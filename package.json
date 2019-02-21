@@ -19,7 +19,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "precommit": "NODE_ENV=dev lint-staged"
+    "precommit": "NODE_ENV=production lint-staged"
   },
   "eslintConfig": {
     "extends": "react-app"
