@@ -33,7 +33,7 @@ class WeatherWidget extends Component {
       <ul className={classes.ul}>
         {items.map(item => {
           const formattedDate = moment(item.date_epoch * 1000).format(
-            'Do MMMM'
+            'ddd Do MMM'
           );
 
           return (
