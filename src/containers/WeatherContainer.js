@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { itemsFetchData } from '../actions/items';
+import WeatherWidget from '../components/WeatherWidget';
 
 class ItemList extends Component {
   componentDidMount() {
     const { fetchData } = this.props;
-    fetchData('http://599167402df2f40011e4929a.mockapi.io/items');
+    fetchData(
+      'https://api.apixu.com/v1/forecast.json?key=6a1b5c2633e94966a0d172626192102&q=london&days=5'
+    );
   }
 
   render() {
@@ -18,13 +21,7 @@ class ItemList extends Component {
       return <p>Loading…</p>;
     }
 
-    return (
-      <ul>
-        {items.map(item => (
-          <li key={item.id}>{item.label}</li>
-        ))}
-      </ul>
-    );
+    return <WeatherWidget items={items} />;
   }
 }
 

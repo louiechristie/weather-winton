@@ -35,7 +35,11 @@ export function itemsFetchData(url) {
         return response;
       })
       .then(response => response.json())
+      .then(response => response.forecast.forecastday)
       .then(items => dispatch(itemsFetchDataSuccess(items)))
-      .catch(() => dispatch(itemsHasErrored(true)));
+      .catch(error => {
+        console.log(error);
+        dispatch(itemsHasErrored(true));
+      });
   };
 }
