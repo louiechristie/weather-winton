@@ -29,11 +29,11 @@ function Day(props) {
   const { classes, date, icon, text, avgtempC } = props;
   return (
     <Card className={classes.card}>
-      <Typography gutterBottom variant="h6" component="h2">
+      <Typography gutterBottom variant="h5" component="h2">
         {date}
       </Typography>
       <img src={`https:${icon}`} alt={text} />
-      <Typography variant="h5" component="p">
+      <Typography variant="h6" component="p">
         {text}
       </Typography>
       <CardActions>

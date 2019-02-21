@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 import { withStyles } from '@material-ui/core/styles';
 import Day from './Day';
 
@@ -34,7 +35,7 @@ class WeatherWidget extends Component {
           return (
             <li key={`${item.date_epoch}`} className={classes.li}>
               <Day
-                date={item.date}
+                date={moment(item.date_epoch).format('Do MMMM')}
                 icon={item.day.condition.icon}
                 text={item.day.condition.text}
                 avgtempC={item.day.avgtemp_c}

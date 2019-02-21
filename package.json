@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^3.9.2",
     "babel-plugin-styled-components": "^1.10.0",
+    "moment": "^2.24.0",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
     "react-error-boundary": "^1.2.3",
