@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import ErrorBoundary from 'react-error-boundary';
 import configureStore from './store/configureStore';
 import WeatherContainer from './containers/WeatherContainer';
+import SimpleAppBar from './components/SimpleAppBar';
 
 const store = configureStore();
 
@@ -12,8 +13,8 @@ class App extends Component {
       <ErrorBoundary>
         <Provider store={store}>
           <div>
-            <h1>Weather Winton</h1>
-            <p>A weather widget.</p>
+            <SimpleAppBar title="Weather Widget" />
+
             <ErrorBoundary>
               <WeatherContainer />
             </ErrorBoundary>

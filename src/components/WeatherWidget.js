@@ -1,33 +1,50 @@
 import React, { Component } from 'react';
+import { withStyles } from '@material-ui/core/styles';
+import Day from './Day';
+
+const styles = theme => ({
+  ul: {
+    padding: theme.spacing.unit * 2,
+    margin: 0,
+    textIndent: 0,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    backgroundColor: '#eeeeee'
+  },
+  li: {
+    listStyleType: 'none'
+  },
+  media: {
+    maxHeight: 140
+  },
+  chip: {
+    marginRight: theme.spacing.unit,
+    marginBottom: theme.spacing.unit
+  }
+});
 
 class WeatherWidget extends Component {
   render() {
-    const { items } = this.props;
+    const { classes, items } = this.props;
 
     return (
-      <ul>
-        {items.map(item => (
-          <li key={item.date_epoch}>
-            <h2>{item.date_epoch}</h2>
-            <div>
-              <img
-                src={item.day.condition.icon}
-                alt={item.day.condition.text}
+      <ul className={classes.ul}>
+        {items.map(item => {
+          return (
+            <li key={`${item.date_epoch}`} className={classes.li}>
+              <Day
+                date={item.date}
+                icon={item.day.condition.icon}
+                text={item.day.condition.text}
+                avgtempC={item.day.avgtemp_c}
               />
-            </div>
-            <div>{item.day.condition.text}</div>
-            <div>{item.day.avgtemp_c}°C</div>
-          </li>
-        ))}
+            </li>
+          );
+        })}
       </ul>
     );
   }
 }
 
-export default WeatherWidget;
-
-// "condition": {
-//     "text": "Partly cloudy",
-//     "icon": "//cdn.apixu.com/weather/64x64/day/116.png",
-//     "code": 1003
-//  },
+export default withStyles(styles)(WeatherWidget);
