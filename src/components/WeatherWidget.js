@@ -32,10 +32,14 @@ class WeatherWidget extends Component {
     return (
       <ul className={classes.ul}>
         {items.map(item => {
+          const formattedDate = moment(item.date_epoch * 1000).format(
+            'Do MMMM'
+          );
+
           return (
             <li key={`${item.date_epoch}`} className={classes.li}>
               <Day
-                date={moment(item.date_epoch).format('Do MMMM')}
+                date={formattedDate}
                 icon={item.day.condition.icon}
                 text={item.day.condition.text}
                 avgtempC={item.day.avgtemp_c}
