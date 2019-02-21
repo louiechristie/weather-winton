@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import ErrorBoundary from 'react-error-boundary';
 import { itemsFetchData } from '../actions/items';
 import WeatherWidget from '../components/WeatherWidget';
 
@@ -21,7 +22,11 @@ class ItemList extends Component {
       return <p>Loading…</p>;
     }
 
-    return <WeatherWidget items={items} />;
+    return (
+      <ErrorBoundary>
+        <WeatherWidget items={items} />
+      </ErrorBoundary>
+    );
   }
 }
 

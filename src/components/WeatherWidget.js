@@ -4,8 +4,6 @@ class WeatherWidget extends Component {
   render() {
     const { items } = this.props;
 
-    console.log('items: ', JSON.stringify(items));
-
     return (
       <ul>
         {items.map(item => (
