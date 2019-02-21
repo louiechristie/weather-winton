@@ -13,7 +13,7 @@ class App extends Component {
       <ErrorBoundary>
         <Provider store={store}>
           <div>
-            <SimpleAppBar title="Weather Widget" />
+            <SimpleAppBar title="Weather Forecast - London" />
 
             <ErrorBoundary>
               <WeatherContainer />
