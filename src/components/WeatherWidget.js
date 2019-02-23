@@ -32,9 +32,14 @@ class WeatherWidget extends Component {
     return (
       <ul className={classes.ul}>
         {items.map(item => {
-          const formattedDate = moment(item.date_epoch * 1000).format(
-            'ddd Do MMM'
-          );
+          const formattedDate = moment(item.date_epoch * 1000).calendar(null, {
+            sameDay: '[Today]',
+            nextDay: '[Tomorrow]',
+            nextWeek: 'dddd',
+            lastDay: '[Yesterday]',
+            lastWeek: '[Last] dddd',
+            sameElse: 'DD/MM/YYYY'
+          });
 
           return (
             <li key={`${item.date_epoch}`} className={classes.li}>
