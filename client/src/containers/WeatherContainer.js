@@ -9,7 +9,7 @@ class ItemList extends Component {
   componentDidMount() {
     const { fetchData } = this.props;
 
-    fetchData(process.env.REACT_APP_API_URL || 'test-data.json', {
+    fetchData(process.env.REACT_APP_API_URL, {
       // 'x-ibm-client-id': process.env.REACT_APP_CLIENT_ID,
     });
   }

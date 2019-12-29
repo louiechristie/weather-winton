@@ -53,7 +53,7 @@ export function itemsFetchData(url, headers) {
         log(`json: ${JSON.stringify(json, null, '  ')}`);
 
         dispatch(itemsIsLoading(false));
-        dispatch(itemsFetchDataSuccess(getItemsFromMetOfficeJSON(json)));
+        dispatch(itemsFetchDataSuccess(json));
       })
       .catch(exception => {
         log(`exception: ${exception.message}`);
