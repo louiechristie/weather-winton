@@ -4,23 +4,18 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-import "regenerator-runtime/runtime";
-
-
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 const fetch = require('node-fetch');
 const dotenv = require('dotenv');
 
-import { getItemsFromMetOfficeJSON } from './utilities/metOfficeWeatherUtils';
-import log from './utilities/log';
+const getItemsFromMetOfficeJSON = require('./utilities/metOfficeWeatherUtils');
+const log = require('./utilities/log');
 
 
 var app = express();
 dotenv.config();
-
-app.disable('etag');
 
 const url = process.env.URL;
 log(url);

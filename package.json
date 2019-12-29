@@ -3,10 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "watch": "nodemon --exec babel-node app.js",
-    "start": "yarn serve",
-    "build": "babel . --out-dir build --ignore 'client/**/*','node_modules/**/*' --copy-files",
-    "serve": "node build/app.js",
+    "start": "node app.js",
     "heroku-postbuild": "cd client && yarn && yarn run build"
   },
   "dependencies": {
@@ -19,15 +16,9 @@
     "http-errors": "~1.7.3",
     "jade": "~1.11.0",
     "morgan": "~1.9.1",
-    "node-fetch": "^2.6.0",
-    "regenerator-runtime": "^0.13.3",
-    "@babel/cli": "^7.7.7"
+    "node-fetch": "^2.6.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.7",
-    "@babel/node": "^7.7.7",
-    "@babel/polyfill": "^7.7.0",
-    "@babel/preset-env": "^7.7.7",
     "nodemon": "^2.0.2"
   }
 }

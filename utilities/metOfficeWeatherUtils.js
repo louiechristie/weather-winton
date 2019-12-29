@@ -1,7 +1,7 @@
-import dayjs from 'dayjs';
-import formattedDateFromISODate from './formattedDateFromISODate';
+const dayjs = require( 'dayjs');
+const formattedDateFromISODate = require('./formattedDateFromISODate');
 
-export function getDescriptionFromMetOfficeWeatherCode(code) {
+function getDescriptionFromMetOfficeWeatherCode(code) {
   const weatherTypes = {
     NA: 'Not available',
     '0': 'Clear night',
@@ -40,7 +40,7 @@ export function getDescriptionFromMetOfficeWeatherCode(code) {
   return weatherTypes[code];
 }
 
-export function getEmojiFromMetOfficeWeatherCode(code) {
+function getEmojiFromMetOfficeWeatherCode(code) {
   const weatherTypes = {
     NA:
       'https://www.metoffice.gov.uk/webfiles/latest/images/icons/weather/NA.svg',
@@ -111,7 +111,7 @@ export function getEmojiFromMetOfficeWeatherCode(code) {
   return weatherTypes[code];
 }
 
-export function getItemsFromMetOfficeJSON(json) {
+function getItemsFromMetOfficeJSON(json) {
   const items = json.features[0].properties.timeSeries
     .filter(day => !dayjs(day.time).isBefore(dayjs()))
     .map(day => {
@@ -129,3 +129,5 @@ export function getItemsFromMetOfficeJSON(json) {
 
   return items;
 }
+
+module.exports = getItemsFromMetOfficeJSON;

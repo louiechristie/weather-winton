@@ -1,4 +1,3 @@
-import { getItemsFromMetOfficeJSON } from '../utilities/metOfficeWeatherUtils';
 import log from '../utilities/log';
 
 export function itemsHasErrored(bool) {

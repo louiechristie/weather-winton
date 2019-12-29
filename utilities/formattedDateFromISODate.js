@@ -1,10 +1,10 @@
-import dayjs from 'dayjs';
-import calendar from 'dayjs/plugin/calendar';
+const dayjs = require('dayjs');
+const calendar = require('dayjs/plugin/calendar');
 
 // Load plugin
 dayjs.extend(calendar);
 
-export default function formattedDateFromISODate(ISODate) {
+function formattedDateFromISODate(ISODate) {
   return dayjs(ISODate).calendar(null, {
     sameDay: '[Today]',
     nextDay: '[Tomorrow]',
@@ -14,3 +14,5 @@ export default function formattedDateFromISODate(ISODate) {
     sameElse: 'DD/MM/YYYY'
   });
 }
+
+module.exports = formattedDateFromISODate;
