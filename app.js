@@ -1,8 +1,11 @@
 var createError = require('http-errors');
-import express from  'express';
+var express = require ('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+
+import "regenerator-runtime/runtime";
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -11,6 +14,8 @@ const fetch = require('node-fetch');
 const dotenv = require('dotenv');
 
 import { getItemsFromMetOfficeJSON } from './utilities/metOfficeWeatherUtils';
+import log from './utilities/log';
+
 
 var app = express();
 dotenv.config();
@@ -18,7 +23,7 @@ dotenv.config();
 app.disable('etag');
 
 const url = process.env.URL;
-console.log(url);
+log(url);
 
 const headers = {
   'accept': 'application/json',
@@ -77,8 +82,8 @@ const getForecast = async (url) => {
       headers
     });
     // const text = await response.text();
-    // console.log('text: ' + text);
-    console.log("response: " + response);
+    // log('text: ' + text);
+    log("response: " + response);
     const json = await response.json();
     if (!response) {
       throw new Error('No response from server.');
@@ -99,7 +104,7 @@ app.get('/forecast', async (req, res) => {
       const items = await getForecast(url);
       res.json(items);
     } catch (error) {
-      console.log(error);
+      log(error);
       res.send(JSON.stringify(error));
     }
   } else {
@@ -111,6 +116,6 @@ app.get('/forecast', async (req, res) => {
 const port = process.env.PORT || 5000;
 app.listen(port);
 
-console.log(`Listening on ${port}`);
+log(`Listening on ${port}`);
 
 module.exports = app;
