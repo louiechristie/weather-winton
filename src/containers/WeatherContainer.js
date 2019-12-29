@@ -3,19 +3,40 @@ import { connect } from 'react-redux';
 import ErrorBoundary from 'react-error-boundary';
 import { itemsFetchData } from '../actions/items';
 import WeatherWidget from '../components/WeatherWidget';
+import { getEmojiFromMetOfficeWeatherCode } from '../utilities/metOfficeWeatherUtils';
 
 class ItemList extends Component {
   componentDidMount() {
     const { fetchData } = this.props;
-    fetchData(
-      'https://api.apixu.com/v1/forecast.json?key=6a1b5c2633e94966a0d172626192102&q=london&days=5'
-    );
+
+    fetchData(process.env.REACT_APP_API_URL || 'test-data.json', {
+      // 'x-ibm-client-id': process.env.REACT_APP_CLIENT_ID,
+    });
   }
 
   render() {
-    const { items, hasErrored, isLoading } = this.props;
+    const { items, isLoading, hasErrored, error } = this.props;
     if (hasErrored) {
-      return <p>Sorry! There was an error loading the items</p>;
+      return (
+        <div>
+          <WeatherWidget
+            items={[
+              {
+                date: 'Tomorrow',
+                description: 'Probably cloudy',
+                icon: getEmojiFromMetOfficeWeatherCode(7),
+                temperature: null
+              },
+              {
+                date: 'Sorry, problem getting forecast.',
+                description: `${error}`,
+                icon: getEmojiFromMetOfficeWeatherCode(30),
+                temperature: null
+              }
+            ]}
+          />
+        </div>
+      );
     }
 
     if (isLoading) {
@@ -33,8 +54,9 @@ class ItemList extends Component {
 const mapStateToProps = state => {
   return {
     items: state.items,
+    isLoading: state.itemsIsLoading,
     hasErrored: state.itemsHasErrored,
-    isLoading: state.itemsIsLoading
+    error: state.error
   };
 };
 
@@ -44,7 +66,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ItemList);
+export default connect(mapStateToProps, mapDispatchToProps)(ItemList);

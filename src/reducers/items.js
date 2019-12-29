@@ -27,3 +27,13 @@ export function items(state = [], action) {
       return state;
   }
 }
+
+export function error(state = [], action) {
+  switch (action.type) {
+    case 'ITEMS_FETCH_DATA_ERROR':
+      return action.error;
+
+    default:
+      return state;
+  }
+}

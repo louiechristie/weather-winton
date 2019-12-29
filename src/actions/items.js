@@ -1,3 +1,6 @@
+import { getItemsFromMetOfficeJSON } from '../utilities/metOfficeWeatherUtils';
+import log from '../utilities/log';
+
 export function itemsHasErrored(bool) {
   return {
     type: 'ITEMS_HAS_ERRORED',
@@ -19,27 +22,44 @@ export function itemsFetchDataSuccess(items) {
   };
 }
 
-export function itemsFetchData(url) {
+export function itemsFetchDataError(error) {
+  return {
+    type: 'ITEMS_FETCH_DATA_ERROR',
+    error
+  };
+}
+
+export function itemsFetchData(url, headers) {
   return dispatch => {
     dispatch(itemsIsLoading(true));
 
     // eslint-disable-next-line no-undef
-    fetch(url)
+    fetch(url, {
+      headers
+    })
       .then(response => {
-        if (!response.ok) {
-          throw Error(response.statusText);
+        log(`response: ${JSON.stringify(response)}`);
+
+        if (!response) {
+          throw new Error('No response from server.');
         }
 
-        dispatch(itemsIsLoading(false));
-
-        return response;
+        if (!response.ok) {
+          throw new Error(JSON.stringify(response, null, '  '));
+        }
+        return response.json();
       })
-      .then(response => response.json())
-      .then(response => response.forecast.forecastday)
-      .then(items => dispatch(itemsFetchDataSuccess(items)))
-      .catch(error => {
-        console.log(error);
+      .then(json => {
+        log(`json: ${JSON.stringify(json, null, '  ')}`);
+
+        dispatch(itemsIsLoading(false));
+        dispatch(itemsFetchDataSuccess(getItemsFromMetOfficeJSON(json)));
+      })
+      .catch(exception => {
+        log(`exception: ${exception.message}`);
+        dispatch(itemsIsLoading(false));
         dispatch(itemsHasErrored(true));
+        dispatch(itemsFetchDataError(exception.message));
       });
   };
 }

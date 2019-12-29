@@ -4,43 +4,71 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import Chip from '@material-ui/core/Chip';
 import Typography from '@material-ui/core/Typography';
+import getRoomTemperatureComfortFromCelsius, {
+  TOO_HOT,
+  TOO_COLD
+} from '../utilities/getRoomTemperatureComfortFromCelsius';
 
 const styles = theme => ({
   card: {
+    boxSizing: 'borderBox',
+    padding: theme.spacing(2),
+
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
-    minWidth: 260,
-    maxWidth: 800,
-    padding: theme.spacing.unit * 2,
-    marginBottom: theme.spacing.unit * 2
-  },
-  media: {
-    maxHeight: 140
+    justifyContent: 'center'
   },
   chip: {
-    marginRight: theme.spacing.unit,
-    marginBottom: theme.spacing.unit
+    backgroundColor: 'white',
+    color: 'orange',
+    fontWeight: 'bold',
+    borderWidth: 3,
+    borderColor: 'orange',
+    borderStyle: 'solid'
+  },
+  tooHot: {
+    color: 'red',
+    borderColor: 'red'
+  },
+  tooCold: {
+    color: 'blue',
+    borderColor: 'blue'
   }
 });
 
 function Day(props) {
-  const { classes, date, icon, text, avgtempC } = props;
+  const { classes, date, icon, description, temperature } = props;
+
+  const getClassName = () => {
+    if (getRoomTemperatureComfortFromCelsius(temperature) === TOO_HOT) {
+      return classes.tooHot;
+    }
+    if (getRoomTemperatureComfortFromCelsius(temperature) === TOO_COLD) {
+      return classes.tooCold;
+    }
+    return classes.chip;
+  };
+
   return (
-    <Card className={classes.card}>
+    <Card className={classes.card} align="center">
       <Typography gutterBottom variant="h5" component="h2">
         {date}
       </Typography>
-      <img src={`https:${icon}`} alt={text} />
+      <img src={icon} alt={description} />
       <Typography variant="h6" component="p">
-        {text}
+        {description}
       </Typography>
-      <CardActions>
-        <div>
-          <Chip label={`${avgtempC}°C`} className={classes.chip} />
-        </div>
-      </CardActions>
+      {temperature && (
+        <CardActions>
+          <div>
+            <Chip
+              label={`${temperature}°C`}
+              className={`${classes.chip} ${getClassName(temperature)}`}
+            />
+          </div>
+        </CardActions>
+      )}
     </Card>
   );
 }
