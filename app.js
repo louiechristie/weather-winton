@@ -13,12 +13,13 @@ const dotenv = require('dotenv');
 const getItemsFromMetOfficeJSON = require('./utilities/metOfficeWeatherUtils');
 const log = require('./utilities/log');
 
+const mockMetOfficeJSON = require('./tests/mockMetOfficeJSON');
+
 
 var app = express();
 dotenv.config();
 
 const url = process.env.URL;
-log(url);
 
 const headers = {
   'accept': 'application/json',
@@ -72,6 +73,8 @@ app.get('/', (req, res) => {
 });
 
 const getForecast = async (url) => {
+  log(`url: ${url}`);
+
   try {
     const response = await fetch(url, {
       headers
@@ -93,6 +96,11 @@ const getForecast = async (url) => {
   }
 };
 
+const getMockForecast = async () => {
+  log('getMockForecast')
+  return getItemsFromMetOfficeJSON(mockMetOfficeJSON());
+}
+
 app.get('/forecast', async (req, res) => {
   if (process.env.NODE_ENV === "production") {
     try {
@@ -103,8 +111,13 @@ app.get('/forecast', async (req, res) => {
       res.send(JSON.stringify(error));
     }
   } else {
-    const testData = [{ "date": "TomorroW", "description": "Cloudy", "icon": "https://www.metoffice.gov.uk/webfiles/latest/images/icons/weather/7.svg", "temperature": 8 }, { "date": "Tuesday", "description": "Overcast", "icon": "https://www.metoffice.gov.uk/webfiles/latest/images/icons/weather/8.svg", "temperature": 7 }, { "date": "Wednesday", "description": "Overcast", "icon": "https://www.metoffice.gov.uk/webfiles/latest/images/icons/weather/8.svg", "temperature": 6 }, { "date": "Thursday", "description": "Overcast", "icon": "https://www.metoffice.gov.uk/webfiles/latest/images/icons/weather/8.svg", "temperature": 7 }, { "date": "Friday", "description": "Light rain", "icon": "https://www.metoffice.gov.uk/webfiles/latest/images/icons/weather/12.svg", "temperature": 9 }, { "date": "Saturday", "description": "Partly cloudy (day)", "icon": "https://www.metoffice.gov.uk/webfiles/latest/images/icons/weather/3.svg", "temperature": 7 }]
-    res.json(testData);
+    try {
+      const items = await getMockForecast();
+      res.json(items);
+    } catch (error) {
+      log(error);
+      res.send(JSON.stringify(error));
+    }
   }
 });
 

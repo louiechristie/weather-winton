@@ -3,14 +3,12 @@ import { connect } from 'react-redux';
 import ErrorBoundary from 'react-error-boundary';
 import { itemsFetchData } from '../actions/items';
 import WeatherWidget from '../components/WeatherWidget';
-import { getEmojiFromMetOfficeWeatherCode } from '../utilities/metOfficeWeatherUtils';
 
 class ItemList extends Component {
   componentDidMount() {
     const { fetchData } = this.props;
 
     fetchData(process.env.REACT_APP_API_URL, {
-      // 'x-ibm-client-id': process.env.REACT_APP_CLIENT_ID,
     });
   }
 
@@ -24,13 +22,13 @@ class ItemList extends Component {
               {
                 date: 'Tomorrow',
                 description: 'Probably cloudy',
-                icon: getEmojiFromMetOfficeWeatherCode(7),
+                icon: 'https://www.metoffice.gov.uk/webfiles/latest/images/icons/weather/7.svg',
                 temperature: null
               },
               {
                 date: 'Sorry, problem getting forecast.',
                 description: `${error}`,
-                icon: getEmojiFromMetOfficeWeatherCode(30),
+                icon: 'https://www.metoffice.gov.uk/webfiles/latest/images/icons/weather/7.svg',
                 temperature: null
               }
             ]}

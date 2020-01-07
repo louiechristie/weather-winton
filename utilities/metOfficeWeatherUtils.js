@@ -1,5 +1,10 @@
-const dayjs = require( 'dayjs');
+const dayjs = require('dayjs');
+const isSameOrAfter = require('dayjs/plugin/isSameOrAfter');
+
 const formattedDateFromISODate = require('./formattedDateFromISODate');
+const log = require('../utilities/log');
+
+dayjs.extend(isSameOrAfter)
 
 function getDescriptionFromMetOfficeWeatherCode(code) {
   const weatherTypes = {
@@ -112,8 +117,9 @@ function getEmojiFromMetOfficeWeatherCode(code) {
 }
 
 function getItemsFromMetOfficeJSON(json) {
+  log(`json: ${JSON.stringify(json, null, "  ")}`)
   const items = json.features[0].properties.timeSeries
-    .filter(day => !dayjs(day.time).isBefore(dayjs()))
+    .filter(day => dayjs(day.time).isSameOrAfter(dayjs(), 'day'))
     .map(day => {
       return {
         date: formattedDateFromISODate(day.time),
