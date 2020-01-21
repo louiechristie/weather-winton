@@ -1,3 +1,4 @@
 **/serviceWorker.js
-**/*.test.js
-.env
+.env*
+/build
+/node_modules

@@ -6,7 +6,6 @@ const styles = theme => ({
   ul: {
     margin: 0,
     padding: theme.spacing(2),
-    backgroundColor: 'beige',
 
     listStyleType: 'none',
     textIndent: 0,
@@ -14,14 +13,14 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   li: {
     width: 260,
     flex: 1,
     marginBottom: theme.spacing(2),
-    textIndent: 0
-  }
+    textIndent: 0,
+  },
 });
 
 class WeatherWidget extends Component {
@@ -38,6 +37,7 @@ class WeatherWidget extends Component {
                 icon={item.icon}
                 description={item.description}
                 temperature={item.temperature}
+                relativeHumidity={item.relativeHumidity}
               />
             </li>
           );

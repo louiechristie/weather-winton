@@ -1,0 +1,7 @@
+.env*
+/client/
+/client/src/serviceWorker.js
+/node_modules/**.*
+/client/node_modules
+/client/build
+/public
