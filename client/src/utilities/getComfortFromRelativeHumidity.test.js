@@ -20,11 +20,11 @@ test('50% relative humidity to equal "COMFORTABLE"', () => {
   expect(getComfortFromRelativeHumidity(50)).toBe('COMFORTABLE');
 });
 
-test('51% relative humidity to equal "COMFORTABLE"', () => {
+test('51% relative humidity to equal "TOO_HUMID"', () => {
   expect(getComfortFromRelativeHumidity(51)).toBe('TOO_HUMID');
 });
 
-test('100% relative humidity to equal "COMFORTABLE"', () => {
+test('100% relative humidity to equal "TOO_HUMID"', () => {
   expect(getComfortFromRelativeHumidity(100)).toBe('TOO_HUMID');
 });
 

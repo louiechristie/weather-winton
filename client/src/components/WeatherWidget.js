@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Day from './Day';
 
+import { getIsTooDryFromRelativeHumidity } from '../utilities/getComfortFromRelativeHumidity';
+
+import getIsStickyFromCelsiusAndRelativeHumidity from '../utilities/getIsStickyFromCelsiusAndRelativeHumidity';
+
 const styles = theme => ({
   ul: {
     margin: 0,
@@ -37,7 +41,11 @@ class WeatherWidget extends Component {
                 icon={item.icon}
                 description={item.description}
                 temperature={item.temperature}
-                relativeHumidity={item.relativeHumidity}
+                isSticky={getIsStickyFromCelsiusAndRelativeHumidity(
+                  item.temperature,
+                  item.relativeHumidity
+                )}
+                isDry={getIsTooDryFromRelativeHumidity(item.relativeHumidity)}
               />
             </li>
           );

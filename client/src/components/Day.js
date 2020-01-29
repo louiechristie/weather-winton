@@ -8,11 +8,6 @@ import getRoomTemperatureComfortFromCelsius, {
   TOO_HOT,
   TOO_COLD,
 } from '../utilities/getRoomTemperatureComfortFromCelsius';
-import getComfortFromRelativeHumidity, {
-  COMFORTABLE,
-  TOO_DRY,
-  TOO_HUMID,
-} from '../utilities/getComfortFromRelativeHumidity';
 
 const styles = theme => ({
   card: {
@@ -57,12 +52,12 @@ const styles = theme => ({
     backgroundColor: '#3F51B5',
     borderColor: '#3F51B5',
   },
-  tooDry: {
+  dry: {
     color: '#cc0605',
     borderColor: '#cc0605',
     backgroundColor: 'white',
   },
-  tooHumid: {
+  sticky: {
     color: '#3F51B5',
     borderColor: '#3F51B5',
   },
@@ -74,24 +69,12 @@ const styles = theme => ({
 const getTemperatureFriendly = celsius => {
   if (!celsius) return null;
   if (getRoomTemperatureComfortFromCelsius(celsius) === TOO_HOT) {
-    return 'Too hot 🥵';
+    return 'Hot 🥵';
   }
   if (getRoomTemperatureComfortFromCelsius(celsius) === TOO_COLD) {
-    return 'Too cold 🥶';
+    return 'Cold 🥶';
   }
   return 'Warm';
-};
-
-const getHumidityFriendly = relativeHumidity => {
-  if (!relativeHumidity) return null;
-
-  if (getComfortFromRelativeHumidity(relativeHumidity) === TOO_DRY) {
-    return 'Dry eyes/skin 👁';
-  }
-  if (getComfortFromRelativeHumidity(relativeHumidity) === TOO_HUMID) {
-    return 'Sticky 💦';
-  }
-  return 'Comfortable';
 };
 
 function Day(props) {
@@ -101,7 +84,8 @@ function Day(props) {
     icon,
     description,
     temperature,
-    relativeHumidity,
+    isSticky,
+    isDry,
   } = props;
 
   const getTemperatureClassName = () => {
@@ -114,17 +98,6 @@ function Day(props) {
       return classes.tooCold;
     }
     return classes.comfortable;
-  };
-
-  const getHumidityClassName = () => {
-    if (!relativeHumidity) return null;
-    if (getComfortFromRelativeHumidity(relativeHumidity) === TOO_DRY) {
-      return classes.tooDry;
-    }
-    if (getComfortFromRelativeHumidity(relativeHumidity) === TOO_HUMID) {
-      return classes.tooHumid;
-    }
-    return classes.chip;
   };
 
   return (
@@ -146,11 +119,16 @@ function Day(props) {
               )}`}
             />
           )}
-          {getComfortFromRelativeHumidity(relativeHumidity) !== COMFORTABLE && (
+          {isSticky && (
             <Chip
-              label={`${getHumidityFriendly(relativeHumidity)}`}
-              className={`${classes.chip} ${getHumidityClassName(
-                relativeHumidity
+              label={'Sticky 💦'}
+              className={`${classes.chip} ${classes.stick}`}
+            />
+          )}
+          {isDry && (
+            <Chip
+              label={'Dry eyes/skin 👁'}
+              className={`${classes.chip} ${classes.dry}
               )}`}
             />
           )}

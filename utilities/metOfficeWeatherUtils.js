@@ -119,8 +119,15 @@ function getEmojiFromMetOfficeWeatherCode(code) {
 function getItemsFromMetOfficeJSON(json) {
   log(`json: ${JSON.stringify(json, null, "  ")}`);
 
+  const filter = day => {
+    if (process.env.NODE_ENV === "production") {
+      return dayjs(day.time).isSameOrAfter(dayjs(), "day");
+    }
+    return true;
+  };
+
   const items = json.features[0].properties.timeSeries
-    .filter(day => dayjs(day.time).isSameOrAfter(dayjs(), "day"))
+    .filter(filter)
     .map(day => {
       return {
         date: formattedDateFromISODate(day.time),

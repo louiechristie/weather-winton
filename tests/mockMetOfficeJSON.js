@@ -65,7 +65,7 @@ const mockMetOfficeJSON = {
             midnight10MWindGust: 2.3467476,
             middayVisibility: 4966,
             midnightVisibility: 4673,
-            middayRelativeHumidity: 75.8,
+            middayRelativeHumidity: 50,
             midnightRelativeHumidity: 84.223785,
             middayMslp: 104810,
             midnightMslp: 104484,

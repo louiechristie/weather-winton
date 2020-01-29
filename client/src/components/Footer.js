@@ -25,8 +25,8 @@ const Footer = props => {
   return (
     <footer className={classes.footer}>
       <Paper className={classes.note}>
-        <Typography variant="body1" component="h2">
-          {meta.description}
+        <Typography variant="body2" component="p">
+          Weather data: Met Office
         </Typography>
 
         <Typography variant="body2" component="p" color="inherit">
