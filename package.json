@@ -19,39 +19,34 @@
   },
   "lint-staged": {
     "*.md": [
-      "markdownlint --fix",
-      "git add"
+      "markdownlint --fix"
     ],
     "*.js": [
       "eslint --fix",
-      "prettier --write",
-      "git add"
+      "prettier --write"
     ]
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
-    "core-js": "^3.6.1",
-    "dayjs": "^1.8.18",
+    "core-js": "^3.6.4",
+    "dayjs": "^1.8.20",
     "debug": "~4.1.1",
     "dotenv": "^8.2.0",
     "express": "~4.17.1",
-    "http-errors": "~1.7.3",
-    "jade": "~1.11.0",
-    "morgan": "~1.9.1",
     "node-fetch": "^2.6.0"
   },
   "devDependencies": {
-    "eslint": "^6.8.0",
     "eslint-cli": "^1.1.1",
-    "eslint-config-airbnb": "^18.0.1",
-    "eslint-config-prettier": "^6.9.0",
-    "eslint-plugin-import": "^2.19.1",
+    "eslint-config-airbnb": "18.0.1",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-prettier": "^3.1.2",
-    "eslint-plugin-react": "^7.17.0",
-    "husky": "^3.1.0",
-    "lint-staged": "^9.5.0",
-    "markdownlint-cli": "^0.21.0",
+    "eslint-plugin-react": "^7.14.3",
+    "eslint-plugin-react-hooks": "^1.7.0",
+    "husky": "^4.2.3",
+    "lint-staged": "^10.0.7",
+    "markdownlint-cli": "^0.22.0",
     "nodemon": "^2.0.2",
     "prettier": "^1.19.1"
   }

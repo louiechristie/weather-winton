@@ -1,15 +1,13 @@
-const express = require("express");
-const path = require("path");
-const cookieParser = require("cookie-parser");
-const logger = require("morgan");
+const express = require('express');
+const path = require('path');
 
-const fetch = require("node-fetch");
-const dotenv = require("dotenv");
+const fetch = require('node-fetch');
+const dotenv = require('dotenv');
 
-const getItemsFromMetOfficeJSON = require("./utilities/metOfficeWeatherUtils");
-const log = require("./utilities/log");
+const getItemsFromMetOfficeJSON = require('./utilities/metOfficeWeatherUtils');
+const log = require('./utilities/log');
 
-const mockMetOfficeJSON = require("./tests/mockMetOfficeJSON");
+const mockMetOfficeJSON = require('./tests/mockMetOfficeJSON');
 
 const app = express();
 dotenv.config();
@@ -17,24 +15,18 @@ dotenv.config();
 const metOfficeAPIUrl = process.env.URL;
 
 const headers = {
-  accept: "application/json",
-  "x-ibm-client-id": process.env.CLIENT_ID,
-  "x-ibm-client-secret": process.env.CLIENT_SECRET
+  accept: 'application/json',
+  'x-ibm-client-id': process.env.CLIENT_ID,
+  'x-ibm-client-secret': process.env.CLIENT_SECRET,
 };
 
-// view engine setup
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "jade");
-
-app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "client/build/")));
+app.use(express.static(path.join(__dirname, 'client/build/')));
 
-app.get("/", (req, res) => {
+app.get('/', (req, res) => {
   try {
-    res.sendFile(path.join(__dirname, "/client/build/", "index.html"));
+    res.sendFile(path.join(__dirname, '/client/build/', 'index.html'));
   } catch (error) {
     log(error);
     res.send(JSON.stringify(error));
@@ -45,29 +37,29 @@ const getForecast = async url => {
   log(`url: ${url}`);
 
   const response = await fetch(url, {
-    headers
+    headers,
   });
   // const text = await response.text();
   // log('text: ' + text);
   log(`response: ${response}`);
   const json = await response.json();
   if (!response) {
-    throw new Error("No response from server.");
+    throw new Error('No response from server.');
   }
   if (!response.ok) {
-    throw new Error(JSON.stringify(response, null, "  "));
+    throw new Error(JSON.stringify(response, null, '  '));
   }
   const items = getItemsFromMetOfficeJSON(json);
   return items;
 };
 
 const getMockForecast = async () => {
-  log("getMockForecast");
+  log('getMockForecast');
   return getItemsFromMetOfficeJSON(mockMetOfficeJSON());
 };
 
-app.get("/forecast", async (req, res) => {
-  if (process.env.NODE_ENV === "production") {
+app.get('/forecast', async (req, res) => {
+  if (process.env.NODE_ENV === 'production') {
     try {
       const items = await getForecast(metOfficeAPIUrl);
       res.json(items);
