@@ -24,38 +24,49 @@ const callback = (err, data) => {
 
   let words = [];
 
-  for (let i = 0; i < lines.length; i++) {
+  for (let i = 0; i < lines.length; i += 1) {
     words = lines[i].trim().split(/\s+/);
     console.log(`words: ${words}`);
 
     for (let j = 2; j < words.length; j++) {
       const temperature = parseInt(words[j], 10) / 10;
-      if (temperature !== -999) {
+      if (temperature !== -99.9) {
         temperatures.push(temperature);
       }
     }
   }
 
-  const sorted = temperatures.sort();
+  const sorted = temperatures.sort(function(a, b) {
+    return a - b;
+  });
 
   const sortedSting = JSON.stringify(sorted, null, 2);
 
   console.log(`sortedString: ${sortedSting}`);
 
-  const output = {
-    freezingNumber: sorted.filter(temperature => {
-      return temperature <= 4;
-    }).length,
-    coldNumber: sorted.filter(temperature => {
-      return temperature > 4 && temperature < 16;
-    }).length,
-    warmNumber: sorted.filter(temperature => {
-      return temperature > 16 && temperature <= 24;
-    }).length,
-    hotNumber: sorted.filter(temperature => {
-      return temperature > 24;
-    }).length,
-  };
+  let output = {};
+
+  // output = {
+  //   freezingNumber: sorted.filter(temperature => {
+  //     return temperature <= 4;
+  //   }).length,
+  //   coldNumber: sorted.filter(temperature => {
+  //     return temperature > 4 && temperature < 16;
+  //   }).length,
+  //   warmNumber: sorted.filter(temperature => {
+  //     return temperature > 16 && temperature <= 24;
+  //   }).length,
+  //   hotNumber: sorted.filter(temperature => {
+  //     return temperature > 24;
+  //   }).length,
+  //   min: sorted[0],
+  //   max: sorted[sorted.length - 1],
+  // };
+
+  for (let k = 0; k < sorted.length; k++) {
+    const key = Math.round(sorted[k]);
+    output[key] = output[key] ? output[key] + 1 : 1;
+  }
 
   const outputString = JSON.stringify(output, null, 2);
 

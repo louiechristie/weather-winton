@@ -20,6 +20,10 @@ const styles = theme => ({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  svgIcon: {
+    width: 48 * 2,
+  },
+  description: { marginTop: 0, paddingTop: 0 },
   chips: {
     display: 'flex',
     flexDirection: 'column',
@@ -27,9 +31,8 @@ const styles = theme => ({
   },
   chip: {
     flex: 1,
-    minWidth: '100px',
     marginTop: '5px',
-    marginBottom: '5px',
+    marginBottom: '20px',
     paddingTop: '5px',
     paddingBottom: '5px',
     backgroundColor: 'white',
@@ -41,29 +44,29 @@ const styles = theme => ({
     borderRadius: 32 / 2,
   },
   temperatureContainer: {
-    minWidth: '100px',
+    minWidth: '200px',
     display: 'flex',
     flexDirection: 'column',
     marginTop: '5px',
-    marginBottom: '5px',
-    borderRadius: 4,
+    borderRadius: '4px',
   },
   colorScale: {
     flex: 1,
     display: 'flex',
     flexDirection: 'row',
+    borderRadius: '4px 4px 0 0',
+    overflow: 'hidden',
   },
   temperature: {
     flex: 1,
-    paddingTop: '5px',
-    paddingBottom: '5px',
+    paddingTop: '4px',
+    paddingBottom: '8px',
   },
   swatch: {
-    fontSize: '0.1px',
+    fontSize: '8px',
   },
   freezingSwatch: {
     flex: 18035,
-    borderRadius: '4px 0 0 0',
   },
   coldSwatch: {
     flex: 64146,
@@ -73,7 +76,6 @@ const styles = theme => ({
   },
   hotSwatch: {
     flex: 11,
-    borderRadius: '0 4px 0 0',
   },
   warm: {
     color: 'black',
@@ -97,7 +99,7 @@ const styles = theme => ({
   },
   dry: {
     color: '#cc0605',
-    borderWidth: 0,
+    borderColor: '#cc0605',
     backgroundColor: 'white',
   },
   sticky: {
@@ -136,8 +138,6 @@ function Day(props) {
   } = props;
 
   const getTemperatureClassName = temperature => {
-    if (!temperature) return null;
-
     if (getIsTooHotForRoomTemperatureFromCelsius(temperature)) {
       return classes.hot;
     }
@@ -150,70 +150,106 @@ function Day(props) {
     return classes.warm;
   };
 
-  // Color scale from https://rmets.onlinelibrary.wiley.com/doi/full/10.1002/joc.6213
+  // Temperatures and tally of days ever had that temperature in UK
+  // Previously calculated using command line utility /data/daily/daily.js
+  const tempTallies = {
+    '-12': 1,
+    '-11': 1,
+    '-9': 5,
+    '-8': 19,
+    '-7': 40,
+    '-6': 53,
+    '-5': 98,
+    '-4': 221,
+    '-3': 391,
+    '-2': 607,
+    '-1': 1091,
+    '0': 1650,
+    '1': 2441,
+    '2': 2988,
+    '3': 3794,
+    '4': 4480,
+    '5': 5177,
+    '6': 5586,
+    '7': 5909,
+    '8': 5639,
+    '9': 5445,
+    '10': 5208,
+    '11': 4893,
+    '12': 4908,
+    '13': 5483,
+    '14': 5988,
+    '15': 5568,
+    '16': 4675,
+    '17': 3434,
+    '18': 2245,
+    '19': 1302,
+    '20': 700,
+    '21': 333,
+    '22': 151,
+    '23': 63,
+    '24': 15,
+    '25': 9,
+  };
+
+  const keys = Object.keys(tempTallies).sort(function(a, b) {
+    return a - b;
+  });
 
   return (
     <Card className={classes.card} align="center">
       <Typography gutterBottom variant="h5" component="h2">
         {date}
       </Typography>
-      <img src={icon} alt={description} />
-      <Typography variant="h6" component="p">
+      <img className={classes.svgIcon} src={icon} alt={description} />
+      <Typography className={classes.description} variant="h6" component="p">
         {description}
       </Typography>
       <CardActions>
         <Box>
-          {temperature && (
-            <Box
-              className={`${
-                classes.temperatureContainer
-              } ${getTemperatureClassName(temperature)}`}
-            >
-              <Box
-                className={[
-                  classes.swatch,
-                  getTemperatureClassName(temperature / 10),
-                ]}
-              ></Box>
-              <Box className={classes.colorScale}>
-                <Box
-                  className={`${classes.swatch} ${classes.freezingSwatch} ${classes.freezing}`}
-                >
-                  &nbsp;
-                </Box>
-                <Box
-                  className={`${classes.swatch} ${classes.coldSwatch} ${classes.cold}`}
-                >
-                  &nbsp;
-                </Box>
-                <Box
-                  className={`${classes.swatch} ${classes.warmSwatch} ${classes.warm}`}
-                >
-                  &nbsp;
-                </Box>
-                <Box
-                  className={`${classes.swatch} ${classes.hotSwatch} ${classes.hot}`}
-                >
-                  &nbsp;
-                </Box>
-              </Box>
-              <Box className={classes.temperature}>
-                {getTemperatureFriendly(temperature)}
-              </Box>
-            </Box>
-          )}
           {isSticky && (
             <Chip
               label={'Sticky 💦'}
               className={`${classes.chip} ${classes.stick}`}
             />
           )}
+
           {isDry && (
             <Chip
               label={'Dry eyes/skin 👁'}
               className={`${classes.chip} ${classes.dry}
               )}`}
             />
+          )}
+
+          {temperature && (
+            <Box
+              className={`${
+                classes.temperatureContainer
+              } ${getTemperatureClassName(temperature)}`}
+            >
+              <Box className={classes.colorScale}>
+                {keys.map(key => {
+                  const integer = parseInt(key, 10);
+                  const tally = tempTallies[key];
+                  return (
+                    <Box
+                      key={key}
+                      className={`${classes.swatch} ${getTemperatureClassName(
+                        integer
+                      )}`}
+                      style={{ flex: tally }}
+                    >
+                      &nbsp;
+                      {integer === temperature && '▲'}
+                    </Box>
+                  );
+                })}
+              </Box>
+              <Box className={classes.temperature}>
+                {getTemperatureFriendly(temperature)}
+              </Box>
+            </Box>
           )}
         </Box>
       </CardActions>
