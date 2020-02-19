@@ -21,6 +21,27 @@ export function getIsTooColdForRoomTemperatureFromCelsius(celsius) {
   return false;
 }
 
+export function getIsFrostyFromCelsius(celsius) {
+  // Frost is likely below 4 degrees celsius
+  // https://www.metoffice.gov.uk/weather/learn-about/weather/types-of-weather/frost-and-ice/forecasting-frost
+  if (celsius <= 4) {
+    return true;
+  }
+}
+
+export function getIsComfortableForRoomTemperatureFromCelsius(celsius) {
+  // The World Health Organization's standard ...
+  // For those with respiratory problems or allergies, they recommend no less than 16 °C */
+  // From https://en.wikipedia.org/wiki/Room_temperature Accessed 2019-12-28
+  if (
+    !getIsTooHotForRoomTemperatureFromCelsius &&
+    getIsTooColdForRoomTemperatureFromCelsius
+  ) {
+    return true;
+  }
+  return false;
+}
+
 export default function getRoomTemperatureComfortFromCelsius(celsius) {
   if (!Number.isFinite(celsius)) {
     return null;
