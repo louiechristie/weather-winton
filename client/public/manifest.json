@@ -1,11 +1,10 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "weather-winton",
+  "name": "Friendly Weather: South London",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "src": "https://www.metoffice.gov.uk/webfiles/latest/images/icons/weather/3.svg",
+      "sizes": "48x48 192x192 512x512"
     }
   ],
   "start_url": ".",
