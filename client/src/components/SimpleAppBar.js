@@ -18,7 +18,7 @@ const styles = {
 };
 
 function SimpleAppBar(props) {
-  const { classes, title, image, alt } = props;
+  const { classes, title, description, image, alt, url } = props;
 
   return (
     <AppBar position="static">
@@ -26,6 +26,12 @@ function SimpleAppBar(props) {
         <link id="favicon" rel="icon" sizes="any" href={image} />
         <link rel="mask-icon" href={image} color="DimGrey" />
         <title>{title}</title>
+
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:image" content={image} />
+        <meta property="og:url" content={url} />
+        <meta name="twitter:card" content="summary_large_image" />
       </Helmet>
 
       <Toolbar>
