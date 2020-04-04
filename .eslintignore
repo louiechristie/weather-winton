@@ -3,5 +3,5 @@
 /client/src/serviceWorker.js
 /node_modules/**.*
 /client/node_modules
-/client/build
+/client/public
 /public

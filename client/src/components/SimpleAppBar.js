@@ -25,7 +25,9 @@ function SimpleAppBar(props) {
       <Helmet>
         <link id="favicon" rel="icon" sizes="any" href={image} />
         <link rel="mask-icon" href={image} color="DimGrey" />
+
         <title>{title}</title>
+        <meta name="description" content={description} />
 
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
