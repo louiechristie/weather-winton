@@ -6,6 +6,11 @@ User Friendly Weather Forecast (South London) web app.
 
 node v10.13.0 or greater
 
+Set up environment variables:
+
+- REACT_APP_SITE_URL - for facebook opengraph
+- REACT_APP_API_URL - address of the api
+
 ## Available Scripts
 
 In the project directory, you can run:

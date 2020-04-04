@@ -1,6 +1,7 @@
 {
   "name": "weather-winton",
-  "description": "Friendly Weather: South London",
+  "title": "Friendly Weather: South London",
+  "description": "Experimental app for innovative user experience in weather forecasting. (Inspired by Negroponte, N. (1995). Being digital. New York: Knopf.)",
   "version": "0.2.1",
   "private": true,
   "author": {
@@ -43,9 +44,6 @@
       "eslint --fix",
       "prettier --write",
       "cross-env CI=true react-scripts test --env=jsdom --findRelatedTests"
-    ],
-    "*.*": [
-      "git add"
     ]
   },
   "browserslist": [

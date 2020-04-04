@@ -9,15 +9,17 @@ import SimpleAppBar from '../components/SimpleAppBar';
 import WeatherWidget from '../components/WeatherWidget';
 import Footer from '../components/Footer';
 
-const cloudyImageSrc =
+const CLOUDY_IMAGE_SRC =
   'https://www.metoffice.gov.uk/webfiles/latest/images/icons/weather/7.svg';
-const probablyCloudy = 'Probably Cloudy';
+const PROBABLY_CLOUDY = 'Probably Cloudy';
+const { REACT_APP_SITE_URL, REACT_APP_API_URL } = process.env;
+const { title, description } = meta;
 
 class ItemList extends Component {
   componentDidMount() {
     const { fetchData } = this.props;
 
-    fetchData(process.env.REACT_APP_API_URL, {});
+    fetchData(REACT_APP_API_URL, {});
   }
 
   render() {
@@ -29,14 +31,14 @@ class ItemList extends Component {
             items={[
               {
                 date: 'Today',
-                description: probablyCloudy,
-                icon: cloudyImageSrc,
+                description: PROBABLY_CLOUDY,
+                icon: CLOUDY_IMAGE_SRC,
                 temperature: null,
               },
               {
                 date: 'Sorry, problem getting forecast.',
                 description: `${error}`,
-                icon: cloudyImageSrc,
+                icon: CLOUDY_IMAGE_SRC,
                 temperature: null,
               },
             ]}
@@ -52,9 +54,11 @@ class ItemList extends Component {
     return (
       <ErrorBoundary>
         <SimpleAppBar
-          title={meta.description}
-          image={(items && items[0] && items[0].icon) || cloudyImageSrc}
-          alt={(items && items[0] && items[0].description) || probablyCloudy}
+          title={title}
+          description={description}
+          image={(items && items[0] && items[0].icon) || CLOUDY_IMAGE_SRC}
+          alt={(items && items[0] && items[0].description) || PROBABLY_CLOUDY}
+          url={REACT_APP_SITE_URL}
         />
 
         <WeatherWidget items={items} />
