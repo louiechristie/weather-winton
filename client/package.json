@@ -2,7 +2,7 @@
   "name": "weather-winton",
   "title": "Friendly Weather: South London",
   "description": "Experimental app for innovative user experience in weather forecasting. (Inspired by Negroponte, N. (1995). Being digital. New York: Knopf.)",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "private": true,
   "author": {
     "name": "Louie Christie",
@@ -15,13 +15,15 @@
     "serve": "gatsby serve"
   },
   "dependencies": {
+    "@material-ui/core": "^4.9.3",
     "axios": "^0.18.0",
+    "dayjs": "^1.8.20",
     "gatsby": "^2.0.0",
+    "gatsby-plugin-react-helmet": "^3.2.1",
     "react": "^16.7.0-alpha.2",
     "react-dom": "^16.7.0-alpha.2",
-    "@material-ui/core": "^4.9.3",
-    "dayjs": "^1.8.20",
     "react-error-boundary": "^1.2.5",
-    "react-helmet": "^5.2.1"
+    "react-helmet": "^5.2.1",
+    "sharp": "^0.25.2"
   }
 }

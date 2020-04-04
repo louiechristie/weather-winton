@@ -1,13 +1,27 @@
 require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`,
 });
-
 const axios = require('axios');
+const sharp = require('sharp');
+const package = require('./package.json');
 
 const CLOUDY_IMAGE_SRC =
   'https://www.metoffice.gov.uk/webfiles/latest/images/icons/weather/7.svg';
 const PROBABLY_CLOUDY = 'Probably Cloudy';
-const { GATSBY_API_URL } = process.env;
+const { GATSBY_SITE_URL, GATSBY_API_URL } = process.env;
+
+const { title, description, author, version } = package;
+
+const meta = {
+  title,
+  description,
+  defaultDescription: PROBABLY_CLOUDY,
+  defaultImageSrc: CLOUDY_IMAGE_SRC,
+  siteURL: GATSBY_SITE_URL,
+  author,
+  version,
+  png: `${GATSBY_SITE_URL}/og-image.png`,
+};
 
 exports.createPages = async ({ actions: { createPage } }) => {
   try {
@@ -17,10 +31,32 @@ exports.createPages = async ({ actions: { createPage } }) => {
 
     const items = result.data;
 
+    const today = items[0];
+
+    const input = (
+      await axios({
+        url: today.icon,
+        responseType: 'arraybuffer',
+      })
+    ).data;
+
+    const ogImage = await sharp(input, { density: 450 })
+      .png()
+      .resize(1200, 630, {
+        fit: 'contain',
+        background: { r: 255, g: 255, b: 255, alpha: 0 },
+      })
+      .toFile(`public/og-image.png`);
+
+    const favicon = await sharp(input, { density: 450 })
+      .png()
+      .resize(48)
+      .toFile(`public/favicon.ico`);
+
     createPage({
       path: `/`,
       component: require.resolve('./src/templates/WeatherContainer.js'),
-      context: { items },
+      context: { items, meta },
     });
   } catch (error) {
     console.log(error);
@@ -43,7 +79,7 @@ exports.createPages = async ({ actions: { createPage } }) => {
     createPage({
       path: `/`,
       component: require.resolve('./src/templates/WeatherContainer.js'),
-      context: { items: mock },
+      context: { items: mock, meta },
     });
   }
 };

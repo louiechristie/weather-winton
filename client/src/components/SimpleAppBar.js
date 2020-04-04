@@ -18,7 +18,7 @@ const styles = {
 };
 
 function SimpleAppBar(props) {
-  const { classes, title, description, image, alt, url } = props;
+  const { classes, title, description, image, alt, url, png } = props;
 
   return (
     <AppBar position="static">
@@ -31,7 +31,7 @@ function SimpleAppBar(props) {
 
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
-        <meta property="og:image" content={image} />
+        <meta property="og:image" content={png} />
         <meta property="og:url" content={url} />
         <meta name="twitter:card" content="summary_large_image" />
       </Helmet>

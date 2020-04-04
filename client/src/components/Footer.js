@@ -30,7 +30,11 @@ const Footer = props => {
         </Typography>
 
         <Typography variant="body2" component="p" color="inherit">
-          Made by <a href={meta.author.url}> {meta.author.name}</a>
+          Version: {meta.version}
+        </Typography>
+
+        <Typography variant="body2" component="p" color="inherit">
+          Made by: <a href={meta.author.url}> {meta.author.name}</a>
         </Typography>
       </Paper>
     </footer>
