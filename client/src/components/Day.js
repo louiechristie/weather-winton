@@ -22,6 +22,7 @@ const styles = theme => ({
   },
   svgIcon: {
     width: 48 * 2,
+    height: 48 * 2,
   },
   description: { marginTop: 0, paddingTop: 0 },
   chips: {

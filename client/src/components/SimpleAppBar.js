@@ -13,6 +13,8 @@ const styles = {
     alignItems: 'center',
   },
   logo: {
+    width: '48px',
+    height: '48px',
     marginRight: '10px',
   },
 };
