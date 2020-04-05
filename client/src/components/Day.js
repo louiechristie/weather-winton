@@ -79,7 +79,7 @@ const styles = theme => ({
     flex: 11,
   },
   warm: {
-    color: 'black',
+    color: '#222222',
     borderWidth: 0,
     backgroundColor: '#ffbf00',
   },
@@ -140,15 +140,15 @@ function Day(props) {
 
   const getTemperatureClassName = temperature => {
     if (getIsTooHotForRoomTemperatureFromCelsius(temperature)) {
-      return classes.hot;
+      return `${classes.hot} hot`;
     }
     if (getIsFrostyFromCelsius(temperature)) {
-      return classes.freezing;
+      return `${classes.freezing} freezing`;
     }
     if (getIsTooColdForRoomTemperatureFromCelsius(temperature)) {
-      return classes.cold;
+      return `${classes.cold} cold`;
     }
-    return classes.warm;
+    return `${classes.warm} warm`;
   };
 
   // Temperatures and tally of days ever had that temperature in UK
@@ -242,7 +242,9 @@ function Day(props) {
                       style={{ flex: tally }}
                     >
                       &nbsp;
-                      {integer === temperature && '▲'}
+                      <span className="indicator">
+                        {integer === temperature && '▲'}
+                      </span>
                     </Box>
                   );
                 })}
