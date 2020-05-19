@@ -44,11 +44,15 @@ const styles = theme => ({
     fontSize: '1em',
     borderRadius: 32 / 2,
   },
+  temperatureOuter: {
+    marginTop: '5px',
+    display: 'flex',
+    flexDirection: 'row',
+  },
   temperatureContainer: {
     minWidth: '200px',
     display: 'flex',
     flexDirection: 'column',
-    marginTop: '5px',
     borderRadius: '4px',
   },
   colorScale: {
@@ -197,6 +201,11 @@ function Day(props) {
     return a - b;
   });
 
+  const isOffTheScaleHot =
+    parseInt(temperature, 10) > parseInt(keys[keys.length - 1], 10);
+
+  const isOffTheScaleCold = parseInt(temperature, 10) < parseInt(keys[0], 10);
+
   return (
     <Card className={classes.card} align="center">
       <Typography gutterBottom variant="h5" component="h2">
@@ -222,37 +231,71 @@ function Day(props) {
               )}`}
             />
           )}
-
+          {(isOffTheScaleHot || isOffTheScaleCold) && (
+            <Chip
+              label={'Off the scale '}
+              className={`${classes.chip} ${classes.stick}`}
+            />
+          )}
           {temperature && (
-            <Box
-              className={`${
-                classes.temperatureContainer
-              } ${getTemperatureClassName(temperature)}`}
-            >
-              <Box className={classes.colorScale}>
-                {keys.map(key => {
-                  const integer = parseInt(key, 10);
-                  const tally = tempTallies[key];
-                  return (
-                    <Box
-                      key={key}
-                      className={`${classes.swatch} ${getTemperatureClassName(
-                        integer
-                      )}`}
-                      style={{ flex: tally }}
-                    >
-                      &nbsp;
-                      <span className="indicator">
-                        {integer === temperature && '▲'}
-                      </span>
-                    </Box>
-                  );
-                })}
+            <div class={classes.temperatureOuter}>
+              <Box
+                className={`${classes.swatch} ${temperature}`}
+                style={{ flex: 1 }}
+              >
+                <div>
+                  {isOffTheScaleCold && temperature}
+                  {!isOffTheScaleCold && <span>&nbsp;&nbsp;</span>}
+                </div>
+
+                <div className="indicator">{isOffTheScaleCold && '▲'}</div>
               </Box>
-              <Box className={classes.temperature}>
-                {getTemperatureFriendly(temperature)}
+
+              <Box
+                className={`${
+                  classes.temperatureContainer
+                } ${getTemperatureClassName(temperature)}`}
+              >
+                <Box className={classes.colorScale}>
+                  {keys.map(key => {
+                    const integer = parseInt(key, 10);
+                    const tally = tempTallies[key];
+                    return (
+                      <Box
+                        key={key}
+                        className={`${classes.swatch} ${getTemperatureClassName(
+                          integer
+                        )} ${integer}`}
+                        style={{ flex: tally }}
+                      >
+                        <div>
+                          {(integer % 10 === 0 || integer === temperature) &&
+                            integer}
+                        </div>
+                        <div className="indicator">
+                          {integer === temperature && '▲'} &nbsp;
+                        </div>
+                      </Box>
+                    );
+                  })}
+                </Box>
+                <Box className={classes.temperature}>
+                  {getTemperatureFriendly(temperature)}
+                </Box>
               </Box>
-            </Box>
+
+              <Box
+                className={`${classes.swatch} ${temperature}`}
+                style={{ flex: 1 }}
+              >
+                <div>
+                  {isOffTheScaleHot && temperature}
+                  {!isOffTheScaleHot && <span>&nbsp;&nbsp;</span>}
+                </div>
+
+                <div className="indicator">{isOffTheScaleHot && '▲'}</div>
+              </Box>
+            </div>
           )}
         </Box>
       </CardActions>

@@ -10,6 +10,7 @@
   },
   "main": "index.js",
   "scripts": {
+    "start": "yarn develop",
     "develop": "gatsby develop",
     "build": "gatsby build",
     "serve": "gatsby serve"
