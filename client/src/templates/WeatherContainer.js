@@ -7,21 +7,23 @@ import SimpleAppBar from '../components/SimpleAppBar';
 import WeatherWidget from '../components/WeatherWidget';
 import Footer from '../components/Footer';
 
-export default ({ pageContext: { items, meta } }) => (
-  <ErrorBoundary>
-    <SimpleAppBar
-      title={meta.title}
-      description={meta.description}
-      image={(items && items[0] && items[0].icon) || meta.defaultImageSrc}
-      alt={
-        (items && items[0] && items[0].description) || meta.defaultDescription
-      }
-      url={meta.siteURL}
-      png={meta.png}
-    />
+export default ({ pageContext: { items, meta } }) => {
+  const todaysWeather =
+    (items && items[0] && items[0].description) || 'probably raining';
 
-    <WeatherWidget items={items} />
+  return (
+    <ErrorBoundary>
+      <SimpleAppBar
+        title={`Today: ${todaysWeather}`}
+        description={`${meta.title}`}
+        image={(items && items[0] && items[0].icon) || meta.defaultImageSrc}
+        alt={todaysWeather || meta.defaultDescription}
+        url={meta.siteURL}
+      />
 
-    <Footer meta={meta} />
-  </ErrorBoundary>
-);
+      <WeatherWidget items={items} />
+
+      <Footer meta={meta} />
+    </ErrorBoundary>
+  );
+};

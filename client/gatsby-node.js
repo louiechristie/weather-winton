@@ -20,7 +20,6 @@ const meta = {
   siteURL: GATSBY_SITE_URL,
   author,
   version,
-  png: `${GATSBY_SITE_URL}/og-image.png`,
 };
 
 exports.createPages = async ({ actions: { createPage } }) => {
