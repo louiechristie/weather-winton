@@ -1,4 +1,7 @@
 module.exports = {
+  siteMetadata: {
+    siteUrl: `https://friendly-weather.netlify.app/`,
+  },
   plugins: [
     `gatsby-plugin-react-helmet`,
     {

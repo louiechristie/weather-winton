@@ -44,6 +44,7 @@ exports.createPages = async ({ actions: { createPage } }) => {
 
     const ogImage = await sharp(input, { density: 450 })
       .png()
+      .removeAlpha()
       .resize(1200, 630, {
         fit: 'contain',
         background: { r: 255, g: 255, b: 255, alpha: 1 },
