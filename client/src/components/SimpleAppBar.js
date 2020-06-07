@@ -56,6 +56,7 @@ function SimpleAppBar(props) {
         />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="600" />
+        <meta property="og:type" content="website" />
         <meta property="og:url" content={url} />
         <meta name="twitter:card" content="summary" />
       </Helmet>

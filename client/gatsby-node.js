@@ -43,12 +43,12 @@ exports.createPages = async ({ actions: { createPage } }) => {
     ).data;
 
     const ogImage = await sharp(input, { density: 450 })
-      .png()
-      .removeAlpha()
+      .flatten({ background: { r: 255, g: 255, b: 255 } })
       .resize(1200, 630, {
         fit: 'contain',
         background: { r: 255, g: 255, b: 255, alpha: 1 },
       })
+      .png()
       .toFile(`public/og-image-${dayjs().format('YYYY-MM-DD')}.png`);
 
     const favicon = await sharp(input, { density: 450 })
