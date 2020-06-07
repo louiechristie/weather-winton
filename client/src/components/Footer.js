@@ -1,4 +1,6 @@
 import React from 'react';
+import dayjs from 'dayjs';
+
 import { withStyles } from '@material-ui/core/styles';
 
 import { Paper } from '@material-ui/core';
@@ -20,7 +22,7 @@ const styles = () => ({
   },
 });
 
-const Footer = props => {
+const Footer = (props) => {
   const { classes, meta } = props;
   return (
     <footer className={classes.footer}>
@@ -30,7 +32,7 @@ const Footer = props => {
         </Typography>
 
         <Typography variant="body2" component="p" color="inherit">
-          Version: {meta.version}
+          Weather Winton ©️ {dayjs().year()} v{meta.version}
         </Typography>
 
         <Typography variant="body2" component="p" color="inherit">

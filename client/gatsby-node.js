@@ -1,6 +1,9 @@
 require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`,
 });
+
+const dayjs = require('dayjs');
+
 const axios = require('axios');
 const sharp = require('sharp');
 const package = require('./package.json');
@@ -45,7 +48,7 @@ exports.createPages = async ({ actions: { createPage } }) => {
         fit: 'contain',
         background: { r: 255, g: 255, b: 255, alpha: 0 },
       })
-      .toFile(`public/og-image.png`);
+      .toFile(`public/og-image-${dayjs().format('YYYY-MM-DD')}.png`);
 
     const favicon = await sharp(input, { density: 450 })
       .png()

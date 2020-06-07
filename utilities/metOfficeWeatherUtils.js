@@ -2,7 +2,7 @@ const dayjs = require("dayjs");
 const isSameOrAfter = require("dayjs/plugin/isSameOrAfter");
 
 const formattedDateFromISODate = require("./formattedDateFromISODate");
-const log = require("../utilities/log");
+const log = require("./log");
 
 dayjs.extend(isSameOrAfter);
 
@@ -39,7 +39,7 @@ function getDescriptionFromMetOfficeWeatherCode(code) {
     "27": "Heavy snow",
     "28": "Thunder shower (night)",
     "29": "Thunder shower (day)",
-    "30": "Thunder"
+    "30": "Thunder",
   };
 
   return weatherTypes[code];
@@ -110,7 +110,7 @@ function getEmojiFromMetOfficeWeatherCode(code) {
     "29":
       "https://www.metoffice.gov.uk/webfiles/latest/images/icons/weather/29.svg",
     "30":
-      "https://www.metoffice.gov.uk/webfiles/latest/images/icons/weather/30.svg"
+      "https://www.metoffice.gov.uk/webfiles/latest/images/icons/weather/30.svg",
   };
 
   return weatherTypes[code];
@@ -119,7 +119,7 @@ function getEmojiFromMetOfficeWeatherCode(code) {
 function getItemsFromMetOfficeJSON(json) {
   log(`json: ${JSON.stringify(json, null, "  ")}`);
 
-  const filter = day => {
+  const filter = (day) => {
     if (process.env.NODE_ENV === "production") {
       return dayjs(day.time).isSameOrAfter(dayjs(), "day");
     }
@@ -128,7 +128,7 @@ function getItemsFromMetOfficeJSON(json) {
 
   const items = json.features[0].properties.timeSeries
     .filter(filter)
-    .map(day => {
+    .map((day) => {
       return {
         date: formattedDateFromISODate(day.time),
         description: getDescriptionFromMetOfficeWeatherCode(
@@ -138,7 +138,7 @@ function getItemsFromMetOfficeJSON(json) {
           day.daySignificantWeatherCode.toString()
         ),
         temperature: Math.round(day.dayMaxScreenTemperature),
-        relativeHumidity: day.middayRelativeHumidity
+        relativeHumidity: day.middayRelativeHumidity,
       };
     });
 

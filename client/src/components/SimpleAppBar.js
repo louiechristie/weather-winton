@@ -1,4 +1,7 @@
 import React from 'react';
+import dayjs from 'dayjs';
+
+// import { useStaticQuery, graphql } from 'gatsby';
 import { Helmet } from 'react-helmet';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -15,12 +18,27 @@ const styles = {
   logo: {
     width: '48px',
     height: '48px',
-    marginRight: '10px',
+  },
+  titles: {
+    display: 'flex',
+    flexDirection: 'column',
   },
 };
 
 function SimpleAppBar(props) {
   const { classes, title, description, image, alt, url } = props;
+
+  // const data = useStaticQuery(
+  //   graphql`
+  //     query {
+  //       site {
+  //         siteMetadata {
+  //           siteUrl
+  //         }
+  //       }
+  //     }
+  //   `
+  // );
 
   return (
     <AppBar position="static">
@@ -33,7 +51,12 @@ function SimpleAppBar(props) {
 
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
-        <meta property="og:image" content={image} />
+        <meta
+          property="og:image"
+          content={`https://friendly-weather.netlify.app/og-image-${dayjs().format(
+            'YYYY-MM-DD'
+          )}.png`}
+        />
         <meta property="og:url" content={url} />
         <meta name="twitter:card" content="summary" />
       </Helmet>
@@ -47,9 +70,14 @@ function SimpleAppBar(props) {
         >
           <img className={classes.logo} src={image} alt={alt} />
         </IconButton>
-        <Typography variant="h6" component="h1" className={classes.title}>
-          {title}
-        </Typography>
+        <div className={classes.titles}>
+          <Typography variant="h6" component="h1" className={classes.title}>
+            {title}
+          </Typography>
+          <Typography variant="p" component="p" className={classes.title}>
+            {description}
+          </Typography>
+        </div>
       </Toolbar>
     </AppBar>
   );

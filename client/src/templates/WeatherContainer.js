@@ -14,7 +14,7 @@ export default ({ pageContext: { items, meta } }) => {
   return (
     <ErrorBoundary>
       <SimpleAppBar
-        title={`Today: ${todaysWeather}`}
+        title={`${todaysWeather}`}
         description={`${meta.title}`}
         image={(items && items[0] && items[0].icon) || meta.defaultImageSrc}
         alt={todaysWeather || meta.defaultDescription}

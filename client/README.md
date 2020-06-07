@@ -1,4 +1,4 @@
-# weather-winton
+# Weather Winton
 
 User Friendly Weather Forecast (South London) web app.
 
