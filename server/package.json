@@ -9,7 +9,6 @@
   "scripts": {
     "watch": "yarn nodemon app.js",
     "start": "yarn node app.js",
-    "build": "cd client && yarn && yarn run build && cd ..",
     "lint": "yarn eslint '**/*.js' --ignore-path .gitignore"
   },
   "husky": {
