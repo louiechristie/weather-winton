@@ -116,6 +116,17 @@ function getEmojiFromMetOfficeWeatherCode(code) {
   return weatherTypes[code];
 }
 
+/**
+ * 
+ * @param Number max 
+ * @param Number min 
+ * 
+ * Calculate average daily temperature
+ */
+function avg(max, min) {
+  return (max + min) / 2;
+}
+
 function getItemsFromMetOfficeJSON(json) {
   log(`json: ${JSON.stringify(json, null, "  ")}`);
 
@@ -137,7 +148,7 @@ function getItemsFromMetOfficeJSON(json) {
         icon: getEmojiFromMetOfficeWeatherCode(
           day.daySignificantWeatherCode.toString()
         ),
-        temperature: Math.round(day.dayMaxScreenTemperature),
+        temperature: Math.round(avg(day.dayMaxScreenTemperature, day.nightMinScreenTemperature)),
         relativeHumidity: day.middayRelativeHumidity,
       };
     });

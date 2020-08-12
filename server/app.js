@@ -1,8 +1,9 @@
+require('dotenv').config();
+
 const express = require('express');
 const path = require('path');
 
 const fetch = require('node-fetch');
-const dotenv = require('dotenv');
 
 const getItemsFromMetOfficeJSON = require('./utilities/metOfficeWeatherUtils');
 const log = require('./utilities/log');
@@ -10,7 +11,6 @@ const log = require('./utilities/log');
 const mockMetOfficeJSON = require('./tests/mockMetOfficeJSON');
 
 const app = express();
-dotenv.config();
 
 const metOfficeAPIUrl = process.env.URL;
 
@@ -81,6 +81,7 @@ app.get('/forecast', async (req, res) => {
 const port = process.env.PORT || 5000;
 app.listen(port);
 
-log(`Listening on ${port}`);
+log(`Node environment: ${process.env.NODE_ENV}`);
+log(`Listening on port: ${port}`);
 
 module.exports = app;
