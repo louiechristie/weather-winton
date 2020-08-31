@@ -199,14 +199,11 @@ function Day(props) {
 
     const isMultipleOfTen = tempInt % 10 === 0; //temperature is a multiple of ten e.g. 0, 10, 20
     const isAwayFromAvgTemp =
-      tempInt < avgTempInt - spacer ||
-      tempInt > avgTempInt + spacer;
+      tempInt < avgTempInt - spacer || tempInt > avgTempInt + spacer;
     const isAwayFromMinTemp =
-      tempInt < minTempInt - spacer ||
-      tempInt > minTempInt + spacer;
+      tempInt < minTempInt - spacer || tempInt > minTempInt + spacer;
     const isAwayFromMaxTemp =
-      tempInt < maxTempInt - spacer ||
-      tempInt > maxTempInt + spacer;
+      tempInt < maxTempInt - spacer || tempInt > maxTempInt + spacer;
 
     if (
       isMultipleOfTen &&
@@ -251,27 +248,27 @@ function Day(props) {
     '1': 2441,
     '2': 2988,
     '3': 3794,
-    '4': 4480,
-    '5': 5177,
-    '6': 5586,
-    '7': 5909,
-    '8': 5639,
-    '9': 5445,
-    '10': 5208,
-    '11': 4893,
-    '12': 4908,
-    '13': 5483,
-    '14': 5988,
-    '15': 5568,
-    '16': 4675,
-    '17': 3434,
-    '18': 2245,
-    '19': 1302,
+    '4': 4486,
+    '5': 5189,
+    '6': 5605,
+    '7': 5918,
+    '8': 5657,
+    '9': 5457,
+    '10': 5215,
+    '11': 4904,
+    '12': 4917,
+    '13': 5495,
+    '14': 6000,
+    '15': 5584,
+    '16': 4697,
+    '17': 3441,
+    '18': 2248,
+    '19': 1305,
     '20': 700,
     '21': 333,
-    '22': 151,
-    '23': 63,
-    '24': 15,
+    '22': 153,
+    '23': 64,
+    '24': 16,
     '25': 9,
   };
 
@@ -295,7 +292,7 @@ function Day(props) {
       <Typography className={classes.description} variant="h6" component="p">
         {description}
       </Typography>
-      <Box style={{flex: 1}}>
+      <Box style={{ flex: 1 }}>
         {isSticky && (
           <Chip
             label={'Sticky 💦'}
@@ -321,11 +318,11 @@ function Day(props) {
             className={`${classes.swatch} ${minTemperature}`}
             style={{ flex: 1 }}
           >
-            <div>
-              {isOffTheScaleCold && getNumberForScale(minTempInt)}
-            </div>
+            <div>{isOffTheScaleCold && getNumberForScale(minTempInt)}</div>
 
-            <div className="indicator">{isOffTheScaleCold && getIndicator(minTempInt)}</div>
+            <div className="indicator">
+              {isOffTheScaleCold && getIndicator(minTempInt)}
+            </div>
           </Box>
 
           <Box
@@ -353,11 +350,7 @@ function Day(props) {
                     }}
                   >
                     <div>{getNumberForScale(tempInt)}</div>
-                    <div
-                      className={'indicator'}
-                    >
-                      {getIndicator(tempInt)}
-                    </div>
+                    <div className={'indicator'}>{getIndicator(tempInt)}</div>
                   </Box>
                 );
               })}
@@ -371,11 +364,11 @@ function Day(props) {
             className={`${classes.swatch} ${maxTempInt}`}
             style={{ flex: 1 }}
           >
-            <div>
-                {isOffTheScaleHot && getNumberForScale(maxTempInt)}
-            </div>
+            <div>{isOffTheScaleHot && getNumberForScale(maxTempInt)}</div>
 
-            <div className="indicator">{isOffTheScaleHot && getIndicator(maxTempInt)}</div>
+            <div className="indicator">
+              {isOffTheScaleHot && getIndicator(maxTempInt)}
+            </div>
           </Box>
         </div>
       </Box>
