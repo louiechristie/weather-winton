@@ -148,7 +148,9 @@ function getItemsFromMetOfficeJSON(json) {
         icon: getEmojiFromMetOfficeWeatherCode(
           day.daySignificantWeatherCode.toString()
         ),
-        temperature: Math.round(avg(day.dayMaxScreenTemperature, day.nightMinScreenTemperature)),
+        minTemperature: day.nightMinScreenTemperature,
+        maxTemperature: day.dayMaxScreenTemperature,
+        avgTemperature: avg(day.dayMaxScreenTemperature, day.nightMinScreenTemperature),
         relativeHumidity: day.middayRelativeHumidity,
       };
     });

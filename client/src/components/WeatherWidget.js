@@ -34,18 +34,21 @@ class WeatherWidget extends Component {
     return (
       <ul className={classes.ul}>
         {items.map(item => {
+          const {date, icon, description, avgTemperature, minTemperature, maxTemperature, relativeHumidity} = item;
           return (
             <li key={`${item.date}`} className={classes.li}>
               <Day
-                date={item.date}
-                icon={item.icon}
-                description={item.description}
-                temperature={item.temperature}
+                date={date}
+                icon={icon}
+                description={description}
+                minTemperature={minTemperature}
+                maxTemperature={maxTemperature}
+                avgTemperature={avgTemperature}
                 isSticky={getIsStickyFromCelsiusAndRelativeHumidity(
-                  item.temperature,
-                  item.relativeHumidity
+                  avgTemperature,
+                  relativeHumidity
                 )}
-                isDry={getIsTooDryFromRelativeHumidity(item.relativeHumidity)}
+                isDry={getIsTooDryFromRelativeHumidity(relativeHumidity)}
               />
             </li>
           );
