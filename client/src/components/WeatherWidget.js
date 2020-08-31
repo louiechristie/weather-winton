@@ -20,7 +20,6 @@ const styles = theme => ({
     alignItems: 'center',
   },
   li: {
-    width: 260,
     flex: 1,
     marginBottom: theme.spacing(2),
     textIndent: 0,

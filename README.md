@@ -22,11 +22,17 @@ Set up environment variables:
 
 ## Getting started
 
+### Start the server
+
 ```console
 cd server
 yarn
 yarn start
-cd ..
+```
+
+### Start the client (in a new terminal)
+
+```console
 cd client
 yarn
 yarn start

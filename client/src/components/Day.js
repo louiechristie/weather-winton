@@ -9,12 +9,13 @@ import {
   getIsTooHotForRoomTemperatureFromCelsius,
   getIsTooColdForRoomTemperatureFromCelsius,
   getIsFrostyFromCelsius,
+  getTemperatureFriendly,
 } from '../utilities/getRoomTemperatureComfortFromCelsius';
 
-const styles = theme => ({
+const styles = (theme) => ({
   card: {
     boxSizing: 'borderBox',
-    padding: theme.spacing(2),
+    paddingTop: theme.spacing(2),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -68,7 +69,7 @@ const styles = theme => ({
     paddingBottom: '8px',
   },
   swatch: {
-    fontSize: '8px',
+    fontSize: '10px',
   },
   freezingSwatch: {
     flex: 18035,
@@ -140,21 +141,6 @@ const styles = theme => ({
   // }
 });
 
-const getTemperatureFriendly = celsius => {
-  if (!celsius) return null;
-
-  if (getIsTooHotForRoomTemperatureFromCelsius(celsius)) {
-    return 'Hot 🥵';
-  }
-  if (getIsFrostyFromCelsius(celsius)) {
-    return 'Freezing 🥶';
-  }
-  if (getIsTooColdForRoomTemperatureFromCelsius(celsius)) {
-    return 'Cold';
-  }
-  return 'Warm';
-};
-
 function Day(props) {
   const {
     classes,
@@ -168,23 +154,26 @@ function Day(props) {
     isDry,
   } = props;
 
-  const getTempFriendlyClassName = temperature => {
-    if (getIsTooHotForRoomTemperatureFromCelsius(temperature)) {
+  const avgTempInt = Math.round(avgTemperature);
+  const minTempInt = Math.round(minTemperature);
+  const maxTempInt = Math.round(maxTemperature);
+
+  const getTempFriendlyClassName = (temperature) => {
+    if (getTemperatureFriendly(temperature) === 'Hot 🥵') {
       return `${classes.hot} hot`;
     }
-    if (getIsFrostyFromCelsius(temperature)) {
-      return `${classes.freezing} freezing`;
+    if (getTemperatureFriendly(temperature) === 'Warm') {
+      return `${classes.warm} warm`;
     }
-    if (getIsTooColdForRoomTemperatureFromCelsius(temperature)) {
+    if (getTemperatureFriendly(temperature) === 'Cold') {
       return `${classes.cold} cold`;
     }
-    return `${classes.warm} warm`;
+    if (getTemperatureFriendly(temperature) === 'Freezing 🥶') {
+      return `${classes.freezing} freezing`;
+    }
   };
 
   // const getBorderClassName = temperature => {
-  //   const minTempInt = Math.round(minTemperature);
-  //   const maxTempInt = Math.round(maxTemperature);
-
   //   if (temperature === minTempInt) {
   //     return classes.minBorder;
   //   }
@@ -200,22 +189,47 @@ function Day(props) {
   //   return '';
   // };
 
-  const getIndicator = temperature => {
-    const minTempInt = Math.round(minTemperature);
-    const maxTempInt = Math.round(maxTemperature);
-    const avgTempInt = Math.round(avgTemperature);
+  const getNumberForScale = (tempInt) => {
+    const spacer = 3;
+    const isAvgTemp = tempInt === avgTempInt;
+    const isMinTemp = tempInt === minTempInt;
+    const isMaxTemp = tempInt === maxTempInt;
 
+    if (isAvgTemp || isMinTemp || isMaxTemp) return tempInt;
+
+    const isMultipleOfTen = tempInt % 10 === 0; //temperature is a multiple of ten e.g. 0, 10, 20
+    const isAwayFromAvgTemp =
+      tempInt < avgTempInt - spacer ||
+      tempInt > avgTempInt + spacer;
+    const isAwayFromMinTemp =
+      tempInt < minTempInt - spacer ||
+      tempInt > minTempInt + spacer;
+    const isAwayFromMaxTemp =
+      tempInt < maxTempInt - spacer ||
+      tempInt > maxTempInt + spacer;
+
+    if (
+      isMultipleOfTen &&
+      isAwayFromAvgTemp &&
+      isAwayFromMinTemp &&
+      isAwayFromMaxTemp
+    )
+      return tempInt;
+
+    return '';
+  };
+
+  const getIndicator = (temperature) => {
     if (temperature === minTempInt) {
       return '⇤';
     }
     if (temperature === maxTempInt) {
       return '⇥';
-
     }
     if (temperature === avgTempInt) {
       return '▲';
     }
-    
+
     return '\u00A0';
   };
 
@@ -261,14 +275,16 @@ function Day(props) {
     '25': 9,
   };
 
-  const temperatures = Object.keys(tempTallies).sort(function(a, b) {
+  const temperatures = Object.keys(tempTallies).sort(function (a, b) {
     return a - b;
   });
 
   const isOffTheScaleHot =
-    Math.round(avgTemperature) > parseInt(temperatures[temperatures.length - 1], 10);
+    Math.round(maxTemperature) >
+    parseInt(temperatures[temperatures.length - 1], 10);
 
-  const isOffTheScaleCold = Math.round(avgTemperature) < parseInt(temperatures[0], 10);
+  const isOffTheScaleCold =
+    Math.round(minTemperature) < parseInt(temperatures[0], 10);
 
   return (
     <Card className={classes.card} align="center">
@@ -279,118 +295,90 @@ function Day(props) {
       <Typography className={classes.description} variant="h6" component="p">
         {description}
       </Typography>
-      <CardActions>
-        <Box>
-          {isSticky && (
-            <Chip
-              label={'Sticky 💦'}
-              className={`${classes.chip} ${classes.stick}`}
-            />
-          )}
-          
-          {isDry && (
-            <Chip
-              label={'Dry eyes/skin 👁'}
-              className={`${classes.chip} ${classes.dry}
-              )}`}
-            />
-          )}
-          {(isOffTheScaleHot || isOffTheScaleCold) && (
-            <Chip
-              label={'Off the scale '}
-              className={`${classes.chip} ${classes.stick}`}
-            />
-          )}
-          {avgTemperature && (
-            <div class={classes.temperatureOuter}>
-              <Box
-                className={`${classes.swatch} ${avgTemperature}`}
-                style={{ flex: 1 }}
-              >
-                <div>
-                  {isOffTheScaleCold && avgTemperature}
-                  {!isOffTheScaleCold && <span>&nbsp;&nbsp;</span>}
-                </div>
+      <Box style={{flex: 1}}>
+        {isSticky && (
+          <Chip
+            label={'Sticky 💦'}
+            className={`${classes.chip} ${classes.stick}`}
+          />
+        )}
 
-                <div className="indicator">{isOffTheScaleCold && '▲'}</div>
-              </Box>
-
-              <Box
-                className={`${
-                  classes.temperatureContainer
-                } ${getTempFriendlyClassName(avgTemperature)}`}
-              >
-                <Box className={classes.colorScale}>
-                  {temperatures.map(key => {
-                    const tempInt = parseInt(key, 10);
-                    const avgTempInt = Math.round(avgTemperature);
-                    const minTempInt = Math.round(minTemperature);
-                    const maxTempInt = Math.round(maxTemperature);
-                    const tally = tempTallies[key];
-
-                    const displaySomeNumbersOnScale = (tempInt) => {
-
-                      const spacer = 3;
-                      const isAvgTemp = tempInt === avgTempInt
-                      const isMinTemp = tempInt === minTempInt
-                      const isMaxTemp = tempInt === maxTempInt
-
-                      if(isAvgTemp || isMinTemp || isMaxTemp) return tempInt;
-
-                      const isMultipleOfTen = tempInt % 10 === 0; //temperature is a multiple of ten e.g. 0, 10, 20
-                      const isAwayFromAvgTemp = (tempInt < (avgTempInt - spacer)) || (tempInt > (avgTempInt + spacer))
-                      const isAwayFromMinTemp = (tempInt < (minTempInt - spacer)) || (tempInt > (minTempInt + spacer))
-                      const isAwayFromMaxTemp = (tempInt < (maxTempInt - spacer)) || (tempInt > (maxTempInt + spacer))
-
-                      if(isMultipleOfTen && isAwayFromAvgTemp && isAwayFromMinTemp && isAwayFromMaxTemp) return tempInt;
-                      
-                      return "";
-                    }
-
-                    return (
-                      <Box
-                        key={key}
-                        className={`
-                          ${classes.swatch} 
-                          ${getTempFriendlyClassName(tempInt)}
-                          ${tempInt}`}
-                        style={{ flex: tally, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end'}}
-                      >
-                        
-                          <div>
-                            {displaySomeNumbersOnScale(tempInt)}
-                          </div>
-                          <div 
-                            className={`
-                              indicator`
-                            }
-                          >
-                            {getIndicator(tempInt)}
-                          </div>
-                      </Box>
-                    );
-                  })}
-                </Box>
-                <Box className={classes.temperature}>
-                  {getTemperatureFriendly(avgTemperature)}
-                </Box>
-              </Box>
-
-              <Box
-                className={`${classes.swatch} ${avgTemperature}`}
-                style={{ flex: 1 }}
-              >
-                <div>
-                  {isOffTheScaleHot && temperature}
-                  {!isOffTheScaleHot && <span>&nbsp;&nbsp;</span>}
-                </div>
-
-                <div className="indicator">{isOffTheScaleHot && '▲'}</div>
-              </Box>
+        {isDry && (
+          <Chip
+            label={'Dry eyes/skin 👁'}
+            className={`${classes.chip} ${classes.dry}
+            )}`}
+          />
+        )}
+        {(isOffTheScaleHot || isOffTheScaleCold) && (
+          <Chip
+            label={'Off the scale '}
+            className={`${classes.chip} ${classes.stick}`}
+          />
+        )}
+        <div class={classes.temperatureOuter}>
+          <Box
+            className={`${classes.swatch} ${minTemperature}`}
+            style={{ flex: 1 }}
+          >
+            <div>
+              {isOffTheScaleCold && getNumberForScale(minTempInt)}
             </div>
-          )}
-        </Box>
-      </CardActions>
+
+            <div className="indicator">{isOffTheScaleCold && getIndicator(minTempInt)}</div>
+          </Box>
+
+          <Box
+            className={`${
+              classes.temperatureContainer
+            } ${getTempFriendlyClassName(avgTempInt)}`}
+          >
+            <Box className={classes.colorScale}>
+              {temperatures.map((key) => {
+                const tempInt = parseInt(key, 10);
+                const tally = tempTallies[key];
+
+                return (
+                  <Box
+                    key={key}
+                    className={`
+                        ${classes.swatch} 
+                        ${getTempFriendlyClassName(tempInt)}
+                        ${tempInt}`}
+                    style={{
+                      flex: tally,
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'flex-end',
+                    }}
+                  >
+                    <div>{getNumberForScale(tempInt)}</div>
+                    <div
+                      className={'indicator'}
+                    >
+                      {getIndicator(tempInt)}
+                    </div>
+                  </Box>
+                );
+              })}
+            </Box>
+            <Box className={classes.temperature}>
+              {getTemperatureFriendly(avgTempInt)}
+            </Box>
+          </Box>
+
+          <Box
+            className={`${classes.swatch} ${maxTempInt}`}
+            style={{ flex: 1 }}
+          >
+            <div>
+                {isOffTheScaleHot && getNumberForScale(maxTempInt)}
+            </div>
+
+            <div className="indicator">{isOffTheScaleHot && getIndicator(maxTempInt)}</div>
+          </Box>
+        </div>
+      </Box>
     </Card>
   );
 }

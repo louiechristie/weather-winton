@@ -1,37 +1,47 @@
-import getRoomTemperatureComfortFromCelsius from './getRoomTemperatureComfortFromCelsius';
+import { getTemperatureFriendly } from './getRoomTemperatureComfortFromCelsius';
 
-test('0 celsius to equal "TOO_COLD"', () => {
-  expect(getRoomTemperatureComfortFromCelsius(0)).toBe('TOO_COLD');
+test(`getTemperatureFriendly: negative temperature`, () => {
+  expect(getTemperatureFriendly(-4)).toBe('Freezing 🥶');
 });
 
-test('15.9 celsius to equal "TOO_COLD"', () => {
-  expect(getRoomTemperatureComfortFromCelsius(15.9)).toBe('TOO_COLD');
+test(`getTemperatureFriendly: test 0`, () => {
+  expect(getTemperatureFriendly(0)).toBe('Freezing 🥶');
 });
 
-test('16 celsius to equal "COMFORTABLE"', () => {
-  expect(getRoomTemperatureComfortFromCelsius(16)).toBe('COMFORTABLE');
+test(`getTemperatureFriendly: max of freezing`, () => {
+  expect(getTemperatureFriendly(4)).toBe('Freezing 🥶');
 });
 
-test('21 celsius to equal "COMFORTABLE"', () => {
-  expect(getRoomTemperatureComfortFromCelsius(21)).toBe('COMFORTABLE');
+test(`getTemperatureFriendly: min limit of cold`, () => {
+  expect(getTemperatureFriendly(4.1)).toBe('Cold');
 });
 
-test('24 celsius to equal "COMFORTABLE"', () => {
-  expect(getRoomTemperatureComfortFromCelsius(24)).toBe('COMFORTABLE');
+test(`getTemperatureFriendly: max limit of cold`, () => {
+  expect(getTemperatureFriendly(15.9)).toBe('Cold');
 });
 
-test('24.1 celsius to equal "TOO_HOT"', () => {
-  expect(getRoomTemperatureComfortFromCelsius(51)).toBe('TOO_HOT');
+test(`getTemperatureFriendly: min limit of warm`, () => {
+  expect(getTemperatureFriendly(16)).toBe('Warm');
 });
 
-test('100 celsius to equal "TOO_HOT"', () => {
-  expect(getRoomTemperatureComfortFromCelsius(100)).toBe('TOO_HOT');
+test(`getTemperatureFriendly: max limit of warm`, () => {
+  expect(getTemperatureFriendly(24)).toBe('Warm');
 });
+
+test(`getTemperatureFriendly: min limit of hot`, () => {
+  expect(getTemperatureFriendly(24.1)).toBe('Hot 🥵');
+});
+
+test(`getTemperatureFriendly: very hot`, () => {
+  expect(getTemperatureFriendly(50)).toBe('Hot 🥵');
+});
+
+
 
 test('"string" celsius to equal null', () => {
-  expect(getRoomTemperatureComfortFromCelsius('string')).toBe(null);
+  expect(getTemperatureFriendly('string')).toBe(null);
 });
 
 test('[object] celsius to equal null', () => {
-  expect(getRoomTemperatureComfortFromCelsius({})).toBe(null);
+  expect(getTemperatureFriendly({})).toBe(null);
 });

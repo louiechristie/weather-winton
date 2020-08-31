@@ -13,7 +13,8 @@
     "start": "yarn develop",
     "develop": "gatsby develop",
     "build": "gatsby build",
-    "serve": "gatsby serve"
+    "serve": "gatsby serve",
+    "test": "yarn jest --watchAll"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.0",
@@ -29,5 +30,12 @@
     "react-dom": "^16.13.1",
     "react-helmet": "^6.1.0",
     "sharp": "^0.26.0"
+  },
+  "devDependencies": {
+    "babel-jest": "^26.3.0",
+    "babel-preset-gatsby": "^0.5.8",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^26.4.2",
+    "react-test-renderer": "^16.13.1"
   }
 }
