@@ -76,7 +76,7 @@ function SimpleAppBar(props) {
           <Typography variant="h6" component="h1" className={classes.title}>
             {title}
           </Typography>
-          <Typography variant="p" component="p" className={classes.title}>
+          <Typography variant="body1" component="p" className={classes.title}>
             {description}
           </Typography>
         </div>

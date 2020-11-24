@@ -313,7 +313,7 @@ function Day(props) {
             className={`${classes.chip} ${classes.stick}`}
           />
         )}
-        <div class={classes.temperatureOuter}>
+        <div className={classes.temperatureOuter}>
           <Box
             className={`${classes.swatch} ${minTemperature}`}
             style={{ flex: 1 }}
