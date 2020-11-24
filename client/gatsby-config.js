@@ -1,6 +1,7 @@
 module.exports = {
   siteMetadata: {
     siteUrl: `https://weather.louiechristie.com/`,
+    monetization: `$ilp.gatehub.net/484331722`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -11,6 +12,6 @@ module.exports = {
       },
     },
     `gatsby-plugin-material-ui`,
-    'gatsby-plugin-no-javascript',
+    `gatsby-plugin-no-javascript`,
   ],
 };
