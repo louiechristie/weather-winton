@@ -217,14 +217,14 @@ function Day(props) {
   };
 
   const getIndicator = (temperature) => {
+    if (temperature === avgTempInt) {
+      return '▲';
+    }
     if (temperature === minTempInt) {
       return '⇤';
     }
     if (temperature === maxTempInt) {
       return '⇥';
-    }
-    if (temperature === avgTempInt) {
-      return '▲';
     }
 
     return '\u00A0';
