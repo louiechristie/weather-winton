@@ -1,6 +1,6 @@
 {
   "name": "weather-winton-server",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "private": true,
   "author": {
     "name": "Louie Christie",
@@ -27,27 +27,27 @@
   },
   "dependencies": {
     "cookie-parser": "~1.4.5",
-    "core-js": "^3.6.5",
-    "dayjs": "^1.8.34",
-    "debug": "~4.1.1",
+    "core-js": "^3.8.0",
+    "dayjs": "^1.9.6",
+    "debug": "~4.3.1",
     "dotenv": "^8.2.0",
     "express": "~4.17.1",
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {
-    "eslint": "^7.7.0",
+    "eslint": "^7.14.0",
     "eslint-cli": "^1.1.1",
-    "eslint-config-airbnb": "18.2.0",
-    "eslint-config-prettier": "^6.11.0",
-    "eslint-plugin-import": "^2.22.0",
-    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-config-airbnb": "18.2.1",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-prettier": "^3.1.4",
-    "eslint-plugin-react": "^7.20.6",
-    "eslint-plugin-react-hooks": "^4.1.0",
-    "husky": "^4.2.5",
-    "lint-staged": "^10.2.13",
-    "markdownlint-cli": "^0.23.2",
-    "nodemon": "^2.0.4",
-    "prettier": "^2.1.1"
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "husky": "^4.3.0",
+    "lint-staged": "^10.5.2",
+    "markdownlint-cli": "^0.25.0",
+    "nodemon": "^2.0.6",
+    "prettier": "^2.2.1"
   }
 }

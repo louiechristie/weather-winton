@@ -2,7 +2,7 @@
   "name": "weather-winton",
   "title": "South London Weather Winton",
   "description": "Experimental app for innovative user experience in weather forecasting. (Inspired by Negroponte, N. (1995). Being digital. New York: Knopf.)",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "private": true,
   "author": {
     "name": "Louie Christie",
@@ -17,25 +17,25 @@
     "test": "yarn jest --watchAll"
   },
   "dependencies": {
-    "@material-ui/core": "^4.11.0",
-    "@material-ui/styles": "^4.10.0",
-    "axios": "^0.20.0",
-    "dayjs": "^1.8.34",
-    "gatsby": "^2.24.53",
+    "@material-ui/core": "^4.11.1",
+    "@material-ui/styles": "^4.11.1",
+    "axios": "^0.21.0",
+    "dayjs": "^1.9.6",
+    "gatsby": "^2.27.5",
     "gatsby-plugin-html-attributes": "^1.0.5",
     "gatsby-plugin-material-ui": "^2.1.10",
     "gatsby-plugin-no-javascript": "^2.0.5",
-    "gatsby-plugin-react-helmet": "^3.3.10",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
+    "gatsby-plugin-react-helmet": "^3.5.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
     "react-helmet": "^6.1.0",
-    "sharp": "^0.26.0"
+    "sharp": "^0.26.3"
   },
   "devDependencies": {
-    "babel-jest": "^26.3.0",
-    "babel-preset-gatsby": "^0.5.8",
+    "babel-jest": "^26.6.3",
+    "babel-preset-gatsby": "^0.7.0",
     "identity-obj-proxy": "^3.0.0",
-    "jest": "^26.4.2",
-    "react-test-renderer": "^16.13.1"
+    "jest": "^26.6.3",
+    "react-test-renderer": "^17.0.1"
   }
 }
