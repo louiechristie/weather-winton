@@ -6,7 +6,7 @@ import { getIsTooDryFromRelativeHumidity } from '../utilities/getComfortFromRela
 
 import getIsStickyFromCelsiusAndRelativeHumidity from '../utilities/getIsStickyFromCelsiusAndRelativeHumidity';
 
-const styles = theme => ({
+const styles = (theme) => ({
   ul: {
     margin: 0,
     padding: theme.spacing(2),
@@ -32,8 +32,17 @@ class WeatherWidget extends Component {
 
     return (
       <ul className={classes.ul}>
-        {items.map(item => {
-          const {date, icon, description, avgTemperature, minTemperature, maxTemperature, relativeHumidity} = item;
+        {items.map((item) => {
+          const {
+            date,
+            icon,
+            description,
+            avgTemperature,
+            minTemperature,
+            maxTemperature,
+            relativeHumidity,
+            isTakeRaincoat,
+          } = item;
           return (
             <li key={`${item.date}`} className={classes.li}>
               <Day
@@ -48,6 +57,7 @@ class WeatherWidget extends Component {
                   relativeHumidity
                 )}
                 isDry={getIsTooDryFromRelativeHumidity(relativeHumidity)}
+                isTakeRaincoat={isTakeRaincoat}
               />
             </li>
           );

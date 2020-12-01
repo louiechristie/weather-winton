@@ -1,45 +1,45 @@
-const dayjs = require("dayjs");
-const isSameOrAfter = require("dayjs/plugin/isSameOrAfter");
+const dayjs = require('dayjs');
+const isSameOrAfter = require('dayjs/plugin/isSameOrAfter');
 
-const formattedDateFromISODate = require("./formattedDateFromISODate");
-const log = require("./log");
+const formattedDateFromISODate = require('./formattedDateFromISODate');
+const log = require('./log');
 
 dayjs.extend(isSameOrAfter);
 
 function getDescriptionFromMetOfficeWeatherCode(code) {
   const weatherTypes = {
-    NA: "Not available",
-    "0": "Clear night",
-    "1": "Sunny day",
-    "2": "Partly cloudy (night)",
-    "3": "Partly cloudy",
-    "4": "Not used",
-    "5": "Mist",
-    "6": "Fog",
-    "7": "Cloudy",
-    "8": "Overcast",
-    "9": "Light rain shower (night)",
-    "10": "Light rain shower",
-    "11": "Drizzle",
-    "12": "Light rain",
-    "13": "Heavy rain shower (night)",
-    "14": "Heavy rain shower",
-    "15": "Heavy rain",
-    "16": "Sleet shower (night)",
-    "17": "Sleet shower",
-    "18": "Sleet",
-    "19": "Hail shower (night)",
-    "20": "Hail shower",
-    "21": "Hail",
-    "22": "Light snow shower (night)",
-    "23": "Light snow shower",
-    "24": "Light snow",
-    "25": "Heavy snow shower (night)",
-    "26": "Heavy snow shower",
-    "27": "Heavy snow",
-    "28": "Thunder shower (night)",
-    "29": "Thunder shower",
-    "30": "Thunder",
+    NA: 'Not available',
+    0: 'Clear night',
+    1: 'Sunny day',
+    2: 'Partly cloudy (night)',
+    3: 'Partly cloudy',
+    4: 'Not used',
+    5: 'Mist',
+    6: 'Fog',
+    7: 'Cloudy',
+    8: 'Overcast',
+    9: 'Light rain shower (night)',
+    10: 'Light rain shower',
+    11: 'Drizzle',
+    12: 'Light rain',
+    13: 'Heavy rain shower (night)',
+    14: 'Heavy rain shower',
+    15: 'Heavy rain',
+    16: 'Sleet shower (night)',
+    17: 'Sleet shower',
+    18: 'Sleet',
+    19: 'Hail shower (night)',
+    20: 'Hail shower',
+    21: 'Hail',
+    22: 'Light snow shower (night)',
+    23: 'Light snow shower',
+    24: 'Light snow',
+    25: 'Heavy snow shower (night)',
+    26: 'Heavy snow shower',
+    27: 'Heavy snow',
+    28: 'Thunder shower (night)',
+    29: 'Thunder shower',
+    30: 'Thunder',
   };
 
   return weatherTypes[code];
@@ -128,12 +128,12 @@ function avg(max, min) {
 }
 
 function getItemsFromMetOfficeJSON(json) {
-  log(`json: ${JSON.stringify(json, null, "  ")}`);
+  log(`json: ${JSON.stringify(json, null, '  ')}`);
 
   const filter = (day) => {
-    if (process.env.NODE_ENV === "production") {
-      return dayjs(day.time).isSameOrAfter(dayjs(), "day");
-    } 
+    if (process.env.NODE_ENV === 'production') {
+      return dayjs(day.time).isSameOrAfter(dayjs(), 'day');
+    }
     return true;
   };
 
@@ -150,8 +150,14 @@ function getItemsFromMetOfficeJSON(json) {
         ),
         minTemperature: day.nightMinScreenTemperature,
         maxTemperature: day.dayMaxScreenTemperature,
-        avgTemperature: avg(day.dayMaxScreenTemperature, day.nightMinScreenTemperature),
+        avgTemperature: avg(
+          day.dayMaxScreenTemperature,
+          day.nightMinScreenTemperature
+        ),
         relativeHumidity: day.middayRelativeHumidity,
+        isTakeRaincoat:
+          day.dayProbabilityOfPrecipitation > 50 ||
+          day.nightProbabilityOfPrecipitation > 50,
       };
     });
 

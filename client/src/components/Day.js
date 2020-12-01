@@ -152,6 +152,7 @@ function Day(props) {
     avgTemperature,
     isSticky,
     isDry,
+    isTakeRaincoat,
   } = props;
 
   const avgTempInt = Math.round(avgTemperature);
@@ -309,7 +310,13 @@ function Day(props) {
         )}
         {(isOffTheScaleHot || isOffTheScaleCold) && (
           <Chip
-            label={'Off the scale '}
+            label={'Off the scale'}
+            className={`${classes.chip} ${classes.stick}`}
+          />
+        )}
+        {isTakeRaincoat && (
+          <Chip
+            label={'Take a raincoat 🧥'}
             className={`${classes.chip} ${classes.stick}`}
           />
         )}
