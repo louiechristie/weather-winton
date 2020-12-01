@@ -34,7 +34,7 @@ const styles = (theme) => ({
   chip: {
     flex: 1,
     marginTop: '5px',
-    marginBottom: '20px',
+    marginBottom: '5px',
     paddingTop: '5px',
     paddingBottom: '5px',
     backgroundColor: 'white',
@@ -286,7 +286,7 @@ function Day(props) {
 
   return (
     <Card className={classes.card} align="center">
-      <Typography gutterBottom variant="h5" component="h2">
+      <Typography variant="h5" component="h2">
         {date}
       </Typography>
       <img className={classes.svgIcon} src={icon} alt={description} />
@@ -316,7 +316,7 @@ function Day(props) {
         )}
         {isTakeRaincoat && (
           <Chip
-            label={'Take a raincoat 🧥'}
+            label={'Take raincoat 🧥'}
             className={`${classes.chip} ${classes.stick}`}
           />
         )}
@@ -327,9 +327,12 @@ function Day(props) {
           >
             <div>{isOffTheScaleCold && getNumberForScale(minTempInt)}</div>
 
-            <div className="indicator">
-              {isOffTheScaleCold && getIndicator(minTempInt)}
-            </div>
+            {(isOffTheScaleCold || isOffTheScaleHot) && (
+              <div className="indicator" style={{ minWidth: '20px' }}>
+                {isOffTheScaleCold && getIndicator(minTempInt)}
+                {'\u00A0'}
+              </div>
+            )}
           </Box>
 
           <Box
@@ -373,9 +376,12 @@ function Day(props) {
           >
             <div>{isOffTheScaleHot && getNumberForScale(maxTempInt)}</div>
 
-            <div className="indicator">
-              {isOffTheScaleHot && getIndicator(maxTempInt)}
-            </div>
+            {(isOffTheScaleHot || isOffTheScaleCold) && (
+              <div className="indicator" style={{ minWidth: '20px' }}>
+                {'\u00A0'}
+                {isOffTheScaleHot && getIndicator(maxTempInt)}
+              </div>
+            )}
           </Box>
         </div>
       </Box>
