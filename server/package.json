@@ -7,8 +7,8 @@
     "url": "https://www.louiechristie.com/"
   },
   "scripts": {
-    "watch": "npm run nodemon app.js",
-    "start": "npm run node app.js",
+    "watch": "nodemon app.js",
+    "start": "node app.js",
     "lint": "npm run eslint '**/*.js' --ignore-path .gitignore"
   },
   "husky": {
