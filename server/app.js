@@ -1,14 +1,12 @@
 require('dotenv').config();
 
 const express = require('express');
+const fetch = require('node-fetch');
 const path = require('path');
 
-const fetch = require('node-fetch');
-
-const getItemsFromMetOfficeJSON = require('./utilities/metOfficeWeatherUtils');
-const log = require('./utilities/log');
-
 const mockMetOfficeJSON = require('./tests/mockMetOfficeJSON');
+const log = require('./utilities/log');
+const getItemsFromMetOfficeJSON = require('./utilities/metOfficeWeatherUtils');
 
 const app = express();
 

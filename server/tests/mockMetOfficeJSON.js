@@ -1,18 +1,18 @@
 const mockMetOfficeJSON = {
-  type: "FeatureCollection",
+  type: 'FeatureCollection',
   features: [
     {
-      type: "Feature",
+      type: 'Feature',
       geometry: {
-        type: "Point",
+        type: 'Point',
         coordinates: [-0.03304, 51.47686, 8],
       },
       properties: {
         requestPointDistance: 222.305,
-        modelRunDate: "2020-05-19T21:00Z",
+        modelRunDate: '2020-05-19T21:00Z',
         timeSeries: [
           {
-            time: "2020-05-18T00:00Z",
+            time: '2020-05-18T00:00Z',
             midday10MWindSpeed: 5.2,
             midnight10MWindSpeed: 3.03,
             midday10MWindDirection: 242,
@@ -56,7 +56,7 @@ const mockMetOfficeJSON = {
             nightProbabilityOfSferics: 0,
           },
           {
-            time: "2020-05-19T00:00Z",
+            time: '2020-05-19T00:00Z',
             midday10MWindSpeed: 2.73,
             midnight10MWindSpeed: 2.26,
             midday10MWindDirection: 249,
@@ -100,7 +100,7 @@ const mockMetOfficeJSON = {
             nightProbabilityOfSferics: 0,
           },
           {
-            time: "2020-05-20T00:00Z",
+            time: '2020-05-20T00:00Z',
             midday10MWindSpeed: 3.7320235,
             midnight10MWindSpeed: 1.8701042,
             midday10MWindDirection: 201,
@@ -144,7 +144,7 @@ const mockMetOfficeJSON = {
             nightProbabilityOfSferics: 0,
           },
           {
-            time: "2020-05-21T00:00Z",
+            time: '2020-05-21T00:00Z',
             midday10MWindSpeed: 3.8277774,
             midnight10MWindSpeed: 2.9654999,
             midday10MWindDirection: 249,
@@ -188,7 +188,7 @@ const mockMetOfficeJSON = {
             nightProbabilityOfSferics: 0,
           },
           {
-            time: "2020-05-22T00:00Z",
+            time: '2020-05-22T00:00Z',
             midday10MWindSpeed: 6.3946247,
             midnight10MWindSpeed: 4.949157,
             midday10MWindDirection: 238,
@@ -232,7 +232,7 @@ const mockMetOfficeJSON = {
             nightProbabilityOfSferics: 0,
           },
           {
-            time: "2020-05-23T00:00Z",
+            time: '2020-05-23T00:00Z',
             midday10MWindSpeed: 6.9091043,
             midnight10MWindSpeed: 4.317048,
             midday10MWindDirection: 254,
@@ -276,7 +276,7 @@ const mockMetOfficeJSON = {
             nightProbabilityOfSferics: 0,
           },
           {
-            time: "2020-05-24T00:00Z",
+            time: '2020-05-24T00:00Z',
             midday10MWindSpeed: 5.6398087,
             midnight10MWindSpeed: 2.817324,
             midday10MWindDirection: 264,
@@ -320,7 +320,7 @@ const mockMetOfficeJSON = {
             nightProbabilityOfSferics: 0,
           },
           {
-            time: "2020-05-25T00:00Z",
+            time: '2020-05-25T00:00Z',
             midday10MWindSpeed: 2.5680656,
             midnight10MWindSpeed: 2.1527302,
             midday10MWindDirection: 239,
@@ -370,455 +370,455 @@ const mockMetOfficeJSON = {
   parameters: [
     {
       daySignificantWeatherCode: {
-        type: "Parameter",
-        description: "Day Significant Weather Code",
+        type: 'Parameter',
+        description: 'Day Significant Weather Code',
         unit: {
-          label: "dimensionless",
+          label: 'dimensionless',
           symbol: {
             value:
-              "https://metoffice.apiconnect.ibmcloud.com/metoffice/production/",
-            type: "1",
+              'https://metoffice.apiconnect.ibmcloud.com/metoffice/production/',
+            type: '1',
           },
         },
       },
       midnightRelativeHumidity: {
-        type: "Parameter",
-        description: "Relative Humidity at Local Midnight",
+        type: 'Parameter',
+        description: 'Relative Humidity at Local Midnight',
         unit: {
-          label: "percentage",
+          label: 'percentage',
           symbol: {
-            value: "http://www.opengis.net/def/uom/UCUM/",
-            type: "%",
+            value: 'http://www.opengis.net/def/uom/UCUM/',
+            type: '%',
           },
         },
       },
       nightProbabilityOfHeavyRain: {
-        type: "Parameter",
-        description: "Probability of Heavy Rain During The Night",
+        type: 'Parameter',
+        description: 'Probability of Heavy Rain During The Night',
         unit: {
-          label: "percentage",
+          label: 'percentage',
           symbol: {
-            value: "http://www.opengis.net/def/uom/UCUM/",
-            type: "%",
+            value: 'http://www.opengis.net/def/uom/UCUM/',
+            type: '%',
           },
         },
       },
       midnight10MWindSpeed: {
-        type: "Parameter",
-        description: "10m Wind Speed at Local Midnight",
+        type: 'Parameter',
+        description: '10m Wind Speed at Local Midnight',
         unit: {
-          label: "metres per second",
+          label: 'metres per second',
           symbol: {
-            value: "http://www.opengis.net/def/uom/UCUM/",
-            type: "m/s",
+            value: 'http://www.opengis.net/def/uom/UCUM/',
+            type: 'm/s',
           },
         },
       },
       nightUpperBoundMinFeelsLikeTemp: {
-        type: "Parameter",
-        description: "Upper Bound on Night Minimum Feels Like Air Temperature",
+        type: 'Parameter',
+        description: 'Upper Bound on Night Minimum Feels Like Air Temperature',
         unit: {
-          label: "degrees Celsius",
+          label: 'degrees Celsius',
           symbol: {
-            value: "http://www.opengis.net/def/uom/UCUM/",
-            type: "Cel",
+            value: 'http://www.opengis.net/def/uom/UCUM/',
+            type: 'Cel',
           },
         },
       },
       nightUpperBoundMinTemp: {
-        type: "Parameter",
-        description: "Upper Bound on Night Minimum Screen Air Temperature",
+        type: 'Parameter',
+        description: 'Upper Bound on Night Minimum Screen Air Temperature',
         unit: {
-          label: "degrees Celsius",
+          label: 'degrees Celsius',
           symbol: {
-            value: "http://www.opengis.net/def/uom/UCUM/",
-            type: "Cel",
+            value: 'http://www.opengis.net/def/uom/UCUM/',
+            type: 'Cel',
           },
         },
       },
       nightProbabilityOfRain: {
-        type: "Parameter",
-        description: "Probability of Rain During The Night",
+        type: 'Parameter',
+        description: 'Probability of Rain During The Night',
         unit: {
-          label: "percentage",
+          label: 'percentage',
           symbol: {
-            value: "http://www.opengis.net/def/uom/UCUM/",
-            type: "%",
+            value: 'http://www.opengis.net/def/uom/UCUM/',
+            type: '%',
           },
         },
       },
       dayUpperBoundMaxFeelsLikeTemp: {
-        type: "Parameter",
-        description: "Upper Bound on Day Maximum Feels Like Air Temperature",
+        type: 'Parameter',
+        description: 'Upper Bound on Day Maximum Feels Like Air Temperature',
         unit: {
-          label: "degrees Celsius",
+          label: 'degrees Celsius',
           symbol: {
-            value: "http://www.opengis.net/def/uom/UCUM/",
-            type: "Cel",
+            value: 'http://www.opengis.net/def/uom/UCUM/',
+            type: 'Cel',
           },
         },
       },
       midnightVisibility: {
-        type: "Parameter",
-        description: "Visibility at Local Midnight",
+        type: 'Parameter',
+        description: 'Visibility at Local Midnight',
         unit: {
-          label: "metres",
+          label: 'metres',
           symbol: {
-            value: "http://www.opengis.net/def/uom/UCUM/",
-            type: "m",
+            value: 'http://www.opengis.net/def/uom/UCUM/',
+            type: 'm',
           },
         },
       },
       midday10MWindDirection: {
-        type: "Parameter",
-        description: "10m Wind Direction at Local Midday",
+        type: 'Parameter',
+        description: '10m Wind Direction at Local Midday',
         unit: {
-          label: "degrees",
+          label: 'degrees',
           symbol: {
-            value: "http://www.opengis.net/def/uom/UCUM/",
-            type: "deg",
+            value: 'http://www.opengis.net/def/uom/UCUM/',
+            type: 'deg',
           },
         },
       },
       nightLowerBoundMinFeelsLikeTemp: {
-        type: "Parameter",
-        description: "Lower Bound on Night Minimum Feels Like Air Temperature",
+        type: 'Parameter',
+        description: 'Lower Bound on Night Minimum Feels Like Air Temperature',
         unit: {
-          label: "degrees Celsius",
+          label: 'degrees Celsius',
           symbol: {
-            value: "http://www.opengis.net/def/uom/UCUM/",
-            type: "Cel",
+            value: 'http://www.opengis.net/def/uom/UCUM/',
+            type: 'Cel',
           },
         },
       },
       nightProbabilityOfHail: {
-        type: "Parameter",
-        description: "Probability of Hail During The Night",
+        type: 'Parameter',
+        description: 'Probability of Hail During The Night',
         unit: {
-          label: "percentage",
+          label: 'percentage',
           symbol: {
-            value: "http://www.opengis.net/def/uom/UCUM/",
-            type: "%",
+            value: 'http://www.opengis.net/def/uom/UCUM/',
+            type: '%',
           },
         },
       },
       middayMslp: {
-        type: "Parameter",
-        description: "Mean Sea Level Pressure at Local Midday",
+        type: 'Parameter',
+        description: 'Mean Sea Level Pressure at Local Midday',
         unit: {
-          label: "pascals",
+          label: 'pascals',
           symbol: {
-            value: "http://www.opengis.net/def/uom/UCUM/",
-            type: "Pa",
+            value: 'http://www.opengis.net/def/uom/UCUM/',
+            type: 'Pa',
           },
         },
       },
       dayProbabilityOfHeavySnow: {
-        type: "Parameter",
-        description: "Probability of Heavy Snow During The Day",
+        type: 'Parameter',
+        description: 'Probability of Heavy Snow During The Day',
         unit: {
-          label: "percentage",
+          label: 'percentage',
           symbol: {
-            value: "http://www.opengis.net/def/uom/UCUM/",
-            type: "%",
+            value: 'http://www.opengis.net/def/uom/UCUM/',
+            type: '%',
           },
         },
       },
       nightProbabilityOfPrecipitation: {
-        type: "Parameter",
-        description: "Probability of Precipitation During The Night",
+        type: 'Parameter',
+        description: 'Probability of Precipitation During The Night',
         unit: {
-          label: "percentage",
+          label: 'percentage',
           symbol: {
-            value: "http://www.opengis.net/def/uom/UCUM/",
-            type: "%",
+            value: 'http://www.opengis.net/def/uom/UCUM/',
+            type: '%',
           },
         },
       },
       dayProbabilityOfHail: {
-        type: "Parameter",
-        description: "Probability of Hail During The Day",
+        type: 'Parameter',
+        description: 'Probability of Hail During The Day',
         unit: {
-          label: "percentage",
+          label: 'percentage',
           symbol: {
-            value: "http://www.opengis.net/def/uom/UCUM/",
-            type: "%",
+            value: 'http://www.opengis.net/def/uom/UCUM/',
+            type: '%',
           },
         },
       },
       dayProbabilityOfRain: {
-        type: "Parameter",
-        description: "Probability of Rain During The Day",
+        type: 'Parameter',
+        description: 'Probability of Rain During The Day',
         unit: {
-          label: "percentage",
+          label: 'percentage',
           symbol: {
-            value: "http://www.opengis.net/def/uom/UCUM/",
-            type: "%",
+            value: 'http://www.opengis.net/def/uom/UCUM/',
+            type: '%',
           },
         },
       },
       midday10MWindSpeed: {
-        type: "Parameter",
-        description: "10m Wind Speed at Local Midday",
+        type: 'Parameter',
+        description: '10m Wind Speed at Local Midday',
         unit: {
-          label: "metres per second",
+          label: 'metres per second',
           symbol: {
-            value: "http://www.opengis.net/def/uom/UCUM/",
-            type: "m/s",
+            value: 'http://www.opengis.net/def/uom/UCUM/',
+            type: 'm/s',
           },
         },
       },
       midday10MWindGust: {
-        type: "Parameter",
-        description: "10m Wind Gust Speed at Local Midday",
+        type: 'Parameter',
+        description: '10m Wind Gust Speed at Local Midday',
         unit: {
-          label: "metres per second",
+          label: 'metres per second',
           symbol: {
-            value: "http://www.opengis.net/def/uom/UCUM/",
-            type: "m/s",
+            value: 'http://www.opengis.net/def/uom/UCUM/',
+            type: 'm/s',
           },
         },
       },
       middayVisibility: {
-        type: "Parameter",
-        description: "Visibility at Local Midday",
+        type: 'Parameter',
+        description: 'Visibility at Local Midday',
         unit: {
-          label: "metres",
+          label: 'metres',
           symbol: {
-            value: "http://www.opengis.net/def/uom/UCUM/",
-            type: "m",
+            value: 'http://www.opengis.net/def/uom/UCUM/',
+            type: 'm',
           },
         },
       },
       midnight10MWindGust: {
-        type: "Parameter",
-        description: "10m Wind Gust Speed at Local Midnight",
+        type: 'Parameter',
+        description: '10m Wind Gust Speed at Local Midnight',
         unit: {
-          label: "metres per second",
+          label: 'metres per second',
           symbol: {
-            value: "http://www.opengis.net/def/uom/UCUM/",
-            type: "m/s",
+            value: 'http://www.opengis.net/def/uom/UCUM/',
+            type: 'm/s',
           },
         },
       },
       dayProbabilityOfSferics: {
-        type: "Parameter",
-        description: "Probability of Sferics During The Day",
+        type: 'Parameter',
+        description: 'Probability of Sferics During The Day',
         unit: {
-          label: "percentage",
+          label: 'percentage',
           symbol: {
-            value: "http://www.opengis.net/def/uom/UCUM/",
-            type: "%",
+            value: 'http://www.opengis.net/def/uom/UCUM/',
+            type: '%',
           },
         },
       },
       midnightMslp: {
-        type: "Parameter",
-        description: "Mean Sea Level Pressure at Local Midnight",
+        type: 'Parameter',
+        description: 'Mean Sea Level Pressure at Local Midnight',
         unit: {
-          label: "pascals",
+          label: 'pascals',
           symbol: {
-            value: "http://www.opengis.net/def/uom/UCUM/",
-            type: "Pa",
+            value: 'http://www.opengis.net/def/uom/UCUM/',
+            type: 'Pa',
           },
         },
       },
       nightSignificantWeatherCode: {
-        type: "Parameter",
-        description: "Night Significant Weather Code",
+        type: 'Parameter',
+        description: 'Night Significant Weather Code',
         unit: {
-          label: "dimensionless",
+          label: 'dimensionless',
           symbol: {
             value:
-              "https://metoffice.apiconnect.ibmcloud.com/metoffice/production/",
-            type: "1",
+              'https://metoffice.apiconnect.ibmcloud.com/metoffice/production/',
+            type: '1',
           },
         },
       },
       dayProbabilityOfPrecipitation: {
-        type: "Parameter",
-        description: "Probability of Precipitation During The Day",
+        type: 'Parameter',
+        description: 'Probability of Precipitation During The Day',
         unit: {
-          label: "percentage",
+          label: 'percentage',
           symbol: {
-            value: "http://www.opengis.net/def/uom/UCUM/",
-            type: "%",
+            value: 'http://www.opengis.net/def/uom/UCUM/',
+            type: '%',
           },
         },
       },
       dayProbabilityOfHeavyRain: {
-        type: "Parameter",
-        description: "Probability of Heavy Rain During The Day",
+        type: 'Parameter',
+        description: 'Probability of Heavy Rain During The Day',
         unit: {
-          label: "percentage",
+          label: 'percentage',
           symbol: {
-            value: "http://www.opengis.net/def/uom/UCUM/",
-            type: "%",
+            value: 'http://www.opengis.net/def/uom/UCUM/',
+            type: '%',
           },
         },
       },
       dayMaxScreenTemperature: {
-        type: "Parameter",
-        description: "Day Maximum Screen Air Temperature",
+        type: 'Parameter',
+        description: 'Day Maximum Screen Air Temperature',
         unit: {
-          label: "degrees Celsius",
+          label: 'degrees Celsius',
           symbol: {
-            value: "http://www.opengis.net/def/uom/UCUM/",
-            type: "Cel",
+            value: 'http://www.opengis.net/def/uom/UCUM/',
+            type: 'Cel',
           },
         },
       },
       nightMinScreenTemperature: {
-        type: "Parameter",
-        description: "Night Minimum Screen Air Temperature",
+        type: 'Parameter',
+        description: 'Night Minimum Screen Air Temperature',
         unit: {
-          label: "degrees Celsius",
+          label: 'degrees Celsius',
           symbol: {
-            value: "http://www.opengis.net/def/uom/UCUM/",
-            type: "Cel",
+            value: 'http://www.opengis.net/def/uom/UCUM/',
+            type: 'Cel',
           },
         },
       },
       midnight10MWindDirection: {
-        type: "Parameter",
-        description: "10m Wind Direction at Local Midnight",
+        type: 'Parameter',
+        description: '10m Wind Direction at Local Midnight',
         unit: {
-          label: "degrees",
+          label: 'degrees',
           symbol: {
-            value: "http://www.opengis.net/def/uom/UCUM/",
-            type: "deg",
+            value: 'http://www.opengis.net/def/uom/UCUM/',
+            type: 'deg',
           },
         },
       },
       maxUvIndex: {
-        type: "Parameter",
-        description: "Day Maximum UV Index",
+        type: 'Parameter',
+        description: 'Day Maximum UV Index',
         unit: {
-          label: "dimensionless",
+          label: 'dimensionless',
           symbol: {
-            value: "http://www.opengis.net/def/uom/UCUM/",
-            type: "1",
+            value: 'http://www.opengis.net/def/uom/UCUM/',
+            type: '1',
           },
         },
       },
       dayProbabilityOfSnow: {
-        type: "Parameter",
-        description: "Probability of Snow During The Day",
+        type: 'Parameter',
+        description: 'Probability of Snow During The Day',
         unit: {
-          label: "percentage",
+          label: 'percentage',
           symbol: {
-            value: "http://www.opengis.net/def/uom/UCUM/",
-            type: "%",
+            value: 'http://www.opengis.net/def/uom/UCUM/',
+            type: '%',
           },
         },
       },
       nightProbabilityOfSnow: {
-        type: "Parameter",
-        description: "Probability of Snow During The Night",
+        type: 'Parameter',
+        description: 'Probability of Snow During The Night',
         unit: {
-          label: "percentage",
+          label: 'percentage',
           symbol: {
-            value: "http://www.opengis.net/def/uom/UCUM/",
-            type: "%",
+            value: 'http://www.opengis.net/def/uom/UCUM/',
+            type: '%',
           },
         },
       },
       nightProbabilityOfHeavySnow: {
-        type: "Parameter",
-        description: "Probability of Heavy Snow During The Night",
+        type: 'Parameter',
+        description: 'Probability of Heavy Snow During The Night',
         unit: {
-          label: "percentage",
+          label: 'percentage',
           symbol: {
-            value: "http://www.opengis.net/def/uom/UCUM/",
-            type: "%",
+            value: 'http://www.opengis.net/def/uom/UCUM/',
+            type: '%',
           },
         },
       },
       dayLowerBoundMaxTemp: {
-        type: "Parameter",
-        description: "Lower Bound on Day Maximum Screen Air Temperature",
+        type: 'Parameter',
+        description: 'Lower Bound on Day Maximum Screen Air Temperature',
         unit: {
-          label: "degrees Celsius",
+          label: 'degrees Celsius',
           symbol: {
-            value: "http://www.opengis.net/def/uom/UCUM/",
-            type: "Cel",
+            value: 'http://www.opengis.net/def/uom/UCUM/',
+            type: 'Cel',
           },
         },
       },
       dayLowerBoundMaxFeelsLikeTemp: {
-        type: "Parameter",
-        description: "Lower Bound on Day Maximum Feels Like Air Temperature",
+        type: 'Parameter',
+        description: 'Lower Bound on Day Maximum Feels Like Air Temperature',
         unit: {
-          label: "degrees Celsius",
+          label: 'degrees Celsius',
           symbol: {
-            value: "http://www.opengis.net/def/uom/UCUM/",
-            type: "Cel",
+            value: 'http://www.opengis.net/def/uom/UCUM/',
+            type: 'Cel',
           },
         },
       },
       dayUpperBoundMaxTemp: {
-        type: "Parameter",
-        description: "Upper Bound on Day Maximum Screen Air Temperature",
+        type: 'Parameter',
+        description: 'Upper Bound on Day Maximum Screen Air Temperature',
         unit: {
-          label: "degrees Celsius",
+          label: 'degrees Celsius',
           symbol: {
-            value: "http://www.opengis.net/def/uom/UCUM/",
-            type: "Cel",
+            value: 'http://www.opengis.net/def/uom/UCUM/',
+            type: 'Cel',
           },
         },
       },
       dayMaxFeelsLikeTemp: {
-        type: "Parameter",
-        description: "Day Maximum Feels Like Air Temperature",
+        type: 'Parameter',
+        description: 'Day Maximum Feels Like Air Temperature',
         unit: {
-          label: "degrees Celsius",
+          label: 'degrees Celsius',
           symbol: {
-            value: "http://www.opengis.net/def/uom/UCUM/",
-            type: "Cel",
+            value: 'http://www.opengis.net/def/uom/UCUM/',
+            type: 'Cel',
           },
         },
       },
       nightMinFeelsLikeTemp: {
-        type: "Parameter",
-        description: "Night Minimum Feels Like Air Temperature",
+        type: 'Parameter',
+        description: 'Night Minimum Feels Like Air Temperature',
         unit: {
-          label: "degrees Celsius",
+          label: 'degrees Celsius',
           symbol: {
-            value: "http://www.opengis.net/def/uom/UCUM/",
-            type: "Cel",
+            value: 'http://www.opengis.net/def/uom/UCUM/',
+            type: 'Cel',
           },
         },
       },
       nightLowerBoundMinTemp: {
-        type: "Parameter",
-        description: "Lower Bound on Night Minimum Screen Air Temperature",
+        type: 'Parameter',
+        description: 'Lower Bound on Night Minimum Screen Air Temperature',
         unit: {
-          label: "degrees Celsius",
+          label: 'degrees Celsius',
           symbol: {
-            value: "http://www.opengis.net/def/uom/UCUM/",
-            type: "Cel",
+            value: 'http://www.opengis.net/def/uom/UCUM/',
+            type: 'Cel',
           },
         },
       },
       middayRelativeHumidity: {
-        type: "Parameter",
-        description: "Relative Humidity at Local Midday",
+        type: 'Parameter',
+        description: 'Relative Humidity at Local Midday',
         unit: {
-          label: "percentage",
+          label: 'percentage',
           symbol: {
-            value: "http://www.opengis.net/def/uom/UCUM/",
-            type: "%",
+            value: 'http://www.opengis.net/def/uom/UCUM/',
+            type: '%',
           },
         },
       },
       nightProbabilityOfSferics: {
-        type: "Parameter",
-        description: "Probability of Sferics During The Night",
+        type: 'Parameter',
+        description: 'Probability of Sferics During The Night',
         unit: {
-          label: "percentage",
+          label: 'percentage',
           symbol: {
-            value: "http://www.opengis.net/def/uom/UCUM/",
-            type: "%",
+            value: 'http://www.opengis.net/def/uom/UCUM/',
+            type: '%',
           },
         },
       },

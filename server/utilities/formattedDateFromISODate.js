@@ -11,7 +11,7 @@ function formattedDateFromISODate(ISODate) {
     nextWeek: 'dddd',
     lastDay: '[Yesterday]',
     lastWeek: '[Last] dddd',
-    sameElse: 'DD/MM/YYYY'
+    sameElse: 'DD/MM/YYYY',
   });
 }
 
