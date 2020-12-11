@@ -10,11 +10,11 @@
   },
   "main": "index.js",
   "scripts": {
-    "start": "yarn develop",
+    "start": "npm run develop",
     "develop": "gatsby develop",
     "build": "gatsby build",
     "serve": "gatsby serve",
-    "test": "yarn jest --watchAll"
+    "test": "npm run jest --watchAll"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.2",

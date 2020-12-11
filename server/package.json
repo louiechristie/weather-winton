@@ -7,9 +7,9 @@
     "url": "https://www.louiechristie.com/"
   },
   "scripts": {
-    "watch": "yarn nodemon app.js",
-    "start": "yarn node app.js",
-    "lint": "yarn eslint '**/*.js' --ignore-path .gitignore"
+    "watch": "npm run nodemon app.js",
+    "start": "npm run node app.js",
+    "lint": "npm run eslint '**/*.js' --ignore-path .gitignore"
   },
   "husky": {
     "hooks": {

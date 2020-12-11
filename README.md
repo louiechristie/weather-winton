@@ -10,8 +10,7 @@ Inspired by Negroponte, N. (1995). Being digital. New York: Knopf.
 
 ### Client and server
 
-- Install node v10.13.0 or greater
-- Install yarn v1.x
+- Install node v14.15.1 or greater
 
 ### Client Only
 
@@ -26,16 +25,16 @@ Set up environment variables:
 
 ```console
 cd server
-yarn
-yarn start
+npm install
+npm run start
 ```
 
 ### Start the client (in a new terminal)
 
 ```console
 cd client
-yarn
-yarn start
+npm install
+npm run start
 ```
 
 ## Monorepo directories
