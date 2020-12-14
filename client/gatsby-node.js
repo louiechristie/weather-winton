@@ -31,8 +31,18 @@ exports.createPages = async ({ actions: { createPage } }) => {
 
     console.log('result: ', result);
 
-    const items = result.data;
+    const hoursOutOfDate = dayjs(new Date()).diff(
+      result.headers['last-modified'],
+      'hour'
+    );
 
+    console.log('hoursOutOfDate', hoursOutOfDate);
+
+    if (hoursOutOfDate >= 18) {
+      throw new Error(`Forecast out of date by ${hoursOutOfDate} hours`);
+    }
+
+    const items = result.data;
     const today = items[0];
 
     const input = (

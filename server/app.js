@@ -25,8 +25,12 @@ app.use(express.static(path.join(__dirname, '/public/')));
 app.get('/', (req, res) => {
   try {
     res.sendFile(path.join(__dirname, '/public/', 'index.html'));
+    res.setHeader('Cache-Control', 'public, max-age=86400');
+    res.setHeader('Last-Modified', new Date().toUTCString());
   } catch (error) {
     log(error);
+    res.setHeader('Cache-Control', 'public, max-age=1');
+    res.setHeader('Last-Modified', new Date().toUTCString());
     res.send(JSON.stringify(error));
   }
 });
@@ -60,17 +64,25 @@ app.get('/forecast', async (req, res) => {
   if (process.env.NODE_ENV === 'production') {
     try {
       const items = await getForecast(metOfficeAPIUrl);
+      res.setHeader('Cache-Control', 'public, max-age=21600');
+      res.setHeader('Last-Modified', new Date().toUTCString());
       res.json(items);
     } catch (error) {
       log(error);
+      res.setHeader('Cache-Control', 'public, max-age=1');
+      res.setHeader('Last-Modified', new Date().toUTCString());
       res.send(JSON.stringify(error));
     }
   } else {
     try {
       const items = await getMockForecast();
+      res.setHeader('Cache-Control', 'public, max-age=1');
+      res.setHeader('Last-Modified', new Date().toUTCString());
       res.json(items);
     } catch (error) {
       log(error);
+      res.setHeader('Cache-Control', 'public, max-age=1');
+      res.setHeader('Last-Modified', new Date().toUTCString());
       res.send(JSON.stringify(error));
     }
   }
