@@ -113,8 +113,14 @@ function getItemsFromMetOfficeJSON(json) {
         icon: getEmojiFromMetOfficeWeatherCode(
           day.daySignificantWeatherCode.toString()
         ),
-        minTemperature: day.nightMinScreenTemperature,
-        maxTemperature: day.dayMaxScreenTemperature,
+        minTemperature: Math.min(
+          day.dayMaxScreenTemperature,
+          day.nightMinScreenTemperature
+        ),
+        maxTemperature: Math.max(
+          day.dayMaxScreenTemperature,
+          day.nightMinScreenTemperature
+        ),
         avgTemperature: avg(
           day.dayMaxScreenTemperature,
           day.nightMinScreenTemperature
