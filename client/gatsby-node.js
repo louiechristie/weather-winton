@@ -33,7 +33,7 @@ exports.createPages = async ({ actions: { createPage } }) => {
     console.log('result: ', result);
 
     meta.timeStamp = `${dayjs(result.headers['last-modified']).format(
-      'YYYY-MM-DD hhmm'
+      'YYYY-MM-DD HHmm'
     )}`;
 
     const foreCastHoursOutOfDate = dayjs(new Date()).diff(
