@@ -1,7 +1,6 @@
 const dayjs = require('dayjs');
 const isSameOrAfter = require('dayjs/plugin/isSameOrAfter');
 
-const formattedDateFromISODate = require('./formattedDateFromISODate');
 const log = require('./log');
 
 dayjs.extend(isSameOrAfter);
@@ -100,17 +99,14 @@ function getItemsFromMetOfficeJSON(json) {
   log(`json: ${JSON.stringify(json, null, '  ')}`);
 
   const filter = (day) => {
-    if (process.env.NODE_ENV === 'production') {
-      return dayjs(day.time).isSameOrAfter(dayjs(), 'day');
-    }
-    return true;
+    return dayjs(day.time).isSameOrAfter(dayjs(), 'day');
   };
 
   const items = json.features[0].properties.timeSeries
     .filter(filter)
     .map((day) => {
       return {
-        date: formattedDateFromISODate(day.time),
+        time: day.time,
         description: getDescriptionFromMetOfficeWeatherCode(
           day.daySignificantWeatherCode.toString()
         ),

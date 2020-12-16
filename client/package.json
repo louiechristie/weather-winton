@@ -2,7 +2,7 @@
   "name": "weather-winton",
   "title": "South London Weather Winton",
   "description": "Experimental app for innovative user experience in weather forecasting. (Inspired by Negroponte, N. (1995). Being digital. New York: Knopf.)",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "private": true,
   "author": {
     "name": "Louie Christie",
@@ -10,11 +10,13 @@
   },
   "main": "index.js",
   "scripts": {
-    "start": "npm run develop",
-    "develop": "gatsby develop",
+    "dev": "gatsby develop",
+    "start": "npm run clean && npm run dev",
     "build": "gatsby build",
     "serve": "gatsby serve",
-    "test": "npm run jest --watchAll"
+    "test": "npm run jest --watchAll",
+    "clean": "gatsby clean",
+    "test:smoke": "npm run clean && npm run build && npm run serve"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.2",

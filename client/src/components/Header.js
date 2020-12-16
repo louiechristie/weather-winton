@@ -24,7 +24,7 @@ const styles = {
   },
 };
 
-function SimpleAppBar(props) {
+function Header(props) {
   const { classes, title, description, image, alt, url } = props;
 
   const data = useStaticQuery(
@@ -85,4 +85,4 @@ function SimpleAppBar(props) {
   );
 }
 
-export default withStyles(styles)(SimpleAppBar);
+export default withStyles(styles)(Header);

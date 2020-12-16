@@ -34,7 +34,8 @@ class WeatherWidget extends Component {
       <ul className={classes.ul}>
         {items.map((item) => {
           const {
-            date,
+            friendlyDate,
+            time,
             icon,
             description,
             avgTemperature,
@@ -44,9 +45,10 @@ class WeatherWidget extends Component {
             isTakeRaincoat,
           } = item;
           return (
-            <li key={`${item.date}`} className={classes.li}>
+            <li key={time} className={classes.li}>
               <Day
-                date={date}
+                friendlyDate={friendlyDate}
+                time={time}
                 icon={icon}
                 description={description}
                 minTemperature={minTemperature}

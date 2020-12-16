@@ -28,6 +28,20 @@ const Footer = (props) => {
     <footer className={classes.footer}>
       <Paper className={classes.note}>
         <Typography variant="body2" component="p">
+          <a href="https://www.louiechristie.com/blog/contact/">
+            Want a website like this one?
+          </a>
+        </Typography>
+        <Typography variant="body2" component="p">
+          * Other styles/sizes/colors are available.
+        </Typography>
+      </Paper>
+
+      <Paper className={classes.note}>
+        <Typography variant="body2" component="p">
+          Last updated: {meta.timeStamp}
+        </Typography>
+        <Typography variant="body2" component="p">
           Weather data: Met Office
         </Typography>
 

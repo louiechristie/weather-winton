@@ -144,7 +144,8 @@ const styles = (theme) => ({
 function Day(props) {
   const {
     classes,
-    date,
+    friendlyDate,
+    time,
     icon,
     description,
     minTemperature,
@@ -245,32 +246,32 @@ function Day(props) {
     '-3': 391,
     '-2': 607,
     '-1': 1091,
-    '0': 1650,
-    '1': 2441,
-    '2': 2988,
-    '3': 3794,
-    '4': 4486,
-    '5': 5189,
-    '6': 5605,
-    '7': 5918,
-    '8': 5657,
-    '9': 5457,
-    '10': 5215,
-    '11': 4904,
-    '12': 4917,
-    '13': 5495,
-    '14': 6000,
-    '15': 5584,
-    '16': 4697,
-    '17': 3441,
-    '18': 2248,
-    '19': 1305,
-    '20': 700,
-    '21': 333,
-    '22': 153,
-    '23': 64,
-    '24': 16,
-    '25': 9,
+    0: 1650,
+    1: 2441,
+    2: 2988,
+    3: 3794,
+    4: 4486,
+    5: 5189,
+    6: 5605,
+    7: 5918,
+    8: 5657,
+    9: 5457,
+    10: 5215,
+    11: 4904,
+    12: 4917,
+    13: 5495,
+    14: 6000,
+    15: 5584,
+    16: 4697,
+    17: 3441,
+    18: 2248,
+    19: 1305,
+    20: 700,
+    21: 333,
+    22: 153,
+    23: 64,
+    24: 16,
+    25: 9,
   };
 
   const temperatures = Object.keys(tempTallies).sort(function (a, b) {
@@ -285,10 +286,13 @@ function Day(props) {
     Math.round(minTemperature) < parseInt(temperatures[0], 10);
 
   return (
-    <Card className={classes.card} align="center">
+    <Card key={time} className={classes.card} align="center">
       <Typography variant="h5" component="h2">
-        {date}
+        {friendlyDate}
       </Typography>
+      {/* <Typography variant="h6" component="p">
+        Time: {time}
+      </Typography> */}
       <img className={classes.svgIcon} src={icon} alt={description} />
       <Typography className={classes.description} variant="h6" component="p">
         {description}

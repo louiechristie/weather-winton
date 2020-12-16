@@ -23,6 +23,7 @@ const meta = {
   siteURL: GATSBY_SITE_URL,
   author,
   version,
+  timeStamp: null,
 };
 
 exports.createPages = async ({ actions: { createPage } }) => {
@@ -31,15 +32,31 @@ exports.createPages = async ({ actions: { createPage } }) => {
 
     console.log('result: ', result);
 
-    const hoursOutOfDate = dayjs(new Date()).diff(
+    meta.timeStamp = `${dayjs(result.headers['last-modified']).format(
+      'YYYY-MM-DD hhmm'
+    )}`;
+
+    const foreCastHoursOutOfDate = dayjs(new Date()).diff(
       result.headers['last-modified'],
       'hour'
     );
 
-    console.log('hoursOutOfDate', hoursOutOfDate);
+    const firstDayHoursOutOfDate = dayjs(new Date()).diff(
+      result.data[0].time,
+      'hour'
+    );
 
-    if (hoursOutOfDate >= 18) {
-      throw new Error(`Forecast out of date by ${hoursOutOfDate} hours`);
+    console.log('foreCastHoursOutOfDate', foreCastHoursOutOfDate);
+    console.log('firstDayHoursOutOfDate', firstDayHoursOutOfDate);
+
+    if (
+      foreCastHoursOutOfDate >= 12 ||
+      firstDayHoursOutOfDate >= 24 ||
+      firstDayHoursOutOfDate <= -24
+    ) {
+      throw new Error(
+        `Forecast out of date by ${foreCastHoursOutOfDate} hours. First day of forecast out of date by ${firstDayHoursOutOfDate}`
+      );
     }
 
     const items = result.data;
@@ -76,13 +93,15 @@ exports.createPages = async ({ actions: { createPage } }) => {
 
     const mock = [
       {
-        date: 'Today',
+        friendlyDate: 'Today',
+        time: 'Sometimes',
         description: PROBABLY_CLOUDY,
         icon: CLOUDY_IMAGE_SRC,
         temperature: null,
       },
       {
-        date: 'Sorry, problem getting forecast.',
+        friendlyDate: 'Sorry, problem getting forecast.',
+        time: '?',
         description: `${error}`,
         icon: CLOUDY_IMAGE_SRC,
         temperature: null,
