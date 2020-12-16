@@ -25,7 +25,7 @@ app.use(express.static(path.join(__dirname, '/public/')));
 app.get('/', (req, res) => {
   try {
     res.sendFile(path.join(__dirname, '/public/', 'index.html'));
-    res.setHeader('Cache-Control', 'public, max-age=86400');
+    res.setHeader('Cache-Control', `public, max-age=${60 * 60 * 12}`);
     res.setHeader('Last-Modified', new Date().toUTCString());
   } catch (error) {
     log(error);
