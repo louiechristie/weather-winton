@@ -15,6 +15,7 @@
     "build": "gatsby build",
     "serve": "gatsby serve",
     "test": "npm run jest --watchAll",
+    "deploy": "netlify deploy --prod",
     "clean": "gatsby clean",
     "test:smoke": "npm run clean && npm run build && npm run serve"
   },
@@ -28,6 +29,7 @@
     "gatsby-plugin-material-ui": "^2.1.10",
     "gatsby-plugin-no-javascript": "^2.0.5",
     "gatsby-plugin-react-helmet": "^3.6.0",
+    "netlify": "^6.0.7",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-helmet": "^6.1.0",
