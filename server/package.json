@@ -1,16 +1,15 @@
 {
   "name": "weather-winton-server",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "private": true,
   "author": {
     "name": "Louie Christie",
     "url": "https://www.louiechristie.com/"
   },
   "scripts": {
-    "start": "node app.js",
-    "start:dev": "nodemon app.js",
-    "start:prod": "NODE_ENV=production node app.js",
-    "lint": "eslint '**/*.js' --ignore-path .gitignore --fix"
+    "watch": "yarn nodemon app.js",
+    "start": "yarn node app.js",
+    "lint": "yarn eslint '**/*.js' --ignore-path .gitignore"
   },
   "husky": {
     "hooks": {
@@ -28,34 +27,27 @@
   },
   "dependencies": {
     "cookie-parser": "~1.4.5",
-    "core-js": "^3.8.1",
-    "dayjs": "^1.9.7",
-    "debug": "~4.3.1",
+    "core-js": "^3.6.5",
+    "dayjs": "^1.8.34",
+    "debug": "~4.1.1",
     "dotenv": "^8.2.0",
     "express": "~4.17.1",
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.10",
-    "@babel/preset-env": "^7.12.10",
-    "@typescript-eslint/eslint-plugin": "^4.9.1",
-    "@typescript-eslint/parser": "^4.9.1",
-    "eslint": "^7.15.0",
+    "eslint": "^7.7.0",
     "eslint-cli": "^1.1.1",
-    "eslint-config-prettier": "^7.0.0",
-    "eslint-config-universe": "^6.0.1",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jsx-a11y": "^6.4.1",
-    "eslint-plugin-prettier": "^3.2.0",
-    "eslint-plugin-react": "^7.21.5",
-    "eslint-plugin-react-hooks": "^4.2.0",
-    "husky": "^4.3.5",
-    "install": "^0.13.0",
-    "lint-staged": "^10.5.3",
-    "markdownlint-cli": "^0.25.0",
-    "nodemon": "^2.0.6",
-    "npm": "^6.14.9",
-    "prettier": "^2.2.1",
-    "typescript": "^4.1.2"
+    "eslint-config-airbnb": "18.2.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.20.6",
+    "eslint-plugin-react-hooks": "^4.1.0",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.13",
+    "markdownlint-cli": "^0.23.2",
+    "nodemon": "^2.0.4",
+    "prettier": "^2.1.1"
   }
 }

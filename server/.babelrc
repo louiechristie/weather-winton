@@ -1,14 +1,3 @@
 {
-  "presets": [
-    [
-      "@babel/preset-env",
-      {
-        "useBuiltIns": "usage",
-        "corejs": 3,
-        "targets": {
-          "firefox": "64"
-        }
-      }
-    ]
-  ]
+  "presets": [["@babel/preset-env"]]
 }
