@@ -4,7 +4,7 @@ User Friendly Weather Forecast (South London) web app.
 
 Experimental app for innovative user experience in weather forecasting.
 
-Inspired by Negroponte, N. (1995). Being digital. New York: Knopf.
+Inspired by Negroponte, N. (1995). Being digital. New York: Knopf. p.55.
 
 ## Prerequisites
 

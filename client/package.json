@@ -1,8 +1,8 @@
 {
   "name": "weather-winton",
-  "title": "South London Weather Winton",
-  "description": "Experimental app for innovative user experience in weather forecasting. (Inspired by Negroponte, N. (1995). Being digital. New York: Knopf.)",
-  "version": "0.8.0",
+  "title": "South London - Weather Winton",
+  "description": "Experimental app for innovative user experience in weather forecasting. Inspired by Negroponte, N. (1995). Being digital. New York: Knopf. p.55",
+  "version": "0.8.1",
   "private": true,
   "author": {
     "name": "Louie Christie",
