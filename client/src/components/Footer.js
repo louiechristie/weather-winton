@@ -31,7 +31,7 @@ const Footer = (props) => {
   return (
     <footer className={classes.footer}>
       <Paper className={[classes.note, classes.cta]}>
-        <Typography variant="h6" component="h6" gutterBottom>
+        <Typography variant="h6" component="h6" gutterBottom align="center">
           <a href="https://www.louiechristie.com/blog/contact/">
             Want me to build you an app or website?
           </a>
@@ -42,7 +42,7 @@ const Footer = (props) => {
       </Paper>
 
       <Paper className={[classes.note, classes.about]}>
-        <Typography variant="h5" component="h2" gutterBottom>
+        <Typography variant="h5" component="h2" gutterBottom align="center">
           About
         </Typography>
         <Typography variant="body1" component="p" paragraph>
@@ -56,18 +56,30 @@ const Footer = (props) => {
       </Paper>
 
       <Paper className={[classes.note, classes.about]}>
-        <Typography variant="body2" component="p" paragraph>
+        <Typography variant="body2" component="p" paragraph align="center">
           Last updated: {meta.timeStamp}
         </Typography>
-        <Typography variant="body2" component="p" paragraph>
+        <Typography variant="body2" component="p" paragraph align="center">
           Weather data: Met Office
         </Typography>
 
-        <Typography variant="body2" component="p" color="inherit" paragraph>
-          ©️ {dayjs().year()} Weather Winton v{meta.version}
+        <Typography
+          variant="body2"
+          component="p"
+          color="inherit"
+          paragraph
+          align="center"
+        >
+          Weather Winton ©️ {dayjs().year()} v{meta.version}
         </Typography>
 
-        <Typography variant="body2" component="p" color="inherit" paragraph>
+        <Typography
+          variant="body2"
+          component="p"
+          color="inherit"
+          paragraph
+          align="center"
+        >
           Made by: <a href={meta.author.url}> {meta.author.name}</a>
         </Typography>
       </Paper>
