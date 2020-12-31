@@ -1,14 +1,14 @@
 {
   "name": "weather-winton-server",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "private": true,
   "author": {
     "name": "Louie Christie",
     "url": "https://www.louiechristie.com/"
   },
   "scripts": {
-    "watch": "yarn nodemon app.js",
-    "start": "yarn nodemon app.js",
+    "dev": "yarn nodemon app.js",
+    "start": "yarn node app.js",
     "start:prod": "NODE_ENV=production node app.js",
     "lint": "yarn eslint '**/*.js' --ignore-path .gitignore"
   },
