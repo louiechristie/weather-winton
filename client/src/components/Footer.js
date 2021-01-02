@@ -19,13 +19,25 @@ const styles = (theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    marginBottom: theme.spacing(2),
-    maxWidth: '85vw',
+    margin: theme.spacing(2),
     padding: theme.spacing(2),
-    width: 250,
   },
   cta: {
     width: 'initial',
+    maxWidth: 600,
+  },
+  about: {
+    width: 'initial',
+    maxWidth: 300,
+  },
+  quote: {
+    margin: 0,
+    marginLeft: 10,
+    padding: 0,
+  },
+  cite: {
+    display: 'block',
+    textAlign: 'right',
   },
 });
 
@@ -48,32 +60,36 @@ const Footer = (props) => {
         <Typography variant="h5" component="h2" gutterBottom align="center">
           About
         </Typography>
+
         <Typography variant="body1" component="p" paragraph>
-          Weather Winton is an {meta.description}
-          <sup>
-            <a href="https://twitter.com/louiechristie/status/1344077058570412034">
-              †
-            </a>
-          </sup>
+          Weather Winton is an experiment in friendly weather forecasting.
+        </Typography>
+
+        <Typography variant="body1" component="p" paragraph>
+          <blockquote className={classes.quote}>
+            <q>
+              Instead of broadcasting the weatherman... use local computing
+              intelligence to transform them into a voice report, a printed map,
+              or an animated cartoon with your favorite Disney character...
+              whatever way you want
+            </q>
+            <cite className={classes.cite}>
+              - Nicholas Negropronte (1995). <br />
+              Being digital. New York: Knopf. p.55
+              <sup>
+                <a href="https://twitter.com/louiechristie/status/1344077058570412034">
+                  †
+                </a>
+              </sup>
+            </cite>
+          </blockquote>{' '}
         </Typography>
       </Paper>
 
-      <Paper className={[classes.note, classes.about]}>
+      <Paper className={classes.note}>
         <Typography variant="body2" component="p" paragraph align="center">
-          Last updated: {meta.timeStamp}
-        </Typography>
-        <Typography variant="body2" component="p" paragraph align="center">
-          Weather data: Met Office
-        </Typography>
-
-        <Typography
-          variant="body2"
-          component="p"
-          color="inherit"
-          paragraph
-          align="center"
-        >
-          Weather Winton ©️ {dayjs().year()} v{meta.version}
+          Last updated: {meta.timeStamp}; Weather data: Met Office; Weather
+          Winton ©️ {dayjs().year()} v{meta.version}; Tags: user experience, UX
         </Typography>
 
         <Typography
