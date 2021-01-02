@@ -9,11 +9,9 @@ import getIsStickyFromCelsiusAndRelativeHumidity from '../utilities/getIsStickyF
 const styles = (theme) => ({
   ul: {
     margin: 0,
-    padding: theme.spacing(2),
-
+    padding: 0,
+    paddingTop: theme.spacing(4),
     listStyleType: 'none',
-    textIndent: 0,
-
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-start',
@@ -21,8 +19,11 @@ const styles = (theme) => ({
   },
   li: {
     flex: 1,
-    marginBottom: theme.spacing(2),
+    marginBottom: theme.spacing(4),
     textIndent: 0,
+    listStyle: 'none',
+    margin: 0,
+    padding: 0,
   },
 });
 

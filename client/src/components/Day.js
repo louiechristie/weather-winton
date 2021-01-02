@@ -1,7 +1,6 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import Chip from '@material-ui/core/Chip';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
@@ -14,12 +13,17 @@ import {
 
 const styles = (theme) => ({
   card: {
+    // borderWidth: 2,
+    // borderColor: 'red',
+    // borderStyle: 'solid',
     boxSizing: 'borderBox',
+    aspectRatio: 1 / 1,
+    minWidth: 250,
+    maxWidth: '80vw',
     paddingTop: theme.spacing(2),
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
   },
   svgIcon: {
     width: 48 * 2,
@@ -46,12 +50,13 @@ const styles = (theme) => ({
     borderRadius: 32 / 2,
   },
   temperatureOuter: {
+    width: '100%',
     marginTop: '5px',
     display: 'flex',
     flexDirection: 'row',
   },
   temperatureContainer: {
-    minWidth: '200px',
+    width: '100%',
     display: 'flex',
     flexDirection: 'column',
     borderRadius: '4px',
@@ -300,108 +305,114 @@ function Day(props) {
 
   return (
     <Card key={time} className={classes.card} align="center">
-      <Typography variant="h5" component="h2">
-        {friendlyDate}
-      </Typography>
-      {/* <Typography variant="h6" component="p">
+      <div>
+        <Typography variant="h5" component="h2">
+          {friendlyDate}
+        </Typography>
+        {/* <Typography variant="h6" component="p">
         Time: {time}
       </Typography> */}
-      <img className={classes.svgIcon} src={icon} alt={description} />
-      <Typography className={classes.description} variant="h6" component="p">
-        {description}
-      </Typography>
-      <Box style={{ flex: 1 }}>
-        {isSticky && (
-          <Chip
-            label={'Sticky 💦'}
-            className={`${classes.chip} ${classes.stick}`}
-          />
-        )}
+      </div>
+      <div>
+        <img className={classes.svgIcon} src={icon} alt={description} />
+        <Typography className={classes.description} variant="h6" component="p">
+          {description}
+        </Typography>
+      </div>
+      <div>
+        <Box style={{ flex: 1 }}>
+          {isSticky && (
+            <Chip
+              label={'Sticky 💦'}
+              className={`${classes.chip} ${classes.stick}`}
+            />
+          )}
 
-        {isDry && (
-          <Chip
-            label={'Dry eyes/skin 👁'}
-            className={`${classes.chip} ${classes.dry}
+          {isDry && (
+            <Chip
+              label={'Dry eyes/skin 👁'}
+              className={`${classes.chip} ${classes.dry}
             )}`}
-          />
-        )}
-        {(isOffTheScaleHot || isOffTheScaleCold) && (
-          <Chip
-            label={'Off the scale'}
-            className={`${classes.chip} ${classes.stick}`}
-          />
-        )}
-        {isTakeRaincoat && (
-          <Chip
-            label={'Take raincoat 🧥'}
-            className={`${classes.chip} ${classes.stick}`}
-          />
-        )}
-        <div className={classes.temperatureOuter}>
-          <Box
-            className={`${classes.swatch} ${minTemperature}`}
-            style={{ flex: 1 }}
-          >
-            <div>{isOffTheScaleCold && getNumberForScale(minTempInt)}</div>
+            />
+          )}
+          {(isOffTheScaleHot || isOffTheScaleCold) && (
+            <Chip
+              label={'Off the scale'}
+              className={`${classes.chip} ${classes.stick}`}
+            />
+          )}
+          {isTakeRaincoat && (
+            <Chip
+              label={'Take raincoat 🧥'}
+              className={`${classes.chip} ${classes.stick}`}
+            />
+          )}
+          <div className={classes.temperatureOuter}>
+            <Box
+              className={`${classes.swatch} ${minTemperature}`}
+              style={{ flex: 1 }}
+            >
+              <div>{isOffTheScaleCold && getNumberForScale(minTempInt)}</div>
 
-            {(isOffTheScaleCold || isOffTheScaleHot) && (
-              <div className="indicator" style={{ minWidth: '20px' }}>
-                {isOffTheScaleCold && getIndicator(minTempInt)}
-                {'\u00A0'}
-              </div>
-            )}
-          </Box>
+              {(isOffTheScaleCold || isOffTheScaleHot) && (
+                <div className="indicator" style={{ minWidth: '20px' }}>
+                  {isOffTheScaleCold && getIndicator(minTempInt)}
+                  {'\u00A0'}
+                </div>
+              )}
+            </Box>
 
-          <Box
-            className={`${
-              classes.temperatureContainer
-            } ${getTempFriendlyClassName(avgTempInt)}`}
-          >
-            <Box className={classes.colorScale}>
-              {temperatures.map((key) => {
-                const tempInt = parseInt(key, 10);
-                const tally = tempTallies[key];
+            <Box
+              className={`${
+                classes.temperatureContainer
+              } ${getTempFriendlyClassName(avgTempInt)}`}
+            >
+              <Box className={classes.colorScale}>
+                {temperatures.map((key) => {
+                  const tempInt = parseInt(key, 10);
+                  const tally = tempTallies[key];
 
-                return (
-                  <Box
-                    key={key}
-                    className={`
+                  return (
+                    <Box
+                      key={key}
+                      className={`
                         ${classes.swatch} 
                         ${getTempFriendlyClassName(tempInt)}
                         ${tempInt}`}
-                    style={{
-                      flex: tally,
-                      display: 'flex',
-                      flexDirection: 'column',
-                      justifyContent: 'flex-end',
-                    }}
-                  >
-                    <div>{getNumberForScale(tempInt)}</div>
-                    <div className={'indicator'}>{getIndicator(tempInt)}</div>
-                  </Box>
-                );
-              })}
+                      style={{
+                        flex: tally,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'flex-end',
+                      }}
+                    >
+                      <div>{getNumberForScale(tempInt)}</div>
+                      <div className={'indicator'}>{getIndicator(tempInt)}</div>
+                    </Box>
+                  );
+                })}
+              </Box>
+              <Box className={classes.temperature}>
+                {getTemperatureFriendly(avgTempInt)}
+              </Box>
             </Box>
-            <Box className={classes.temperature}>
-              {getTemperatureFriendly(avgTempInt)}
+
+            <Box
+              className={`${classes.swatch} ${maxTempInt}`}
+              style={{ flex: 1 }}
+            >
+              <div>{isOffTheScaleHot && getNumberForScale(maxTempInt)}</div>
+
+              {(isOffTheScaleHot || isOffTheScaleCold) && (
+                <div className="indicator" style={{ minWidth: '20px' }}>
+                  {'\u00A0'}
+                  {isOffTheScaleHot && getIndicator(maxTempInt)}
+                </div>
+              )}
             </Box>
-          </Box>
-
-          <Box
-            className={`${classes.swatch} ${maxTempInt}`}
-            style={{ flex: 1 }}
-          >
-            <div>{isOffTheScaleHot && getNumberForScale(maxTempInt)}</div>
-
-            {(isOffTheScaleHot || isOffTheScaleCold) && (
-              <div className="indicator" style={{ minWidth: '20px' }}>
-                {'\u00A0'}
-                {isOffTheScaleHot && getIndicator(maxTempInt)}
-              </div>
-            )}
-          </Box>
-        </div>
-      </Box>
+          </div>
+        </Box>
+      </div>
     </Card>
   );
 }

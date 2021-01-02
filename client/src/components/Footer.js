@@ -6,23 +6,26 @@ import { withStyles } from '@material-ui/core/styles';
 import { Paper } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 
-const styles = () => ({
+const styles = (theme) => ({
   footer: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    justifyContent: 'flex-start',
+    paddingBottom: theme.spacing(2),
   },
   note: {
+    boxSizing: 'border-box',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    margin: '10px',
-    padding: '10px',
-    maxWidth: '200px',
+    marginBottom: theme.spacing(2),
+    maxWidth: '85vw',
+    padding: theme.spacing(2),
+    width: 250,
   },
   cta: {
-    padding: '20px',
-    maxWidth: '400px',
+    width: 'initial',
   },
 });
 
