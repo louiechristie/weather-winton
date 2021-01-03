@@ -61,7 +61,7 @@ const styles = (theme) => ({
     marginLeft: 10,
     padding: 0,
   },
-  cite: {
+  inspiration: {
     display: 'block',
     textAlign: 'right',
   },
@@ -128,12 +128,13 @@ const WeatherContainer = ({ classes, pageContext: { items, meta } }) => {
           <Typography variant="h5" component="h2" gutterBottom align="center">
             About
           </Typography>
-
-          <Typography variant="body1" component="p" paragraph>
-            Weather Winton is an experiment in friendly weather forecasting.
+          <Typography variant="body1" component="p" paragraph align="left">
+            {meta.siteDescription}
           </Typography>
+        </Paper>
 
-          <Typography variant="body1" component="p" paragraph>
+        <Paper className={[classes.note, classes.about]}>
+          <Typography variant="body1" component="p" paragraph align="left">
             <blockquote className={classes.quote}>
               <q>
                 Instead of broadcasting the weatherman... use local computing
@@ -141,16 +142,19 @@ const WeatherContainer = ({ classes, pageContext: { items, meta } }) => {
                 map, or an animated cartoon with your favorite Disney
                 character... whatever way you want
               </q>
-              <cite className={classes.cite}>
-                - Nicholas Negropronte (1995). <br />
-                Being digital. New York: Knopf. p.55
-                <sup>
-                  <a href="https://twitter.com/louiechristie/status/1344077058570412034">
-                    †
-                  </a>
-                </sup>
-              </cite>
-            </blockquote>{' '}
+              <div className={classes.inspiration}>
+                - Inspiration from{' '}
+                <cite>
+                  Nicholas Negropronte (1995). Being digital. New York: Knopf.
+                  p.55
+                  <sup>
+                    <a href="https://twitter.com/louiechristie/status/1344077058570412034">
+                      †
+                    </a>
+                  </sup>
+                </cite>
+              </div>
+            </blockquote>
           </Typography>
         </Paper>
       </div>

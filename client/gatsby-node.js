@@ -95,17 +95,20 @@ exports.createPages = async ({ actions: { createPage } }) => {
   } catch (error) {
     console.log(error);
 
+    const now = dayjs();
+    const today = now.toISOString();
+
     const mock = [
       {
         friendlyDate: 'Today',
-        time: 'Sometimes',
+        time: today,
         description: PROBABLY_CLOUDY,
         icon: CLOUDY_IMAGE_SRC,
         temperature: null,
       },
       {
         friendlyDate: 'Sorry, problem getting forecast.',
-        time: '?',
+        time: today,
         description: `${error}`,
         icon: CLOUDY_IMAGE_SRC,
         temperature: null,
