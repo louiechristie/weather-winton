@@ -15,6 +15,10 @@ const styles = (theme) => ({
     paddingBottom: theme.spacing(2),
   },
   note: {
+    borderWidth: 1,
+    borderColor: 'black',
+    borderStyle: 'solid',
+    borderRadius: 5,
     boxSizing: 'border-box',
     display: 'flex',
     flexDirection: 'column',

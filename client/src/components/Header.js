@@ -43,7 +43,16 @@ function Header(props) {
   const { siteUrl, monetization } = data.site.siteMetadata;
 
   return (
-    <AppBar position="static">
+    <AppBar
+      position="static"
+      style={{
+        borderBottomWidth: 1,
+        borderBottomColor: 'black',
+        borderBottomStyle: 'solid',
+        borderBottomRadius: 20,
+        background: '#0075C4',
+      }}
+    >
       <Helmet>
         <link id="favicon" rel="icon" sizes="any" href={image} />
         <link rel="mask-icon" href={image} color="DimGrey" />

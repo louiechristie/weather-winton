@@ -13,13 +13,14 @@ import {
 
 const styles = (theme) => ({
   card: {
-    // borderWidth: 2,
-    // borderColor: 'red',
-    // borderStyle: 'solid',
+    borderWidth: 2,
+    borderColor: 'black',
+    borderStyle: 'solid',
+    borderRadius: 20,
     boxSizing: 'borderBox',
     aspectRatio: 1 / 1,
-    minWidth: 250,
-    maxWidth: '80vw',
+    minWidth: 280,
+    maxWidth: '90vw',
     paddingTop: theme.spacing(2),
     display: 'flex',
     flexDirection: 'column',
@@ -29,7 +30,7 @@ const styles = (theme) => ({
     width: 48 * 2,
     height: 48 * 2,
   },
-  description: { marginTop: 0, paddingTop: 0 },
+  description: { marginTop: 0, paddingTop: 0, marginBottom: theme.spacing(4) },
   chips: {
     display: 'flex',
     flexDirection: 'column',
@@ -42,12 +43,16 @@ const styles = (theme) => ({
     paddingTop: '5px',
     paddingBottom: '5px',
     backgroundColor: 'white',
-    color: '#3F51B5',
-    borderWidth: 3,
-    borderColor: '#3F51B5',
+    color: '#0075C4',
+    borderWidth: 2,
+    borderColor: '#0075C4',
     borderStyle: 'solid',
     fontSize: '1em',
-    borderRadius: 32 / 2,
+    borderRadius: 20,
+    fontSize: '1.25rem',
+    fontWeight: 500,
+    lineHeight: 1.6,
+    letterSpacing: '0.0075em',
   },
   temperatureOuter: {
     width: '100%',
@@ -72,9 +77,16 @@ const styles = (theme) => ({
     flex: 1,
     paddingTop: '4px',
     paddingBottom: '8px',
+    fontSize: '1.25rem',
+    fontWeight: 500,
+    lineHeight: 1.6,
+    letterSpacing: '0.0075em',
   },
   swatch: {
-    fontSize: '10px',
+    fontSize: '0.8rem',
+    fontWeight: 500,
+    lineHeight: 1.6,
+    letterSpacing: '0.0075em',
   },
   freezingSwatch: {
     flex: 18035,
@@ -89,9 +101,9 @@ const styles = (theme) => ({
     flex: 11,
   },
   warm: {
-    color: '#222222',
+    color: '#000',
     borderWidth: 0,
-    backgroundColor: '#ffbf00',
+    backgroundColor: '#F19E20',
   },
   hot: {
     color: 'white',
@@ -101,12 +113,12 @@ const styles = (theme) => ({
   cold: {
     color: 'white',
     borderWidth: 0,
-    backgroundColor: '#3F51B5',
+    backgroundColor: '#0075c4',
   },
   freezing: {
     color: 'white',
     borderWidth: 0,
-    backgroundColor: '#002984',
+    backgroundColor: '#004a93',
   },
   // minBorder: {
   //   borderColor: 'green',
@@ -165,7 +177,7 @@ function Day(props) {
   const minTempInt = Math.round(minTemperature);
   const maxTempInt = Math.round(maxTemperature);
 
-  const getTempFriendlyClassName = (temperature) => {
+  export const getTempFriendlyClassName = (temperature) => {
     if (getTemperatureFriendly(temperature) === 'Hot 🥵') {
       return `${classes.hot} hot`;
     }
