@@ -8,6 +8,7 @@ export default function formattedDateFromISODate(ISODate) {
   const theDate = dayjs(ISODate);
 
   if (!theDate.isValid()) {
+    console.error('Invalid date');
     throw new Error('Invalid date');
   }
 

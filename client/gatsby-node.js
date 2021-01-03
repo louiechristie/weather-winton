@@ -94,7 +94,7 @@ exports.createPages = async ({ actions: { createPage } }) => {
       context: { items, meta },
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
 
     const now = dayjs();
     const today = now.toISOString();
