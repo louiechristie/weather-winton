@@ -12,21 +12,35 @@ import Footer from '../components/Footer';
 
 const styles = (theme) => ({
   container: {},
-  warm: {
-    color: 'black',
-    backgroundColor: '#f1d220',
-  },
   hot: {
     color: 'white',
     backgroundColor: '#cc0605',
+    borderBottomColor: '#f1d220',
   },
-  cold: {
+  warmToHot: {
+    color: 'black',
+    backgroundColor: '#f1d220',
+    borderBottomColor: '#cc0605',
+  },
+  warmToCold: {
+    color: 'black',
+    backgroundColor: '#f1d220',
+    borderBottomColor: '#0075c4',
+  },
+  coldToWarm: {
     color: 'white',
     backgroundColor: '#0075c4',
+    borderBottomColor: '#f1d220',
+  },
+  coldToFreezing: {
+    color: 'white',
+    backgroundColor: '#0075c4',
+    borderBottomColor: '#004a93',
   },
   freezing: {
     color: 'white',
     backgroundColor: '#004a93',
+    borderBottomColor: '#0075c4',
   },
   blurb: {
     display: 'flex',
@@ -73,17 +87,27 @@ const WeatherContainer = ({ classes, pageContext: { items, meta } }) => {
 
   const todaysWeather = `${items[0]?.description || 'probably raining'}`;
 
-  const getTempFriendlyClassName = (temperature) => {
-    if (getTemperatureFriendly(temperature) === 'Hot 🥵') {
+  const getTempFriendlyClassName = (forecast) => {
+    console.log('forecast: ', forecast);
+    const avgTempInt = Math.round(forecast.avgTemperature);
+    const maxTempInt = Math.round(forecast.maxTemperature);
+
+    if (getTemperatureFriendly(avgTempInt) === 'Hot 🥵') {
       return `${classes.hot} hot`;
     }
-    if (getTemperatureFriendly(temperature) === 'Warm') {
-      return `${classes.warm} warm`;
+    if (getTemperatureFriendly(avgTempInt) === 'Warm') {
+      if (getTemperatureFriendly(Math.round(maxTempInt)) === 'Hot 🥵') {
+        return `${classes.warmToHot} warmToHot`;
+      }
+      return `${classes.warmToCold} warmToCold`;
     }
-    if (getTemperatureFriendly(temperature) === 'Cold') {
-      return `${classes.cold} cold`;
+    if (getTemperatureFriendly(avgTempInt) === 'Cold') {
+      if (getTemperatureFriendly(Math.round(maxTempInt)) === 'Warm') {
+        return `${classes.coldToWarm} coldToWarm`;
+      }
+      return `${classes.coldToFreezing} coldToFreezing`;
     }
-    if (getTemperatureFriendly(temperature) === 'Freezing 🥶') {
+    if (getTemperatureFriendly(avgTempInt) === 'Freezing 🥶') {
       return `${classes.freezing} freezing`;
     }
   };
@@ -95,9 +119,7 @@ const WeatherContainer = ({ classes, pageContext: { items, meta } }) => {
         description={meta.location}
         image={(items && items[0] && items[0].icon) || meta.defaultImageSrc}
         alt={todaysWeather || meta.defaultDescription}
-        temperatureClass={getTempFriendlyClassName(
-          Math.round(items[0]?.avgTemperature) || 21
-        )}
+        temperatureClass={getTempFriendlyClassName(items[0])}
         meta={meta}
       />
 
@@ -123,7 +145,7 @@ const WeatherContainer = ({ classes, pageContext: { items, meta } }) => {
           <Typography variant="h5" component="h2" gutterBottom align="center">
             About
           </Typography>
-          <Typography variant="body1" component="p" paragraph align="left">
+          <Typography variant="body1" component="p" paragraph align="center">
             {meta.siteDescription}
           </Typography>
         </Paper>

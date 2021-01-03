@@ -30,6 +30,7 @@ const meta = {
 exports.createPages = async ({ actions: { createPage } }) => {
   try {
     const result = await axios.get(GATSBY_API_URL);
+    // console.log('result: ', result);
 
     meta.timeStamp = `${dayjs(result.headers['last-modified']).format(
       'YYYY-MM-DD HHmm'

@@ -17,7 +17,7 @@ const styles = (theme) => ({
     borderColor: 'black',
     borderStyle: 'solid',
     borderRadius: 5,
-    boxSizing: 'borderBox',
+    boxSizing: 'border-box',
     aspectRatio: 1 / 1,
     minWidth: 250,
     maxWidth: '90vw',
@@ -58,13 +58,14 @@ const styles = (theme) => ({
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
-    // borderRadius: '4px',
+    minWidth: 250,
+    borderRadius: '5px 5px 0 0',
   },
   colorScale: {
     flex: 1,
     display: 'flex',
     flexDirection: 'row',
-    // borderRadius: '4px 4px 0 0',
+    // borderRadius: '5px 5px 0 0',
     overflow: 'hidden',
   },
   scaleNumber: {
@@ -299,7 +300,10 @@ function Day(props) {
             />
           )}
           {(isOffTheScaleHot || isOffTheScaleCold) && (
-            <Chip label={'Off the scale'} className={classes.chip} />
+            <Chip
+              label={`Off the scale ${isOffTheScaleHot ? 'hot' : 'cold'}`}
+              className={classes.chip}
+            />
           )}
           {isTakeRaincoat && (
             <Chip
@@ -313,10 +317,8 @@ function Day(props) {
               className={`${classes.swatch} ${minTemperature}`}
               style={{ flex: 1 }}
             >
-              <div>
-                <Typography variant="body2" component="p">
-                  {isOffTheScaleCold && getNumberForScale(minTempInt)}{' '}
-                </Typography>
+              <div className={classes.scaleNumber}>
+                {isOffTheScaleCold && getNumberForScale(minTempInt)}{' '}
               </div>
 
               {(isOffTheScaleCold || isOffTheScaleHot) && (
@@ -374,10 +376,13 @@ function Day(props) {
               className={`${classes.swatch} ${maxTempInt}`}
               style={{ flex: 1 }}
             >
-              <div>{isOffTheScaleHot && getNumberForScale(maxTempInt)}</div>
+              <div className={classes.scaleNumber}>
+                {' '}
+                {isOffTheScaleHot && getNumberForScale(maxTempInt)}
+              </div>
 
               {(isOffTheScaleHot || isOffTheScaleCold) && (
-                <div className="indicator" style={{ minWidth: '20px' }}>
+                <div className={classes.indicator} style={{ minWidth: '20px' }}>
                   {'\u00A0'}
                   {isOffTheScaleHot && getIndicator(maxTempInt)}
                 </div>

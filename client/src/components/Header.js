@@ -55,7 +55,6 @@ function Header(props) {
       position="static"
       style={{
         borderBottomWidth: 4,
-        borderBottomColor: '#004895',
         borderBottomStyle: 'solid',
         borderBottomRadius: 20,
       }}
