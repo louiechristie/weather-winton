@@ -17,6 +17,7 @@ const styles = (theme) => ({
     borderTopStyle: 'solid',
     borderTopRadius: 20,
     backgroundColor: '#F8F8F8',
+    marginBottom: 0,
   },
 });
 

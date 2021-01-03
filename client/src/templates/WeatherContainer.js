@@ -47,14 +47,10 @@ const styles = (theme) => ({
     alignItems: 'center',
     margin: theme.spacing(2),
     padding: theme.spacing(2),
+    maxWidth: 250,
   },
   cta: {
-    width: 'initial',
     maxWidth: 600,
-  },
-  about: {
-    width: 'initial',
-    maxWidth: 300,
   },
   quote: {
     margin: 0,
