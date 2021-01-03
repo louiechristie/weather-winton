@@ -1,6 +1,6 @@
 {
   "name": "weather-winton",
-  "title": "Weather Winton: South London",
+  "title": "Weather Winton",
   "description": "Experimental app for innovative user experience in weather forecasting. Inspired by Negroponte, N. (1995). Being digital. New York: Knopf. p.55",
   "version": "0.8.4",
   "private": true,

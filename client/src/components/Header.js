@@ -17,6 +17,11 @@ const styles = {
   logo: {
     width: '48px',
     height: '48px',
+    backgroundColor: 'white',
+    borderWidth: 0,
+    borderStyle: 'solid',
+    borderColor: 'black',
+    borderRadius: 48,
   },
   titles: {
     display: 'flex',
@@ -25,41 +30,47 @@ const styles = {
 };
 
 function Header(props) {
-  const { classes, title, description, image, alt, url } = props;
+  const {
+    classes,
+    title,
+    description,
+    image,
+    alt,
+    url,
+    temperatureClass,
+    meta: {
+      siteTitle,
+      siteDescription,
+      siteUrl,
+      monetization,
+      todaysWeather,
+      location,
+    },
+  } = props;
 
-  const data = useStaticQuery(
-    graphql`
-      query {
-        site {
-          siteMetadata {
-            siteUrl
-            monetization
-          }
-        }
-      }
-    `
-  );
-
-  const { siteUrl, monetization } = data.site.siteMetadata;
+  console.log('siteUrl' + siteUrl);
 
   return (
     <AppBar
       position="static"
       style={{
-        borderBottomWidth: 1,
-        borderBottomColor: 'black',
+        borderBottomWidth: 4,
+        borderBottomColor: '#004895',
         borderBottomStyle: 'solid',
         borderBottomRadius: 20,
-        background: '#0075C4',
       }}
+      className={temperatureClass}
     >
       <Helmet>
         <link id="favicon" rel="icon" sizes="any" href={image} />
         <link rel="mask-icon" href={image} color="DimGrey" />
         <title>{title}</title>
         <meta name="description" content={description} />
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
+        <meta
+          property="og:title"
+          content={`${todaysWeather} in ${location} | ${siteTitle}`}
+        />
+        <meta property="og:description" content={siteDescription} />
         <meta
           property="og:image"
           content={`${siteUrl}/og-image-${dayjs().format('YYYY-MM-DD')}.png`}
@@ -67,18 +78,13 @@ function Header(props) {
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="600" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={url} />
+        <meta property="og:url" content={siteUrl} />
         <meta name="twitter:card" content="summary" />
         <meta name="monetization" content={monetization} />
       </Helmet>
 
       <Toolbar>
-        <IconButton
-          edge="start"
-          className={classes.menuButton}
-          color="inherit"
-          aria-label="menu"
-        >
+        <IconButton edge="start" color="inherit" aria-label="menu">
           <img className={classes.logo} src={image} alt={alt} />
         </IconButton>
         <div className={classes.titles}>

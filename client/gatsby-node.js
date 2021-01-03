@@ -16,21 +16,20 @@ const { GATSBY_SITE_URL, GATSBY_API_URL } = process.env;
 const { title, description, author, version } = package;
 
 const meta = {
-  title,
-  description,
-  defaultDescription: PROBABLY_CLOUDY,
-  defaultImageSrc: CLOUDY_IMAGE_SRC,
-  siteURL: GATSBY_SITE_URL,
+  siteTitle: title,
+  siteDescription: description,
+  siteUrl: `${GATSBY_SITE_URL}`,
+  monetization: `$ilp.gatehub.net/484331722`,
   author,
   version,
   timeStamp: null,
+  todaysWeather: 'probably raining',
+  location: 'South London',
 };
 
 exports.createPages = async ({ actions: { createPage } }) => {
   try {
     const result = await axios.get(GATSBY_API_URL);
-
-    console.log('result: ', result);
 
     meta.timeStamp = `${dayjs(result.headers['last-modified']).format(
       'YYYY-MM-DD HHmm'
@@ -46,8 +45,11 @@ exports.createPages = async ({ actions: { createPage } }) => {
       'hour'
     );
 
+    console.log(
+      `data fetched last-modified: ${result.headers['last-modified']}`
+    );
     console.log('foreCastHoursOutOfDate', foreCastHoursOutOfDate);
-    console.log('firstDayHoursOutOfDate', firstDayHoursOutOfDate);
+    // console.log('firstDayHoursOutOfDate', firstDayHoursOutOfDate);
 
     if (
       foreCastHoursOutOfDate >= 12 ||
@@ -82,6 +84,8 @@ exports.createPages = async ({ actions: { createPage } }) => {
       .png()
       .resize(48)
       .toFile(`public/favicon.ico`);
+
+    meta.todaysWeather = items[0]?.description;
 
     createPage({
       path: `/`,

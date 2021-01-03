@@ -16,43 +16,37 @@ const styles = (theme) => ({
     borderWidth: 2,
     borderColor: 'black',
     borderStyle: 'solid',
-    borderRadius: 20,
+    // borderRadius: 20,
     boxSizing: 'borderBox',
     aspectRatio: 1 / 1,
-    minWidth: 280,
+    minWidth: 250,
     maxWidth: '90vw',
     paddingTop: theme.spacing(2),
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
   },
+  friendlyDate: {
+    marginBottom: -theme.spacing(2),
+  },
   svgIcon: {
     width: 48 * 2,
     height: 48 * 2,
   },
-  description: { marginTop: 0, paddingTop: 0, marginBottom: theme.spacing(4) },
+  description: {
+    marginTop: -theme.spacing(2),
+    paddingTop: 0,
+    marginBottom: theme.spacing(1),
+  },
   chips: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
   },
   chip: {
-    flex: 1,
-    marginTop: '5px',
-    marginBottom: '5px',
-    paddingTop: '5px',
-    paddingBottom: '5px',
-    backgroundColor: 'white',
-    color: '#0075C4',
-    borderWidth: 2,
-    borderColor: '#0075C4',
-    borderStyle: 'solid',
-    fontSize: '1em',
-    borderRadius: 20,
-    fontSize: '1.25rem',
-    fontWeight: 500,
-    lineHeight: 1.6,
-    letterSpacing: '0.0075em',
+    marginBottom: theme.spacing(1),
+    fontSize: '1rem',
+    borderRadius: 5,
   },
   temperatureOuter: {
     width: '100%',
@@ -64,30 +58,29 @@ const styles = (theme) => ({
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
-    borderRadius: '4px',
+    // borderRadius: '4px',
   },
   colorScale: {
     flex: 1,
     display: 'flex',
     flexDirection: 'row',
-    borderRadius: '4px 4px 0 0',
+    // borderRadius: '4px 4px 0 0',
     overflow: 'hidden',
+  },
+  scaleNumber: {
+    fontSize: '0.8rem',
+    lineHeight: '1.2rem',
+  },
+  indicator: {
+    fontSize: '0.6rem',
+    lineHeight: '0.6rem',
   },
   temperature: {
     flex: 1,
     paddingTop: '4px',
     paddingBottom: '8px',
-    fontSize: '1.25rem',
-    fontWeight: 500,
-    lineHeight: 1.6,
-    letterSpacing: '0.0075em',
   },
-  swatch: {
-    fontSize: '0.8rem',
-    fontWeight: 500,
-    lineHeight: 1.6,
-    letterSpacing: '0.0075em',
-  },
+  swatch: {},
   freezingSwatch: {
     flex: 18035,
   },
@@ -101,9 +94,9 @@ const styles = (theme) => ({
     flex: 11,
   },
   warm: {
-    color: '#000',
+    color: 'black',
     borderWidth: 0,
-    backgroundColor: '#F19E20',
+    backgroundColor: '#f1d220',
   },
   hot: {
     color: 'white',
@@ -120,30 +113,6 @@ const styles = (theme) => ({
     borderWidth: 0,
     backgroundColor: '#004a93',
   },
-  // minBorder: {
-  //   borderColor: 'green',
-  //   borderWidth: 1,
-  //   borderRightWidth: 0,
-  //   borderStyle: 'dashed',
-  //   borderTopLeftRadius: 4,
-  //   borderBottomLeftRadius: 4,
-
-  // },
-  // maxBorder: {
-  //   borderColor: 'green',
-  //   borderWidth: 1,
-  //   borderLeftWidth: 0,
-  //   borderStyle: 'dashed',
-  //   borderTopRightRadius: 4,
-  //   borderBottomRightRadius: 4,
-  // },
-  // middleBorder: {
-  //   borderColor: 'green',
-  //   borderWidth: 0,
-  //   borderTopWidth: 1,
-  //   borderBottomWidth: 1,
-  //   borderStyle: 'dashed',
-  // },
   dry: {
     color: '#cc0605',
     borderColor: '#cc0605',
@@ -177,7 +146,7 @@ function Day(props) {
   const minTempInt = Math.round(minTemperature);
   const maxTempInt = Math.round(maxTemperature);
 
-  export const getTempFriendlyClassName = (temperature) => {
+  const getTempFriendlyClassName = (temperature) => {
     if (getTemperatureFriendly(temperature) === 'Hot 🥵') {
       return `${classes.hot} hot`;
     }
@@ -191,22 +160,6 @@ function Day(props) {
       return `${classes.freezing} freezing`;
     }
   };
-
-  // const getBorderClassName = temperature => {
-  //   if (temperature === minTempInt) {
-  //     return classes.minBorder;
-  //   }
-  //   if (temperature === maxTempInt) {
-  //     return classes.maxBorder;
-  //   }
-  //   if (
-  //     (temperature > minTempInt)
-  //     &&
-  //     (temperature < maxTempInt)) {
-  //     return classes.middleBorder;
-  //   }
-  //   return '';
-  // };
 
   const spacer = 3;
 
@@ -318,7 +271,11 @@ function Day(props) {
   return (
     <Card key={time} className={classes.card} align="center">
       <div>
-        <Typography variant="h5" component="h2">
+        <Typography
+          variant="h5"
+          component="h2"
+          className={classes.friendlyDate}
+        >
           {friendlyDate}
         </Typography>
         {/* <Typography variant="h6" component="p">
@@ -333,30 +290,22 @@ function Day(props) {
       </div>
       <div>
         <Box style={{ flex: 1 }}>
-          {isSticky && (
-            <Chip
-              label={'Sticky 💦'}
-              className={`${classes.chip} ${classes.stick}`}
-            />
-          )}
+          {isSticky && <Chip label={'Sticky 💦'} className={classes.chip} />}
 
           {isDry && (
             <Chip
               label={'Dry eyes/skin 👁'}
-              className={`${classes.chip} ${classes.dry}
-            )}`}
+              className={`${classes.chip} ${classes.dry}`}
             />
           )}
           {(isOffTheScaleHot || isOffTheScaleCold) && (
-            <Chip
-              label={'Off the scale'}
-              className={`${classes.chip} ${classes.stick}`}
-            />
+            <Chip label={'Off the scale'} className={classes.chip} />
           )}
           {isTakeRaincoat && (
             <Chip
               label={'Take raincoat 🧥'}
-              className={`${classes.chip} ${classes.stick}`}
+              variant="outlined"
+              className={classes.chip}
             />
           )}
           <div className={classes.temperatureOuter}>
@@ -364,12 +313,18 @@ function Day(props) {
               className={`${classes.swatch} ${minTemperature}`}
               style={{ flex: 1 }}
             >
-              <div>{isOffTheScaleCold && getNumberForScale(minTempInt)}</div>
+              <div>
+                <Typography variant="body2" component="p">
+                  {isOffTheScaleCold && getNumberForScale(minTempInt)}{' '}
+                </Typography>
+              </div>
 
               {(isOffTheScaleCold || isOffTheScaleHot) && (
                 <div className="indicator" style={{ minWidth: '20px' }}>
-                  {isOffTheScaleCold && getIndicator(minTempInt)}
-                  {'\u00A0'}
+                  <Typography variant="body2" component="p">
+                    {isOffTheScaleCold && getIndicator(minTempInt)}
+                    {'\u00A0'}
+                  </Typography>
                 </div>
               )}
             </Box>
@@ -398,14 +353,20 @@ function Day(props) {
                         justifyContent: 'flex-end',
                       }}
                     >
-                      <div>{getNumberForScale(tempInt)}</div>
-                      <div className={'indicator'}>{getIndicator(tempInt)}</div>
+                      <div className={classes.scaleNumber}>
+                        {getNumberForScale(tempInt)}
+                      </div>
+                      <div className={classes.indicator}>
+                        {getIndicator(tempInt)}
+                      </div>
                     </Box>
                   );
                 })}
               </Box>
               <Box className={classes.temperature}>
-                {getTemperatureFriendly(avgTempInt)}
+                <Typography variant="body1" component="p">
+                  {getTemperatureFriendly(avgTempInt)}
+                </Typography>
               </Box>
             </Box>
 

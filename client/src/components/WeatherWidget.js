@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Day from './Day';
-
 import { getIsTooDryFromRelativeHumidity } from '../utilities/getComfortFromRelativeHumidity';
-
 import getIsStickyFromCelsiusAndRelativeHumidity from '../utilities/getIsStickyFromCelsiusAndRelativeHumidity';
 
 const styles = (theme) => ({
