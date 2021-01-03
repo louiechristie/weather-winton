@@ -13,7 +13,6 @@ import Footer from '../components/Footer';
 const styles = (theme) => ({
   container: {},
   warm: {
-    borderWidth: 0,
     color: 'black',
     backgroundColor: '#f1d220',
   },
@@ -97,7 +96,7 @@ const WeatherContainer = ({ classes, pageContext: { items, meta } }) => {
         image={(items && items[0] && items[0].icon) || meta.defaultImageSrc}
         alt={todaysWeather || meta.defaultDescription}
         temperatureClass={getTempFriendlyClassName(
-          items[0]?.avgTemperature || 21
+          Math.round(items[0]?.avgTemperature) || 21
         )}
         meta={meta}
       />
