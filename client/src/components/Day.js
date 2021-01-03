@@ -16,7 +16,7 @@ const styles = (theme) => ({
     borderWidth: 2,
     borderColor: 'black',
     borderStyle: 'solid',
-    // borderRadius: 20,
+    borderRadius: 5,
     boxSizing: 'borderBox',
     aspectRatio: 1 / 1,
     minWidth: 250,

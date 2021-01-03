@@ -40,7 +40,7 @@ const styles = (theme) => ({
     borderWidth: 2,
     borderColor: 'black',
     borderStyle: 'solid',
-    // borderRadius: 5,
+    borderRadius: 5,
     boxSizing: 'border-box',
     display: 'flex',
     flexDirection: 'column',
