@@ -27,6 +27,60 @@ const meta = {
   location: 'South London',
 };
 
+function getIsTooHotForRoomTemperatureFromCelsius(celsius) {
+  // the maximum should be below 24 °C (75 °F) – and to avoid sick building syndrome, below 22 °C (72 °F).[3]
+  // From https://en.wikipedia.org/wiki/Room_temperature Accessed 2019-12-28
+  if (celsius > 24) {
+    return true;
+  }
+  return false;
+}
+
+function getIsTooColdForRoomTemperatureFromCelsius(celsius) {
+  // The World Health Organization's standard ...
+  // For those with respiratory problems or allergies, they recommend no less than 16 °C */
+  // From https://en.wikipedia.org/wiki/Room_temperature Accessed 2019-12-28
+  if (celsius < 16) {
+    return true;
+  }
+  return false;
+}
+
+function getIsFrostyFromCelsius(celsius) {
+  // Frost is likely below 4 degrees celsius
+  // https://www.metoffice.gov.uk/weather/learn-about/weather/types-of-weather/frost-and-ice/forecasting-frost
+  if (celsius <= 4) {
+    return true;
+  }
+}
+
+function getIsComfortableRoomTemperatureFromCelsius(celsius) {
+  // The World Health Organization's standard ...
+  // For those with respiratory problems or allergies, they recommend no less than 16 °C */
+  // From https://en.wikipedia.org/wiki/Room_temperature Accessed 2019-12-28
+  if (
+    !getIsTooHotForRoomTemperatureFromCelsius &&
+    getIsTooColdForRoomTemperatureFromCelsius
+  ) {
+    return true;
+  }
+  return false;
+}
+
+function getTemperatureColor(celsius) {
+  if (!isFinite(celsius)) return null;
+  if (getIsTooHotForRoomTemperatureFromCelsius(celsius)) {
+    return '#cc0605';
+  }
+  if (getIsFrostyFromCelsius(celsius)) {
+    return '#004a93';
+  }
+  if (getIsTooColdForRoomTemperatureFromCelsius(celsius)) {
+    return '#0075c4';
+  }
+  return '#f1d220';
+}
+
 exports.createPages = async ({ actions: { createPage } }) => {
   try {
     const result = await axios.get(GATSBY_API_URL);
@@ -64,6 +118,8 @@ exports.createPages = async ({ actions: { createPage } }) => {
 
     const items = result.data;
     const today = items[0];
+    const backgroundColor =
+      getTemperatureColor(today.avgTemperature) || '#000000';
 
     const input = (
       await axios({
@@ -73,18 +129,24 @@ exports.createPages = async ({ actions: { createPage } }) => {
     ).data;
 
     const ogImage = await sharp(input, { density: 450 })
-      .flatten({ background: { r: 255, g: 255, b: 255 } })
+      .flatten({ background: backgroundColor })
       .resize(1200, 630, {
         fit: 'contain',
-        background: { r: 255, g: 255, b: 255, alpha: 1 },
+        background: backgroundColor,
       })
       .png()
       .toFile(`public/og-image-${dayjs().format('YYYY-MM-DD')}.png`);
 
     const favicon = await sharp(input, { density: 450 })
+      .flatten({ background: backgroundColor })
       .png()
       .resize(48)
       .toFile(`public/favicon.ico`);
+
+    const appleTouchIcon = await sharp(input, { density: 450 })
+      .flatten({ background: backgroundColor })
+      .resize(150)
+      .toFile(`public/apple-touch-icon.png`);
 
     meta.todaysWeather = items[0]?.description;
 
