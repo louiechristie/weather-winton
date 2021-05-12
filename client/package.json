@@ -14,7 +14,7 @@
     "develop": "yarn gatsby develop",
     "build": "yarn gatsby build",
     "serve": "yarn gatsby serve",
-    "deploy": "netlify deploy --prod",
+    "deploy": "yarn netlify deploy --prod",
     "test": "yarn jest --watchAll"
   },
   "dependencies": {
@@ -26,10 +26,11 @@
     "gatsby-plugin-html-attributes": "^1.0.5",
     "gatsby-plugin-material-ui": "^2.1.10",
     "gatsby-plugin-no-javascript": "^2.0.5",
-    "gatsby-plugin-react-helmet": "^3.3.10",
-    "netlify": "^6.0.7",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
+    "gatsby-plugin-react-helmet": "^4.5.0",
+    "netlify": "^6.1.29",
+    "netlify-cli": "^3.29.5",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "react-helmet": "^6.1.0",
     "sharp": "^0.26.0"
   },
