@@ -1,4 +1,5 @@
 **/serviceWorker.js
 .env*
 /build
-/node_modules
+/node_module
+.next

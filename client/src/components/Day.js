@@ -9,7 +9,7 @@ import {
   getIsTooColdForRoomTemperatureFromCelsius,
   getIsFrostyFromCelsius,
   getTemperatureFriendly,
-} from '../utilities/getRoomTemperatureComfortFromCelsius';
+} from '/src/utilities/getRoomTemperatureComfortFromCelsius';
 
 const styles = (theme) => ({
   card: {

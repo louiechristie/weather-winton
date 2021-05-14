@@ -16,8 +16,8 @@ Inspired by Negroponte, N. (1995). Being digital. New York: Knopf. p.55.
 
 Set up environment variables:
 
-- GATSBY_SITE_URL - url of client website for social sharing using Open Graph
-- GATSBY_API_URL - url of the api
+- SITE_URL - url of client website for social sharing using Open Graph
+- API_URL - url of the api
 
 ## Getting started
 

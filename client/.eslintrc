@@ -1,5 +1,5 @@
 {
-  "extends": ["prettier", "prettier/react"],
+  "extends": ["prettier"],
   "plugins": ["prettier"],
   "rules": {
     "react/jsx-filename-extension": [
