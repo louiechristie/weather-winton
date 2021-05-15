@@ -45,7 +45,7 @@ function SEO(props) {
       />
       <link
         rel="apple-touch-icon"
-        href={`${siteUrl}/apple-touch-icon.png`}
+        href={`${siteUrl}/apple-touch-icon-${dayjs().format('YYYY-MM-DD')}.png`}
       ></link>
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="600" />
