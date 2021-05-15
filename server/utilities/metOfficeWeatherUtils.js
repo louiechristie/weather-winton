@@ -46,8 +46,7 @@ function getDescriptionFromMetOfficeWeatherCode(code) {
 
 function getEmojiFromMetOfficeWeatherCode(code) {
   const weatherTypes = {
-    NA:
-      'https://www.metoffice.gov.uk/webfiles/latest/images/icons/weather/NA.svg?cachebust=1',
+    NA: 'https://www.metoffice.gov.uk/webfiles/latest/images/icons/weather/NA.svg?cachebust=1',
     0: 'https://www.metoffice.gov.uk/webfiles/latest/images/icons/weather/0.svg?cachebust=1',
     1: 'https://www.metoffice.gov.uk/webfiles/latest/images/icons/weather/1.svg?cachebust=1',
     2: 'https://www.metoffice.gov.uk/webfiles/latest/images/icons/weather/2.svg?cachebust=1',
