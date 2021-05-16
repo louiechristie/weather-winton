@@ -14,5 +14,6 @@ module.exports = {
     `gatsby-plugin-material-ui`,
     `gatsby-plugin-no-javascript`,
     `gatsby-plugin-postcss`,
+    `gatsby-plugin-gatsby-cloud`,
   ],
 };
