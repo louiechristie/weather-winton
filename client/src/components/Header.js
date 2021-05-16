@@ -48,7 +48,7 @@ function Header(props) {
     },
   } = props;
 
-  console.log('siteUrl' + siteUrl);
+  console.log('siteUrl: ' + siteUrl);
 
   return (
     <AppBar
@@ -72,16 +72,16 @@ function Header(props) {
         <meta property="og:description" content={siteDescription} />
         <meta
           property="og:image"
-          content={`${siteUrl}og-image-${dayjs().format('YYYY-MM-DD')}.png`}
+          content={`${siteUrl}/og-image-${dayjs().format('YYYY-MM-DD')}.png`}
         />
         <link
           rel="apple-touch-icon"
-          href={`${siteUrl}apple-touch-icon.png`}
+          href={`${siteUrl}/apple-touch-icon.png`}
         ></link>
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="600" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={siteUrl} />
+        <meta property="og:url" content={`${siteUrl}/` />
         <meta name="twitter:card" content="summary" />
         <meta name="monetization" content={monetization} />
       </Helmet>
