@@ -81,7 +81,7 @@ function Header(props) {
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="600" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={`${siteUrl}/` />
+        <meta property="og:url" content={`${siteUrl}/`} />
         <meta name="twitter:card" content="summary" />
         <meta name="monetization" content={monetization} />
       </Helmet>
@@ -96,7 +96,7 @@ function Header(props) {
           </Typography>
           <Typography variant="body1" component="p" className={classes.title}>
             {description}
-          </Typography>
+            </Typography>
         </div>
       </Toolbar>
     </AppBar>

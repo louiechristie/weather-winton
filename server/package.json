@@ -1,16 +1,15 @@
 {
   "name": "weather-winton-server",
-  "version": "0.9.1",
+  "version": "0.11.0",
   "private": true,
   "author": {
     "name": "Louie Christie",
     "url": "https://www.louiechristie.com/"
   },
   "scripts": {
-    "dev": "yarn nodemon app.js",
-    "start": "yarn node app.js",
-    "start:prod": "NODE_ENV=production node app.js",
-    "lint": "yarn eslint '**/*.js' --ignore-path .gitignore"
+    "dev": "nodemon app.js",
+    "start": "NODE_ENV=production node app.js",
+    "lint": "eslint '**/*.js' --ignore-path .gitignore"
   },
   "husky": {
     "hooks": {
@@ -36,11 +35,16 @@
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.14.2",
+    "@babel/preset-env": "^7.14.2",
+    "@typescript-eslint/eslint-plugin": "^4.23.0",
+    "@typescript-eslint/parser": "^4.23.0",
+    "babel-eslint": "^10.1.0",
     "eslint": "^7.26.0",
     "eslint-cli": "^1.1.1",
-    "eslint-config-airbnb": "18.2.1",
     "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-import": "^2.22.1",
+    "eslint-config-universe": "^7.0.1",
+    "eslint-plugin-import": "^2.23.0",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react": "^7.23.2",
@@ -49,6 +53,7 @@
     "lint-staged": "^11.0.0",
     "markdownlint-cli": "^0.27.1",
     "nodemon": "^2.0.7",
-    "prettier": "^2.3.0"
+    "prettier": "^2.3.0",
+    "typescript": "^4.2.4"
   }
 }

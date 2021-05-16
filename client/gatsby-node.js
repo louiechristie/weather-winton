@@ -2,23 +2,22 @@ require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`,
 });
 
-const dayjs = require('dayjs');
-
 const axios = require('axios');
+const dayjs = require('dayjs');
 const sharp = require('sharp');
-const package = require('./package.json');
+
+const manifest = require('./package.json');
 
 const CLOUDY_IMAGE_SRC =
   'https://www.metoffice.gov.uk/webfiles/latest/images/icons/weather/7.svg';
 const PROBABLY_CLOUDY = 'Probably Cloudy';
-const { GATSBY_SITE_URL, GATSBY_API_URL } = process.env;
 
-const { title, description, author, version } = package;
+const { title, description, author, version } = manifest;
 
 const meta = {
   siteTitle: title,
   siteDescription: description,
-  siteUrl: `${GATSBY_SITE_URL}`,
+  siteUrl: process.env.GATSBY_SITE_URL,
   monetization: `$ilp.gatehub.net/484331722`,
   author,
   version,
@@ -83,8 +82,8 @@ function getTemperatureColor(celsius) {
 
 exports.createPages = async ({ actions: { createPage } }) => {
   try {
-    const result = await axios.get(GATSBY_API_URL);
-    // console.log('result: ', result);
+    const result = await axios.get(process.env.GATSBY_API_URL);
+    console.log('result: ', result);
 
     meta.timeStamp = `${dayjs(result.headers['last-modified']).format(
       'YYYY-MM-DD HHmm'
@@ -116,39 +115,39 @@ exports.createPages = async ({ actions: { createPage } }) => {
       );
     }
 
-    const items = result.data;
+    const items = result.data || [];
     const today = items[0];
     const backgroundColor =
       getTemperatureColor(today.avgTemperature) || '#000000';
 
-    const input = (
-      await axios({
-        url: today.icon,
-        responseType: 'arraybuffer',
-      })
-    ).data;
+    // const input = (
+    //   await axios({
+    //     url: today.icon,
+    //     responseType: 'arraybuffer',
+    //   })
+    // ).data;
 
-    const ogImage = await sharp(input, { density: 450 })
-      .flatten({ background: backgroundColor })
-      .resize(1200, 630, {
-        fit: 'contain',
-        background: backgroundColor,
-      })
-      .png()
-      .toFile(`public/og-image-${dayjs().format('YYYY-MM-DD')}.png`);
+    // const ogImage = await sharp(input, { density: 450 })
+    //   .flatten({ background: backgroundColor })
+    //   .resize(1200, 630, {
+    //     fit: 'contain',
+    //     background: backgroundColor,
+    //   })
+    //   .png()
+    //   .toFile(`public/og-image-${dayjs().format('YYYY-MM-DD')}.png`);
 
-    const favicon = await sharp(input, { density: 450 })
-      .flatten({ background: backgroundColor })
-      .png()
-      .resize(48)
-      .toFile(`public/favicon.ico`);
+    // const favicon = await sharp(input, { density: 450 })
+    //   .flatten({ background: backgroundColor })
+    //   .png()
+    //   .resize(48)
+    //   .toFile(`public/favicon.ico`);
 
-    const appleTouchIcon = await sharp(input, { density: 450 })
-      .flatten({ background: backgroundColor })
-      .resize(150)
-      .toFile(`public/apple-touch-icon.png`);
+    // const appleTouchIcon = await sharp(input, { density: 450 })
+    //   .flatten({ background: backgroundColor })
+    //   .resize(150)
+    //   .toFile(`public/apple-touch-icon.png`);
 
-    meta.todaysWeather = items[0]?.description;
+    meta.todaysWeather = today?.description;
 
     createPage({
       path: `/`,
