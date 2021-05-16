@@ -4,7 +4,13 @@ require('dotenv').config({
 
 const axios = require('axios');
 const dayjs = require('dayjs');
+const timezone = require('dayjs/plugin/timezone');
+const utc = require('dayjs/plugin/utc');
 const sharp = require('sharp');
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.tz.setDefault('Europe/London');
 
 const manifest = require('./package.json');
 
