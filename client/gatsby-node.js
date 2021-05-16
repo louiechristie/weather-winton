@@ -24,6 +24,7 @@ const meta = {
   timeStamp: null,
   todaysWeather: 'probably raining',
   location: 'South London',
+  ogImage: `og-image-${dayjs().format('YYYY-MM-DD')}.png`,
 };
 
 function getIsTooHotForRoomTemperatureFromCelsius(celsius) {
@@ -120,32 +121,32 @@ exports.createPages = async ({ actions: { createPage } }) => {
     const backgroundColor =
       getTemperatureColor(today.avgTemperature) || '#000000';
 
-    // const input = (
-    //   await axios({
-    //     url: today.icon,
-    //     responseType: 'arraybuffer',
-    //   })
-    // ).data;
+    const input = (
+      await axios({
+        url: today.icon,
+        responseType: 'arraybuffer',
+      })
+    ).data;
 
-    // const ogImage = await sharp(input, { density: 450 })
-    //   .flatten({ background: backgroundColor })
-    //   .resize(1200, 630, {
-    //     fit: 'contain',
-    //     background: backgroundColor,
-    //   })
-    //   .png()
-    //   .toFile(`public/og-image-${dayjs().format('YYYY-MM-DD')}.png`);
+    await sharp(input, { density: 450 })
+      .flatten({ background: backgroundColor })
+      .resize(1200, 630, {
+        fit: 'contain',
+        background: backgroundColor,
+      })
+      .png()
+      .toFile(`public/${meta.ogImage}`);
 
-    // const favicon = await sharp(input, { density: 450 })
-    //   .flatten({ background: backgroundColor })
-    //   .png()
-    //   .resize(48)
-    //   .toFile(`public/favicon.ico`);
+    await sharp(input, { density: 450 })
+      .flatten({ background: backgroundColor })
+      .png()
+      .resize(48)
+      .toFile(`public/favicon.ico`);
 
-    // const appleTouchIcon = await sharp(input, { density: 450 })
-    //   .flatten({ background: backgroundColor })
-    //   .resize(150)
-    //   .toFile(`public/apple-touch-icon.png`);
+    await sharp(input, { density: 450 })
+      .flatten({ background: backgroundColor })
+      .resize(150)
+      .toFile(`public/apple-touch-icon.png`);
 
     meta.todaysWeather = today?.description;
 

@@ -1,12 +1,12 @@
-import React from 'react';
+import AppBar from '@material-ui/core/AppBar';
+import IconButton from '@material-ui/core/IconButton';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
 import dayjs from 'dayjs';
 import { useStaticQuery, graphql } from 'gatsby';
+import React from 'react';
 import { Helmet } from 'react-helmet';
-import { withStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
 
 const styles = {
   root: {
@@ -45,6 +45,7 @@ function Header(props) {
       monetization,
       todaysWeather,
       location,
+      ogImage,
     },
   } = props;
 
@@ -70,14 +71,8 @@ function Header(props) {
           content={`${todaysWeather} in ${location} | ${siteTitle}`}
         />
         <meta property="og:description" content={siteDescription} />
-        <meta
-          property="og:image"
-          content={`${siteUrl}/og-image-${dayjs().format('YYYY-MM-DD')}.png`}
-        />
-        <link
-          rel="apple-touch-icon"
-          href={`${siteUrl}/apple-touch-icon.png`}
-        ></link>
+        <meta property="og:image" content={`${siteUrl}/${ogImage}`} />
+        <link rel="apple-touch-icon" href={`${siteUrl}/apple-touch-icon.png`} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="600" />
         <meta property="og:type" content="website" />
@@ -96,7 +91,7 @@ function Header(props) {
           </Typography>
           <Typography variant="body1" component="p" className={classes.title}>
             {description}
-            </Typography>
+          </Typography>
         </div>
       </Toolbar>
     </AppBar>
