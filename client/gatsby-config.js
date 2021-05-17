@@ -14,6 +14,21 @@ module.exports = {
     `gatsby-plugin-material-ui`,
     `gatsby-plugin-no-javascript`,
     `gatsby-plugin-postcss`,
-    `gatsby-plugin-gatsby-cloud`,
+    {
+      resolve: `gatsby-plugin-gatsby-cloud`,
+      options: {
+        headers: {
+          '/favicon.ico': [
+            'cache-control: public, max-age=0, must-revalidate,',
+          ],
+          '/apple-touch-icon.png': [
+            'cache-control: public, max-age=0, must-revalidate,',
+          ],
+          '/og-image-*.png': [
+            'cache-control: public, max-age=0, must-revalidate,',
+          ],
+        },
+      },
+    },
   ],
 };
