@@ -30,7 +30,7 @@ const meta = {
   timeStamp: null,
   todaysWeather: 'probably raining',
   location: 'South London',
-  ogImage: `og-image-${dayjs().format('YYYY-MM-DD')}.png`,
+  ogImage: `og-image-${dayjs().tz().format('YYYY-MM-DD')}.png`,
 };
 
 function getIsTooHotForRoomTemperatureFromCelsius(celsius) {
@@ -92,9 +92,9 @@ exports.createPages = async ({ actions: { createPage } }) => {
     const result = await axios.get(process.env.GATSBY_API_URL);
     console.log('result: ', result);
 
-    meta.timeStamp = `${dayjs(result.headers['last-modified']).format(
-      'YYYY-MM-DD HHmm'
-    )}`;
+    meta.timeStamp = `${dayjs(result.headers['last-modified'])
+      .tz()
+      .format('YYYY-MM-DD HHmm')}`;
 
     const foreCastHoursOutOfDate = dayjs(new Date()).diff(
       result.headers['last-modified'],

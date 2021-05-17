@@ -1,5 +1,11 @@
 const dayjs = require('dayjs');
 const isSameOrAfter = require('dayjs/plugin/isSameOrAfter');
+const timezone = require('dayjs/plugin/timezone');
+const utc = require('dayjs/plugin/utc');
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.tz.setDefault('Europe/London');
 
 const log = require('./log');
 
@@ -98,7 +104,7 @@ function getItemsFromMetOfficeJSON(json) {
   log(`json: ${JSON.stringify(json, null, '  ')}`);
 
   const filter = (day) => {
-    return dayjs(day.time).isSameOrAfter(dayjs(), 'day');
+    return dayjs(day.time).tz().isSameOrAfter(dayjs(), 'day');
   };
 
   const items = json.features[0].properties.timeSeries
