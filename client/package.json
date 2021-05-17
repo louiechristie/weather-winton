@@ -11,7 +11,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run build && npm run",
-    "dev": "gatsby develop",
+    "dev": "gatsby develop -H 0.0.0.0",
     "build": "gatsby build",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
@@ -23,6 +23,7 @@
     "@material-ui/core": "^4.11.4",
     "@material-ui/styles": "^4.11.4",
     "axios": "^0.21.1",
+    "color": "^3.1.3",
     "dayjs": "^1.10.4",
     "gatsby": "^3.5.0",
     "gatsby-cli": "^3.5.0",

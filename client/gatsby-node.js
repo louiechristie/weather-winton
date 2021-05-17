@@ -1,8 +1,8 @@
 require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`,
 });
-
 const axios = require('axios');
+const Color = require('color');
 const dayjs = require('dayjs');
 const timezone = require('dayjs/plugin/timezone');
 const utc = require('dayjs/plugin/utc');
@@ -125,7 +125,8 @@ exports.createPages = async ({ actions: { createPage } }) => {
     const items = result.data || [];
     const today = items[0];
     const backgroundColor =
-      getTemperatureColor(today.avgTemperature) || '#000000';
+      Color(getTemperatureColor(today.avgTemperature)).lighten(0.75).hex() ||
+      '#FFFFFF';
 
     const input = (
       await axios({
@@ -151,10 +152,10 @@ exports.createPages = async ({ actions: { createPage } }) => {
 
     await sharp(input, { density: 450 })
       .flatten({ background: backgroundColor })
-      .resize(150)
+      .resize(180)
       .toFile(`public/apple-touch-icon.png`);
 
-    meta.todaysWeather = today?.description;
+    meta.todaysWeather = `It's ${today.description.toLowerCase()}`;
 
     createPage({
       path: `/`,
