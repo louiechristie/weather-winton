@@ -74,7 +74,7 @@ function Header(props) {
         <meta property="og:description" content={siteDescription} />
         <meta property="og:image" content={`${siteUrl}/${ogImage}`} />
         <link rel="apple-touch-icon" href={`${siteUrl}/apple-touch-icon.png`} />
-        <meta name="apple-mobile-web-app-title" content={todaysWeather} />
+        <meta name="apple-mobile-web-app-title" content={title} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="600" />
         <meta property="og:type" content="website" />
