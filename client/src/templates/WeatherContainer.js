@@ -1,14 +1,14 @@
-import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import formattedDateFromISODate from '../utilities/formattedDateFromISODate';
-import dayjs from 'dayjs';
-
-import Header from '../components/Header';
-import WeatherWidget from '../components/WeatherWidget';
-import { getTemperatureFriendly } from '../utilities/getRoomTemperatureComfortFromCelsius';
 import { Paper } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
+import dayjs from 'dayjs';
+import React from 'react';
+
 import Footer from '../components/Footer';
+import Header from '../components/Header';
+import WeatherWidget from '../components/WeatherWidget';
+import formattedDateFromISODate from '../utilities/formattedDateFromISODate';
+import { getTemperatureFriendly } from '../utilities/getRoomTemperatureComfortFromCelsius';
 
 const styles = (theme) => ({
   container: {},
@@ -131,7 +131,7 @@ const WeatherContainer = ({ classes, pageContext: { items, meta } }) => {
 
       <div className={classes.blurb}>
         <Paper className={[classes.note, classes.cta]}>
-          <Typography variant="h6" component="h6" gutterBottom align="center">
+          <Typography variant="h6" component="h2" gutterBottom align="center">
             <a href="https://www.louiechristie.com/blog/contact/">
               Want me to build you an app or website?
             </a>
