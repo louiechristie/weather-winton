@@ -25,7 +25,7 @@ module.exports = {
             'cache-control: public, max-age=0, must-revalidate,',
           ],
           '/og-image-*.png': [
-            'cache-control: public, max-age=0, must-revalidate,',
+            'cache-control: public, max-age: 31536000, immutable,',
           ],
         },
       },

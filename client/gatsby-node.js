@@ -30,7 +30,7 @@ const meta = {
   timeStamp: null,
   todaysWeather: 'probably raining',
   location: 'South London',
-  ogImage: `og-image-${dayjs().tz().format('YYYY-MM-DD')}.png`,
+  ogImage: `og-image-${dayjs().tz().format('YYYY-MM-DD-HH:mm:ss')}.png`,
 };
 
 function getIsTooHotForRoomTemperatureFromCelsius(celsius) {
