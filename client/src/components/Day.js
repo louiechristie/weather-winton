@@ -1,15 +1,10 @@
-import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import Chip from '@material-ui/core/Chip';
 import Box from '@material-ui/core/Box';
+import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
-import {
-  getIsTooHotForRoomTemperatureFromCelsius,
-  getIsTooColdForRoomTemperatureFromCelsius,
-  getIsFrostyFromCelsius,
-  getTemperatureFriendly,
-} from '../utilities/getRoomTemperatureComfortFromCelsius';
+import { withStyles } from '@material-ui/core/styles';
+import React from 'react';
+
+import { getTemperatureFriendly } from '../utilities/getRoomTemperatureComfortFromCelsius';
 
 const styles = (theme) => ({
   card: {
@@ -38,12 +33,12 @@ const styles = (theme) => ({
     paddingTop: 0,
     marginBottom: theme.spacing(1),
   },
-  chips: {
+  labels: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
   },
-  chip: {
+  label: {
     marginBottom: theme.spacing(1),
     fontSize: '1rem',
     borderRadius: 5,
@@ -290,27 +285,25 @@ function Day(props) {
         </Typography>
       </div>
       <div>
-        <Box style={{ flex: 1 }}>
-          {isSticky && <Chip label={'Sticky 💦'} className={classes.chip} />}
+        <Box className={classes.labels}>
+          {isSticky && (
+            <div variant="outlined" className={classes.label}>
+              Sticky 💦
+            </div>
+          )}
 
           {isDry && (
-            <Chip
-              label={'Dry eyes/skin 👁'}
-              className={`${classes.chip} ${classes.dry}`}
-            />
+            <div className={`${classes.label} ${classes.dry}`}>
+              Dry eyes/skin 👁
+            </div>
           )}
           {(isOffTheScaleHot || isOffTheScaleCold) && (
-            <Chip
-              label={`Off the scale ${isOffTheScaleHot ? 'hot' : 'cold'}`}
-              className={classes.chip}
-            />
+            <div variant="outlined" className={classes.label}>{`Off the scale ${
+              isOffTheScaleHot ? 'hot 🥵' : 'cold 🥶'
+            }`}</div>
           )}
           {isTakeRaincoat && (
-            <Chip
-              label={'Take raincoat 🧥'}
-              variant="outlined"
-              className={classes.chip}
-            />
+            <div className={classes.label}>Take raincoat 🧥</div>
           )}
           <div className={classes.temperatureOuter}>
             <Box
