@@ -1,8 +1,11 @@
-import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import Day from './Day';
+import dayjs from 'dayjs';
+import { Link } from 'gatsby';
+import React, { Component } from 'react';
+
 import { getIsTooDryFromRelativeHumidity } from '../utilities/getComfortFromRelativeHumidity';
 import getIsStickyFromCelsiusAndRelativeHumidity from '../utilities/getIsStickyFromCelsiusAndRelativeHumidity';
+import Day from './Day';
 
 const styles = (theme) => ({
   ul: {
@@ -23,6 +26,7 @@ const styles = (theme) => ({
     margin: 0,
     padding: 0,
   },
+  link: { textDecoration: 'none' },
 });
 
 class WeatherWidget extends Component {
@@ -45,21 +49,28 @@ class WeatherWidget extends Component {
           } = item;
           return (
             <li key={time} className={classes.li}>
-              <Day
-                friendlyDate={friendlyDate}
-                time={time}
-                icon={icon}
-                description={description}
-                minTemperature={minTemperature}
-                maxTemperature={maxTemperature}
-                avgTemperature={avgTemperature}
-                isSticky={getIsStickyFromCelsiusAndRelativeHumidity(
-                  avgTemperature,
-                  relativeHumidity
-                )}
-                isDry={getIsTooDryFromRelativeHumidity(relativeHumidity)}
-                isTakeRaincoat={isTakeRaincoat}
-              />
+              <Link
+                className={`${classes.link}`}
+                to={`https://www.metoffice.gov.uk/weather/forecast/gcpuyudzk#?nearestTo=New%20Cross%20(Lewisham)&date=${dayjs(
+                  time
+                ).format('YYYY-MM-DD')}`}
+              >
+                <Day
+                  friendlyDate={friendlyDate}
+                  time={time}
+                  icon={icon}
+                  description={description}
+                  minTemperature={minTemperature}
+                  maxTemperature={maxTemperature}
+                  avgTemperature={avgTemperature}
+                  isSticky={getIsStickyFromCelsiusAndRelativeHumidity(
+                    avgTemperature,
+                    relativeHumidity
+                  )}
+                  isDry={getIsTooDryFromRelativeHumidity(relativeHumidity)}
+                  isTakeRaincoat={isTakeRaincoat}
+                />
+              </Link>
             </li>
           );
         })}
