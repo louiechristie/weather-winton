@@ -88,7 +88,7 @@ app.get('/forecast', async (req, res) => {
   }
 });
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5001;
 app.listen(port);
 
 log(`Node environment: ${process.env.NODE_ENV}`);
