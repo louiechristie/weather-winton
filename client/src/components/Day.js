@@ -168,8 +168,12 @@ function Day(props) {
       // If a decent temp change show range
       if (isMinTemp) return tempInt;
       if (isMaxTemp) return tempInt;
-      if (isAvgTemp && avgTempInt - minTempInt >= spacer) return tempInt;
-      if (isAvgTemp && maxTempInt - avgTempInt >= spacer) return tempInt;
+      if (
+        isAvgTemp &&
+        avgTempInt - minTempInt >= spacer &&
+        maxTempInt - avgTempInt >= spacer
+      )
+        return tempInt;
     } else {
       // Else show avg only decent temp change
       if (isAvgTemp) return tempInt;
@@ -198,13 +202,13 @@ function Day(props) {
 
     if (maxTempInt - minTempInt >= spacer) {
       // If a decent temp change show range
-      // If a decent temp change show range
+      if (isAvgTemp && isMaxTemp) return '▲'; // If max same as avg show min and avg
       if (isMinTemp) return '⇤';
       if (isMaxTemp) return '⇥';
       if (isAvgTemp && !isMinTemp) return '▲';
       if (isAvgTemp && !isMaxTemp) return '▲';
     } else {
-      // Else show avg only decent temp change
+      // Else show avg only
       if (isAvgTemp) return '▲';
     }
 

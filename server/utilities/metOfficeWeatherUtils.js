@@ -128,7 +128,7 @@ function getItemsFromMetOfficeJSON(json) {
         ),
         avgTemperature: avg(
           day.dayMaxScreenTemperature,
-          day.nightMinScreenTemperature
+          day.dayLowerBoundMaxTemp
         ),
         relativeHumidity: day.middayRelativeHumidity,
         isTakeRaincoat:
