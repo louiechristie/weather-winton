@@ -11,13 +11,13 @@ const getItemsFromMetOfficeJSON = require('./utilities/metOfficeWeatherUtils');
 
 const app = express();
 
-const metOfficeAPIUrl = process.env.URL;
-const metOfficeHourlyWeatherUrl = process.env.MET_HOURLY_WEATHER_URL;
+const metOfficeDailyWeatherUrl = process.env.MET_WEATHER_DAILY_URL;
+const metOfficeHourlyWeatherUrl = process.env.MET_WEATHER_HOURLY_URL;
 
 const headers = {
   accept: 'application/json',
-  'x-ibm-client-id': process.env.CLIENT_ID,
-  'x-ibm-client-secret': process.env.CLIENT_SECRET,
+  'x-ibm-client-id': process.env.MET_WEATHER_ID,
+  'x-ibm-client-secret': process.env.MET_WEATHER_SECRET,
 };
 
 app.use(express.json());
@@ -83,7 +83,7 @@ const getMockForecast = async () => {
 app.get('/forecast', async (req, res) => {
   if (process.env.NODE_ENV === 'production') {
     try {
-      const items = await getForecast(metOfficeAPIUrl);
+      const items = await getForecast(metOfficeDailyWeatherUrl);
       res.setHeader('Cache-Control', 'public, max-age=21600');
       res.setHeader('Last-Modified', new Date().toUTCString());
       res.json(items);
