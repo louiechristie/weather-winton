@@ -4,13 +4,15 @@ const express = require('express');
 const fetch = require('node-fetch');
 const path = require('path');
 
-const mockMetOfficeJSON = require('./tests/mockMetOfficeJSON');
+const mockDailyMetOfficeJSON = require('./tests/mockDailyMetOfficeJSON');
+const mockHourlyMetOfficeJSON = require('./tests/mockHourlyMetOfficeJSON');
 const log = require('./utilities/log');
 const getItemsFromMetOfficeJSON = require('./utilities/metOfficeWeatherUtils');
 
 const app = express();
 
 const metOfficeAPIUrl = process.env.URL;
+const metOfficeHourlyWeatherUrl = process.env.MET_HOURLY_WEATHER_URL;
 
 const headers = {
   accept: 'application/json',
@@ -25,7 +27,7 @@ app.use(express.static(path.join(__dirname, '/public/')));
 app.get('/', (req, res) => {
   try {
     res.sendFile(path.join(__dirname, '/public/', 'index.html'));
-    res.setHeader('Cache-Control', `public, max-age=${60 * 60 * 12}`);
+    res.setHeader('Cache-Control', `public, max-age=${60 * 60}`);
     res.setHeader('Last-Modified', new Date().toUTCString());
   } catch (error) {
     log(error);
@@ -44,20 +46,38 @@ const getForecast = async (url) => {
   // const text = await response.text();
   // log('text: ' + text);
   log(`response: ${response}`);
-  const json = await response.json();
+  const dailyJson = await response.json();
   if (!response) {
     throw new Error('No response from server.');
   }
   if (!response.ok) {
     throw new Error(JSON.stringify(response, null, '  '));
   }
-  const items = getItemsFromMetOfficeJSON(json);
+
+  const hourlyResponse = await fetch(metOfficeHourlyWeatherUrl, {
+    headers,
+  });
+  // const text = await hourlyResponse.text();
+  // log('text: ' + text);
+  log(`hourlyResponse: ${hourlyResponse}`);
+  const hourlyJson = await hourlyResponse.json();
+  if (!hourlyResponse) {
+    throw new Error('No hourlyResponse from server.');
+  }
+  if (!hourlyResponse.ok) {
+    throw new Error(JSON.stringify(hourlyResponse, null, '  '));
+  }
+
+  const items = getItemsFromMetOfficeJSON(dailyJson, hourlyJson);
   return items;
 };
 
 const getMockForecast = async () => {
   log('getMockForecast');
-  return getItemsFromMetOfficeJSON(mockMetOfficeJSON());
+  return getItemsFromMetOfficeJSON(
+    mockDailyMetOfficeJSON(),
+    mockHourlyMetOfficeJSON()
+  );
 };
 
 app.get('/forecast', async (req, res) => {

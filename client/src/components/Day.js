@@ -132,13 +132,13 @@ function Day(props) {
     description,
     minTemperature,
     maxTemperature,
-    avgTemperature,
+    indicativeTemperature,
     isSticky,
     isDry,
     isTakeRaincoat,
   } = props;
 
-  const avgTempInt = Math.round(avgTemperature);
+  const indicativeTempInt = Math.round(indicativeTemperature);
   const minTempInt = Math.round(minTemperature);
   const maxTempInt = Math.round(maxTemperature);
 
@@ -160,7 +160,7 @@ function Day(props) {
   const spacer = 3;
 
   const getNumberForScale = (tempInt) => {
-    const isAvgTemp = tempInt === avgTempInt;
+    const isIndicativeTemp = tempInt === indicativeTempInt;
     const isMinTemp = tempInt === minTempInt;
     const isMaxTemp = tempInt === maxTempInt;
 
@@ -169,26 +169,27 @@ function Day(props) {
       if (isMinTemp) return tempInt;
       if (isMaxTemp) return tempInt;
       if (
-        isAvgTemp &&
-        avgTempInt - minTempInt >= spacer &&
-        maxTempInt - avgTempInt >= spacer
+        isIndicativeTemp &&
+        indicativeTempInt - minTempInt >= spacer &&
+        maxTempInt - indicativeTempInt >= spacer
       )
         return tempInt;
     } else {
-      // Else show avg only decent temp change
-      if (isAvgTemp) return tempInt;
+      // Else show indicative only decent temp change
+      if (isIndicativeTemp) return tempInt;
     }
 
     if (tempInt % 10 === 0) {
       //temperature is a multiple of ten e.g. 0, 10, 20
-      const isAwayFromAvgTemp =
-        tempInt < avgTempInt - spacer || tempInt > avgTempInt + spacer;
+      const isAwayFromIndicativeTemp =
+        tempInt < indicativeTempInt - spacer ||
+        tempInt > indicativeTempInt + spacer;
       const isAwayFromMinTemp =
         tempInt < minTempInt - spacer || tempInt > minTempInt + spacer;
       const isAwayFromMaxTemp =
         tempInt < maxTempInt - spacer || tempInt > maxTempInt + spacer;
 
-      if (isAwayFromAvgTemp && isAwayFromMinTemp && isAwayFromMaxTemp)
+      if (isAwayFromIndicativeTemp && isAwayFromMinTemp && isAwayFromMaxTemp)
         return tempInt;
     }
 
@@ -196,20 +197,20 @@ function Day(props) {
   };
 
   const getIndicator = (tempInt) => {
-    const isAvgTemp = tempInt === avgTempInt;
+    const isIndicativeTemp = tempInt === indicativeTempInt;
     const isMinTemp = tempInt === minTempInt;
     const isMaxTemp = tempInt === maxTempInt;
 
     if (maxTempInt - minTempInt >= spacer) {
       // If a decent temp change show range
-      if (isAvgTemp && isMaxTemp) return '▲'; // If max same as avg show min and avg
+      if (isIndicativeTemp && isMaxTemp) return '▲'; // If max same as indicative show min and indicative
       if (isMinTemp) return '⇤';
       if (isMaxTemp) return '⇥';
-      if (isAvgTemp && !isMinTemp) return '▲';
-      if (isAvgTemp && !isMaxTemp) return '▲';
+      if (isIndicativeTemp && !isMinTemp) return '▲';
+      if (isIndicativeTemp && !isMaxTemp) return '▲';
     } else {
-      // Else show avg only
-      if (isAvgTemp) return '▲';
+      // Else show indicative only
+      if (isIndicativeTemp) return '▲';
     }
 
     return '\u00A0';
@@ -331,7 +332,7 @@ function Day(props) {
             <Box
               className={`${
                 classes.temperatureContainer
-              } ${getTempFriendlyClassName(avgTempInt)}`}
+              } ${getTempFriendlyClassName(indicativeTempInt)}`}
             >
               <Box className={classes.colorScale}>
                 {temperatures.map((key) => {
@@ -364,7 +365,7 @@ function Day(props) {
               </Box>
               <Box className={classes.temperature}>
                 <Typography variant="body1" component="p">
-                  {getTemperatureFriendly(avgTempInt)}
+                  {getTemperatureFriendly(indicativeTempInt)}
                 </Typography>
               </Box>
             </Box>

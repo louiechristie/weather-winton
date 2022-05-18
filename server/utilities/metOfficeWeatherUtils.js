@@ -100,14 +100,15 @@ function avg(max, min) {
   return (max + min) / 2;
 }
 
-function getItemsFromMetOfficeJSON(json) {
-  log(`json: ${JSON.stringify(json, null, '  ')}`);
+function getItemsFromMetOfficeJSON(dailyJson, hourlyJson) {
+  log(`dailyJson: ${JSON.stringify(dailyJson, null, '  ')}`);
+  log(`hourlyJson: ${JSON.stringify(hourlyJson, null, '  ')}`);
 
   const filter = (day) => {
     return dayjs(day.time).tz().isSameOrAfter(dayjs(), 'day');
   };
 
-  const items = json.features[0].properties.timeSeries
+  const items = dailyJson.features[0].properties.timeSeries
     .filter(filter)
     .map((day) => {
       return {
@@ -136,6 +137,16 @@ function getItemsFromMetOfficeJSON(json) {
           day.nightProbabilityOfPrecipitation > 50,
       };
     });
+
+  const thisHourFilter = (hour) => {
+    return dayjs(hour.time).tz().isSame(dayjs(), 'hour');
+  };
+
+  const temperatureNow =
+    hourlyJson.features[0].properties.timeSeries.filter(thisHourFilter)[0]
+      .screenTemperature;
+
+  items[0].currentTemperature = temperatureNow;
 
   return items;
 }
