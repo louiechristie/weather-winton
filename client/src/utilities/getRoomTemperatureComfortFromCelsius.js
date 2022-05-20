@@ -39,7 +39,7 @@ export function getIsComfortableRoomTemperatureFromCelsius(celsius) {
 }
 
 export function getTemperatureFriendly(celsius) {
-  if(!isFinite(celsius)) return null;
+  if (!isFinite(celsius)) return null;
   if (getIsTooHotForRoomTemperatureFromCelsius(celsius)) {
     return 'Hot 🥵';
   }
@@ -50,4 +50,4 @@ export function getTemperatureFriendly(celsius) {
     return 'Cold';
   }
   return 'Warm';
-};
+}

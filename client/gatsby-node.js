@@ -1,3 +1,22 @@
+// Can't import module because Gatsby doesn't support ESM
+// const getTemperatureFriendly = require('./src/utilities/getRoomTemperatureComfortFromCelsius');
+
+// So copy the function here
+// Remove after upgrade to Gatsby 4.9+ (which supports TypeScript)
+function getTemperatureFriendly(celsius) {
+  if (!isFinite(celsius)) return null;
+  if (getIsTooHotForRoomTemperatureFromCelsius(celsius)) {
+    return 'Hot 🥵';
+  }
+  if (getIsFrostyFromCelsius(celsius)) {
+    return 'Freezing 🥶';
+  }
+  if (getIsTooColdForRoomTemperatureFromCelsius(celsius)) {
+    return 'Cold';
+  }
+  return 'Warm';
+}
+
 require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`,
 });
@@ -155,7 +174,9 @@ exports.createPages = async ({ actions: { createPage } }) => {
       .resize(180)
       .toFile(`public/apple-touch-icon.png`);
 
-    meta.todaysWeather = `It's ${today.description.toLowerCase()}`;
+    meta.todaysWeather = `It's ${getTemperatureFriendly(
+      today.avgTemperature
+    ).toLowerCase()} and ${today.description.toLowerCase()}`;
 
     createPage({
       path: `/`,

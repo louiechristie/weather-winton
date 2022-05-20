@@ -132,6 +132,7 @@ function Day(props) {
     description,
     minTemperature,
     maxTemperature,
+    avgTemperature,
     indicativeTemperature,
     isSticky,
     isDry,
@@ -332,7 +333,7 @@ function Day(props) {
             <Box
               className={`${
                 classes.temperatureContainer
-              } ${getTempFriendlyClassName(indicativeTempInt)}`}
+              } ${getTempFriendlyClassName(avgTemperature)}`}
             >
               <Box className={classes.colorScale}>
                 {temperatures.map((key) => {
@@ -365,7 +366,7 @@ function Day(props) {
               </Box>
               <Box className={classes.temperature}>
                 <Typography variant="body1" component="p">
-                  {getTemperatureFriendly(indicativeTempInt)}
+                  {getTemperatureFriendly(avgTemperature)}
                 </Typography>
               </Box>
             </Box>
