@@ -6,7 +6,7 @@ let hour = -2;
 
 const getMockDate = () => {
   hour++;
-  return now.add(hour, 'hour').toISOString();
+  return now.startOf('hour').add(hour, 'hour').toISOString();
 };
 
 const mockMetOfficeJSON = {
@@ -66,7 +66,7 @@ const mockMetOfficeJSON = {
           },
           {
             time: getMockDate(),
-            screenTemperature: 15.28,
+            screenTemperature: 22,
             maxScreenAirTemp: 15.28,
             minScreenAirTemp: 14.09,
             screenDewPointTemperature: 9.39,

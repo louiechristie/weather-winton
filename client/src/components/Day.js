@@ -204,11 +204,9 @@ function Day(props) {
 
     if (maxTempInt - minTempInt >= spacer) {
       // If a decent temp change show range
-      if (isIndicativeTemp && isMaxTemp) return '▲'; // If max same as indicative show min and indicative
+      if (isIndicativeTemp) return '▲';
       if (isMinTemp) return '⇤';
       if (isMaxTemp) return '⇥';
-      if (isIndicativeTemp && !isMinTemp) return '▲';
-      if (isIndicativeTemp && !isMaxTemp) return '▲';
     } else {
       // Else show indicative only
       if (isIndicativeTemp) return '▲';
