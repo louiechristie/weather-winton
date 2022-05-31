@@ -36,8 +36,6 @@ test(`getTemperatureFriendly: very hot`, () => {
   expect(getTemperatureFriendly(50)).toBe('Hot 🥵');
 });
 
-
-
 test('"string" celsius to equal null', () => {
   expect(getTemperatureFriendly('string')).toBe(null);
 });
