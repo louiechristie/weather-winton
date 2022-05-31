@@ -79,11 +79,11 @@ const mockMetOfficeJSON = {
             screenRelativeHumidity: 67.66,
             mslp: 102184,
             uvIndex: 4,
-            significantWeatherCode: 3,
+            significantWeatherCode: 10,
             precipitationRate: 0.0,
             totalPrecipAmount: 0.0,
             totalSnowAmount: 0,
-            probOfPrecipitation: 0,
+            probOfPrecipitation: 49,
           },
           {
             time: getMockDate(),

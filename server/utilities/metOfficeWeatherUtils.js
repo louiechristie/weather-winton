@@ -133,8 +133,10 @@ function getItemsFromMetOfficeJSON(dailyJson, hourlyJson) {
         ),
         relativeHumidity: day.middayRelativeHumidity,
         isTakeRaincoat:
-          day.dayProbabilityOfPrecipitation > 50 ||
-          day.nightProbabilityOfPrecipitation > 50,
+          day.dayProbabilityOfPrecipitation >= 50 ||
+          day.nightProbabilityOfPrecipitation >= 50 ||
+          day.daySignificantWeatherCode > 9 ||
+          day.nightSignificantWeatherCode > 9,
       };
     });
 
@@ -142,11 +144,38 @@ function getItemsFromMetOfficeJSON(dailyJson, hourlyJson) {
     return dayjs(hour.time).tz().isSame(dayjs().add(1, 'hour'), 'hour');
   };
 
+  const timeSeries = hourlyJson.features[0].properties.timeSeries;
+
   const temperatureOnNextHour =
-    hourlyJson.features[0].properties.timeSeries.filter(thisHourFilter)[0]
-      .screenTemperature;
+    timeSeries.filter(thisHourFilter)[0].screenTemperature;
 
   items[0].indicativeTemperature = temperatureOnNextHour;
+
+  const getIsHourNeedsRaincoat = (hour) => {
+    return hour.probOfPrecipitation >= 50 || hour.significantWeatherCode > 9;
+  };
+
+  const getIsHourIMightGetWetToday = (hour) => {
+    return (
+      dayjs(hour.time).tz() >= dayjs().startOf('hour').add(1, 'hour') &&
+      dayjs(hour.time).tz() <= dayjs().endOf('day')
+    );
+  };
+
+  const isTakeRaincoatToday = timeSeries.reduce((acc, nextHour) => {
+    if (acc === true) return acc;
+
+    if (
+      getIsHourIMightGetWetToday(nextHour) &&
+      getIsHourNeedsRaincoat(nextHour)
+    ) {
+      return true;
+    }
+
+    return false;
+  });
+
+  items[0].isTakeRaincoat = isTakeRaincoatToday;
 
   return items;
 }
