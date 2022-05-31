@@ -46,7 +46,7 @@ class WeatherWidget extends Component {
             maxTemperature,
             relativeHumidity,
             isTakeRaincoat,
-            currentTemperature,
+            indicativeTemperature,
           } = item;
           return (
             <li key={time} className={classes.li}>
@@ -64,7 +64,9 @@ class WeatherWidget extends Component {
                   minTemperature={minTemperature}
                   maxTemperature={maxTemperature}
                   avgTemperature={avgTemperature}
-                  indicativeTemperature={currentTemperature || avgTemperature}
+                  indicativeTemperature={
+                    indicativeTemperature || avgTemperature
+                  }
                   isSticky={getIsStickyFromCelsiusAndRelativeHumidity(
                     avgTemperature,
                     relativeHumidity

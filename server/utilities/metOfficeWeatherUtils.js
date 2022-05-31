@@ -139,14 +139,14 @@ function getItemsFromMetOfficeJSON(dailyJson, hourlyJson) {
     });
 
   const thisHourFilter = (hour) => {
-    return dayjs(hour.time).tz().isSame(dayjs(), 'hour');
+    return dayjs(hour.time).tz().isSame(dayjs().add(1, 'hour'), 'hour');
   };
 
-  const temperatureNow =
+  const temperatureOnNextHour =
     hourlyJson.features[0].properties.timeSeries.filter(thisHourFilter)[0]
       .screenTemperature;
 
-  items[0].currentTemperature = temperatureNow;
+  items[0].indicativeTemperature = temperatureOnNextHour;
 
   return items;
 }
