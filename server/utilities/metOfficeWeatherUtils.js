@@ -158,7 +158,7 @@ function getItemsFromMetOfficeJSON(dailyJson, hourlyJson) {
   const getIsHourIMightGetWetToday = (hour) => {
     return (
       dayjs(hour.time).tz() >= dayjs().startOf('hour').add(1, 'hour') &&
-      dayjs(hour.time).tz() <= dayjs().endOf('day')
+      dayjs(hour.time).tz() < dayjs().endOf('day')
     );
   };
 
