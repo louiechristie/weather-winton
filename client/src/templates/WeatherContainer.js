@@ -6,7 +6,7 @@ import React from 'react';
 
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import WeatherWidget from '../components/WeatherWidget';
+import Days from '../components/Days';
 import formattedDateFromISODate from '../utilities/formattedDateFromISODate';
 import { getTemperatureFriendly } from '../utilities/getRoomTemperatureComfortFromCelsius';
 
@@ -123,7 +123,7 @@ const WeatherContainer = ({ classes, pageContext: { items, meta } }) => {
         meta={meta}
       />
 
-      <WeatherWidget
+      <Days
         items={items.map((item) => {
           return { ...item, friendlyDate: formattedDateFromISODate(item.time) };
         })}
