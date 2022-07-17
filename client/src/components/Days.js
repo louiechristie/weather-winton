@@ -144,7 +144,7 @@ const AdvertCore = (props) => {
       </div>
 
       <p className={`${classes.adText} `}>
-        Why?: Because it's a heatwave, show a picture of{' '}
+        Why?: Because it's a heatwave, let's show a picture of{' '}
         <Link to="https://undergroundcomedian.wordpress.com/gonzo/">
           Nigel Thomas
         </Link>{' '}
