@@ -13,7 +13,6 @@ const styles = (theme) => ({
     borderStyle: 'solid',
     borderRadius: 5,
     boxSizing: 'border-box',
-    aspectRatio: 1 / 1,
     minWidth: 250,
     maxWidth: '90vw',
     paddingTop: theme.spacing(2),
