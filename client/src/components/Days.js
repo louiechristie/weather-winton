@@ -34,10 +34,14 @@ const styles = (theme) => ({
   },
   link: { textDecoration: 'none' },
   adContainer: {
-    position: 'relative',
     maxWidth: 320,
+    textAlign: 'center',
+  },
+  adLinked: {
+    position: 'relative',
   },
   ad: {
+    maxWidth: 320,
     position: 'absolute' /* Sit on top of the page content */,
     width: '100%' /* Full width (cover the whole page) */,
     height: '100%' /* Full height (cover the whole page) */,
@@ -122,22 +126,27 @@ const AdvertCore = (props) => {
   const { classes } = props;
 
   return (
-    <li className={`${classes.adContainer} ${classes.li}`}>
+    <li className={`${classes.li} ${classes.adContainer}`}>
       <h6 className={`${classes.adText} `}>Advert</h6>
 
-      <TwitterVideoEmbed id="1547990626641137666" />
+      <div className={`${classes.adLinked} `}>
+        <TwitterVideoEmbed id="1547990626641137666" />
+
+        <Link
+          className={`${classes.link} ${classes.ad}`}
+          to="https://twitter.com/StellaArtoisUK/status/1547990626641137666"
+        />
+      </div>
 
       <p className={`${classes.adText} `}>
-        Because it's a heatwave, show a picture of Nigel Thomas with his shirt
-        off
+        Why?: Because it's a heatwave, show a picture of{' '}
+        <Link to="https://undergroundcomedian.wordpress.com/gonzo/">
+          Nigel Thomas
+        </Link>{' '}
+        with his shirt off
       </p>
       <p className={`${classes.adText}`}>(Sunglasses recommended 😎)</p>
       <h6 className={`${classes.adText}`}>End of Advert</h6>
-
-      <Link
-        className={`${classes.link} ${classes.ad}`}
-        to="https://twitter.com/StellaArtoisUK/status/1547990626641137666"
-      />
     </li>
   );
 };
