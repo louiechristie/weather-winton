@@ -64,7 +64,6 @@ const styles = (theme) => ({
   },
   scaleNumber: {
     fontSize: '0.8rem',
-    lineHeight: '1.2rem',
   },
   indicator: {
     fontSize: '0.6rem',
@@ -373,7 +372,6 @@ function Day(props) {
               style={{ flex: 1 }}
             >
               <div className={classes.scaleNumber}>
-                {' '}
                 {isOffTheScaleHot && getNumberForScale(maxTempInt)}
               </div>
 
