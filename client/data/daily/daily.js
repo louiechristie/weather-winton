@@ -8,35 +8,44 @@
  * node daily.js
  */
 
-fs = require('fs');
-fs = require('fs');
+fs = require('fs/promises');
 
-const callback = (err, data) => {
-  const temperatures = [];
+const temperatures = [];
 
-  if (err) {
-    return console.log(err);
-  }
+async function processData(filename) {
+  try {
+    const data = await fs.readFile(filename, { encoding: 'utf8' });
 
-  const lines = data.trim().split(/\n+/);
+    const lines = data.trim().split(/\n+/);
 
-  console.log(`lines: ${lines}`);
+    console.log(`lines: ${lines}`);
 
-  let words = [];
+    let words = [];
 
-  for (let i = 0; i < lines.length; i += 1) {
-    words = lines[i].trim().split(/\s+/);
-    console.log(`words: ${words}`);
+    for (let i = 0; i < lines.length; i += 1) {
+      words = lines[i].trim().split(/\s+/);
+      console.log(`words: ${words}`);
 
-    for (let j = 2; j < words.length; j++) {
-      const temperature = parseInt(words[j], 10) / 10;
-      if (temperature !== -99.9) {
-        temperatures.push(temperature);
+      for (let j = 2; j < words.length; j++) {
+        const temperature = parseInt(words[j], 10) / 10;
+        if (temperature !== -99.9) {
+          temperatures.push(temperature);
+        }
       }
     }
+  } catch (err) {
+    console.log(err);
   }
+}
 
-  const sorted = temperatures.sort(function(a, b) {
+async function combineData() {
+  for (let i = 0; i < 23; i++) {
+    await processData('./cetdl1772on.dat');
+  }
+  await processData('./cetmaxdly1878on_urbadj4.dat');
+  await processData('./cetmindly1878on_urbadj4.dat');
+
+  const sorted = temperatures.sort(function (a, b) {
     return a - b;
   });
 
@@ -73,6 +82,6 @@ const callback = (err, data) => {
   console.log(`outputString: ${outputString}`);
 
   return output;
-};
+}
 
-fs.readFile('./cetdl1772on.dat', 'utf8', callback);
+combineData();
