@@ -57,6 +57,10 @@ const styles = (theme) => ({
   },
 });
 
+const findIndexOfLast = (array, condition) => {
+  return array.length - 1 - [...array].reverse().findIndex(condition);
+};
+
 class Days extends Component {
   render() {
     const { classes, items } = this.props;
@@ -109,7 +113,8 @@ class Days extends Component {
               <>
                 {Math.round(item.maxTemperature) >= heatWaveTemperature &&
                   index ===
-                    items.findIndex(
+                    findIndexOfLast(
+                      items,
                       (day) =>
                         Math.round(day.maxTemperature) >= heatWaveTemperature
                     ) && <Advert />}
