@@ -14,7 +14,6 @@ const styles = (theme) => ({
     borderRadius: 5,
     boxSizing: 'border-box',
     minWidth: 250,
-    maxWidth: '90vw',
     paddingTop: theme.spacing(2),
     display: 'flex',
     flexDirection: 'column',
