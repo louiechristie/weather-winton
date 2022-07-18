@@ -2,7 +2,6 @@ import { withStyles } from '@material-ui/core/styles';
 import dayjs from 'dayjs';
 import { Link } from 'gatsby';
 import React, { Component } from 'react';
-import { TwitterVideoEmbed } from 'react-twitter-embed';
 
 import { getIsTooDryFromRelativeHumidity } from '../utilities/getComfortFromRelativeHumidity';
 import getIsStickyFromCelsiusAndRelativeHumidity from '../utilities/getIsStickyFromCelsiusAndRelativeHumidity';
@@ -135,7 +134,25 @@ const AdvertCore = (props) => {
       <h6 className={`${classes.adText} `}>Advert</h6>
 
       <div className={`${classes.adLinked} `}>
-        <TwitterVideoEmbed id="1547990626641137666" />
+        <blockquote class="twitter-tweet">
+          <p lang="en" dir="ltr">
+            Enjoy Beer, au naturel this weekend 🥵☀️
+            <br />
+            <br />
+            New Stella Artois Unfiltered, available in stores and online across
+            the UK.{' '}
+            <a href="https://twitter.com/hashtag/BeerAuNaturel?src=hash&amp;ref_src=twsrc%5Etfw">
+              #BeerAuNaturel
+            </a>{' '}
+            <a href="https://twitter.com/hashtag/WeatherAuNaturel?src=hash&amp;ref_src=twsrc%5Etfw">
+              #WeatherAuNaturel
+            </a>
+          </p>
+          &mdash; StellaArtoisUK (@StellaArtoisUK){' '}
+          <a href="https://twitter.com/StellaArtoisUK/status/1547990626641137666?ref_src=twsrc%5Etfw">
+            July 15, 2022
+          </a>
+        </blockquote>
 
         <Link
           className={`${classes.link} ${classes.ad}`}
