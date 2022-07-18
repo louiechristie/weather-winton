@@ -13,7 +13,7 @@ const styles = (theme) => ({
     borderStyle: 'solid',
     borderRadius: 5,
     boxSizing: 'border-box',
-    minWidth: 250,
+    minWidth: 300,
     paddingTop: theme.spacing(2),
     display: 'flex',
     flexDirection: 'column',
@@ -155,26 +155,30 @@ function Day(props) {
     }
   };
 
-  const spacer = 3;
+  const spacer = 4;
 
   const getNumberForScale = (tempInt) => {
     const isIndicativeTemp = tempInt === indicativeTempInt;
     const isMinTemp = tempInt === minTempInt;
     const isMaxTemp = tempInt === maxTempInt;
 
+    const temperatureNumberSpaced = `${tempInt}\u00A0`;
+
     if (maxTempInt - minTempInt >= spacer) {
       // If a decent temp change show range
-      if (isMinTemp) return tempInt;
-      if (isMaxTemp) return tempInt;
+      if (isMinTemp) return temperatureNumberSpaced;
+
+      if (isMaxTemp) return temperatureNumberSpaced;
+
       if (
         isIndicativeTemp &&
         indicativeTempInt - minTempInt >= spacer &&
         maxTempInt - indicativeTempInt >= spacer
       )
-        return tempInt;
+        return temperatureNumberSpaced;
     } else {
       // Else show indicative only decent temp change
-      if (isIndicativeTemp) return tempInt;
+      if (isIndicativeTemp) return temperatureNumberSpaced;
     }
 
     if (tempInt % 10 === 0) {
@@ -188,7 +192,7 @@ function Day(props) {
         tempInt < maxTempInt - spacer || tempInt > maxTempInt + spacer;
 
       if (isAwayFromIndicativeTemp && isAwayFromMinTemp && isAwayFromMaxTemp)
-        return tempInt;
+        return temperatureNumberSpaced;
     }
 
     return '';
@@ -209,7 +213,7 @@ function Day(props) {
       if (isIndicativeTemp) return '▲';
     }
 
-    return '\u00A0';
+    return '';
   };
 
   // Temperatures and tally of days ever had that temperature in UK
@@ -250,6 +254,11 @@ function Day(props) {
     32: 7,
     33: 7,
     34: 1,
+    35: 0.1,
+    36: 0.1,
+    37: 0.1,
+    38: 0.1,
+    39: 0.1,
     '-16': 1,
     '-14': 1,
     '-13': 11,
@@ -359,7 +368,7 @@ function Day(props) {
                         flex: tally,
                         display: 'flex',
                         flexDirection: 'column',
-                        justifyContent: 'flex-end',
+                        justifyContent: 'space-between',
                       }}
                     >
                       <div className={classes.scaleNumber}>
