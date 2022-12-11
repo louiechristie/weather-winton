@@ -1,20 +1,7 @@
 {
-  "files.autoSave": "onFocusChange",
-
-  // FORMATTING
-
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-
-  "prettier.jsxBracketSameLine": true,
-  "prettier.singleQuote": true,
-  "prettier.trailingComma": "es5",
-
-  "editor.formatOnType": true,
-  "editor.formatOnSave": true,
-
-  // LINTING
-
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
-  }
+    "source.fixAll.eslint": true,
+    "source.fixAll.markdownlint": true
+  },
 }

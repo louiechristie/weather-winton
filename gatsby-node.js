@@ -32,6 +32,7 @@ dayjs.extend(timezone);
 dayjs.tz.setDefault('Europe/London');
 
 const manifest = require('./package.json');
+const { getForecast } = require('./src/utilities/getForecast');
 
 const CLOUDY_IMAGE_SRC =
   'https://www.metoffice.gov.uk/webfiles/latest/images/icons/weather/7.svg';
@@ -108,40 +109,13 @@ function getTemperatureColor(celsius) {
 
 exports.createPages = async ({ actions: { createPage } }) => {
   try {
-    const result = await axios.get(process.env.GATSBY_API_URL);
-    console.log('result: ', result);
+    const items = await getForecast();
+    console.log('getForecast items: ', items);
 
-    meta.timeStamp = `${dayjs(result.headers['last-modified'])
-      .tz()
-      .format('YYYY-MM-DD HHmm')}`;
-
-    const foreCastHoursOutOfDate = dayjs(new Date()).diff(
-      result.headers['last-modified'],
-      'hour'
-    );
-
-    const firstDayHoursOutOfDate = dayjs(new Date()).diff(
-      result.data[0].time,
-      'hour'
-    );
-
-    console.log(
-      `data fetched last-modified: ${result.headers['last-modified']}`
-    );
-    console.log('foreCastHoursOutOfDate', foreCastHoursOutOfDate);
-    // console.log('firstDayHoursOutOfDate', firstDayHoursOutOfDate);
-
-    if (
-      foreCastHoursOutOfDate >= 12 ||
-      firstDayHoursOutOfDate >= 24 ||
-      firstDayHoursOutOfDate <= -24
-    ) {
-      throw new Error(
-        `Forecast out of date by ${foreCastHoursOutOfDate} hours. First day of forecast out of date by ${firstDayHoursOutOfDate}`
-      );
+    if (!items || items.length < 1) {
+      throw new Error(`Coudn't get forecast`);
     }
 
-    const items = result.data || [];
     const today = items[0];
     const backgroundColor =
       Color(getTemperatureColor(today.avgTemperature)).lighten(0.75).hex() ||
