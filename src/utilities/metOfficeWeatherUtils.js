@@ -177,7 +177,8 @@ function getItemsFromMetOfficeJSON(dailyJson, hourlyJson) {
 
     if (
       getIsHourInTheRemainingDay(nextHour) &&
-      getIsHourNeedsRaincoat(nextHour)
+      getIsHourNeedsRaincoat(nextHour) &&
+      getIsHourSnowy(nextHour) === false
     ) {
       return true;
     }
