@@ -112,6 +112,10 @@ exports.createPages = async ({ actions: { createPage } }) => {
     const items = await getForecast();
     console.log('getForecast items: ', items);
 
+    meta.timeStamp = `${dayjs(new Date())
+      .tz()
+      .format('YYYY-MM-DD HHmm')}`;
+
     if (!items || items.length < 1) {
       throw new Error(`Coudn't get forecast`);
     }
