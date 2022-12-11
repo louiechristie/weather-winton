@@ -134,6 +134,7 @@ function Day(props) {
     isSticky,
     isDry,
     isTakeRaincoat,
+    isSnowDay
   } = props;
 
   const indicativeTempInt = Math.round(indicativeTemperature);
@@ -327,6 +328,11 @@ function Day(props) {
           )}
           {isTakeRaincoat && (
             <div className={classes.label}>Take raincoat 🧥</div>
+          )}
+          {isSnowDay && (
+            <div variant="outlined" className={classes.label}>
+              Snow ❄️☃️
+            </div>
           )}
           <div className={classes.temperatureOuter}>
             <Box

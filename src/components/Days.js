@@ -78,6 +78,7 @@ class Days extends Component {
             relativeHumidity,
             isTakeRaincoat,
             indicativeTemperature,
+            isSnowDay
           } = item;
 
           return (
@@ -106,6 +107,7 @@ class Days extends Component {
                     )}
                     isDry={getIsTooDryFromRelativeHumidity(relativeHumidity)}
                     isTakeRaincoat={isTakeRaincoat}
+                    isSnowDay={isSnowDay}
                   />
                 </Link>
               </li>

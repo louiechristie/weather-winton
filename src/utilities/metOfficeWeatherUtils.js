@@ -137,6 +137,8 @@ function getItemsFromMetOfficeJSON(dailyJson, hourlyJson) {
           day.nightProbabilityOfPrecipitation >= 50 ||
           day.daySignificantWeatherCode > 9 ||
           day.nightSignificantWeatherCode > 9,
+        isSnowDay:
+          day.dayProbabilityOfSnow >= 50 || day.nightProbabilityOfSnow >= 50,
       };
     });
 
@@ -155,7 +157,15 @@ function getItemsFromMetOfficeJSON(dailyJson, hourlyJson) {
     return hour.probOfPrecipitation >= 50 || hour.significantWeatherCode > 9;
   };
 
-  const getIsHourIMightGetWetToday = (hour) => {
+  const getIsHourSnowy = (hour) => {
+    return (
+      (hour.significantWeatherCode >= 22 &&
+        hour.significantWeatherCode <= 27) ||
+      hour.totalSnowAmount > 0
+    );
+  };
+
+  const getIsHourInTheRemainingDay = (hour) => {
     return (
       dayjs(hour.time).tz() >= dayjs().tz().startOf('hour').add(1, 'hour') &&
       dayjs(hour.time).tz() < dayjs().tz().endOf('day')
@@ -166,7 +176,7 @@ function getItemsFromMetOfficeJSON(dailyJson, hourlyJson) {
     if (acc === true) return acc;
 
     if (
-      getIsHourIMightGetWetToday(nextHour) &&
+      getIsHourInTheRemainingDay(nextHour) &&
       getIsHourNeedsRaincoat(nextHour)
     ) {
       return true;
@@ -175,7 +185,18 @@ function getItemsFromMetOfficeJSON(dailyJson, hourlyJson) {
     return false;
   });
 
+  const isSnowDay = timeSeries.reduce((acc, nextHour) => {
+    if (acc === true) return acc;
+
+    if (getIsHourInTheRemainingDay(nextHour) && getIsHourSnowy(nextHour)) {
+      return true;
+    }
+
+    return false;
+  });
+
   items[0].isTakeRaincoat = isTakeRaincoatToday;
+  items[0].isSnowDay = isSnowDay;
 
   return items;
 }
