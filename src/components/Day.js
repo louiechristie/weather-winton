@@ -1,12 +1,9 @@
-import Box from '@material-ui/core/Box';
-import Card from '@material-ui/core/Card';
-import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
 import React from 'react';
 
+import { theme, Box, Card, Typography } from '../utilities/theme';
 import { getTemperatureFriendly } from '../utilities/getRoomTemperatureComfortFromCelsius';
 
-const styles = (theme) => ({
+const styles = {
   card: {
     borderWidth: 2,
     borderColor: 'black',
@@ -118,11 +115,10 @@ const styles = (theme) => ({
   // emoji: {
   //   textShadow: '-2px 0 white, 0 2px white, 2px 0 white, 0 -2px white',
   // }
-});
+};
 
-function Day(props) {
+const Day = (props) => {
   const {
-    classes,
     friendlyDate,
     time,
     icon,
@@ -134,25 +130,25 @@ function Day(props) {
     isSticky,
     isDry,
     isTakeRaincoat,
-    isSnowDay
+    isSnowDay,
   } = props;
 
   const indicativeTempInt = Math.round(indicativeTemperature);
   const minTempInt = Math.round(minTemperature);
   const maxTempInt = Math.round(maxTemperature);
 
-  const getTempFriendlyClassName = (temperature) => {
+  const getTempFriendlyStyle = (temperature) => {
     if (getTemperatureFriendly(temperature) === 'Hot 🥵') {
-      return `${classes.hot} hot`;
+      return styles.hot;
     }
     if (getTemperatureFriendly(temperature) === 'Warm') {
-      return `${classes.warm} warm`;
+      return styles.warm;
     }
     if (getTemperatureFriendly(temperature) === 'Cold') {
-      return `${classes.cold} cold`;
+      return styles.cold;
     }
     if (getTemperatureFriendly(temperature) === 'Freezing 🥶') {
-      return `${classes.freezing} freezing`;
+      return styles.freezing;
     }
   };
 
@@ -289,62 +285,55 @@ function Day(props) {
     Math.round(minTemperature) < parseInt(temperatures[0], 10);
 
   return (
-    <Card key={time} className={classes.card} align="center">
+    <Card key={time} style={styles.card} align="center">
       <div>
-        <Typography
-          variant="h5"
-          component="h2"
-          className={classes.friendlyDate}
-        >
+        <Typography variant="h5" component="h2" style={styles.friendlyDate}>
           {friendlyDate}
         </Typography>
-        {/* <Typography variant="h6" component="p">
-        Time: {time}
-      </Typography> */}
+        {/* 
+          <Typography variant="h6" component="p">
+            Time: {time}
+          </Typography> 
+        */}
       </div>
       <div>
-        <img className={classes.svgIcon} src={icon} alt={description} />
-        <Typography className={classes.description} variant="h6" component="p">
+        <img style={styles.svgIcon} src={icon} alt={description} />
+        <Typography style={styles.description} variant="h6" component="p">
           {description}
         </Typography>
       </div>
       <div>
-        <Box className={classes.labels}>
+        <Box style={styles.labels}>
           {isSticky && (
-            <div variant="outlined" className={classes.label}>
+            <div variant="outlined" style={styles.label}>
               Sticky 💦
             </div>
           )}
 
           {isDry && (
-            <div className={`${classes.label} ${classes.dry}`}>
+            <div style={{ ...styles.label, ...styles.dry }}>
               Dry eyes/skin 👁
             </div>
           )}
           {(isOffTheScaleHot || isOffTheScaleCold) && (
-            <div variant="outlined" className={classes.label}>{`Off the scale ${
+            <div variant="outlined" style={styles.label}>{`Off the scale ${
               isOffTheScaleHot ? 'hot 🥵' : 'cold 🥶'
             }`}</div>
           )}
-          {isTakeRaincoat && (
-            <div className={classes.label}>Take raincoat 🧥</div>
-          )}
+          {isTakeRaincoat && <div style={styles.label}>Take raincoat 🧥</div>}
           {isSnowDay && (
-            <div variant="outlined" className={classes.label}>
+            <div variant="outlined" style={styles.label}>
               Snow ❄️☃️
             </div>
           )}
-          <div className={classes.temperatureOuter}>
-            <Box
-              className={`${classes.swatch} ${minTemperature}`}
-              style={{ flex: 1 }}
-            >
-              <div className={classes.scaleNumber}>
+          <div style={styles.temperatureOuter}>
+            <Box style={{ ...styles.swatch, ...minTemperature, flex: 1 }}>
+              <div style={styles.scaleNumber}>
                 {isOffTheScaleCold && getNumberForScale(minTempInt)}{' '}
               </div>
 
               {(isOffTheScaleCold || isOffTheScaleHot) && (
-                <div className="indicator" style={{ minWidth: '20px' }}>
+                <div style={{ ...styes.indicator, minWidth: '20px' }}>
                   <Typography variant="body2" component="p">
                     {isOffTheScaleCold && getIndicator(minTempInt)}
                     {'\u00A0'}
@@ -354,11 +343,12 @@ function Day(props) {
             </Box>
 
             <Box
-              className={`${
-                classes.temperatureContainer
-              } ${getTempFriendlyClassName(avgTemperature)}`}
+              style={{
+                ...styles.temperatureContainer,
+                ...getTempFriendlyStyle(avgTemperature),
+              }}
             >
-              <Box className={classes.colorScale}>
+              <Box style={styles.colorScale}>
                 {temperatures.map((key) => {
                   const tempInt = parseInt(key, 10);
                   const tally = tempTallies[key];
@@ -366,44 +356,39 @@ function Day(props) {
                   return (
                     <Box
                       key={key}
-                      className={`
-                        ${classes.swatch} 
-                        ${getTempFriendlyClassName(tempInt)}
-                        ${tempInt}`}
                       style={{
+                        ...styles.swatch,
+                        ...getTempFriendlyStyle(tempInt),
                         flex: tally,
                         display: 'flex',
                         flexDirection: 'column',
                         justifyContent: 'space-between',
                       }}
                     >
-                      <div className={classes.scaleNumber}>
+                      <div style={styles.scaleNumber}>
                         {getNumberForScale(tempInt)}
                       </div>
-                      <div className={classes.indicator}>
+                      <div style={styles.indicator}>
                         {getIndicator(tempInt)}
                       </div>
                     </Box>
                   );
                 })}
               </Box>
-              <Box className={classes.temperature}>
+              <Box style={styles.temperature}>
                 <Typography variant="body1" component="p">
                   {getTemperatureFriendly(avgTemperature)}
                 </Typography>
               </Box>
             </Box>
 
-            <Box
-              className={`${classes.swatch} ${maxTempInt}`}
-              style={{ flex: 1 }}
-            >
-              <div className={classes.scaleNumber}>
+            <Box style={{ ...styles.swatch, flex: 1 }}>
+              <div style={styles.scaleNumber}>
                 {isOffTheScaleHot && getNumberForScale(maxTempInt)}
               </div>
 
               {(isOffTheScaleHot || isOffTheScaleCold) && (
-                <div className={classes.indicator} style={{ minWidth: '20px' }}>
+                <div style={{ ...styles.indicator, minWidth: '20px' }}>
                   {'\u00A0'}
                   {isOffTheScaleHot && getIndicator(maxTempInt)}
                 </div>
@@ -414,6 +399,6 @@ function Day(props) {
       </div>
     </Card>
   );
-}
+};
 
-export default withStyles(styles)(Day);
+export default Day;

@@ -1,11 +1,17 @@
-import AppBar from '@material-ui/core/AppBar';
-import IconButton from '@material-ui/core/IconButton';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
 import { useStaticQuery, graphql } from 'gatsby';
 import React from 'react';
 import { Helmet } from 'react-helmet';
+
+import {
+  theme,
+  Paper,
+  Box,
+  Card,
+  Typography,
+  AppBar,
+  IconButton,
+  Toolbar,
+} from '../utilities/theme';
 
 const styles = {
   root: {
@@ -30,7 +36,6 @@ const styles = {
 
 function Header(props) {
   const {
-    classes,
     title,
     description,
     image,
@@ -54,11 +59,11 @@ function Header(props) {
     <AppBar
       position="static"
       style={{
+        ...temperatureClass,
         borderBottomWidth: 4,
         borderBottomStyle: 'solid',
         borderBottomRadius: 20,
       }}
-      className={temperatureClass}
     >
       <Helmet>
         <link id="favicon" rel="icon" sizes="any" href={image} />
@@ -73,7 +78,10 @@ function Header(props) {
         />
         <meta property="og:description" content={siteDescription} />
         <meta property="og:image" content={`${siteUrl}/${ogImage}`} />
-        <link rel="apple-touch-icon" href={`${siteUrl}/apple-touch-icon.png?v=${ogImage}`} />
+        <link
+          rel="apple-touch-icon"
+          href={`${siteUrl}/apple-touch-icon.png?v=${ogImage}`}
+        />
         <meta name="apple-mobile-web-app-title" content={title} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="600" />
@@ -85,13 +93,13 @@ function Header(props) {
 
       <Toolbar>
         <IconButton edge="start" color="inherit" aria-label="menu">
-          <img className={classes.logo} src={image} alt={alt} />
+          <img style={styles.logo} src={image} alt={alt} />
         </IconButton>
-        <div className={classes.titles}>
-          <Typography variant="h6" component="h1" className={classes.title}>
+        <div style={styles.titles}>
+          <Typography variant="h6" component="h1" style={styles.title}>
             {title}
           </Typography>
-          <Typography variant="body1" component="p" className={classes.title}>
+          <Typography variant="body1" component="p" style={styles.title}>
             {description}
           </Typography>
         </div>
@@ -100,4 +108,4 @@ function Header(props) {
   );
 }
 
-export default withStyles(styles)(Header);
+export default Header;

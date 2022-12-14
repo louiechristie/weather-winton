@@ -1,16 +1,13 @@
-import { Paper } from '@material-ui/core';
-import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
 import dayjs from 'dayjs';
 import React from 'react';
-
+import { theme, Paper, Typography } from '../utilities/theme';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Days from '../components/Days';
 import formattedDateFromISODate from '../utilities/formattedDateFromISODate';
 import { getTemperatureFriendly } from '../utilities/getRoomTemperatureComfortFromCelsius';
 
-const styles = (theme) => ({
+const style = {
   container: {},
   hot: {
     color: 'white',
@@ -74,9 +71,9 @@ const styles = (theme) => ({
     display: 'block',
     textAlign: 'right',
   },
-});
+};
 
-const WeatherContainer = ({ classes, pageContext: { items, meta } }) => {
+const WeatherContainer = ({ pageContext: { items, meta } }) => {
   const now = dayjs();
 
   let date = 'Today';
@@ -87,39 +84,39 @@ const WeatherContainer = ({ classes, pageContext: { items, meta } }) => {
 
   const todaysWeather = `${items[0]?.description || 'probably raining'}`;
 
-  const getTempFriendlyClassName = (forecast) => {
+  const getTempFriendlyStyle = (forecast) => {
     console.log('forecast: ', forecast);
     const avgTempInt = Math.round(forecast.avgTemperature);
     const maxTempInt = Math.round(forecast.maxTemperature);
 
     if (getTemperatureFriendly(avgTempInt) === 'Hot 🥵') {
-      return `${classes.hot} hot`;
+      return style.hot;
     }
     if (getTemperatureFriendly(avgTempInt) === 'Warm') {
       if (getTemperatureFriendly(Math.round(maxTempInt)) === 'Hot 🥵') {
-        return `${classes.warmToHot} warmToHot`;
+        return style.warmToHot;
       }
-      return `${classes.warmToCold} warmToCold`;
+      return style.warmToCold;
     }
     if (getTemperatureFriendly(avgTempInt) === 'Cold') {
       if (getTemperatureFriendly(Math.round(maxTempInt)) === 'Warm') {
-        return `${classes.coldToWarm} coldToWarm`;
+        return style.coldToWarm;
       }
-      return `${classes.coldToFreezing} coldToFreezing`;
+      return style.coldToFreezing;
     }
     if (getTemperatureFriendly(avgTempInt) === 'Freezing 🥶') {
-      return `${classes.freezing} freezing`;
+      return style.freezing;
     }
   };
 
   return (
-    <div className={classes.container}>
+    <div style={style.container}>
       <Header
         title={meta.siteTitle}
         description={meta.location}
         image={(items && items[0] && items[0].icon) || meta.defaultImageSrc}
         alt={todaysWeather || meta.defaultDescription}
-        temperatureClass={getTempFriendlyClassName(items[0])}
+        temperatureClass={getTempFriendlyStyle(items[0])}
         meta={meta}
       />
 
@@ -129,8 +126,8 @@ const WeatherContainer = ({ classes, pageContext: { items, meta } }) => {
         })}
       />
 
-      <div className={classes.blurb}>
-        <Paper className={[classes.note, classes.cta]}>
+      <div style={style.blurb}>
+        <Paper style={{ ...style.note, ...style.cta }}>
           <Typography variant="h6" component="h2" gutterBottom align="center">
             <a href="https://www.louiechristie.com/blog/contact/">
               Want me to build you an app or website?
@@ -141,7 +138,7 @@ const WeatherContainer = ({ classes, pageContext: { items, meta } }) => {
           </Typography>
         </Paper>
 
-        <Paper className={[classes.note, classes.about]}>
+        <Paper style={{ ...style.note, ...style.about }}>
           <Typography variant="h5" component="h2" gutterBottom align="center">
             About
           </Typography>
@@ -150,16 +147,16 @@ const WeatherContainer = ({ classes, pageContext: { items, meta } }) => {
           </Typography>
         </Paper>
 
-        <Paper className={[classes.note, classes.about]}>
+        <Paper style={{ ...style.note, ...style.about }}>
           <Typography variant="body1" component="p" paragraph align="left">
-            <blockquote className={classes.quote}>
+            <blockquote style={style.quote}>
               <q>
                 Instead of broadcasting the weatherman... use local computing
                 intelligence to transform them into a voice report, a printed
                 map, or an animated cartoon with your favorite Disney
                 character... whatever way you want
               </q>
-              <div className={classes.inspiration}>
+              <div style={style.inspiration}>
                 - Inspiration from{' '}
                 <cite>
                   Nicholas Negropronte (1995). Being digital. New York: Knopf.
@@ -181,4 +178,4 @@ const WeatherContainer = ({ classes, pageContext: { items, meta } }) => {
   );
 };
 
-export default withStyles(styles)(WeatherContainer);
+export default WeatherContainer;

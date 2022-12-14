@@ -67,3 +67,7 @@ yarn-error.log
 .pnp.js
 # Yarn Integrity file
 .yarn-integrity
+
+# Yarn Integrity file
+.yarn-integrity
+node_modules/.yarn-integrity

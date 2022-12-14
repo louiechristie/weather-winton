@@ -1,11 +1,8 @@
 import React from 'react';
 import dayjs from 'dayjs';
-import { withStyles } from '@material-ui/core/styles';
+import { theme, Paper, Typography } from '../utilities/theme';
 
-import { Paper } from '@material-ui/core';
-import Typography from '@material-ui/core/Typography';
-
-const styles = (theme) => ({
+const styles = {
   footer: {
     display: 'flex',
     flexDirection: 'column',
@@ -19,12 +16,12 @@ const styles = (theme) => ({
     backgroundColor: '#F8F8F8',
     marginBottom: 0,
   },
-});
+};
 
 const Footer = (props) => {
-  const { classes, meta } = props;
+  const { meta } = props;
   return (
-    <Paper className={classes.footer} elevation={24} square>
+    <Paper style={styles.footer} elevation={24} square>
       <Typography variant="body2" component="p" align="center">
         Last updated: {meta.timeStamp} | Weather Winton ©️ {dayjs().year()} v
         {meta.version} | Tags: user experience, UX
@@ -48,4 +45,4 @@ const Footer = (props) => {
   );
 };
 
-export default withStyles(styles)(Footer);
+export default Footer;

@@ -11,7 +11,6 @@ module.exports = {
         lang: 'en',
       },
     },
-    `gatsby-plugin-material-ui`,
     `gatsby-plugin-postcss`,
     {
       resolve: `gatsby-plugin-gatsby-cloud`,
