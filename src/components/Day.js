@@ -16,15 +16,12 @@ const styles = {
     flexDirection: 'column',
     justifyContent: 'space-between',
   },
-  friendlyDate: {
-    marginBottom: -theme.spacing(2),
-  },
+  friendlyDate: {},
   svgIcon: {
     width: 48 * 2,
     height: 48 * 2,
   },
   description: {
-    marginTop: -theme.spacing(2),
     paddingTop: 0,
     marginBottom: theme.spacing(1),
   },

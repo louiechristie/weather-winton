@@ -80,8 +80,8 @@ const Days = (props) => {
         } = item;
 
         return (
-          <>
-            <li key={time} style={styles.li}>
+          <div key={time}>
+            <li style={styles.li}>
               <Link
                 style={styles.link}
                 to={`https://www.metoffice.gov.uk/weather/forecast/gcpuyudzk#?nearestTo=New%20Cross%20(Lewisham)&date=${dayjs(
@@ -118,7 +118,7 @@ const Days = (props) => {
                       Math.round(day.maxTemperature) >= heatWaveTemperature
                   ) && <Advert />}
             </>
-          </>
+          </div>
         );
       })}
     </ul>

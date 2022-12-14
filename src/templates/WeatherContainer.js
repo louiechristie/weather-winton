@@ -148,27 +148,29 @@ const WeatherContainer = ({ pageContext: { items, meta } }) => {
         </Paper>
 
         <Paper style={{ ...style.note, ...style.about }}>
-          <Typography variant="body1" component="p" paragraph align="left">
-            <blockquote style={style.quote}>
-              <q>
-                Instead of broadcasting the weatherman... use local computing
-                intelligence to transform them into a voice report, a printed
-                map, or an animated cartoon with your favorite Disney
-                character... whatever way you want
-              </q>
-              <div style={style.inspiration}>
-                - Inspiration from{' '}
-                <cite>
-                  Nicholas Negropronte (1995). Being digital. New York: Knopf.
-                  p.55
-                  <sup>
-                    <a href="https://twitter.com/louiechristie/status/1344077058570412034">
-                      †
-                    </a>
-                  </sup>
-                </cite>
-              </div>
-            </blockquote>
+          <Typography
+            style={style.quote}
+            variant="body1"
+            component="blockquote"
+            paragraph
+            align="left"
+          >
+            <q>
+              Instead of broadcasting the weatherman... use local computing
+              intelligence to transform them into a voice report, a printed map,
+              or an animated cartoon with your favorite Disney character...
+              whatever way you want
+            </q>
+
+            <cite style={style.inspiration}>
+              - Inspiration from Nicholas Negropronte (1995). Being digital. New
+              York: Knopf. p.55
+              <sup>
+                <a href="https://twitter.com/louiechristie/status/1344077058570412034">
+                  †
+                </a>
+              </sup>
+            </cite>
           </Typography>
         </Paper>
       </div>
