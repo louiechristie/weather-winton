@@ -20,12 +20,15 @@ function getTemperatureFriendly(celsius) {
 require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`,
 });
+
 const axios = require('axios');
 const Color = require('color');
 const dayjs = require('dayjs');
 const timezone = require('dayjs/plugin/timezone');
 const utc = require('dayjs/plugin/utc');
 const sharp = require('sharp');
+
+axios.defaults.timeout === 30000;
 
 dayjs.extend(utc);
 dayjs.extend(timezone);

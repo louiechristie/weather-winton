@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-const fetch = require('node-fetch');
+const axios = require('axios');
 
 const mockDailyMetOfficeJSON = require('../tests/mockDailyMetOfficeJSON');
 const mockHourlyMetOfficeJSON = require('../tests/mockHourlyMetOfficeJSON');
@@ -15,21 +15,18 @@ const headers = {
 
 const getMetOfficeForecast = async () => {
   try {
-    const response = await fetch(process.env.GATSBY_MET_WEATHER_DAILY_URL, {
+    const response = await axios.get(process.env.GATSBY_MET_WEATHER_DAILY_URL, {
       headers,
     });
     // const text = await response.text();
     // log('text: ' + text);
-    log(`response: ${response}`);
-    const dailyJson = await response.json();
+    log(`response.data: ${JSON.stringify(response.data, null, '  ')}`);
+    const dailyJson = response.data;
     if (!response) {
       throw new Error('No response from server.');
     }
-    if (!response.ok) {
-      throw new Error(JSON.stringify(response, null, '  '));
-    }
 
-    const hourlyResponse = await fetch(
+    const hourlyResponse = await axios.get(
       process.env.GATSBY_MET_WEATHER_HOURLY_URL,
       {
         headers,
@@ -37,13 +34,12 @@ const getMetOfficeForecast = async () => {
     );
     // const text = await hourlyResponse.text();
     // log('text: ' + text);
-    log(`hourlyResponse: ${hourlyResponse}`);
-    const hourlyJson = await hourlyResponse.json();
+    log(
+      `hourlyResponse.data: ${JSON.stringify(hourlyResponse.data, null, '  ')}`
+    );
+    const hourlyJson = hourlyResponse.data;
     if (!hourlyResponse) {
       throw new Error('No hourlyResponse from server.');
-    }
-    if (!hourlyResponse.ok) {
-      throw new Error(JSON.stringify(hourlyResponse, null, '  '));
     }
 
     const items = getItemsFromMetOfficeJSON(dailyJson, hourlyJson);
