@@ -35,8 +35,8 @@ const manifest = require('./package.json');
 const { getForecast } = require('./src/utilities/getForecast');
 
 const CLOUDY_IMAGE_SRC =
-  'https://www.metoffice.gov.uk/webfiles/latest/images/icons/weather/7.svg';
-const PROBABLY_CLOUDY = 'Probably Cloudy';
+  'https://www.metoffice.gov.uk/webfiles/latest/images/icons/weather/12.svg';
+const PROBABLY_RAINING = 'Probably Raining';
 
 const { title, description, author, version } = manifest;
 
@@ -112,9 +112,7 @@ exports.createPages = async ({ actions: { createPage } }) => {
     const items = await getForecast();
     console.log('getForecast items: ', items);
 
-    meta.timeStamp = `${dayjs(new Date())
-      .tz()
-      .format('YYYY-MM-DD HHmm')}`;
+    meta.timeStamp = `${dayjs(new Date()).tz().format('YYYY-MM-DD HHmm')}`;
 
     if (!items || items.length < 1) {
       throw new Error(`Coudn't get forecast`);
@@ -127,8 +125,10 @@ exports.createPages = async ({ actions: { createPage } }) => {
 
     const input = (
       await axios({
+        method: 'get',
         url: today.icon,
         responseType: 'arraybuffer',
+        headers: { 'Accept-Encoding': 'gzip,deflate,compress' },
       })
     ).data;
 
@@ -162,6 +162,7 @@ exports.createPages = async ({ actions: { createPage } }) => {
       context: { items, meta },
     });
   } catch (error) {
+    console.error('Error creating pages');
     console.error(error);
 
     const now = dayjs();
@@ -171,7 +172,7 @@ exports.createPages = async ({ actions: { createPage } }) => {
       {
         friendlyDate: 'Today',
         time: today,
-        description: PROBABLY_CLOUDY,
+        description: PROBABLY_RAINING,
         icon: CLOUDY_IMAGE_SRC,
         temperature: null,
       },

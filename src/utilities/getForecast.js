@@ -13,42 +13,44 @@ const headers = {
   'x-ibm-client-secret': process.env.GATSBY_MET_WEATHER_SECRET,
 };
 
-const getMetOfficeForecast = async (url) => {
-  log(`url: ${url}`);
-
-  const response = await fetch(url, {
-    headers,
-  });
-  // const text = await response.text();
-  // log('text: ' + text);
-  log(`response: ${response}`);
-  const dailyJson = await response.json();
-  if (!response) {
-    throw new Error('No response from server.');
-  }
-  if (!response.ok) {
-    throw new Error(JSON.stringify(response, null, '  '));
-  }
-
-  const hourlyResponse = await fetch(
-    process.env.GATSBY_MET_WEATHER_HOURLY_URL,
-    {
+const getMetOfficeForecast = async () => {
+  try {
+    const response = await fetch(process.env.GATSBY_MET_WEATHER_DAILY_URL, {
       headers,
+    });
+    // const text = await response.text();
+    // log('text: ' + text);
+    log(`response: ${response}`);
+    const dailyJson = await response.json();
+    if (!response) {
+      throw new Error('No response from server.');
     }
-  );
-  // const text = await hourlyResponse.text();
-  // log('text: ' + text);
-  log(`hourlyResponse: ${hourlyResponse}`);
-  const hourlyJson = await hourlyResponse.json();
-  if (!hourlyResponse) {
-    throw new Error('No hourlyResponse from server.');
-  }
-  if (!hourlyResponse.ok) {
-    throw new Error(JSON.stringify(hourlyResponse, null, '  '));
-  }
+    if (!response.ok) {
+      throw new Error(JSON.stringify(response, null, '  '));
+    }
 
-  const items = getItemsFromMetOfficeJSON(dailyJson, hourlyJson);
-  return items;
+    const hourlyResponse = await fetch(
+      process.env.GATSBY_MET_WEATHER_HOURLY_URL,
+      {
+        headers,
+      }
+    );
+    // const text = await hourlyResponse.text();
+    // log('text: ' + text);
+    log(`hourlyResponse: ${hourlyResponse}`);
+    const hourlyJson = await hourlyResponse.json();
+    if (!hourlyResponse) {
+      throw new Error('No hourlyResponse from server.');
+    }
+    if (!hourlyResponse.ok) {
+      throw new Error(JSON.stringify(hourlyResponse, null, '  '));
+    }
+
+    const items = getItemsFromMetOfficeJSON(dailyJson, hourlyJson);
+    return items;
+  } catch (error) {
+    throw error;
+  }
 };
 
 const getMockForecast = async () => {
@@ -75,17 +77,19 @@ const getForecast = async () => {
         'You need to set your GATSBY_MET_WEATHER_SECRET environment variable'
       );
     try {
-      items = await getMetOfficeForecast(
-        process.env.GATSBY_MET_WEATHER_DAILY_URL
-      );
+      items = await getMetOfficeForecast();
     } catch (error) {
+      log('Error getting forecast');
       log(error);
+      throw error;
     }
   } else {
     try {
       items = await getMockForecast();
     } catch (error) {
+      log('Error getting mock forecast');
       log(error);
+      throw error;
     }
   }
 
