@@ -50,7 +50,7 @@ const style = {
     borderWidth: 2,
     borderColor: 'black',
     borderStyle: 'solid',
-    borderRadius: 5,
+    borderRadius: 20,
     boxSizing: 'border-box',
     display: 'flex',
     flexDirection: 'column',

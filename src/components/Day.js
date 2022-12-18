@@ -8,7 +8,7 @@ const styles = {
     borderWidth: 2,
     borderColor: 'black',
     borderStyle: 'solid',
-    borderRadius: 5,
+    borderRadius: 20,
     boxSizing: 'border-box',
     minWidth: 300,
     paddingTop: theme.spacing(2),
@@ -33,7 +33,7 @@ const styles = {
   label: {
     marginBottom: theme.spacing(1),
     fontSize: '1rem',
-    borderRadius: 5,
+    borderRadius: 20,
   },
   temperatureOuter: {
     width: '100%',
@@ -46,13 +46,12 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     minWidth: 250,
-    borderRadius: '5px 5px 0 0',
+    borderRadius: '20px 20px 0 0',
   },
   colorScale: {
     flex: 1,
     display: 'flex',
     flexDirection: 'row',
-    // borderRadius: '5px 5px 0 0',
     overflow: 'hidden',
   },
   scaleNumber: {
@@ -133,6 +132,7 @@ const Day = (props) => {
   const indicativeTempInt = Math.round(indicativeTemperature);
   const minTempInt = Math.round(minTemperature);
   const maxTempInt = Math.round(maxTemperature);
+  const isToday = friendlyDate === 'Today';
 
   const getTempFriendlyStyle = (temperature) => {
     if (getTemperatureFriendly(temperature) === 'Hot 🥵') {
@@ -149,7 +149,16 @@ const Day = (props) => {
     }
   };
 
-  const spacer = 4;
+  const spacer = isToday ? 1 : 4;
+
+  const getShowIndicative = (tempInt) => {
+    const isIndicativeTemp = tempInt === indicativeTempInt;
+
+    if (isToday && isIndicativeTemp) {
+      return true;
+    }
+    return false;
+  };
 
   const getNumberForScale = (tempInt) => {
     const isIndicativeTemp = tempInt === indicativeTempInt;
@@ -164,12 +173,7 @@ const Day = (props) => {
 
       if (isMaxTemp) return temperatureNumberSpaced;
 
-      if (
-        isIndicativeTemp &&
-        indicativeTempInt - minTempInt >= spacer &&
-        maxTempInt - indicativeTempInt >= spacer
-      )
-        return temperatureNumberSpaced;
+      if (getShowIndicative(tempInt)) return temperatureNumberSpaced;
     } else {
       // Else show indicative only decent temp change
       if (isIndicativeTemp) return temperatureNumberSpaced;
@@ -184,8 +188,14 @@ const Day = (props) => {
         tempInt < minTempInt - spacer || tempInt > minTempInt + spacer;
       const isAwayFromMaxTemp =
         tempInt < maxTempInt - spacer || tempInt > maxTempInt + spacer;
+      const isBetween = tempInt > minTempInt && tempInt < maxTempInt;
 
-      if (isAwayFromIndicativeTemp && isAwayFromMinTemp && isAwayFromMaxTemp)
+      if (
+        !isBetween &&
+        isAwayFromIndicativeTemp &&
+        isAwayFromMinTemp &&
+        isAwayFromMaxTemp
+      )
         return temperatureNumberSpaced;
     }
 
@@ -199,7 +209,7 @@ const Day = (props) => {
 
     if (maxTempInt - minTempInt >= spacer) {
       // If a decent temp change show range
-      if (isIndicativeTemp) return '▲';
+      if (isToday && isIndicativeTemp) return '▲';
       if (isMinTemp) return '⇤';
       if (isMaxTemp) return '⇥';
     } else {
@@ -342,7 +352,7 @@ const Day = (props) => {
             <Box
               style={{
                 ...styles.temperatureContainer,
-                ...getTempFriendlyStyle(avgTemperature),
+                ...getTempFriendlyStyle(indicativeTempInt),
               }}
             >
               <Box style={styles.colorScale}>
@@ -374,7 +384,7 @@ const Day = (props) => {
               </Box>
               <Box style={styles.temperature}>
                 <Typography variant="body1" component="p">
-                  {getTemperatureFriendly(avgTemperature)}
+                  {getTemperatureFriendly(indicativeTempInt)}
                 </Typography>
               </Box>
             </Box>

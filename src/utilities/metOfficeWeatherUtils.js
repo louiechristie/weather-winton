@@ -146,23 +146,17 @@ function getItemsFromMetOfficeJSON(dailyJson, hourlyJson) {
     return dayjs(hour.time).tz().isSame(dayjs().add(1, 'hour'), 'hour');
   };
 
-  const timeSeries = hourlyJson.features[0].properties.timeSeries;
+  const hourlyTimeSeries = hourlyJson.features[0].properties.timeSeries;
 
   const temperatureOnNextHour =
-    timeSeries.filter(thisHourFilter)[0].screenTemperature;
-
-  items[0].indicativeTemperature = temperatureOnNextHour;
+    hourlyTimeSeries.filter(thisHourFilter)[0].screenTemperature;
 
   const getIsHourNeedsRaincoat = (hour) => {
     return hour.probOfPrecipitation >= 50 || hour.significantWeatherCode > 9;
   };
 
   const getIsHourSnowy = (hour) => {
-    return (
-      (hour.significantWeatherCode >= 22 &&
-        hour.significantWeatherCode <= 27) ||
-      hour.totalSnowAmount > 0
-    );
+    return hour.totalSnowAmount > 0;
   };
 
   const getIsHourInTheRemainingDay = (hour) => {
@@ -172,7 +166,7 @@ function getItemsFromMetOfficeJSON(dailyJson, hourlyJson) {
     );
   };
 
-  const isTakeRaincoatToday = timeSeries.reduce((acc, nextHour) => {
+  const isTakeRaincoatToday = hourlyTimeSeries.reduce((acc, nextHour) => {
     if (acc === true) return acc;
 
     if (
@@ -186,7 +180,7 @@ function getItemsFromMetOfficeJSON(dailyJson, hourlyJson) {
     return false;
   });
 
-  const isSnowDay = timeSeries.reduce((acc, nextHour) => {
+  const isSnowDay = hourlyTimeSeries.reduce((acc, nextHour) => {
     if (acc === true) return acc;
 
     if (getIsHourInTheRemainingDay(nextHour) && getIsHourSnowy(nextHour)) {
@@ -198,6 +192,22 @@ function getItemsFromMetOfficeJSON(dailyJson, hourlyJson) {
 
   items[0].isTakeRaincoat = isTakeRaincoatToday;
   items[0].isSnowDay = isSnowDay;
+
+  items[0].indicativeTemperature = temperatureOnNextHour;
+
+  // items[0].maxTemperature = Math.max(
+  //   ...hourlyTimeSeries
+  //     .filter(getIsHourInTheRemainingDay)
+  //     .map((hour) => hour.screenTemperature)
+  // );
+
+  items[0].maxTemperature = 10;
+
+  items[0].minTemperature = Math.min(
+    ...hourlyTimeSeries
+      .filter(getIsHourInTheRemainingDay)
+      .map((hour) => hour.screenTemperature)
+  );
 
   return items;
 }
