@@ -57,7 +57,7 @@ const style = {
     alignItems: 'center',
     margin: theme.spacing(2),
     padding: theme.spacing(2),
-    maxWidth: 250,
+    width: '300px'
   },
   cta: {
     maxWidth: 600,
@@ -128,13 +128,13 @@ const WeatherContainer = ({ pageContext: { items, meta } }) => {
 
       <div style={style.blurb}>
         <Paper style={{ ...style.note, ...style.cta }}>
+        <Typography variant="body1" component="p">
+            Advert
+          </Typography>
           <Typography variant="h6" component="h2" gutterBottom align="center">
             <a href="https://www.louiechristie.com/blog/contact/">
-              Want me to build you an app or website?
+              Like this? Let's make friendly technology together
             </a>
-          </Typography>
-          <Typography variant="body1" component="p">
-            10% discount on blue ones
           </Typography>
         </Paper>
 
@@ -142,18 +142,17 @@ const WeatherContainer = ({ pageContext: { items, meta } }) => {
           <Typography variant="h5" component="h2" gutterBottom align="center">
             About
           </Typography>
-          <Typography variant="body1" component="p" paragraph align="center">
+          <Typography variant="body1" component="p" paragraph align="left">
             {meta.siteDescription}
           </Typography>
-        </Paper>
 
-        <Paper style={{ ...style.note, ...style.about }}>
           <Typography
             style={style.quote}
             variant="body1"
             component="blockquote"
             paragraph
             align="left"
+
           >
             <q>
               Instead of broadcasting the weatherman... use local computing
@@ -173,6 +172,8 @@ const WeatherContainer = ({ pageContext: { items, meta } }) => {
             </cite>
           </Typography>
         </Paper>
+
+        
       </div>
 
       <Footer meta={meta} />
