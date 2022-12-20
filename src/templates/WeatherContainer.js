@@ -109,6 +109,14 @@ const WeatherContainer = ({ pageContext: { items, meta } }) => {
     }
   };
 
+  const getFriendlyDateFromISODate = (ISOdate) => {
+    if(dayjs(ISOdate).isSame('2022-12-25', 'day') && dayjs(ISOdate).isSame('2022-12-25', 'month')) {
+      return 'Christmas'
+    } else {
+      return formattedDateFromISODate(ISOdate); 
+    }
+  }
+
   return (
     <div style={style.container}>
       <Header
@@ -122,7 +130,7 @@ const WeatherContainer = ({ pageContext: { items, meta } }) => {
 
       <Days
         items={items.map((item) => {
-          return { ...item, friendlyDate: formattedDateFromISODate(item.time) };
+          return { ...item, friendlyDate: getFriendlyDateFromISODate(item.time) };
         })}
       />
 
