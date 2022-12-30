@@ -2,7 +2,7 @@
   "name": "weather-winton",
   "title": "Weather Winton",
   "description": "Weather Winton is an experiment in friendly weather forecasting.",
-  "version": "0.24.1",
+  "version": "0.24.2",
   "private": true,
   "author": {
     "name": "Louie Christie",
@@ -18,14 +18,17 @@
     "test": "jest --watchAll",
     "lint": "eslint '**/*.js' --ignore-path .gitignore"
   },
+  "resolutions": {
+    "json5": "^2.2.2"
+  },
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
-    "@mui/material": "^5.11.0",
-    "axios": "^1.2.1",
+    "@mui/material": "^5.11.2",
+    "axios": "^1.2.2",
     "color": "^4.2.3",
     "dayjs": "^1.11.7",
-    "gatsby": "^5.3.2",
+    "gatsby": "^5.3.3",
     "gatsby-cli": "^5.3.1",
     "gatsby-link": "^5.3.1",
     "gatsby-plugin-gatsby-cloud": "^5.3.1",
@@ -39,13 +42,13 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
-    "sharp": "^0.31.2"
+    "sharp": "^0.31.3"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.5",
+    "@babel/core": "^7.20.7",
     "@babel/preset-env": "^7.20.2",
-    "@typescript-eslint/eslint-plugin": "^5.46.1",
-    "@typescript-eslint/parser": "^5.46.1",
+    "@typescript-eslint/eslint-plugin": "^5.47.1",
+    "@typescript-eslint/parser": "^5.47.1",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^29.3.1",
     "babel-preset-gatsby": "^3.3.1",
