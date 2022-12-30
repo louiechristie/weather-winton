@@ -70,6 +70,9 @@ const style = {
   inspiration: {
     display: 'block',
     textAlign: 'right',
+    marginTop: 14,
+    fontStyle: 'normal',
+    fontSize: '1em',
   },
 };
 
@@ -149,7 +152,7 @@ const WeatherContainer = ({ pageContext: { items, meta } }) => {
           </Typography>
           <Typography variant="h6" component="h2" gutterBottom align="center">
             <a href="https://www.louiechristie.com/blog/contact/">
-              Like this? Let's make friendly technology together
+              Like this? Let's make friendly technology together...
             </a>
           </Typography>
         </Paper>
@@ -160,6 +163,12 @@ const WeatherContainer = ({ pageContext: { items, meta } }) => {
           </Typography>
           <Typography variant="body1" component="p" paragraph align="left">
             {meta.siteDescription}
+          </Typography>
+        </Paper>
+
+        <Paper style={{ ...style.note, ...style.about }}>
+          <Typography variant="h5" component="h2" gutterBottom align="center">
+            Inspiration
           </Typography>
 
           <Typography
@@ -177,8 +186,8 @@ const WeatherContainer = ({ pageContext: { items, meta } }) => {
             </q>
 
             <cite style={style.inspiration}>
-              - Inspiration from Nicholas Negropronte (1995). Being digital. New
-              York: Knopf. p.55
+              - Nicholas Negropronte (1995). Being digital. New York: Knopf.
+              p.55
               <sup>
                 <a href="https://twitter.com/louiechristie/status/1344077058570412034">
                   †
