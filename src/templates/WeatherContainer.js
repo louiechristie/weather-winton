@@ -57,7 +57,7 @@ const style = {
     alignItems: 'center',
     margin: theme.spacing(2),
     padding: theme.spacing(2),
-    width: '300px'
+    width: '300px',
   },
   cta: {
     maxWidth: 600,
@@ -110,12 +110,17 @@ const WeatherContainer = ({ pageContext: { items, meta } }) => {
   };
 
   const getFriendlyDateFromISODate = (ISOdate) => {
-    if(dayjs(ISOdate).isSame('2022-12-25', 'day') && dayjs(ISOdate).isSame('2022-12-25', 'month')) {
-      return 'Christmas'
-    } else {
-      return formattedDateFromISODate(ISOdate); 
+    switch (true) {
+      case dayjs(ISOdate).isSame('2022-12-25', 'month') &&
+        dayjs(ISOdate).isSame('2022-12-25', 'day'):
+        return 'Christmas';
+      case dayjs(ISOdate).isSame('2022-12-31', 'month') &&
+        dayjs(ISOdate).isSame('2022-12-31', 'day'):
+        return "New Year's Eve 🎉";
+      default:
+        return formattedDateFromISODate(ISOdate);
     }
-  }
+  };
 
   return (
     <div style={style.container}>
@@ -130,13 +135,16 @@ const WeatherContainer = ({ pageContext: { items, meta } }) => {
 
       <Days
         items={items.map((item) => {
-          return { ...item, friendlyDate: getFriendlyDateFromISODate(item.time) };
+          return {
+            ...item,
+            friendlyDate: getFriendlyDateFromISODate(item.time),
+          };
         })}
       />
 
       <div style={style.blurb}>
         <Paper style={{ ...style.note, ...style.cta }}>
-        <Typography variant="body1" component="p">
+          <Typography variant="body1" component="p">
             Advert
           </Typography>
           <Typography variant="h6" component="h2" gutterBottom align="center">
@@ -160,7 +168,6 @@ const WeatherContainer = ({ pageContext: { items, meta } }) => {
             component="blockquote"
             paragraph
             align="left"
-
           >
             <q>
               Instead of broadcasting the weatherman... use local computing
@@ -180,8 +187,6 @@ const WeatherContainer = ({ pageContext: { items, meta } }) => {
             </cite>
           </Typography>
         </Paper>
-
-        
       </div>
 
       <Footer meta={meta} />
