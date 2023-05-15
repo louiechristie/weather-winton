@@ -14,7 +14,7 @@ Inspired by Negroponte, N. (1995). Being digital. New York: Knopf. p.55.
 
 - ifttt.com account
 
-- Install node v14.15.1 or greater
+- Install node v18.16.0 or greater
 
 Set up environment variables:
 
