@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   transform: {
     "^.+\\.jsx?$": `<rootDir>/jest-preprocess.js`,
   },
@@ -13,4 +13,4 @@ module.exports = {
   },
   testURL: `http://localhost`,
   setupFiles: [`<rootDir>/loadershim.js`],
-}
+};

@@ -1,6 +1,6 @@
 import React from 'react';
 import dayjs from 'dayjs';
-import { theme, Paper, Typography } from '../utilities/theme';
+import { theme, Paper, Typography } from '../utilities/theme.mjs';
 
 const styles = {
   footer: {

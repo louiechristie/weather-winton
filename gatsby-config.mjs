@@ -1,8 +1,10 @@
-require('dotenv').config({
-  path: `.env.${process.env.NODE_ENV}`,
-});
+import dotenv from 'dotenv';
+dotenv.config();
 
-module.exports = {
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+
+export default {
   plugins: [
     `gatsby-plugin-react-helmet`,
     {

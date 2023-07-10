@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'gatsby';
-import { Typography, theme } from '../utilities/theme';
+import { Typography, theme } from '../utilities/theme.mjs';
 
 const styles = {
   container: {

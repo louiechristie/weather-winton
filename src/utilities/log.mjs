@@ -5,4 +5,4 @@ function log(string) {
   }
 }
 
-module.exports = log;
+export default log;

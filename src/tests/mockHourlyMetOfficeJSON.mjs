@@ -1,4 +1,4 @@
-const dayjs = require('dayjs');
+import dayjs from 'dayjs';
 
 const now = dayjs();
 
@@ -1252,4 +1252,4 @@ const mockMetOfficeJSON = {
 
 const getMockMetOfficeJSON = () => mockMetOfficeJSON;
 
-module.exports = getMockMetOfficeJSON;
+export default getMockMetOfficeJSON;

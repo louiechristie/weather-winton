@@ -1,10 +1,10 @@
 import dayjs from 'dayjs';
 import { Link } from 'gatsby';
 import React, { Component } from 'react';
-import { theme } from '../utilities/theme';
-import { getIsTooDryFromRelativeHumidity } from '../utilities/getComfortFromRelativeHumidity';
-import getIsStickyFromCelsiusAndRelativeHumidity from '../utilities/getIsStickyFromCelsiusAndRelativeHumidity';
-import Day from './Day';
+import { theme } from '../utilities/theme.mjs';
+import { getIsTooDryFromRelativeHumidity } from '../utilities/getComfortFromRelativeHumidity.mjs';
+import getIsStickyFromCelsiusAndRelativeHumidity from '../utilities/getIsStickyFromCelsiusAndRelativeHumidity.mjs';
+import Day from './Day.mjs';
 
 const heatWaveTemperature = 30;
 

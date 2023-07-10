@@ -11,7 +11,7 @@ import {
   AppBar,
   IconButton,
   Toolbar,
-} from '../utilities/theme';
+} from '../utilities/theme.mjs';
 
 const styles = {
   root: {

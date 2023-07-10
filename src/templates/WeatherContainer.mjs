@@ -1,11 +1,11 @@
 import dayjs from 'dayjs';
 import React from 'react';
-import { theme, Paper, Typography } from '../utilities/theme';
-import Footer from '../components/Footer';
-import Header from '../components/Header';
-import Days from '../components/Days';
-import formattedDateFromISODate from '../utilities/formattedDateFromISODate';
-import { getTemperatureFriendly } from '../utilities/getRoomTemperatureComfortFromCelsius';
+import { theme, Paper, Typography } from '../utilities/theme.mjs';
+import Footer from '../components/Footer.mjs';
+import Header from '../components/Header.mjs';
+import Days from '../components/Days.mjs';
+import formattedDateFromISODate from '../utilities/formattedDateFromISODate.mjs';
+import { getTemperatureFriendly } from '../utilities/getRoomTemperatureComfortFromCelsius.mjs';
 
 const style = {
   container: {},

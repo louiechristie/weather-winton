@@ -1,4 +1,4 @@
-import { getTemperatureFriendly } from './getRoomTemperatureComfortFromCelsius';
+import { getTemperatureFriendly } from './getRoomTemperatureComfortFromCelsius.mjs';
 
 test(`getTemperatureFriendly: negative temperature`, () => {
   expect(getTemperatureFriendly(-4)).toBe('Freezing 🥶');

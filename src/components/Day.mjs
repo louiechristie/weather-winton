@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { theme, Box, Card, Typography } from '../utilities/theme';
-import { getTemperatureFriendly } from '../utilities/getRoomTemperatureComfortFromCelsius';
+import { theme, Box, Card, Typography } from '../utilities/theme.mjs';
+import { getTemperatureFriendly } from '../utilities/getRoomTemperatureComfortFromCelsius.mjs';
 
 const styles = {
   card: {

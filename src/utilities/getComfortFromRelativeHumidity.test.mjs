@@ -1,4 +1,4 @@
-import getComfortFromRelativeHumidity from './getComfortFromRelativeHumidity';
+import getComfortFromRelativeHumidity from './getComfortFromRelativeHumidity.mjs';
 
 test('0% relative humidity to equal "TOO_DRY"', () => {
   expect(getComfortFromRelativeHumidity(0)).toBe('TOO_DRY');

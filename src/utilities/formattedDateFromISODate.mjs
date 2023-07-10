@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import calendar from 'dayjs/plugin/calendar';
+import calendar from 'dayjs/plugin/calendar.js';
 
 // Load plugin
 dayjs.extend(calendar);

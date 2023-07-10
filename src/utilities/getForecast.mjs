@@ -1,11 +1,11 @@
-require('dotenv').config();
+import dotenv from 'dotenv';
+dotenv.config();
 
-const axios = require('axios');
-
-const mockDailyMetOfficeJSON = require('../tests/mockDailyMetOfficeJSON');
-const mockHourlyMetOfficeJSON = require('../tests/mockHourlyMetOfficeJSON');
-const log = require('./log');
-const getItemsFromMetOfficeJSON = require('./metOfficeWeatherUtils');
+import axios from 'axios';
+import mockDailyMetOfficeJSON from '../tests/mockDailyMetOfficeJSON.mjs';
+import mockHourlyMetOfficeJSON from '../tests/mockHourlyMetOfficeJSON.mjs';
+import log from './log.mjs';
+import getItemsFromMetOfficeJSON from './metOfficeWeatherUtils.mjs';
 
 const headers = {
   accept: 'application/json',
@@ -92,4 +92,4 @@ const getForecast = async () => {
   return items;
 };
 
-exports.getForecast = getForecast;
+export default getForecast;

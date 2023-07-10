@@ -1,4 +1,4 @@
-import getIsStickyFromCelsiusAndRelativeHumidity from './getIsStickyFromCelsiusAndRelativeHumidity';
+import getIsStickyFromCelsiusAndRelativeHumidity from './getIsStickyFromCelsiusAndRelativeHumidity.mjs';
 
 test('is sticky', () => {
   expect(getIsStickyFromCelsiusAndRelativeHumidity(24, 60)).toBe(true);

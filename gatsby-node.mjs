@@ -1,32 +1,13 @@
-// Can't import module because Gatsby doesn't support ESM
-// const getTemperatureFriendly = require('./src/utilities/getRoomTemperatureComfortFromCelsius');
+import dotenv from 'dotenv';
+dotenv.config();
 
-// So copy the function here
-// Remove after upgrade to Gatsby 4.9+ (which supports TypeScript)
-function getTemperatureFriendly(celsius) {
-  if (!isFinite(celsius)) return null;
-  if (getIsTooHotForRoomTemperatureFromCelsius(celsius)) {
-    return 'Hot 🥵';
-  }
-  if (getIsFrostyFromCelsius(celsius)) {
-    return 'Freezing 🥶';
-  }
-  if (getIsTooColdForRoomTemperatureFromCelsius(celsius)) {
-    return 'Cold';
-  }
-  return 'Warm';
-}
-
-require('dotenv').config({
-  path: `.env.${process.env.NODE_ENV}`,
-});
-
-const axios = require('axios');
-const Color = require('color');
-const dayjs = require('dayjs');
-const timezone = require('dayjs/plugin/timezone');
-const utc = require('dayjs/plugin/utc');
-const sharp = require('sharp');
+import axios from 'axios';
+import Color from 'color';
+import dayjs from 'dayjs';
+import timezone from 'dayjs/plugin/timezone.js';
+import utc from 'dayjs/plugin/utc.js';
+import sharp from 'sharp';
+import path from 'path';
 
 axios.defaults.timeout === 30000;
 
@@ -34,8 +15,9 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.tz.setDefault('Europe/London');
 
-const manifest = require('./package.json');
-const { getForecast } = require('./src/utilities/getForecast');
+import manifest from './package.json' assert { type: 'json' };
+import getForecast from './src/utilities/getForecast.mjs';
+import { getTemperatureFriendly } from './src/utilities/getRoomTemperatureComfortFromCelsius.mjs';
 
 const CLOUDY_IMAGE_SRC =
   'https://www.metoffice.gov.uk/webfiles/latest/images/icons/weather/12.svg';
@@ -110,7 +92,7 @@ function getTemperatureColor(celsius) {
   return '#f1d220';
 }
 
-exports.createPages = async ({ actions: { createPage } }) => {
+export const createPages = async ({ actions: { createPage } }) => {
   try {
     const items = await getForecast();
     console.log('getForecast items: ', items);
@@ -161,7 +143,7 @@ exports.createPages = async ({ actions: { createPage } }) => {
 
     createPage({
       path: `/`,
-      component: require.resolve('./src/templates/WeatherContainer.js'),
+      component: path.resolve('./src/templates/WeatherContainer.mjs'),
       context: { items, meta },
     });
   } catch (error) {
@@ -190,7 +172,7 @@ exports.createPages = async ({ actions: { createPage } }) => {
 
     createPage({
       path: `/`,
-      component: require.resolve('./src/templates/WeatherContainer.js'),
+      component: path.resolve('./src/templates/WeatherContainer.mjs'),
       context: { items: mock, meta },
     });
   }

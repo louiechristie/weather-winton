@@ -1,13 +1,13 @@
-const dayjs = require('dayjs');
-const isSameOrAfter = require('dayjs/plugin/isSameOrAfter');
-const timezone = require('dayjs/plugin/timezone');
-const utc = require('dayjs/plugin/utc');
+import dayjs from 'dayjs';
+import isSameOrAfter from 'dayjs/plugin/isSameOrAfter.js';
+import timezone from 'dayjs/plugin/timezone.js';
+import utc from 'dayjs/plugin/utc.js';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.tz.setDefault('Europe/London');
 
-const log = require('./log');
+import log from './log.mjs';
 
 dayjs.extend(isSameOrAfter);
 
@@ -210,4 +210,4 @@ function getItemsFromMetOfficeJSON(dailyJson, hourlyJson) {
   return items;
 }
 
-module.exports = getItemsFromMetOfficeJSON;
+export default getItemsFromMetOfficeJSON;
