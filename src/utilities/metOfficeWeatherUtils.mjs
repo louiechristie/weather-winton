@@ -100,6 +100,42 @@ function avg(max, min) {
   return (max + min) / 2;
 }
 
+const getIsHourNeedsRaincoat = (hour) => {
+  return hour.probOfPrecipitation >= 50 || hour.significantWeatherCode > 9;
+};
+
+const getIsHourSnowy = (hour) => {
+  return hour.totalSnowAmount > 0;
+};
+
+const getIsHourInTheRemainingDay = (hour) => {
+  return (
+    dayjs(hour.time).tz() >= dayjs().tz().startOf('hour').add(1, 'hour') &&
+    dayjs(hour.time).tz() < dayjs().tz().endOf('day')
+  );
+};
+
+export const getIsTakeRaincoatToday = (hourlyMetOfficeJSON) => {
+  // console.log('hourlyMetOfficeJSON: ', hourlyMetOfficeJSON);
+
+  const hourlyTimeSeries =
+    hourlyMetOfficeJSON.features[0].properties.timeSeries;
+
+  return hourlyTimeSeries.reduce((acc, nextHour) => {
+    if (acc === true) return acc;
+
+    if (
+      getIsHourInTheRemainingDay(nextHour) &&
+      getIsHourNeedsRaincoat(nextHour) &&
+      getIsHourSnowy(nextHour) === false
+    ) {
+      return true;
+    }
+
+    return false;
+  });
+};
+
 function getItemsFromMetOfficeJSON(dailyJson, hourlyJson) {
   log(`dailyJson: ${JSON.stringify(dailyJson, null, '  ')}`);
   log(`hourlyJson: ${JSON.stringify(hourlyJson, null, '  ')}`);
@@ -151,35 +187,6 @@ function getItemsFromMetOfficeJSON(dailyJson, hourlyJson) {
   const temperatureOnNextHour =
     hourlyTimeSeries.filter(thisHourFilter)[0].screenTemperature;
 
-  const getIsHourNeedsRaincoat = (hour) => {
-    return hour.probOfPrecipitation >= 50 || hour.significantWeatherCode > 9;
-  };
-
-  const getIsHourSnowy = (hour) => {
-    return hour.totalSnowAmount > 0;
-  };
-
-  const getIsHourInTheRemainingDay = (hour) => {
-    return (
-      dayjs(hour.time).tz() >= dayjs().tz().startOf('hour').add(1, 'hour') &&
-      dayjs(hour.time).tz() < dayjs().tz().endOf('day')
-    );
-  };
-
-  const isTakeRaincoatToday = hourlyTimeSeries.reduce((acc, nextHour) => {
-    if (acc === true) return acc;
-
-    if (
-      getIsHourInTheRemainingDay(nextHour) &&
-      getIsHourNeedsRaincoat(nextHour) &&
-      getIsHourSnowy(nextHour) === false
-    ) {
-      return true;
-    }
-
-    return false;
-  });
-
   const isSnowDay = hourlyTimeSeries.reduce((acc, nextHour) => {
     if (acc === true) return acc;
 
@@ -190,7 +197,7 @@ function getItemsFromMetOfficeJSON(dailyJson, hourlyJson) {
     return false;
   });
 
-  items[0].isTakeRaincoat = isTakeRaincoatToday;
+  items[0].isTakeRaincoat = getIsTakeRaincoatToday(hourlyJson);
   items[0].isSnowDay = isSnowDay;
 
   items[0].indicativeTemperature = temperatureOnNextHour;

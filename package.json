@@ -15,7 +15,7 @@
     "build": "gatsby build",
     "serve": "gatsby serve -H 0.0.0.0",
     "clean": "gatsby clean",
-    "test": "jest --watchAll",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "lint": "eslint '**/*.js' --ignore-path .gitignore"
   },
   "resolutions": {
