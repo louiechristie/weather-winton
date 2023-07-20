@@ -101,7 +101,10 @@ function avg(max, min) {
 }
 
 const getIsHourNeedsRaincoat = (hour) => {
-  return hour.probOfPrecipitation >= 50 || hour.significantWeatherCode > 9;
+  // For significantWeatherCode definitions see: https://www.metoffice.gov.uk/services/data/datapoint/code-definitions
+  // For icons see: https://www.metoffice.gov.uk/weather/guides/what-does-this-forecast-mean
+  const significantWeatherIsDrizzleOrWorse = hour.significantWeatherCode >= 11;
+  return hour.probOfPrecipitation >= 50 || significantWeatherIsDrizzleOrWorse;
 };
 
 const getIsHourSnowy = (hour) => {
