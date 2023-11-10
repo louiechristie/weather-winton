@@ -25,7 +25,7 @@
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.13.0",
-    "axios": "^1.4.0",
+    "axios": "^1.6.0",
     "color": "^4.2.3",
     "dayjs": "^1.11.7",
     "gatsby": "^5.9.1",
