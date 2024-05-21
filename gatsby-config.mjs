@@ -14,22 +14,7 @@ export default {
       },
     },
     `gatsby-plugin-postcss`,
-    {
-      resolve: `gatsby-plugin-gatsby-cloud`,
-      options: {
-        headers: {
-          '/favicon.ico': [
-            'cache-control: public, max-age=0, must-revalidate,',
-          ],
-          '/apple-touch-icon.png': [
-            'cache-control: public, max-age=0, must-revalidate,',
-          ],
-          '/og-image-*.png': [
-            'cache-control: public, max-age: 31536000, immutable,',
-          ],
-        },
-      },
-    },
+    `gatsby-plugin-netlify`,
     `gatsby-plugin-twitter`,
   ],
 };

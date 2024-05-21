@@ -33,6 +33,7 @@
     "gatsby-link": "^5.13.1",
     "gatsby-plugin-gatsby-cloud": "^5.13.1",
     "gatsby-plugin-html-attributes": "^1.0.5",
+    "gatsby-plugin-netlify": "^5.1.1",
     "gatsby-plugin-postcss": "^6.13.1",
     "gatsby-plugin-react-helmet": "^6.13.1",
     "gatsby-plugin-twitter": "^5.13.1",
