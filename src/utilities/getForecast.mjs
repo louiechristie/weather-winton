@@ -9,8 +9,7 @@ import getItemsFromMetOfficeJSON from './metOfficeWeatherUtils.mjs';
 
 const headers = {
   accept: 'application/json',
-  'x-ibm-client-id': process.env.GATSBY_MET_WEATHER_ID,
-  'x-ibm-client-secret': process.env.GATSBY_MET_WEATHER_SECRET,
+  'apikey': process.env.GATSBY_MET_WEATHER_SECRET,
 };
 
 const getMetOfficeForecast = async () => {
