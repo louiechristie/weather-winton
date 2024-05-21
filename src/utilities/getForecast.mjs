@@ -63,10 +63,6 @@ const getForecast = async () => {
       throw new Error(
         'You need to set your GATSBY_MET_WEATHER_DAILY_URL environment variable'
       );
-    if (!process.env.GATSBY_MET_WEATHER_ID)
-      throw new Error(
-        'You need to set your GATSBY_MET_WEATHER_ID environment variable'
-      );
     if (!process.env.GATSBY_MET_WEATHER_SECRET)
       throw new Error(
         'You need to set your GATSBY_MET_WEATHER_SECRET environment variable'

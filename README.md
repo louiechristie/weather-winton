@@ -19,10 +19,9 @@ Inspired by Negroponte, N. (1995). Being digital. New York: Knopf. p.55.
 Set up environment variables:
 
 - GATSBY_SITE_URL - url of client website for social sharing using Open Graph
-- GATSBY_MET_WEATHER_DAILY_URL=<https://api-metoffice.apiconnect.ibmcloud.com/metoffice/production/v0/forecasts/point/daily?excludeParameterMetadata=true&latitude=51.477753&longitude=-0.035913>
-- GATSBY_MET_WEATHER_HOURLY_URL=<https://api-metoffice.apiconnect.ibmcloud.com/metoffice/production/v0/forecasts/point/hourly?excludeParameterMetadata=true&latitude=51.477753&longitude=-0.035913>
-- GATSBY_MET_WEATHER_ID= id for your met office account
-- GATSBY_MET_WEATHER_SECRET= secret for your met office account
+- GATSBY_MET_WEATHER_DAILY_URL=<https://data.hub.api.metoffice.gov.uk/sitespecific/v0/point/daily?excludeParameterMetadata=true&latitude=51.477753&longitude=-0.035913>
+- GATSBY_MET_WEATHER_HOURLY_URL=<https://data.hub.api.metoffice.gov.uk/sitespecific/v0/point/hourly?excludeParameterMetadata=true&latitude=51.477753&longitude=-0.035913>
+- GATSBY_MET_WEATHER_SECRET= api key for your met office account
 
 ## Getting started
 
