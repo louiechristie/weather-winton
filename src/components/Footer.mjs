@@ -24,13 +24,13 @@ const Footer = (props) => {
     <Paper style={styles.footer} elevation={24} square>
       <Typography variant="body2" component="p" align="center">
         Last updated: {meta.timeStamp} | Weather Winton ©️ {dayjs().year()} v
-        {meta.version} | Tags: user experience, UX
+        {meta.version} | Tags: user experience, UX | Hosted on: <img style={{verticalAlign: 'middle'}} src="https://api.netlify.com/api/v1/badges/f0ee41e4-eb3b-44f3-8810-07d0a72ca9a1/deploy-status" alt="Netlify logo" />
       </Typography>
 
       <Typography variant="body2" component="p" paragraph align="center">
-        Data from: Met Office | Contains public sector information licensed
-        under the Open Government Licence
+        Data from: Met Office | Contains public sector information licensed under the Open Government Licence
       </Typography>
+
 
       <Typography
         variant="body2"
