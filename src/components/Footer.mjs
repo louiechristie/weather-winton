@@ -31,7 +31,7 @@ const HostedOn = () => {
     );
   }
 
-  if (process.env.VERCEL) {
+  if (process.env.VERCEL === 1) {
     return (
       <>
         <img
