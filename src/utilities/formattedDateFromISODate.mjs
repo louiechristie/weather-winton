@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 import calendar from 'dayjs/plugin/calendar.js';
+import log from './log.mjs';
 
 // Load plugin
 dayjs.extend(calendar);
@@ -8,7 +9,6 @@ export default function formattedDateFromISODate(ISODate) {
   const theDate = dayjs(ISODate);
 
   if (!theDate.isValid()) {
-    console.error('Invalid date');
     throw new Error('Invalid date');
   }
 

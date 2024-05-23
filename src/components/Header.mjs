@@ -1,6 +1,7 @@
 import { useStaticQuery, graphql } from 'gatsby';
 import React from 'react';
 import { Helmet } from 'react-helmet';
+import log from '../utilities/log.mjs';
 
 import {
   theme,
@@ -53,7 +54,7 @@ function Header(props) {
     },
   } = props;
 
-  console.log('siteUrl: ' + siteUrl);
+  log('siteUrl: ' + siteUrl);
 
   return (
     <AppBar

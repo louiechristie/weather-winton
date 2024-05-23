@@ -2,13 +2,11 @@ import dayjs from 'dayjs';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter.js';
 import timezone from 'dayjs/plugin/timezone.js';
 import utc from 'dayjs/plugin/utc.js';
+import log from './log.mjs';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.tz.setDefault('Europe/London');
-
-import log from './log.mjs';
-
 dayjs.extend(isSameOrAfter);
 
 function getDescriptionFromMetOfficeWeatherCode(code) {
@@ -119,7 +117,7 @@ const getIsHourInTheRemainingDay = (hour) => {
 };
 
 export const getIsTakeRaincoatToday = (hourlyMetOfficeJSON) => {
-  // console.log('hourlyMetOfficeJSON: ', hourlyMetOfficeJSON);
+  // log('hourlyMetOfficeJSON: ', hourlyMetOfficeJSON);
 
   const hourlyTimeSeries =
     hourlyMetOfficeJSON.features[0].properties.timeSeries;

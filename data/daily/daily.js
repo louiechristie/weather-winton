@@ -8,9 +8,12 @@
  * node daily.js
  */
 
+import log from './../../src/utilities/log.mjs';
+
 fs = require('fs/promises');
 
 const temperatures = [];
+
 
 async function processData(filename) {
   try {
@@ -18,13 +21,13 @@ async function processData(filename) {
 
     const lines = data.trim().split(/\n+/);
 
-    console.log(`lines: ${lines}`);
+    log(`lines: ${lines}`);
 
     let words = [];
 
     for (let i = 0; i < lines.length; i += 1) {
       words = lines[i].trim().split(/\s+/);
-      console.log(`words: ${words}`);
+      log(`words: ${words}`);
 
       for (let j = 2; j < words.length; j++) {
         const temperature = parseInt(words[j], 10) / 10;
@@ -34,7 +37,7 @@ async function processData(filename) {
       }
     }
   } catch (err) {
-    console.log(err);
+    log(err);
   }
 }
 
@@ -51,7 +54,7 @@ async function combineData() {
 
   const sortedSting = JSON.stringify(sorted, null, 2);
 
-  console.log(`sortedString: ${sortedSting}`);
+  log(`sortedString: ${sortedSting}`);
 
   let output = {};
 
@@ -79,7 +82,7 @@ async function combineData() {
 
   const outputString = JSON.stringify(output, null, 2);
 
-  console.log(`outputString: ${outputString}`);
+  log(`outputString: ${outputString}`);
 
   return output;
 }

@@ -6,6 +6,7 @@ import Header from '../components/Header.mjs';
 import Days from '../components/Days.mjs';
 import formattedDateFromISODate from '../utilities/formattedDateFromISODate.mjs';
 import { getTemperatureFriendly } from '../utilities/getRoomTemperatureComfortFromCelsius.mjs';
+import log from '../utilities/log.mjs';
 
 const style = {
   container: {},
@@ -88,7 +89,7 @@ const WeatherContainer = ({ pageContext: { items, meta } }) => {
   const todaysWeather = `${items[0]?.description || 'probably raining'}`;
 
   const getTempFriendlyStyle = (forecast) => {
-    console.log('forecast: ', forecast);
+    log('forecast: ', forecast);
     const avgTempInt = Math.round(forecast.avgTemperature);
     const maxTempInt = Math.round(forecast.maxTemperature);
 

@@ -7,6 +7,7 @@ import mockHourlyMetOfficeJSON from '../tests/mockHourlyMetOfficeJSON.mjs';
 import log from './log.mjs';
 import getItemsFromMetOfficeJSON from './metOfficeWeatherUtils.mjs';
 
+
 const headers = {
   accept: 'application/json',
   'apikey': process.env.GATSBY_MET_WEATHER_SECRET,

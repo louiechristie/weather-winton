@@ -8,6 +8,7 @@ import timezone from 'dayjs/plugin/timezone.js';
 import utc from 'dayjs/plugin/utc.js';
 import sharp from 'sharp';
 import path from 'path';
+import log, { error } from './src/utilities/log.mjs';
 
 axios.defaults.timeout === 30000;
 
@@ -95,7 +96,7 @@ function getTemperatureColor(celsius) {
 export const createPages = async ({ actions: { createPage } }) => {
   try {
     const items = await getForecast();
-    console.log('getForecast items: ', items);
+    // log('getForecast items: ', items);
 
     meta.timeStamp = `${dayjs(new Date()).tz().format('YYYY-MM-DD HHmm')}`;
 
@@ -147,8 +148,8 @@ export const createPages = async ({ actions: { createPage } }) => {
       context: { items, meta },
     });
   } catch (error) {
-    console.error('Error creating pages');
-    console.error(error);
+    log.error('Error creating pages');
+    log.error(error);
 
     const now = dayjs();
     const today = now.toISOString();
