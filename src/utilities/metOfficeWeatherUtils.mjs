@@ -98,32 +98,32 @@ function avg(max, min) {
   return (max + min) / 2;
 }
 
-const getIsHourNeedsRaincoat = (hour) => {
+const getIsHourNeedsRaincoat = hour => {
   // For significantWeatherCode definitions see: https://www.metoffice.gov.uk/services/data/datapoint/code-definitions
   // For icons see: https://www.metoffice.gov.uk/weather/guides/what-does-this-forecast-mean
   const significantWeatherIsDrizzleOrWorse = hour.significantWeatherCode >= 11;
   return hour.probOfPrecipitation >= 50 || significantWeatherIsDrizzleOrWorse;
 };
 
-const getIsHourSnowy = (hour) => {
+const getIsHourSnowy = hour => {
   return hour.totalSnowAmount > 0;
 };
 
-const getIsHourInTheRemainingDay = (hour) => {
+const getIsHourInTheRemainingDay = hour => {
   return (
     dayjs(hour.time).tz() >= dayjs().tz().startOf('hour').add(1, 'hour') &&
     dayjs(hour.time).tz() < dayjs().tz().endOf('day')
   );
 };
 
-export const getIsTakeRaincoatToday = (hourlyMetOfficeJSON) => {
+export const getIsTakeRaincoatToday = hourlyMetOfficeJSON => {
   // log('hourlyMetOfficeJSON: ', hourlyMetOfficeJSON);
 
   const hourlyTimeSeries =
     hourlyMetOfficeJSON.features[0].properties.timeSeries;
 
   return hourlyTimeSeries.reduce((acc, nextHour) => {
-    if (acc === true) return acc;
+    if (acc === true) return true;
 
     if (
       getIsHourInTheRemainingDay(nextHour) &&
@@ -141,13 +141,13 @@ function getItemsFromMetOfficeJSON(dailyJson, hourlyJson) {
   log(`dailyJson: ${JSON.stringify(dailyJson, null, '  ')}`);
   log(`hourlyJson: ${JSON.stringify(hourlyJson, null, '  ')}`);
 
-  const filter = (day) => {
+  const filter = day => {
     return dayjs(day.time).tz().isSameOrAfter(dayjs(), 'day');
   };
 
   const items = dailyJson.features[0].properties.timeSeries
     .filter(filter)
-    .map((day) => {
+    .map(day => {
       return {
         time: day.time,
         description: getDescriptionFromMetOfficeWeatherCode(
@@ -179,7 +179,7 @@ function getItemsFromMetOfficeJSON(dailyJson, hourlyJson) {
       };
     });
 
-  const thisHourFilter = (hour) => {
+  const thisHourFilter = hour => {
     return dayjs(hour.time).tz().isSame(dayjs().add(1, 'hour'), 'hour');
   };
 
@@ -206,13 +206,13 @@ function getItemsFromMetOfficeJSON(dailyJson, hourlyJson) {
   items[0].maxTemperature = Math.max(
     ...hourlyTimeSeries
       .filter(getIsHourInTheRemainingDay)
-      .map((hour) => hour.screenTemperature)
+      .map(hour => hour.screenTemperature)
   );
 
   items[0].minTemperature = Math.min(
     ...hourlyTimeSeries
       .filter(getIsHourInTheRemainingDay)
-      .map((hour) => hour.screenTemperature)
+      .map(hour => hour.screenTemperature)
   );
 
   return items;

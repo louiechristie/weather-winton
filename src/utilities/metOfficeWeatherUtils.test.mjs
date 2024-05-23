@@ -12,14 +12,14 @@ test('isTakeRaincoatToday false', () => {
   expect(getIsTakeRaincoatToday(mockHourlyNoRaincoatJSON())).toBe(false);
 });
 
-test('isTakeRaincoatToday true when there is a 50% chance of rain one hour between now and the end of the day', () => {
+test('isTakeRaincoatToday true when there is rain one hour between now and the end of the day', () => {
   expect(getIsTakeRaincoatToday(mockHourlyNeedRaincoatJSON())).toBe(true);
 });
 
-test('isTakeRaincoatToday false when there is a 50% chance of rain only at midnight', () => {
+test('isTakeRaincoatToday false when there is rain only at midnight', () => {
   expect(getIsTakeRaincoatToday(mockHourlyRainAtMidnightJSON())).toBe(false);
 });
 
-test('isTakeRaincoatToday true when there is a 50% chance of rain only at 23:00', () => {
+test('isTakeRaincoatToday true when there is rain only at 23:00', () => {
   expect(getIsTakeRaincoatToday(mockHourlyRainAtElevenJSON())).toBe(true);
 });
