@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
-dotenv.config();
-
 import { createRequire } from 'module';
+
+dotenv.config();
 const require = createRequire(import.meta.url);
 
 export default {

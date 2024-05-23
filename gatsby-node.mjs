@@ -1,24 +1,24 @@
-import dotenv from 'dotenv';
-dotenv.config();
-
 import axios from 'axios';
 import Color from 'color';
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone.js';
 import utc from 'dayjs/plugin/utc.js';
-import sharp from 'sharp';
+import dotenv from 'dotenv';
 import path from 'path';
+import sharp from 'sharp';
+
+import manifest from './package.json' assert { type: 'json' };
+import getForecast from './src/utilities/getForecast.mjs';
+import { getTemperatureFriendly } from './src/utilities/getRoomTemperatureComfortFromCelsius.mjs';
 import log, { error } from './src/utilities/log.mjs';
+
+dotenv.config();
 
 axios.defaults.timeout === 30000;
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.tz.setDefault('Europe/London');
-
-import manifest from './package.json' assert { type: 'json' };
-import getForecast from './src/utilities/getForecast.mjs';
-import { getTemperatureFriendly } from './src/utilities/getRoomTemperatureComfortFromCelsius.mjs';
 
 const CLOUDY_IMAGE_SRC =
   'https://www.metoffice.gov.uk/webfiles/latest/images/icons/weather/12.svg';

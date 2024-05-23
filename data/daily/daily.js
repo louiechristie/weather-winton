@@ -14,7 +14,6 @@ fs = require('fs/promises');
 
 const temperatures = [];
 
-
 async function processData(filename) {
   try {
     const data = await fs.readFile(filename, { encoding: 'utf8' });
