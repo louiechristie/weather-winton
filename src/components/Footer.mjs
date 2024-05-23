@@ -31,7 +31,7 @@ const HostedOn = () => {
     );
   }
 
-  if (process.env.VERCEL === 1) {
+  if (process.env.GATSBY_VERCEL_ENV === 'production') {
     return (
       <>
         <img
