@@ -148,8 +148,8 @@ export const createPages = async ({ actions: { createPage } }) => {
       context: { items, meta },
     });
   } catch (error) {
-    log.error('Error creating pages');
-    log.error(error);
+    error('Error creating pages');
+    error(error);
 
     const now = dayjs();
     const today = now.toISOString();
