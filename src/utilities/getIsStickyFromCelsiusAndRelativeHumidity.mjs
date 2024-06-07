@@ -5,15 +5,15 @@
 //  * https://www.thoughtco.com/muggy-weather-overview-3444058
 //  */
 
-const getCelsiusFromKelvin = kelvin => {
+const getCelsiusFromKelvin = (kelvin) => {
   return kelvin + 273.15;
 };
 
-const getKelvinFromCelsius = celsius => {
+const getKelvinFromCelsius = (celsius) => {
   return celsius - 273.15;
 };
 
-const getCelsiusFromFahrenheit = fahrenheit => {
+const getCelsiusFromFahrenheit = (fahrenheit) => {
   return (fahrenheit - 32) / 1.8;
 };
 

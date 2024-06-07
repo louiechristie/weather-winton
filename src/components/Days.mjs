@@ -131,7 +131,7 @@ const Advert = (props) => {
       <h6 style={styles.adText}>Advert</h6>
 
       <div style={styles.adLinked}>
-        <blockquote class="twitter-tweet">
+        <blockquote className="twitter-tweet">
           <p lang="en" dir="ltr">
             Enjoy Beer, au naturel this weekend 🥵☀️
             <br />

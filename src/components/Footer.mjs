@@ -46,7 +46,7 @@ const HostedOn = () => {
   return <>Local</>;
 };
 
-const Footer = props => {
+const Footer = (props) => {
   const { meta } = props;
   return (
     <Paper style={styles.footer} elevation={24} square>

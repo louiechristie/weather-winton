@@ -113,7 +113,7 @@ const styles = {
   // }
 };
 
-const Day = props => {
+const Day = (props) => {
   const {
     friendlyDate,
     time,
@@ -134,7 +134,7 @@ const Day = props => {
   const maxTempInt = Math.round(maxTemperature);
   const isToday = friendlyDate === 'Today';
 
-  const getTempFriendlyStyle = temperature => {
+  const getTempFriendlyStyle = (temperature) => {
     if (getTemperatureFriendly(temperature) === 'Hot 🥵') {
       return styles.hot;
     }
@@ -151,7 +151,7 @@ const Day = props => {
 
   const spacer = isToday ? 1 : 4;
 
-  const getShowIndicative = tempInt => {
+  const getShowIndicative = (tempInt) => {
     const isIndicativeTemp = tempInt === indicativeTempInt;
 
     if (isToday && isIndicativeTemp) {
@@ -160,7 +160,7 @@ const Day = props => {
     return false;
   };
 
-  const getNumberForScale = tempInt => {
+  const getNumberForScale = (tempInt) => {
     const isIndicativeTemp = tempInt === indicativeTempInt;
     const isMinTemp = tempInt === minTempInt;
     const isMaxTemp = tempInt === maxTempInt;
@@ -202,7 +202,7 @@ const Day = props => {
     return '';
   };
 
-  const getIndicator = tempInt => {
+  const getIndicator = (tempInt) => {
     const isIndicativeTemp = tempInt === indicativeTempInt;
     const isMinTemp = tempInt === minTempInt;
     const isMaxTemp = tempInt === maxTempInt;
@@ -356,7 +356,7 @@ const Day = props => {
               }}
             >
               <Box style={styles.colorScale}>
-                {temperatures.map(key => {
+                {temperatures.map((key) => {
                   const tempInt = parseInt(key, 10);
                   const tally = tempTallies[key];
 

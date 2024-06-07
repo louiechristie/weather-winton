@@ -17,7 +17,7 @@
     "clean": "gatsby clean",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore . && stylelint --ignore-path .gitignore '**/*.css'",
-    "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore . --fix && stylelint --ignore-path .gitignore '**/*.css' --fix"
+    "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx,.mjs --ignore-path .gitignore . --fix && stylelint --ignore-path .gitignore '**/*.css' --fix"
   },
   "resolutions": {
     "json5": "^2.2.3"
