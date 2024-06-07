@@ -4,7 +4,7 @@ import { theme, Paper, Typography } from '../utilities/theme.mjs';
 import Footer from '../components/Footer.mjs';
 import Header from '../components/Header.mjs';
 import Days from '../components/Days.mjs';
-import formattedDateFromISODate from '../utilities/formattedDateFromISODate.mjs';
+import getFriendlyDateFromISODate from '../utilities/getFriendlyDateFromISODate.mjs';
 import { getTemperatureFriendly } from '../utilities/getRoomTemperatureComfortFromCelsius.mjs';
 import log from '../utilities/log.mjs';
 
@@ -83,12 +83,12 @@ const WeatherContainer = ({ pageContext: { items, meta } }) => {
   let date = 'Today';
 
   if (items[0]?.time) {
-    date = formattedDateFromISODate(items[0].time);
+    date = getFriendlyDateFromISODate(items[0].time);
   }
 
   const todaysWeather = `${items[0]?.description || 'probably raining'}`;
 
-  const getTempFriendlyStyle = (forecast) => {
+  const getTempFriendlyStyle = forecast => {
     log('forecast: ', forecast);
     const avgTempInt = Math.round(forecast.avgTemperature);
     const maxTempInt = Math.round(forecast.maxTemperature);
@@ -113,19 +113,6 @@ const WeatherContainer = ({ pageContext: { items, meta } }) => {
     }
   };
 
-  const getFriendlyDateFromISODate = (ISOdate) => {
-    switch (true) {
-      case dayjs(ISOdate).isSame('2022-12-25', 'month') &&
-        dayjs(ISOdate).isSame('2022-12-25', 'day'):
-        return 'Christmas';
-      case dayjs(ISOdate).isSame('2022-12-31', 'month') &&
-        dayjs(ISOdate).isSame('2022-12-31', 'day'):
-        return "New Year's Eve 🎉";
-      default:
-        return formattedDateFromISODate(ISOdate);
-    }
-  };
-
   return (
     <div style={style.container}>
       <Header
@@ -138,7 +125,7 @@ const WeatherContainer = ({ pageContext: { items, meta } }) => {
       />
 
       <Days
-        items={items.map((item) => {
+        items={items.map(item => {
           return {
             ...item,
             friendlyDate: getFriendlyDateFromISODate(item.time),
