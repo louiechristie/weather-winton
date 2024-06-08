@@ -3,6 +3,7 @@ import isSameOrAfter from 'dayjs/plugin/isSameOrAfter.js';
 import timezone from 'dayjs/plugin/timezone.js';
 import utc from 'dayjs/plugin/utc.js';
 import log from './log.mjs';
+import getIndicativeTemperatureFromHourly from './getIndicativeTemperatureFromHourly.mjs';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -109,11 +110,17 @@ const getIsHourSnowy = (hour) => {
   return hour.totalSnowAmount > 0;
 };
 
-const getIsHourInTheRemainingDay = (hour) => {
-  return (
-    dayjs(hour.time).tz() >= dayjs().tz().startOf('hour').add(1, 'hour') &&
-    dayjs(hour.time).tz() < dayjs().tz().endOf('day')
-  );
+export const getIsHourInTheRemainingDay = (
+  time,
+  currentTime = dayjs().tz().toISOString()
+) => {
+  const currentTimeDayJS = dayjs(currentTime).tz();
+  const timeToCheckDayJS = dayjs(time);
+  const isHourInTheRemainingDay =
+    timeToCheckDayJS.isSameOrAfter(currentTimeDayJS) &&
+    timeToCheckDayJS.isBefore(currentTimeDayJS.endOf('day'));
+  // console.log({ time, currentTime, isHourInTheRemainingDay });
+  return isHourInTheRemainingDay;
 };
 
 export const getIsTakeRaincoatToday = (hourlyMetOfficeJSON) => {
@@ -126,7 +133,7 @@ export const getIsTakeRaincoatToday = (hourlyMetOfficeJSON) => {
     if (acc === true) return true;
 
     if (
-      getIsHourInTheRemainingDay(nextHour) &&
+      getIsHourInTheRemainingDay(nextHour.time) &&
       getIsHourNeedsRaincoat(nextHour) &&
       getIsHourSnowy(nextHour) === false
     ) {
@@ -191,7 +198,7 @@ function getItemsFromMetOfficeJSON(dailyJson, hourlyJson) {
   const isSnowDay = hourlyTimeSeries.reduce((acc, nextHour) => {
     if (acc === true) return acc;
 
-    if (getIsHourInTheRemainingDay(nextHour) && getIsHourSnowy(nextHour)) {
+    if (getIsHourInTheRemainingDay(nextHour.time) && getIsHourSnowy(nextHour)) {
       return true;
     }
 
@@ -201,7 +208,8 @@ function getItemsFromMetOfficeJSON(dailyJson, hourlyJson) {
   items[0].isTakeRaincoat = getIsTakeRaincoatToday(hourlyJson);
   items[0].isSnowDay = isSnowDay;
 
-  items[0].indicativeTemperature = temperatureOnNextHour;
+  items[0].indicativeTemperature =
+    getIndicativeTemperatureFromHourly(hourlyJson);
 
   items[0].maxTemperature = Math.max(
     ...hourlyTimeSeries

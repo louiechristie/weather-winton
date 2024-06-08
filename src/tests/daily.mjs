@@ -1,5 +1,3 @@
-import getMockDate from './mockDate.mjs/index.js';
-
 const mockMetOfficeJSON = {
   type: 'FeatureCollection',
   features: [
@@ -361,6 +359,6 @@ const mockMetOfficeJSON = {
   ],
 };
 
-const getMockMetOfficeJSON = () => mockMetOfficeJSON;
+const getMockMetOfficeJSON = () => structuredClone(mockMetOfficeJSON);
 
-module.exports = getMockMetOfficeJSON;
+export default getMockMetOfficeJSON;

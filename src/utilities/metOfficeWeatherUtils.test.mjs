@@ -1,12 +1,8 @@
 import { getIsTakeRaincoatToday } from './metOfficeWeatherUtils.mjs';
 import mockHourlyNoRaincoatJSON from '../tests/mockHourlyNoRaincoat.mjs';
 import mockHourlyNeedRaincoatJSON from '../tests/mockHourlyNeedRaincoat.mjs';
-import getMockMetOfficeJSON from '../tests/mockDailyMetOfficeJSON.mjs';
 import mockHourlyRainAtMidnightJSON from '../tests/mockHourlyRainAtMidnight.mjs';
 import mockHourlyRainAtElevenJSON from '../tests/mockHourlyRainAtEleven.mjs';
-import { jest } from '@jest/globals';
-
-jest.useFakeTimers();
 
 test('isTakeRaincoatToday false', () => {
   expect(getIsTakeRaincoatToday(mockHourlyNoRaincoatJSON())).toBe(false);
