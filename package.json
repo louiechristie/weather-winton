@@ -10,7 +10,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "start": "npm run build && npm run serve",
+    "start": "yarn run build && yarn run serve",
     "dev": "gatsby develop -H 0.0.0.0",
     "build": "gatsby build",
     "serve": "gatsby serve -H 0.0.0.0",
