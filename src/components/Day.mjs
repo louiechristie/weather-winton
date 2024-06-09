@@ -80,7 +80,7 @@ const styles = {
     flex: 11,
   },
   warm: {
-    color: 'black',
+    color: 'rgba(0,0,0, 0.7)',
     borderWidth: 0,
     backgroundColor: '#f1d220',
   },
@@ -196,7 +196,7 @@ const Day = (props) => {
         isAwayFromMinTemp &&
         isAwayFromMaxTemp
       )
-        return temperatureNumberSpaced;
+        return <spam style={{ opacity: 0.75 }}>{temperatureNumberSpaced}</spam>;
     }
 
     return '';
