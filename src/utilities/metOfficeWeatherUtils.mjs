@@ -192,9 +192,6 @@ function getItemsFromMetOfficeJSON(dailyJson, hourlyJson) {
 
   const hourlyTimeSeries = hourlyJson.features[0].properties.timeSeries;
 
-  const temperatureOnNextHour =
-    hourlyTimeSeries.filter(thisHourFilter)[0].screenTemperature;
-
   const isSnowDay = hourlyTimeSeries.reduce((acc, nextHour) => {
     if (acc === true) return acc;
 

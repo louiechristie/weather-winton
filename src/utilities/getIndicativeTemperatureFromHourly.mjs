@@ -6,7 +6,7 @@ import { getIsHourInTheRemainingDay } from './metOfficeWeatherUtils.mjs';
  * @param {number} fromTime ISO time from which to calculate the temperature forcast
  * @returns {number} temperature as float
  */
-const getIndicativeTemperaturefromTimely = (hourlyTimeSeries, fromTime) => {
+const getIndicativeTemperaturefromHourly = (hourlyTimeSeries, fromTime) => {
   const average = (array) => array.reduce((a, b) => a + b) / array.length;
 
   const hourlyTimeSeriesInRemainingDay =
@@ -24,4 +24,4 @@ const getIndicativeTemperaturefromTimely = (hourlyTimeSeries, fromTime) => {
   return average(temperatures);
 };
 
-export default getIndicativeTemperaturefromTimely;
+export default getIndicativeTemperaturefromHourly;

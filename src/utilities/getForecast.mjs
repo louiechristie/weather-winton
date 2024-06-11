@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
+import dayjs from 'dayjs';
 import axios from 'axios';
 import mockDailyMetOfficeJSON from '../tests/mockDailyMetOfficeJSON.mjs';
 import generateMockHourlyMetOfficeJSON from '../tests/generateMockHourlyMetOfficeJSON.mjs';
@@ -52,7 +53,7 @@ const getMockForecast = async () => {
   log('getMockForecast');
   return getItemsFromMetOfficeJSON(
     mockDailyMetOfficeJSON(),
-    generateMockHourlyMetOfficeJSON()
+    generateMockHourlyMetOfficeJSON(dayjs().toISOString())
   );
 };
 
