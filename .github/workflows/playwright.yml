@@ -8,9 +8,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Install Yarn
+        run: npm install -g yarn && yarn
       - name: Install dependencies
-        run: npm install @playwright/test && npx playwright install --with-deps
+        run: yarn && yarn playwright install --with-deps chromium
       - name: Run tests
-        run: npx playwright test
+        run: yarn playwright test
         env:
           BASE_URL: ${{ github.event.deployment_status.environment_url }}
