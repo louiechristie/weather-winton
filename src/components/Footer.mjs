@@ -56,11 +56,7 @@ const HostedOn = () => {
     );
   }
 
-  return (
-    <>
-      Local <GitHubBadge />
-    </>
-  );
+  return <>Local</>;
 };
 
 const Footer = (props) => {
