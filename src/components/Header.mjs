@@ -1,13 +1,8 @@
-import { useStaticQuery, graphql } from 'gatsby';
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import log from '../utilities/log.mjs';
 
 import {
-  theme,
-  Paper,
-  Box,
-  Card,
   Typography,
   AppBar,
   IconButton,
@@ -41,7 +36,6 @@ function Header(props) {
     description,
     image,
     alt,
-    url,
     temperatureClass,
     meta: {
       siteTitle,

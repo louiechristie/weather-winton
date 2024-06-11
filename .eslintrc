@@ -62,10 +62,12 @@
       {
         "extensions": [
           ".tsx",
-          ".jsx"
+          ".jsx",
+          ".mjs"
         ]
       }
     ],
-    "react/state-in-constructor": "off"
+    "react/state-in-constructor": "off",
+    "react/prop-types": "off"
   }
 }

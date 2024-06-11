@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import { Link } from 'gatsby';
-import React, { Component } from 'react';
+import React from 'react';
 import { theme } from '../utilities/theme.mjs';
 import { getIsTooDryFromRelativeHumidity } from '../utilities/getComfortFromRelativeHumidity.mjs';
 import getIsStickyFromCelsiusAndRelativeHumidity from '../utilities/getIsStickyFromCelsiusAndRelativeHumidity.mjs';
@@ -125,7 +125,7 @@ const Days = (props) => {
   );
 };
 
-const Advert = (props) => {
+const Advert = () => {
   return (
     <li style={{ ...styles.li, ...styles.adContainer }}>
       <h6 style={styles.adText}>Advert</h6>
@@ -158,7 +158,7 @@ const Advert = (props) => {
       </div>
 
       <p style={styles.adText}>
-        Why?: Because it's a heatwave, let's show a picture of{' '}
+        Why?: Because it&apos;s a heatwave, let&apos;s show a picture of{' '}
         <Link to="https://undergroundcomedian.wordpress.com/gonzo/">
           Nigel Thomas
         </Link>{' '}

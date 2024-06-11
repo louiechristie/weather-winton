@@ -25,18 +25,18 @@ export function getIsFrostyFromCelsius(celsius) {
   }
 }
 
-export function getIsComfortableRoomTemperatureFromCelsius(celsius) {
-  // The World Health Organization's standard ...
-  // For those with respiratory problems or allergies, they recommend no less than 16 °C */
-  // From https://en.wikipedia.org/wiki/Room_temperature Accessed 2019-12-28
-  if (
-    !getIsTooHotForRoomTemperatureFromCelsius &&
-    getIsTooColdForRoomTemperatureFromCelsius
-  ) {
-    return true;
-  }
-  return false;
-}
+// export function getIsComfortableRoomTemperatureFromCelsius(celsius) {
+//   // The World Health Organization's standard ...
+//   // For those with respiratory problems or allergies, they recommend no less than 16 °C */
+//   // From https://en.wikipedia.org/wiki/Room_temperature Accessed 2019-12-28
+//   if (
+//     !getIsTooHotForRoomTemperatureFromCelsius(celsius) &&
+//     getIsTooColdForRoomTemperatureFromCelsius(celsius)
+//   ) {
+//     return true;
+//   }
+//   return false;
+// }
 
 export function getTemperatureFriendly(celsius) {
   if (!isFinite(celsius)) return null;

@@ -1,4 +1,3 @@
-import dayjs from 'dayjs';
 import React from 'react';
 import { theme, Paper, Typography } from '../utilities/theme.mjs';
 import Footer from '../components/Footer.mjs';
@@ -78,17 +77,9 @@ const style = {
 };
 
 const WeatherContainer = ({ pageContext: { items, meta } }) => {
-  const now = dayjs();
-
-  let date = 'Today';
-
-  if (items[0]?.time) {
-    date = getFriendlyDateFromISODate(items[0].time);
-  }
-
   const todaysWeather = `${items[0]?.description || 'probably raining'}`;
 
-  const getTempFriendlyStyle = forecast => {
+  const getTempFriendlyStyle = (forecast) => {
     log('forecast: ', forecast);
     const avgTempInt = Math.round(forecast.avgTemperature);
     const maxTempInt = Math.round(forecast.maxTemperature);
@@ -125,7 +116,7 @@ const WeatherContainer = ({ pageContext: { items, meta } }) => {
       />
 
       <Days
-        items={items.map(item => {
+        items={items.map((item) => {
           return {
             ...item,
             friendlyDate: getFriendlyDateFromISODate(item.time),
@@ -140,7 +131,7 @@ const WeatherContainer = ({ pageContext: { items, meta } }) => {
           </Typography>
           <Typography variant="h6" component="h2" gutterBottom align="center">
             <a href="https://www.louiechristie.com/blog/contact/">
-              Like this? Let's make friendly technology together...
+              Like this? Let&apos;s make friendly technology together...
             </a>
           </Typography>
         </Paper>

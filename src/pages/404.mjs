@@ -17,7 +17,7 @@ const styles = {
   },
 };
 
-const NotFoundPage = (props) => {
+const NotFoundPage = () => {
   return (
     <div style={styles.container}>
       <div style={styles.content}>

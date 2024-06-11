@@ -121,7 +121,6 @@ const Day = (props) => {
     description,
     minTemperature,
     maxTemperature,
-    avgTemperature,
     indicativeTemperature,
     isSticky,
     isDry,
@@ -311,11 +310,7 @@ const Day = (props) => {
       </div>
       <div>
         <Box style={styles.labels}>
-          {isSticky && (
-            <div variant="outlined" style={styles.label}>
-              Sticky 💦
-            </div>
-          )}
+          {isSticky && <div style={styles.label}>Sticky 💦</div>}
 
           {isDry && (
             <div style={{ ...styles.label, ...styles.dry }}>
@@ -323,16 +318,12 @@ const Day = (props) => {
             </div>
           )}
           {(isOffTheScaleHot || isOffTheScaleCold) && (
-            <div variant="outlined" style={styles.label}>{`Off the scale ${
+            <div style={styles.label}>{`Off the scale ${
               isOffTheScaleHot ? 'hot 🥵' : 'cold 🥶'
             }`}</div>
           )}
           {isTakeRaincoat && <div style={styles.label}>Take raincoat 🧥</div>}
-          {isSnowDay && (
-            <div variant="outlined" style={styles.label}>
-              Snow ❄️☃️
-            </div>
-          )}
+          {isSnowDay && <div style={styles.label}>Snow ❄️☃️</div>}
           <div style={styles.temperatureOuter}>
             <Box style={{ ...styles.swatch, ...minTemperature, flex: 1 }}>
               <div style={styles.scaleNumber}>
@@ -340,7 +331,7 @@ const Day = (props) => {
               </div>
 
               {(isOffTheScaleCold || isOffTheScaleHot) && (
-                <div style={{ ...styes.indicator, minWidth: '20px' }}>
+                <div style={{ ...styles.indicator, minWidth: '20px' }}>
                   <Typography variant="body2" component="p">
                     {isOffTheScaleCold && getIndicator(minTempInt)}
                     {'\u00A0'}

@@ -1,6 +1,3 @@
-import dotenv from 'dotenv';
-dotenv.config();
-
 import dayjs from 'dayjs';
 import axios from 'axios';
 import mockDailyMetOfficeJSON from '../tests/mockDailyMetOfficeJSON.mjs';
@@ -14,39 +11,35 @@ const headers = {
 };
 
 const getMetOfficeForecast = async () => {
-  try {
-    const response = await axios.get(process.env.GATSBY_MET_WEATHER_DAILY_URL, {
-      headers,
-    });
-    // const text = await response.text();
-    // log('text: ' + text);
-    log(`response.data: ${JSON.stringify(response.data, null, '  ')}`);
-    const dailyJson = response.data;
-    if (!response) {
-      throw new Error('No response from server.');
-    }
-
-    const hourlyResponse = await axios.get(
-      process.env.GATSBY_MET_WEATHER_HOURLY_URL,
-      {
-        headers,
-      }
-    );
-    // const text = await hourlyResponse.text();
-    // log('text: ' + text);
-    log(
-      `hourlyResponse.data: ${JSON.stringify(hourlyResponse.data, null, '  ')}`
-    );
-    const hourlyJson = hourlyResponse.data;
-    if (!hourlyResponse) {
-      throw new Error('No hourlyResponse from server.');
-    }
-
-    const items = getItemsFromMetOfficeJSON(dailyJson, hourlyJson);
-    return items;
-  } catch (error) {
-    throw error;
+  const response = await axios.get(process.env.GATSBY_MET_WEATHER_DAILY_URL, {
+    headers,
+  });
+  // const text = await response.text();
+  // log('text: ' + text);
+  log(`response.data: ${JSON.stringify(response.data, null, '  ')}`);
+  const dailyJson = response.data;
+  if (!response) {
+    throw new Error('No response from server.');
   }
+
+  const hourlyResponse = await axios.get(
+    process.env.GATSBY_MET_WEATHER_HOURLY_URL,
+    {
+      headers,
+    }
+  );
+  // const text = await hourlyResponse.text();
+  // log('text: ' + text);
+  log(
+    `hourlyResponse.data: ${JSON.stringify(hourlyResponse.data, null, '  ')}`
+  );
+  const hourlyJson = hourlyResponse.data;
+  if (!hourlyResponse) {
+    throw new Error('No hourlyResponse from server.');
+  }
+
+  const items = getItemsFromMetOfficeJSON(dailyJson, hourlyJson);
+  return items;
 };
 
 const getMockForecast = async () => {

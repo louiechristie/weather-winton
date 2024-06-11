@@ -1,8 +1,6 @@
+// eslint-disable-next-line node/no-extraneous-import
 import dotenv from 'dotenv';
-import { createRequire } from 'module';
-
 dotenv.config();
-const require = createRequire(import.meta.url);
 
 export default {
   plugins: [

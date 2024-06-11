@@ -186,10 +186,6 @@ function getItemsFromMetOfficeJSON(dailyJson, hourlyJson) {
       };
     });
 
-  const thisHourFilter = (hour) => {
-    return dayjs(hour.time).tz().isSame(dayjs().add(1, 'hour'), 'hour');
-  };
-
   const hourlyTimeSeries = hourlyJson.features[0].properties.timeSeries;
 
   const isSnowDay = hourlyTimeSeries.reduce((acc, nextHour) => {
