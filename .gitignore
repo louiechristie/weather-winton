@@ -67,3 +67,7 @@ yarn-error.log
 .pnp.js
 # Yarn Integrity file
 .yarn-integrity
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
