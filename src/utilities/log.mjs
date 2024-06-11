@@ -9,9 +9,4 @@ function log(string) {
   }
 }
 
-export function error(string) {
-  // eslint-disable-next-line no-console
-  console.error(string);
-}
-
 export default log;

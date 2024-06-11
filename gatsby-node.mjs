@@ -10,7 +10,6 @@ import sharp from 'sharp';
 import manifest from './package.json' assert { type: 'json' };
 import getForecast from './src/utilities/getForecast.mjs';
 import { getTemperatureFriendly } from './src/utilities/getRoomTemperatureComfortFromCelsius.mjs';
-import log, { error } from './src/utilities/log.mjs';
 
 dotenv.config();
 
@@ -101,7 +100,7 @@ export const createPages = async ({ actions: { createPage } }) => {
     meta.timeStamp = `${dayjs(new Date()).tz().format('YYYY-MM-DD HHmm')}`;
 
     if (!items || items.length < 1) {
-      throw new Error(`Coudn't get forecast`);
+      throw new Error(`No items in retrieved weather forecast`);
     }
 
     const today = items[0];
@@ -148,8 +147,8 @@ export const createPages = async ({ actions: { createPage } }) => {
       context: { items, meta },
     });
   } catch (error) {
-    error('Error creating pages');
-    error(error);
+    console.error('Error creating pages');
+    console.error(error);
 
     const now = dayjs();
     const today = now.toISOString();
