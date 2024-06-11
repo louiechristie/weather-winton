@@ -1,4 +1,5 @@
 import hourly from '../tests/hourly.json' assert { type: 'json' };
+import hourlyForBetween2300AndMidnightTesting from '../tests/hourlyForBetween2300AndMidnightTesting.json' assert { type: 'json' };
 import getIndicativeTemperatureFromHourly from './getIndicativeTemperatureFromHourly.mjs';
 import generateMockHourlyMetOfficeJSON from '../tests/generateMockHourlyMetOfficeJSON.mjs';
 import dayjs from 'dayjs';
@@ -63,4 +64,157 @@ test('test all after now are 18 degrees', () => {
   expect(
     getIndicativeTemperatureFromHourly(testData, dayjs().toISOString())
   ).toBe(18);
+});
+
+test('test all after now are 18 degrees', () => {
+  const testData = generateMockHourlyMetOfficeJSON(dayjs().toISOString());
+
+  testData.features[0].properties.timeSeries =
+    testData.features[0].properties.timeSeries.map((hour) => {
+      if (getIsHourInTheRemainingDay(hour.time))
+        return {
+          ...hour,
+          screenTemperature: 18,
+        };
+      else return hour;
+    });
+
+  expect(
+    getIndicativeTemperatureFromHourly(testData, dayjs().toISOString())
+  ).toBe(18);
+});
+
+test('a few mins after 11pm', () => {
+  expect(() => {
+    return getIndicativeTemperatureFromHourly(
+      hourlyForBetween2300AndMidnightTesting,
+      '2024-06-11T23:06:00+0100'
+    );
+  }).not.toThrow();
+});
+
+test('one second after 11pm', () => {
+  expect(() => {
+    return getIndicativeTemperatureFromHourly(
+      hourlyForBetween2300AndMidnightTesting,
+      '2024-06-11T23:00:01+0100'
+    );
+  }).not.toThrow();
+});
+
+test('one second till midnight', () => {
+  expect(() => {
+    return getIndicativeTemperatureFromHourly(
+      hourlyForBetween2300AndMidnightTesting,
+      '2024-06-11T23:59:59+0100'
+    );
+  }).not.toThrow();
+});
+
+test('midnight', () => {
+  expect(() => {
+    return getIndicativeTemperatureFromHourly(
+      hourlyForBetween2300AndMidnightTesting,
+      '2024-06-12T00:00:00+0100'
+    );
+  }).not.toThrow();
+});
+
+test('one second after midnight', () => {
+  expect(() => {
+    return getIndicativeTemperatureFromHourly(
+      hourlyForBetween2300AndMidnightTesting,
+      '2024-06-12T00:00:01+0100'
+    );
+  }).not.toThrow();
+});
+
+test('one minute after 11pm', () => {
+  expect(() => {
+    return getIndicativeTemperatureFromHourly(
+      hourlyForBetween2300AndMidnightTesting,
+      '2024-06-11T23:01:00+0100'
+    );
+  }).not.toThrow();
+});
+
+test('one minute till midnight', () => {
+  expect(() => {
+    return getIndicativeTemperatureFromHourly(
+      hourlyForBetween2300AndMidnightTesting,
+      '2024-06-11T23:59:00+0100'
+    );
+  }).not.toThrow();
+});
+
+test('one minute after midnight', () => {
+  expect(() => {
+    return getIndicativeTemperatureFromHourly(
+      hourlyForBetween2300AndMidnightTesting,
+      '2024-06-12T00:01:00+0100'
+    );
+  }).not.toThrow();
+});
+
+test('a 15 mins after 11pm', () => {
+  expect(() => {
+    return getIndicativeTemperatureFromHourly(
+      hourlyForBetween2300AndMidnightTesting,
+      '2024-06-11T23:15:00+0100'
+    );
+  }).not.toThrow();
+});
+
+test('a 29 mins after 11pm', () => {
+  expect(() => {
+    return getIndicativeTemperatureFromHourly(
+      hourlyForBetween2300AndMidnightTesting,
+      '2024-06-11T23:29:00+0100'
+    );
+  }).not.toThrow();
+});
+
+test('a 30 mins after 11pm', () => {
+  expect(() => {
+    return getIndicativeTemperatureFromHourly(
+      hourlyForBetween2300AndMidnightTesting,
+      '2024-06-11T23:30:00+0100'
+    );
+  }).not.toThrow();
+});
+
+test('a 31 mins after 11pm', () => {
+  expect(() => {
+    return getIndicativeTemperatureFromHourly(
+      hourlyForBetween2300AndMidnightTesting,
+      '2024-06-11T23:31:00+0100'
+    );
+  }).not.toThrow();
+});
+
+test('a 44 mins after 11pm', () => {
+  expect(() => {
+    return getIndicativeTemperatureFromHourly(
+      hourlyForBetween2300AndMidnightTesting,
+      '2024-06-11T23:44:00+0100'
+    );
+  }).not.toThrow();
+});
+
+test('a 45 mins after 11pm', () => {
+  expect(() => {
+    return getIndicativeTemperatureFromHourly(
+      hourlyForBetween2300AndMidnightTesting,
+      '2024-06-11T23:45:00+0100'
+    );
+  }).not.toThrow();
+});
+
+test('a 46 mins after 11pm', () => {
+  expect(() => {
+    return getIndicativeTemperatureFromHourly(
+      hourlyForBetween2300AndMidnightTesting,
+      '2024-06-11T23:46:00+0100'
+    );
+  }).not.toThrow();
 });
