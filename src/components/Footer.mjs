@@ -19,6 +19,17 @@ const styles = {
 };
 
 const HostedOn = () => {
+  const GitHubBadge = () => (
+    <>
+      <a href="https://github.com/louiechristie/weather-winton/">
+        <img
+          style={{ verticalAlign: 'middle' }}
+          src="https://github.com/louiechristie/weather-winton/actions/workflows/playwright.yml/badge.svg"
+          alt="Github logo"
+        />
+      </a>
+    </>
+  );
   if (process.env.NETLIFY) {
     return (
       <>
@@ -27,6 +38,7 @@ const HostedOn = () => {
           src="https://api.netlify.com/api/v1/badges/f0ee41e4-eb3b-44f3-8810-07d0a72ca9a1/deploy-status"
           alt="Netlify logo"
         />
+        <GitHubBadge />
       </>
     );
   }
@@ -39,11 +51,16 @@ const HostedOn = () => {
           src="https://deploy-badge.vercel.app/vercel/weather-winton"
           alt="Vercel logo"
         />
+        <GitHubBadge />
       </>
     );
   }
 
-  return <>Local</>;
+  return (
+    <>
+      Local <GitHubBadge />
+    </>
+  );
 };
 
 const Footer = (props) => {

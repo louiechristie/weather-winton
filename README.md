@@ -8,13 +8,13 @@ Inspired by Negroponte, N. (1995). Being digital. New York: Knopf. p.55.
 
 ## Prerequisites
 
-- Met Office account for api-metoffice.apiconnect.ibmcloud.com
+- Met Office account for [Met Office Data Hub](https://datahub.metoffice.gov.uk/)
 
 - Gatsby Cloud account
 
 - ifttt.com account
 
-- Install node v18.16.0 or greater
+- Install node v20.14.0 or greater
 
 Set up environment variables:
 
