@@ -4,7 +4,7 @@ import hourly from './hourly.json' assert { type: 'json' };
 const getMockMetOfficeJSON = (
   startTime = hourly.features[0].properties.timeSeries[0].time
 ) => {
-  const startTimeDayJS = dayjs(startTime);
+  const startTimeDayJS = dayjs(startTime).startOf('hour');
 
   let hour = -2;
 

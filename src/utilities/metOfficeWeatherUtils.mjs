@@ -116,9 +116,15 @@ export const getIsHourInTheRemainingDay = (
 ) => {
   const currentTimeDayJS = dayjs(currentTime).tz();
   const timeToCheckDayJS = dayjs(time);
-  const isHourInTheRemainingDay =
-    timeToCheckDayJS.isSameOrAfter(currentTimeDayJS) &&
-    timeToCheckDayJS.isBefore(currentTimeDayJS.endOf('day'));
+
+  const differenceFromCurrentTime = currentTimeDayJS.diff(
+    timeToCheckDayJS,
+    'minutes',
+    true
+  );
+  const isSameDay = timeToCheckDayJS.tz().isSame(currentTimeDayJS.tz(), 'day');
+  const isHourInTheRemainingDay = isSameDay && differenceFromCurrentTime < 60;
+
   // console.log({ time, currentTime, isHourInTheRemainingDay });
   return isHourInTheRemainingDay;
 };

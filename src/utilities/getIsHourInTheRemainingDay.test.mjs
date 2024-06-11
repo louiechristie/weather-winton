@@ -109,3 +109,45 @@ test('one hour before current time', () => {
     )
   ).toBe(false);
 });
+
+test('one hour before current day', () => {
+  expect(
+    getIsHourInTheRemainingDay('2024-06-12T23:00Z', '2024-06-11T23:00Z')
+  ).toBe(false);
+});
+
+test('one second before current day', () => {
+  expect(
+    getIsHourInTheRemainingDay(
+      '2024-06-11T23:59:59+0100',
+      '2024-06-12T00:00:00+0100'
+    )
+  ).toBe(false);
+});
+
+test('one minute before current day', () => {
+  expect(
+    getIsHourInTheRemainingDay(
+      '2024-06-11T23:59:00+0100',
+      '2024-06-12T00:00:00+0100'
+    )
+  ).toBe(false);
+});
+
+test('one hour before end of day', () => {
+  expect(
+    getIsHourInTheRemainingDay('2024-06-12T23:00Z', '2024-06-12T23:00Z')
+  ).toBe(true);
+});
+
+test('one second before end of day', () => {
+  expect(
+    getIsHourInTheRemainingDay('2024-06-12T23:00Z', '2024-06-12T23:59:59Z')
+  ).toBe(true);
+});
+
+test('one minute before end of day', () => {
+  expect(
+    getIsHourInTheRemainingDay('2024-06-12T23:00Z', '2024-06-12T23:59:00Z')
+  ).toBe(true);
+});

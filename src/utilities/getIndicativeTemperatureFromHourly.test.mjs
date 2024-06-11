@@ -2,6 +2,7 @@ import hourly from '../tests/hourly.json' assert { type: 'json' };
 import getIndicativeTemperatureFromHourly from './getIndicativeTemperatureFromHourly.mjs';
 import generateMockHourlyMetOfficeJSON from '../tests/generateMockHourlyMetOfficeJSON.mjs';
 import dayjs from 'dayjs';
+import { getIsHourInTheRemainingDay } from './metOfficeWeatherUtils.mjs';
 
 const average = (array) => array.reduce((a, b) => a + b) / array.length;
 
@@ -16,8 +17,8 @@ test('test default generateMockHourlyMetOfficeJSON from hourly file', () => {
   const timeNow = '2024-06-08T07:19:00+0100';
 
   const expectedTemperatures = [
-    12.4, 13.49, 13.95, 14.7, 15.86, 16.16, 15.72, 16.25, 17.2, 17.67, 17.95,
-    17.76, 16.84, 15.64, 14.69, 13.78,
+    11.35, 12.4, 13.49, 13.95, 14.7, 15.86, 16.16, 15.72, 16.25, 17.2, 17.67,
+    17.95, 17.76, 16.84, 15.64, 14.69, 13.78,
   ];
 
   const expectedAverageTemperature = average(expectedTemperatures);
@@ -51,7 +52,7 @@ test('test all after now are 18 degrees', () => {
 
   testData.features[0].properties.timeSeries =
     testData.features[0].properties.timeSeries.map((hour) => {
-      if (dayjs(hour.time).isAfter(dayjs()))
+      if (getIsHourInTheRemainingDay(hour.time))
         return {
           ...hour,
           screenTemperature: 18,
