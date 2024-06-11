@@ -2,7 +2,7 @@
   "name": "weather-winton",
   "title": "Weather Winton",
   "description": "Weather Winton is an experiment in friendly weather forecasting.",
-  "version": "0.28.1",
+  "version": "0.28.2",
   "private": true,
   "author": {
     "name": "Louie Christie",
@@ -17,7 +17,7 @@
     "clean": "gatsby clean",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch -t test",
-    "test:debug": "node --experimental-vm-modules node_modules/jest/bin/jest.js -t 'regenerate hourly.json file exactly'",
+    "test:debug": "node --experimental-vm-modules node_modules/jest/bin/jest.js -t 'test all after now are 18 degrees'",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore . && stylelint --ignore-path .gitignore '**/*.css'",
     "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx,.mjs --ignore-path .gitignore . --fix && stylelint --ignore-path .gitignore '**/*.css' --fix"
   },

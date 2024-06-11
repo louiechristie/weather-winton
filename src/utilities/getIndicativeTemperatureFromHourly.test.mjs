@@ -1,6 +1,6 @@
 import hourly from '../tests/hourly.json' assert { type: 'json' };
 import getIndicativeTemperatureFromHourly from './getIndicativeTemperatureFromHourly.mjs';
-import getgenerateMockHourlyMetOfficeJSON from '../tests/generateMockHourlyMetOfficeJSON.mjs';
+import generateMockHourlyMetOfficeJSON from '../tests/generateMockHourlyMetOfficeJSON.mjs';
 import dayjs from 'dayjs';
 
 const average = (array) => array.reduce((a, b) => a + b) / array.length;
@@ -28,7 +28,7 @@ test('test default generateMockHourlyMetOfficeJSON from hourly file', () => {
 });
 
 test('test all 21 degrees', () => {
-  const testData = getgenerateMockHourlyMetOfficeJSON();
+  const testData = generateMockHourlyMetOfficeJSON();
 
   testData.features[0].properties.timeSeries =
     testData.features[0].properties.timeSeries.map((hour) => {
@@ -39,27 +39,27 @@ test('test all 21 degrees', () => {
     });
 
   expect(
-    getIndicativeTemperatureFromHourly(testData, dayjs().toISOString())
+    getIndicativeTemperatureFromHourly(
+      testData,
+      testData.features[0].properties.timeSeries[0].time
+    )
   ).toBe(21);
 });
 
 test('test all after now are 18 degrees', () => {
-  const testData = getgenerateMockHourlyMetOfficeJSON();
+  const testData = generateMockHourlyMetOfficeJSON(dayjs().toISOString());
 
   testData.features[0].properties.timeSeries =
     testData.features[0].properties.timeSeries.map((hour) => {
-      if (dayjs(hour.time).tz().hour() >= 12)
+      if (dayjs(hour.time).isAfter(dayjs()))
         return {
           ...hour,
-          screenTemperature: 1,
+          screenTemperature: 18,
         };
       else return hour;
     });
 
   expect(
-    getIndicativeTemperatureFromHourly(
-      testData,
-      dayjs().tz().hour(12).toISOString()
-    )
-  ).toBe(1);
+    getIndicativeTemperatureFromHourly(testData, dayjs().toISOString())
+  ).toBe(18);
 });
