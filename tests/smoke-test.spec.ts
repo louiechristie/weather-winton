@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 test('has title', async ({ page }) => {
+  console.log('BASE_URL: ', process.env.BASE_URL);
   await page.goto(process.env.BASE_URL || 'http://127.0.0.1:8000');
 
   // Expect a title "to contain" a substring.
