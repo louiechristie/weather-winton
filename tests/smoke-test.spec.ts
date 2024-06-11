@@ -8,7 +8,7 @@ test('has title', async ({ page }) => {
 });
 
 test('doesn\'t say "Probably Raining"', async ({ page }) => {
-  await page.goto('https://weather.louiechristie.com/');
+  await page.goto(process.env.BASE_URL || 'http://127.0.0.1:8000');
 
   await expect(page.getByText('Probably Raining')).toBeVisible({
     visible: false,
