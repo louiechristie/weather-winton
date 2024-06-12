@@ -91,6 +91,13 @@ test('a few mins after 11pm', () => {
       '2024-06-11T23:06:00+0100'
     );
   }).not.toThrow();
+
+  expect(
+    getIndicativeTemperatureFromHourly(
+      hourlyForBetween2300AndMidnightTesting,
+      '2024-06-11T23:06:00+0100'
+    )
+  ).toBe(12.26);
 });
 
 test('one second after 11pm', () => {
@@ -100,6 +107,13 @@ test('one second after 11pm', () => {
       '2024-06-11T23:00:01+0100'
     );
   }).not.toThrow();
+
+  expect(
+    getIndicativeTemperatureFromHourly(
+      hourlyForBetween2300AndMidnightTesting,
+      '2024-06-11T23:00:01+0100'
+    )
+  ).toBe(12.26);
 });
 
 test('one second till midnight', () => {
@@ -217,4 +231,11 @@ test('a 46 mins after 11pm', () => {
       '2024-06-11T23:46:00+0100'
     );
   }).not.toThrow();
+
+  expect(
+    getIndicativeTemperatureFromHourly(
+      hourlyForBetween2300AndMidnightTesting,
+      '2024-06-11T23:46:00+0100'
+    )
+  ).toBe(12.26);
 });
