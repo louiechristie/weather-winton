@@ -81,25 +81,25 @@ const WeatherContainer = ({ pageContext: { items, meta } }) => {
 
   const getTempFriendlyStyle = (forecast) => {
     log('forecast: ', forecast);
-    const avgTempInt = Math.round(forecast.avgTemperature);
+    const indicativeTempInt = Math.round(forecast.indicativeTemperature);
     const maxTempInt = Math.round(forecast.maxTemperature);
 
-    if (getTemperatureFriendly(avgTempInt) === 'Hot 🥵') {
+    if (getTemperatureFriendly(indicativeTempInt) === 'Hot 🥵') {
       return style.hot;
     }
-    if (getTemperatureFriendly(avgTempInt) === 'Warm') {
+    if (getTemperatureFriendly(indicativeTempInt) === 'Warm') {
       if (getTemperatureFriendly(Math.round(maxTempInt)) === 'Hot 🥵') {
         return style.warmToHot;
       }
       return style.warmToCold;
     }
-    if (getTemperatureFriendly(avgTempInt) === 'Cold') {
+    if (getTemperatureFriendly(indicativeTempInt) === 'Cold') {
       if (getTemperatureFriendly(Math.round(maxTempInt)) === 'Warm') {
         return style.coldToWarm;
       }
       return style.coldToFreezing;
     }
-    if (getTemperatureFriendly(avgTempInt) === 'Freezing 🥶') {
+    if (getTemperatureFriendly(indicativeTempInt) === 'Freezing 🥶') {
       return style.freezing;
     }
   };

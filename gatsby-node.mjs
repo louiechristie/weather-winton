@@ -122,7 +122,7 @@ export const createPages = async ({ actions: { createPage } }) => {
       .toFile(`public/apple-touch-icon.png`);
 
     meta.todaysWeather = `It's ${getTemperatureFriendly(
-      today.avgTemperature
+      today.indicativeTemperature
     ).toLowerCase()} and ${today.description.toLowerCase()}`;
 
     createPage({
