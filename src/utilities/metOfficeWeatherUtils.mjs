@@ -212,13 +212,17 @@ function getItemsFromMetOfficeJSON(dailyJson, hourlyJson) {
 
   items[0].maxTemperature = Math.max(
     ...hourlyTimeSeries
-      .filter(getIsHourInTheRemainingDay)
+      .filter((hour) =>
+        getIsHourInTheRemainingDay(hour.time, dayjs().toISOString())
+      )
       .map((hour) => hour.screenTemperature)
   );
 
   items[0].minTemperature = Math.min(
     ...hourlyTimeSeries
-      .filter(getIsHourInTheRemainingDay)
+      .filter((hour) =>
+        getIsHourInTheRemainingDay(hour.time, dayjs().toISOString())
+      )
       .map((hour) => hour.screenTemperature)
   );
 
