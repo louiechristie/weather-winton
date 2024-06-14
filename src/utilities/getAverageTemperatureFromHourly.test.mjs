@@ -1,6 +1,6 @@
 import hourly from '../tests/hourly.json' assert { type: 'json' };
 import hourlyForBetween2300AndMidnightTesting from '../tests/hourlyForBetween2300AndMidnightTesting.json' assert { type: 'json' };
-import getIndicativeTemperatureFromHourly from './getIndicativeTemperatureFromHourly.mjs';
+import getAverageTemperatureFromHourly from './getAverageTemperatureFromHourly.mjs';
 import generateMockHourlyMetOfficeJSON from '../tests/generateMockHourlyMetOfficeJSON.mjs';
 import dayjs from 'dayjs';
 import { getIsHourInTheRemainingDay } from './getIsHourInTheRemainingDay.mjs';
@@ -24,7 +24,7 @@ test('test default generateMockHourlyMetOfficeJSON from hourly file', () => {
 
   const expectedAverageTemperature = average(expectedTemperatures);
 
-  expect(getIndicativeTemperatureFromHourly(testData, timeNow)).toBeCloseTo(
+  expect(getAverageTemperatureFromHourly(testData, timeNow)).toBeCloseTo(
     expectedAverageTemperature
   );
 });
@@ -41,7 +41,7 @@ test('test all 21 degrees', () => {
     });
 
   expect(
-    getIndicativeTemperatureFromHourly(
+    getAverageTemperatureFromHourly(
       testData,
       testData.features[0].properties.timeSeries[0].time
     )
@@ -61,9 +61,9 @@ test('test all after now are 18 degrees', () => {
       else return hour;
     });
 
-  expect(
-    getIndicativeTemperatureFromHourly(testData, dayjs().toISOString())
-  ).toBe(18);
+  expect(getAverageTemperatureFromHourly(testData, dayjs().toISOString())).toBe(
+    18
+  );
 });
 
 test('test all after now are 18 degrees', () => {
@@ -79,21 +79,21 @@ test('test all after now are 18 degrees', () => {
       else return hour;
     });
 
-  expect(
-    getIndicativeTemperatureFromHourly(testData, dayjs().toISOString())
-  ).toBe(18);
+  expect(getAverageTemperatureFromHourly(testData, dayjs().toISOString())).toBe(
+    18
+  );
 });
 
 test('a few mins after 11pm', () => {
   expect(() => {
-    return getIndicativeTemperatureFromHourly(
+    return getAverageTemperatureFromHourly(
       hourlyForBetween2300AndMidnightTesting,
       '2024-06-11T23:06:00+0100'
     );
   }).not.toThrow();
 
   expect(
-    getIndicativeTemperatureFromHourly(
+    getAverageTemperatureFromHourly(
       hourlyForBetween2300AndMidnightTesting,
       '2024-06-11T23:06:00+0100'
     )
@@ -102,14 +102,14 @@ test('a few mins after 11pm', () => {
 
 test('one second after 11pm', () => {
   expect(() => {
-    return getIndicativeTemperatureFromHourly(
+    return getAverageTemperatureFromHourly(
       hourlyForBetween2300AndMidnightTesting,
       '2024-06-11T23:00:01+0100'
     );
   }).not.toThrow();
 
   expect(
-    getIndicativeTemperatureFromHourly(
+    getAverageTemperatureFromHourly(
       hourlyForBetween2300AndMidnightTesting,
       '2024-06-11T23:00:01+0100'
     )
@@ -118,7 +118,7 @@ test('one second after 11pm', () => {
 
 test('one second till midnight', () => {
   expect(() => {
-    return getIndicativeTemperatureFromHourly(
+    return getAverageTemperatureFromHourly(
       hourlyForBetween2300AndMidnightTesting,
       '2024-06-11T23:59:59+0100'
     );
@@ -127,7 +127,7 @@ test('one second till midnight', () => {
 
 test('midnight', () => {
   expect(() => {
-    return getIndicativeTemperatureFromHourly(
+    return getAverageTemperatureFromHourly(
       hourlyForBetween2300AndMidnightTesting,
       '2024-06-12T00:00:00+0100'
     );
@@ -136,7 +136,7 @@ test('midnight', () => {
 
 test('one second after midnight', () => {
   expect(() => {
-    return getIndicativeTemperatureFromHourly(
+    return getAverageTemperatureFromHourly(
       hourlyForBetween2300AndMidnightTesting,
       '2024-06-12T00:00:01+0100'
     );
@@ -145,7 +145,7 @@ test('one second after midnight', () => {
 
 test('one minute after 11pm', () => {
   expect(() => {
-    return getIndicativeTemperatureFromHourly(
+    return getAverageTemperatureFromHourly(
       hourlyForBetween2300AndMidnightTesting,
       '2024-06-11T23:01:00+0100'
     );
@@ -154,7 +154,7 @@ test('one minute after 11pm', () => {
 
 test('one minute till midnight', () => {
   expect(() => {
-    return getIndicativeTemperatureFromHourly(
+    return getAverageTemperatureFromHourly(
       hourlyForBetween2300AndMidnightTesting,
       '2024-06-11T23:59:00+0100'
     );
@@ -163,7 +163,7 @@ test('one minute till midnight', () => {
 
 test('one minute after midnight', () => {
   expect(() => {
-    return getIndicativeTemperatureFromHourly(
+    return getAverageTemperatureFromHourly(
       hourlyForBetween2300AndMidnightTesting,
       '2024-06-12T00:01:00+0100'
     );
@@ -172,7 +172,7 @@ test('one minute after midnight', () => {
 
 test('a 15 mins after 11pm', () => {
   expect(() => {
-    return getIndicativeTemperatureFromHourly(
+    return getAverageTemperatureFromHourly(
       hourlyForBetween2300AndMidnightTesting,
       '2024-06-11T23:15:00+0100'
     );
@@ -181,7 +181,7 @@ test('a 15 mins after 11pm', () => {
 
 test('a 29 mins after 11pm', () => {
   expect(() => {
-    return getIndicativeTemperatureFromHourly(
+    return getAverageTemperatureFromHourly(
       hourlyForBetween2300AndMidnightTesting,
       '2024-06-11T23:29:00+0100'
     );
@@ -190,7 +190,7 @@ test('a 29 mins after 11pm', () => {
 
 test('a 30 mins after 11pm', () => {
   expect(() => {
-    return getIndicativeTemperatureFromHourly(
+    return getAverageTemperatureFromHourly(
       hourlyForBetween2300AndMidnightTesting,
       '2024-06-11T23:30:00+0100'
     );
@@ -199,7 +199,7 @@ test('a 30 mins after 11pm', () => {
 
 test('a 31 mins after 11pm', () => {
   expect(() => {
-    return getIndicativeTemperatureFromHourly(
+    return getAverageTemperatureFromHourly(
       hourlyForBetween2300AndMidnightTesting,
       '2024-06-11T23:31:00+0100'
     );
@@ -208,7 +208,7 @@ test('a 31 mins after 11pm', () => {
 
 test('a 44 mins after 11pm', () => {
   expect(() => {
-    return getIndicativeTemperatureFromHourly(
+    return getAverageTemperatureFromHourly(
       hourlyForBetween2300AndMidnightTesting,
       '2024-06-11T23:44:00+0100'
     );
@@ -217,7 +217,7 @@ test('a 44 mins after 11pm', () => {
 
 test('a 45 mins after 11pm', () => {
   expect(() => {
-    return getIndicativeTemperatureFromHourly(
+    return getAverageTemperatureFromHourly(
       hourlyForBetween2300AndMidnightTesting,
       '2024-06-11T23:45:00+0100'
     );
@@ -226,14 +226,14 @@ test('a 45 mins after 11pm', () => {
 
 test('a 46 mins after 11pm', () => {
   expect(() => {
-    return getIndicativeTemperatureFromHourly(
+    return getAverageTemperatureFromHourly(
       hourlyForBetween2300AndMidnightTesting,
       '2024-06-11T23:46:00+0100'
     );
   }).not.toThrow();
 
   expect(
-    getIndicativeTemperatureFromHourly(
+    getAverageTemperatureFromHourly(
       hourlyForBetween2300AndMidnightTesting,
       '2024-06-11T23:46:00+0100'
     )

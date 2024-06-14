@@ -89,7 +89,7 @@ export const createPages = async ({ actions: { createPage } }) => {
 
     const today = items[0];
     const backgroundColor =
-      Color(getTemperatureColor(today.indicativeTemperature))
+      Color(getTemperatureColor(today.averageTemperature))
         .lighten(0.75)
         .hex() || '#FFFFFF';
 
@@ -123,7 +123,7 @@ export const createPages = async ({ actions: { createPage } }) => {
       .toFile(`public/apple-touch-icon.png`);
 
     meta.todaysWeather = `It's ${getTemperatureFriendly(
-      today.indicativeTemperature
+      today.averageTemperature
     ).toLowerCase()} and ${today.description.toLowerCase()}`;
 
     createPage({

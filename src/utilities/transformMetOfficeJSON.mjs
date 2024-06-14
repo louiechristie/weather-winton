@@ -9,7 +9,7 @@ import {
   getIsTakeRaincoatToday,
 } from './metOfficeWeatherUtils.mjs';
 import { getIsHourInTheRemainingDay } from './getIsHourInTheRemainingDay.mjs';
-import getIndicativeTemperaturefromHourly from './getIndicativeTemperatureFromHourly.mjs';
+import getAverageTemperaturefromHourly from './getAverageTemperatureFromHourly.mjs';
 
 const transformMetOfficeJSON = (dailyJson, hourlyJson) => {
   log(`dailyJson: ${JSON.stringify(dailyJson, null, '  ')}`);
@@ -46,7 +46,7 @@ const transformMetOfficeJSON = (dailyJson, hourlyJson) => {
           day.nightSignificantWeatherCode > 9,
         isSnowDay:
           day.dayProbabilityOfSnow >= 50 || day.nightProbabilityOfSnow >= 50,
-        indicativeTemperature: avg(
+        averageTemperature: avg(
           day.dayMaxScreenTemperature,
           day.dayLowerBoundMaxTemp
         ),
@@ -69,8 +69,7 @@ const transformMetOfficeJSON = (dailyJson, hourlyJson) => {
   items[0].isTakeRaincoat = getIsTakeRaincoatToday(hourlyJson);
   items[0].isSnowDay = isSnowDay;
 
-  items[0].indicativeTemperature =
-    getIndicativeTemperaturefromHourly(hourlyJson);
+  items[0].averageTemperature = getAverageTemperaturefromHourly(hourlyJson);
   items[0].currentTemperature = getCurrentTemperature(hourlyJson);
 
   items[0].maxTemperature = Math.max(

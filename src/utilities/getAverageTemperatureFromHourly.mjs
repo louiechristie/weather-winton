@@ -6,7 +6,7 @@ import { getIsHourInTheRemainingDay } from './getIsHourInTheRemainingDay.mjs';
  * @param {number} fromTime ISO time from which to calculate the temperature forcast
  * @returns {number} temperature as float
  */
-const getIndicativeTemperaturefromHourly = (hourlyTimeSeries, fromTime) => {
+const getAverageTemperaturefromHourly = (hourlyTimeSeries, fromTime) => {
   const average = (array) => array.reduce((a, b) => a + b) / array.length;
 
   const hourlyTimeSeriesInRemainingDay =
@@ -24,4 +24,4 @@ const getIndicativeTemperaturefromHourly = (hourlyTimeSeries, fromTime) => {
   return average(temperatures);
 };
 
-export default getIndicativeTemperaturefromHourly;
+export default getAverageTemperaturefromHourly;

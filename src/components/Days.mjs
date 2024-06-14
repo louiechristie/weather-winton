@@ -75,7 +75,7 @@ const Days = (props) => {
           relativeHumidity,
           isTakeRaincoat,
           isSnowDay,
-          indicativeTemperature,
+          averageTemperature,
           currentTemperature,
         } = item;
 
@@ -95,9 +95,9 @@ const Days = (props) => {
                   description={description}
                   minTemperature={minTemperature}
                   maxTemperature={maxTemperature}
-                  indicativeTemperature={indicativeTemperature}
+                  averageTemperature={averageTemperature}
                   isSticky={getIsStickyFromCelsiusAndRelativeHumidity(
-                    indicativeTemperature,
+                    averageTemperature,
                     relativeHumidity
                   )}
                   isDry={getIsTooDryFromRelativeHumidity(relativeHumidity)}
