@@ -1,4 +1,4 @@
-import { getIsHourInTheRemainingDay } from './metOfficeWeatherUtils.mjs';
+import { getIsHourInTheRemainingDay } from './getIsHourInTheRemainingDay.mjs';
 
 test('1200 is after 0800', () => {
   expect(

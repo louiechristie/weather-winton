@@ -1,4 +1,4 @@
-import { getIsHourInTheRemainingDay } from './metOfficeWeatherUtils.mjs';
+import { getIsHourInTheRemainingDay } from './getIsHourInTheRemainingDay.mjs';
 
 /**
  *

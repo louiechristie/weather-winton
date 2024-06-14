@@ -89,8 +89,9 @@ export const createPages = async ({ actions: { createPage } }) => {
 
     const today = items[0];
     const backgroundColor =
-      Color(getTemperatureColor(today.avgTemperature)).lighten(0.75).hex() ||
-      '#FFFFFF';
+      Color(getTemperatureColor(today.indicativeTemperature))
+        .lighten(0.75)
+        .hex() || '#FFFFFF';
 
     const input = (
       await axios({

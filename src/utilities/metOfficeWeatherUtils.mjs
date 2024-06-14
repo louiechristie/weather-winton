@@ -2,15 +2,14 @@ import dayjs from 'dayjs';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter.js';
 import timezone from 'dayjs/plugin/timezone.js';
 import utc from 'dayjs/plugin/utc.js';
-import log from './log.mjs';
-import getIndicativeTemperatureFromHourly from './getIndicativeTemperatureFromHourly.mjs';
+import { getIsHourInTheRemainingDay } from './getIsHourInTheRemainingDay.mjs';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.tz.setDefault('Europe/London');
 dayjs.extend(isSameOrAfter);
 
-function getDescriptionFromMetOfficeWeatherCode(code) {
+export function getDescriptionFromMetOfficeWeatherCode(code) {
   const weatherTypes = {
     NA: 'Not available',
     0: 'Clear night',
@@ -49,7 +48,7 @@ function getDescriptionFromMetOfficeWeatherCode(code) {
   return weatherTypes[code];
 }
 
-function getEmojiFromMetOfficeWeatherCode(code) {
+export function getEmojiFromMetOfficeWeatherCode(code) {
   const weatherTypes = {
     NA: 'https://www.metoffice.gov.uk/webfiles/latest/images/icons/weather/NA.svg?cachebust=1',
     0: 'https://www.metoffice.gov.uk/webfiles/latest/images/icons/weather/0.svg?cachebust=1',
@@ -95,7 +94,7 @@ function getEmojiFromMetOfficeWeatherCode(code) {
  *
  * Calculate average daily temperature
  */
-function avg(max, min) {
+export function avg(max, min) {
   return (max + min) / 2;
 }
 
@@ -106,27 +105,8 @@ const getIsHourNeedsRaincoat = (hour) => {
   return hour.probOfPrecipitation >= 50 || significantWeatherIsDrizzleOrWorse;
 };
 
-const getIsHourSnowy = (hour) => {
+export const getIsHourSnowy = (hour) => {
   return hour.totalSnowAmount > 0;
-};
-
-export const getIsHourInTheRemainingDay = (
-  time,
-  currentTime = dayjs().tz().toISOString()
-) => {
-  const currentTimeDayJS = dayjs(currentTime).tz();
-  const timeToCheckDayJS = dayjs(time);
-
-  const differenceFromCurrentTime = currentTimeDayJS.diff(
-    timeToCheckDayJS,
-    'minutes',
-    true
-  );
-  const isSameDay = timeToCheckDayJS.tz().isSame(currentTimeDayJS.tz(), 'day');
-  const isHourInTheRemainingDay = isSameDay && differenceFromCurrentTime < 60;
-
-  // console.log({ time, currentTime, isHourInTheRemainingDay });
-  return isHourInTheRemainingDay;
 };
 
 export const getIsTakeRaincoatToday = (hourlyMetOfficeJSON) => {
@@ -149,84 +129,3 @@ export const getIsTakeRaincoatToday = (hourlyMetOfficeJSON) => {
     return false;
   });
 };
-
-function getItemsFromMetOfficeJSON(dailyJson, hourlyJson) {
-  log(`dailyJson: ${JSON.stringify(dailyJson, null, '  ')}`);
-  log(`hourlyJson: ${JSON.stringify(hourlyJson, null, '  ')}`);
-
-  const filter = (day) => {
-    return dayjs(day.time).tz().isSameOrAfter(dayjs(), 'day');
-  };
-
-  const items = dailyJson.features[0].properties.timeSeries
-    .filter(filter)
-    .map((day) => {
-      return {
-        time: day.time,
-        description: getDescriptionFromMetOfficeWeatherCode(
-          day.daySignificantWeatherCode.toString()
-        ),
-        icon: getEmojiFromMetOfficeWeatherCode(
-          day.daySignificantWeatherCode.toString()
-        ),
-        minTemperature: Math.min(
-          day.dayMaxScreenTemperature,
-          day.nightMinScreenTemperature
-        ),
-        maxTemperature: Math.max(
-          day.dayMaxScreenTemperature,
-          day.nightMinScreenTemperature
-        ),
-        avgTemperature: avg(
-          day.dayMaxScreenTemperature,
-          day.dayLowerBoundMaxTemp
-        ),
-        relativeHumidity: day.middayRelativeHumidity,
-        isTakeRaincoat:
-          day.dayProbabilityOfPrecipitation >= 50 ||
-          day.nightProbabilityOfPrecipitation >= 50 ||
-          day.daySignificantWeatherCode > 9 ||
-          day.nightSignificantWeatherCode > 9,
-        isSnowDay:
-          day.dayProbabilityOfSnow >= 50 || day.nightProbabilityOfSnow >= 50,
-      };
-    });
-
-  const hourlyTimeSeries = hourlyJson.features[0].properties.timeSeries;
-
-  const isSnowDay = hourlyTimeSeries.reduce((acc, nextHour) => {
-    if (acc === true) return acc;
-
-    if (getIsHourInTheRemainingDay(nextHour.time) && getIsHourSnowy(nextHour)) {
-      return true;
-    }
-
-    return false;
-  });
-
-  items[0].isTakeRaincoat = getIsTakeRaincoatToday(hourlyJson);
-  items[0].isSnowDay = isSnowDay;
-
-  items[0].indicativeTemperature =
-    getIndicativeTemperatureFromHourly(hourlyJson);
-
-  items[0].maxTemperature = Math.max(
-    ...hourlyTimeSeries
-      .filter((hour) =>
-        getIsHourInTheRemainingDay(hour.time, dayjs().toISOString())
-      )
-      .map((hour) => hour.screenTemperature)
-  );
-
-  items[0].minTemperature = Math.min(
-    ...hourlyTimeSeries
-      .filter((hour) =>
-        getIsHourInTheRemainingDay(hour.time, dayjs().toISOString())
-      )
-      .map((hour) => hour.screenTemperature)
-  );
-
-  return items;
-}
-
-export default getItemsFromMetOfficeJSON;

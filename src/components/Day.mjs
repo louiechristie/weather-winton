@@ -121,17 +121,19 @@ const Day = (props) => {
     description,
     minTemperature,
     maxTemperature,
-    indicativeTemperature,
     isSticky,
     isDry,
     isTakeRaincoat,
     isSnowDay,
+    indicativeTemperature,
+    currentTemperature,
   } = props;
 
-  const indicativeTempInt = Math.round(indicativeTemperature);
   const minTempInt = Math.round(minTemperature);
   const maxTempInt = Math.round(maxTemperature);
   const isToday = friendlyDate === 'Today';
+  const indicativeTempInt = Math.round(indicativeTemperature);
+  const currentTempInt = currentTemperature && Math.round(currentTemperature);
 
   const getTempFriendlyStyle = (temperature) => {
     if (getTemperatureFriendly(temperature) === 'Hot 🥵') {
@@ -150,32 +152,24 @@ const Day = (props) => {
 
   const spacer = isToday ? 1 : 4;
 
-  const getShowIndicative = (tempInt) => {
-    const isIndicativeTemp = tempInt === indicativeTempInt;
-
-    if (isToday && isIndicativeTemp) {
-      return true;
-    }
-    return false;
-  };
-
   const getNumberForScale = (tempInt) => {
-    const isIndicativeTemp = tempInt === indicativeTempInt;
+    const isDialTemp = isToday
+      ? tempInt === currentTempInt
+      : tempInt === indicativeTempInt;
     const isMinTemp = tempInt === minTempInt;
     const isMaxTemp = tempInt === maxTempInt;
 
-    const temperatureNumberSpaced = `${tempInt}\u00A0`;
+    const temperatureNumberHTML = `${tempInt}\u00A0`;
 
     if (maxTempInt - minTempInt >= spacer) {
       // If a decent temp change show range
-      if (isMinTemp) return temperatureNumberSpaced;
-
-      if (isMaxTemp) return temperatureNumberSpaced;
-
-      if (getShowIndicative(tempInt)) return temperatureNumberSpaced;
+      if (isDialTemp) return temperatureNumberHTML;
+      if (isMinTemp) return temperatureNumberHTML;
+      if (isMaxTemp) return temperatureNumberHTML;
+      if (isDialTemp) return temperatureNumberHTML;
     } else {
       // Else show indicative only decent temp change
-      if (isIndicativeTemp) return temperatureNumberSpaced;
+      if (isDialTemp) return temperatureNumberHTML;
     }
 
     if (tempInt % 10 === 0) {
@@ -195,25 +189,28 @@ const Day = (props) => {
         isAwayFromMinTemp &&
         isAwayFromMaxTemp
       )
-        return <spam style={{ opacity: 0.75 }}>{temperatureNumberSpaced}</spam>;
+        return <spam style={{ opacity: 0.75 }}>{temperatureNumberHTML}</spam>;
     }
 
     return '';
   };
 
   const getIndicator = (tempInt) => {
+    const isCurrentTemp = tempInt === currentTempInt;
     const isIndicativeTemp = tempInt === indicativeTempInt;
     const isMinTemp = tempInt === minTempInt;
     const isMaxTemp = tempInt === maxTempInt;
 
     if (maxTempInt - minTempInt >= spacer) {
       // If a decent temp change show range
-      if (isToday && isIndicativeTemp) return '▲';
+      if (isToday && isCurrentTemp) return '▲';
+      if (!isToday && isIndicativeTemp) return '▲';
       if (isMinTemp) return '⇤';
       if (isMaxTemp) return '⇥';
     } else {
       // Else show indicative only
-      if (isIndicativeTemp) return '▲';
+      if (isToday && isCurrentTemp) return '▲';
+      if (!isToday && isIndicativeTemp) return '▲';
     }
 
     return '';

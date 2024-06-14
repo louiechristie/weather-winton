@@ -3,7 +3,8 @@ import axios from 'axios';
 import mockDailyMetOfficeJSON from '../tests/mockDailyMetOfficeJSON.mjs';
 import generateMockHourlyMetOfficeJSON from '../tests/generateMockHourlyMetOfficeJSON.mjs';
 import log from './log.mjs';
-import getItemsFromMetOfficeJSON from './metOfficeWeatherUtils.mjs';
+import getItemsFromMetOfficeJSON from './transformMetOfficeJSON.mjs';
+import transformMetOfficeJSON from './transformMetOfficeJSON.mjs';
 
 const headers = {
   accept: 'application/json',
@@ -38,7 +39,7 @@ const getMetOfficeForecast = async () => {
     throw new Error('No hourlyResponse from server.');
   }
 
-  const items = getItemsFromMetOfficeJSON(dailyJson, hourlyJson);
+  const items = transformMetOfficeJSON(dailyJson, hourlyJson);
   return items;
 };
 

@@ -70,13 +70,13 @@ const Days = (props) => {
           time,
           icon,
           description,
-          avgTemperature,
           minTemperature,
           maxTemperature,
           relativeHumidity,
           isTakeRaincoat,
-          indicativeTemperature,
           isSnowDay,
+          indicativeTemperature,
+          currentTemperature,
         } = item;
 
         return (
@@ -95,17 +95,15 @@ const Days = (props) => {
                   description={description}
                   minTemperature={minTemperature}
                   maxTemperature={maxTemperature}
-                  avgTemperature={avgTemperature}
-                  indicativeTemperature={
-                    indicativeTemperature || avgTemperature
-                  }
+                  indicativeTemperature={indicativeTemperature}
                   isSticky={getIsStickyFromCelsiusAndRelativeHumidity(
-                    avgTemperature,
+                    indicativeTemperature,
                     relativeHumidity
                   )}
                   isDry={getIsTooDryFromRelativeHumidity(relativeHumidity)}
                   isTakeRaincoat={isTakeRaincoat}
                   isSnowDay={isSnowDay}
+                  currentTemperature={currentTemperature}
                 />
               </Link>
             </li>

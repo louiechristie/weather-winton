@@ -3,7 +3,7 @@ import hourlyForBetween2300AndMidnightTesting from '../tests/hourlyForBetween230
 import getIndicativeTemperatureFromHourly from './getIndicativeTemperatureFromHourly.mjs';
 import generateMockHourlyMetOfficeJSON from '../tests/generateMockHourlyMetOfficeJSON.mjs';
 import dayjs from 'dayjs';
-import { getIsHourInTheRemainingDay } from './metOfficeWeatherUtils.mjs';
+import { getIsHourInTheRemainingDay } from './getIsHourInTheRemainingDay.mjs';
 
 const average = (array) => array.reduce((a, b) => a + b) / array.length;
 
