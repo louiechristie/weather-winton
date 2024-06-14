@@ -16,6 +16,7 @@
     "serve": "gatsby serve -H 0.0.0.0",
     "clean": "gatsby clean",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test:smoke": "npx playwright test",
     "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch -t test",
     "test:debug": "node --experimental-vm-modules node_modules/jest/bin/jest.js -t 'test default generateMockHourlyMetOfficeJSON from hourly file'",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx,.mjs --ignore-path .gitignore . && stylelint --ignore-path .gitignore '**/*.css'",
