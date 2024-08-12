@@ -4,9 +4,8 @@ import React from 'react';
 import { theme } from '../utilities/theme.mjs';
 import { getIsTooDryFromRelativeHumidity } from '../utilities/getComfortFromRelativeHumidity.mjs';
 import getIsStickyFromCelsiusAndRelativeHumidity from '../utilities/getIsStickyFromCelsiusAndRelativeHumidity.mjs';
+import getThirdDayOfHeatwaveIndex from '../utilities/heatWaveUtils.mjs';
 import Day from './Day.mjs';
-
-const heatWaveTemperature = 30;
 
 const styles = {
   ul: {
@@ -53,10 +52,6 @@ const styles = {
   adText: {
     textAlign: 'center',
   },
-};
-
-const findIndexOfLast = (array, condition) => {
-  return array.length - 1 - [...array].reverse().findIndex(condition);
 };
 
 const Days = (props) => {
@@ -107,15 +102,7 @@ const Days = (props) => {
                 />
               </Link>
             </li>
-            <>
-              {Math.round(item.maxTemperature) >= heatWaveTemperature &&
-                index ===
-                  findIndexOfLast(
-                    items,
-                    (day) =>
-                      Math.round(day.maxTemperature) >= heatWaveTemperature
-                  ) && <Advert />}
-            </>
+            <>{getThirdDayOfHeatwaveIndex(items) === index && <Advert />}</>
           </div>
         );
       })}
