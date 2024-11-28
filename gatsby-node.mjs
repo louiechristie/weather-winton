@@ -6,7 +6,7 @@ import utc from 'dayjs/plugin/utc.js';
 import path from 'path';
 import sharp from 'sharp';
 
-import manifest from './package.json' assert { type: 'json' };
+import manifest from './package.json' with { type: 'json' };
 import getForecast from './src/utilities/getForecast.mjs';
 import { getTemperatureFriendly } from './src/utilities/getRoomTemperatureComfortFromCelsius.mjs';
 

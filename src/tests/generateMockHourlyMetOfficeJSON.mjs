@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import hourly from './hourly.json' assert { type: 'json' };
+import hourly from './hourly.json' with { type: 'json' };
 
 const getMockMetOfficeJSON = (
   startTime = hourly.features[0].properties.timeSeries[0].time

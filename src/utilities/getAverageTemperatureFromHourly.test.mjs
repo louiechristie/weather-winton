@@ -1,5 +1,5 @@
-import hourly from '../tests/hourly.json' assert { type: 'json' };
-import hourlyForBetween2300AndMidnightTesting from '../tests/hourlyForBetween2300AndMidnightTesting.json' assert { type: 'json' };
+import hourly from '../tests/hourly.json' with { type: 'json' };
+import hourlyForBetween2300AndMidnightTesting from '../tests/hourlyForBetween2300AndMidnightTesting.json' with { type: 'json' };
 import getAverageTemperatureFromHourly from './getAverageTemperatureFromHourly.mjs';
 import generateMockHourlyMetOfficeJSON from '../tests/generateMockHourlyMetOfficeJSON.mjs';
 import dayjs from 'dayjs';
