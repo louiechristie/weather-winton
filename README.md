@@ -28,8 +28,8 @@ Set up environment variables:
 At a command line run:
 
 ```console
-yarn install
-yarn start
+npm install
+npm run start
 ```
 
 Set up ifttt.com hourly webhook trigger of Gatsby Cloud build of the Gatsby.js forecast static site.

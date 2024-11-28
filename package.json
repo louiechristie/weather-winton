@@ -10,7 +10,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "start": "yarn run build && yarn run serve",
+    "start": "npm run build && npm run serve",
     "dev": "gatsby develop -H 0.0.0.0",
     "build": "gatsby build",
     "serve": "gatsby serve -H 0.0.0.0",
@@ -85,5 +85,14 @@
   },
   "engines": {
     "node": "22.x"
+  },
+  "overrides": {
+    "eslint": "^9.15.0",
+    "stylelint": "16.10.0",
+    "gatsby": "^5.14.0"
+  },
+  "overridesNotes": {
+    "eslint": "Because version 8 is deprecated"
   }
 }
+
