@@ -161,8 +161,8 @@ const Day = (props) => {
 
     const temperatureNumberHTML = `${tempInt}\u00A0`;
 
-    if (maxTempInt - minTempInt >= spacer) {
-      // If a decent temp change show range
+    if ((maxTempInt - minTempInt >= spacer) || minTempInt < 1 || maxTempInt > 26) {
+      // If a decent temp change show range, or if unusually high/low show temp
       if (isDialTemp) return temperatureNumberHTML;
       if (isMinTemp)
         return <span style={{ opacity: 0.75 }}>{temperatureNumberHTML}</span>;
@@ -202,8 +202,8 @@ const Day = (props) => {
     const isMinTemp = tempInt === minTempInt;
     const isMaxTemp = tempInt === maxTempInt;
 
-    if (maxTempInt - minTempInt >= spacer) {
-      // If a decent temp change show range
+    if ((maxTempInt - minTempInt >= spacer) || minTempInt < 1 || maxTempInt > 26) {
+      // If a decent temp change show range, or if unusually high/low show temp
       if (isToday && isCurrentTemp) return '▲';
       if (!isToday && isAverageTemp) return '▲';
       if (isMinTemp) return <span style={{ opacity: 0.75 }}>{'⇤'}</span>;
