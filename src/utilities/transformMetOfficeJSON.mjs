@@ -13,8 +13,8 @@ import getAverageTemperaturefromHourly from './getAverageTemperatureFromHourly.m
 import getFriendlyDateFromISODate from './getFriendlyDateFromISODate.mjs';
 
 const transformMetOfficeJSON = async (dailyJson, hourlyJson, specialDates) => {
-  log(`dailyJson: ${JSON.stringify(dailyJson, null, '  ')}`);
-  log(`hourlyJson: ${JSON.stringify(hourlyJson, null, '  ')}`);
+  // log(`dailyJson: ${JSON.stringify(dailyJson, null, '  ')}`);
+  // log(`hourlyJson: ${JSON.stringify(hourlyJson, null, '  ')}`);
 
   const filter = (day) => {
     return dayjs(day.time).tz().isSameOrAfter(dayjs(), 'day');
@@ -23,11 +23,6 @@ const transformMetOfficeJSON = async (dailyJson, hourlyJson, specialDates) => {
   const items = dailyJson.features[0].properties.timeSeries
     .filter(filter)
     .map((day) => {
-      console.log(
-        'day.daySignificantWeatherCode',
-        day.daySignificantWeatherCode
-      );
-
       if (!day.daySignificantWeatherCode) {
         console.log(
           'day.daySignificantWeatherCode undefined',

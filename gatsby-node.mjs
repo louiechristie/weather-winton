@@ -82,6 +82,8 @@ function getTemperatureColor(celsius) {
 const isItPancakeDayAPI =
   'https://api.isitpancakeday.com/?format=json&daysuntil&recipe';
 
+const bankHolidaysAPI = 'https://www.gov.uk/bank-holidays.json';
+
 export const createPages = async ({ actions: { createPage } }) => {
   try {
     let specialDates;
@@ -95,9 +97,24 @@ export const createPages = async ({ actions: { createPage } }) => {
         'DD-MM-YYYY'
       );
 
-      specialDates = [{ date: pancakeDayDate, name: 'Pancake Day 🥞' }];
-    } catch {
-      console.error(`Can't fetch pancake day from ${isItPancakeDayAPI}`);
+      const bankHolidaysResponse = await axios.get(bankHolidaysAPI);
+
+      const bankHolidays =
+        bankHolidaysResponse.data['england-and-wales']?.events;
+
+      specialDates = [
+        { date: pancakeDayDate, name: 'Pancake Day 🥞' },
+        ...bankHolidays.map((event) => {
+          return {
+            date: dayjs(event.date, 'YYYY-DD-MM'),
+            name: event.title,
+          };
+        }),
+      ];
+    } catch (error) {
+      console.error(
+        `Can't fetch special days from ${isItPancakeDayAPI} or ${bankHolidaysAPI}. Error: ${error}`
+      );
     }
 
     const items = await getForecast(specialDates);

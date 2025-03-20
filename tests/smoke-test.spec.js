@@ -25,3 +25,18 @@ test('pancake day', async ({ page }) => {
 
   await expect(page.getByText('Pancake Day 🥞')).toBeVisible();
 });
+
+test('Easter Monday', async ({ page }) => {
+  await page.goto(
+    process.env.BASE_URL
+      ? process.env.BASE_URL + '/test'
+      : 'http://127.0.0.1:8000' + '/test'
+  );
+
+  const easterMonday = page.getByText('Easter Monday');
+  console.log('easterMonday: ', easterMonday);
+
+  await expect
+    .poll(() => page.getByText('Easter Monday').count())
+    .toBeGreaterThan(0);
+});
