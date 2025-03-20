@@ -4,12 +4,28 @@ import calendar from 'dayjs/plugin/calendar.js';
 // Load plugin
 dayjs.extend(calendar);
 
-export default function getFriendlyDateFromISODate(ISODate) {
+export default function getFriendlyDateFromISODate(ISODate, specialDates) {
   const theDate = dayjs(ISODate);
 
+  let isSpecialDate = false;
+  let specialDateName;
+
+  if (!theDate.isValid()) {
+    throw new Error('Invalid date');
+  }
+
+  if (specialDates) {
+    specialDates.forEach((specialDate) => {
+      if (theDate.isSame(specialDate.date)) {
+        isSpecialDate = true;
+        specialDateName = specialDate.name;
+      }
+    });
+  }
+
   switch (true) {
-    case !theDate.isValid():
-      throw new Error('Invalid date');
+    case isSpecialDate:
+      return specialDateName;
     case dayjs(ISODate).month() === 11 /* in days months are zero indexed */ &&
       dayjs(ISODate).date() === 25:
       return 'Christmas';

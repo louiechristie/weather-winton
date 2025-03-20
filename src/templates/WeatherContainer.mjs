@@ -3,7 +3,6 @@ import { theme, Paper, Typography } from '../utilities/theme.mjs';
 import Footer from '../components/Footer.mjs';
 import Header from '../components/Header.mjs';
 import Days from '../components/Days.mjs';
-import getFriendlyDateFromISODate from '../utilities/getFriendlyDateFromISODate.mjs';
 import { getTemperatureFriendly } from '../utilities/getRoomTemperatureComfortFromCelsius.mjs';
 import log from '../utilities/log.mjs';
 
@@ -115,14 +114,7 @@ const WeatherContainer = ({ pageContext: { items, meta } }) => {
         meta={meta}
       />
 
-      <Days
-        items={items.map((item) => {
-          return {
-            ...item,
-            friendlyDate: getFriendlyDateFromISODate(item.time),
-          };
-        })}
-      />
+      <Days items={items} />
 
       <div style={style.blurb}>
         <Paper style={{ ...style.note, ...style.cta }}>

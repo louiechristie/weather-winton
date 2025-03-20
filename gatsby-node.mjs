@@ -3,18 +3,21 @@ import Color from 'color';
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone.js';
 import utc from 'dayjs/plugin/utc.js';
+import customParseFormat from 'dayjs/plugin/customParseFormat.js';
 import path from 'path';
 import sharp from 'sharp';
 
 import manifest from './package.json' with { type: 'json' };
-import getForecast from './src/utilities/getForecast.mjs';
+import getForecast, { getMockForecast } from './src/utilities/getForecast.mjs';
 import { getTemperatureFriendly } from './src/utilities/getRoomTemperatureComfortFromCelsius.mjs';
+import log from './src/utilities/log.mjs';
 
 axios.defaults.timeout === 30000;
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.tz.setDefault('Europe/London');
+dayjs.extend(customParseFormat);
 
 const CLOUDY_IMAGE_SRC =
   'https://www.metoffice.gov.uk/webfiles/latest/images/icons/weather/12.svg';
@@ -76,9 +79,28 @@ function getTemperatureColor(celsius) {
   return '#f1d220';
 }
 
+const isItPancakeDayAPI =
+  'https://api.isitpancakeday.com/?format=json&daysuntil&recipe';
+
 export const createPages = async ({ actions: { createPage } }) => {
   try {
-    const items = await getForecast();
+    let specialDates;
+
+    try {
+      const isItPancakeDayResponse = await axios.get(
+        'https://api.isitpancakeday.com/?format=json&daysuntil&recipe'
+      );
+      const pancakeDayDate = dayjs(
+        isItPancakeDayResponse?.data?.next_pancakeday?.date,
+        'DD-MM-YYYY'
+      );
+
+      specialDates = [{ date: pancakeDayDate, name: 'Pancake Day 🥞' }];
+    } catch {
+      console.error(`Can't fetch pancake day from ${isItPancakeDayAPI}`);
+    }
+
+    const items = await getForecast(specialDates);
     // log('getForecast items: ', items);
 
     meta.timeStamp = `${dayjs(new Date()).tz().format('YYYY-MM-DD HHmm')}`;
@@ -130,6 +152,22 @@ export const createPages = async ({ actions: { createPage } }) => {
       path: `/`,
       component: path.resolve('./src/templates/WeatherContainer.mjs'),
       context: { items, meta },
+    });
+
+    let mockItems;
+
+    try {
+      mockItems = await getMockForecast(specialDates);
+    } catch (error) {
+      log('Error getting mock forecast');
+      log(error);
+      throw error;
+    }
+
+    createPage({
+      path: `/test`,
+      component: path.resolve('./src/templates/WeatherContainer.mjs'),
+      context: { items: mockItems, meta },
     });
   } catch (error) {
     console.error('Error creating pages');

@@ -1,8 +1,6 @@
-// eslint-disable-next-line node/no-unpublished-import
 import { test, expect } from '@playwright/test';
 
 test('has title', async ({ page }) => {
-   
   console.log('BASE_URL: ', process.env.BASE_URL);
   await page.goto(process.env.BASE_URL || 'http://127.0.0.1:8000');
 
@@ -16,4 +14,14 @@ test('doesn\'t say "Probably Raining"', async ({ page }) => {
   await expect(page.getByText('Probably Raining')).toBeVisible({
     visible: false,
   });
+});
+
+test('pancake day', async ({ page }) => {
+  await page.goto(
+    process.env.BASE_URL
+      ? process.env.BASE_URL + '/test'
+      : 'http://127.0.0.1:8000' + '/test'
+  );
+
+  await expect(page.getByText('Pancake Day 🥞')).toBeVisible();
 });

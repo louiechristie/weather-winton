@@ -2,7 +2,7 @@
   "name": "weather-winton",
   "title": "Weather Winton",
   "description": "Weather Winton is an experiment in friendly weather forecasting.",
-  "version": "0.32.0",
+  "version": "0.33.0",
   "private": true,
   "author": {
     "name": "Louie Christie",
@@ -15,7 +15,7 @@
     "build": "gatsby build",
     "serve": "gatsby serve -H 0.0.0.0",
     "clean": "gatsby clean",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js && npx playwright test",
     "test:smoke": "npx playwright test",
     "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch -t test",
     "test:debug": "node --experimental-vm-modules node_modules/jest/bin/jest.js -t 'test default generateMockHourlyMetOfficeJSON from hourly file'",

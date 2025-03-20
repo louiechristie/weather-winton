@@ -1,9 +1,8 @@
 import dayjs from 'dayjs';
 import axios from 'axios';
-import mockDailyMetOfficeJSON from '../tests/mockDailyMetOfficeJSON.mjs';
+import generateMockDailyMetOfficeJSON from '../tests/generateMockDailyMetOfficeJSON.mjs';
 import generateMockHourlyMetOfficeJSON from '../tests/generateMockHourlyMetOfficeJSON.mjs';
 import log from './log.mjs';
-import getItemsFromMetOfficeJSON from './transformMetOfficeJSON.mjs';
 import transformMetOfficeJSON from './transformMetOfficeJSON.mjs';
 
 const headers = {
@@ -11,7 +10,7 @@ const headers = {
   apikey: process.env.GATSBY_MET_WEATHER_SECRET,
 };
 
-const getMetOfficeForecast = async () => {
+const getMetOfficeForecast = async (specialDates) => {
   const response = await axios.get(process.env.GATSBY_MET_WEATHER_DAILY_URL, {
     headers,
   });
@@ -39,35 +38,43 @@ const getMetOfficeForecast = async () => {
     throw new Error('No hourlyResponse from server.');
   }
 
-  const items = transformMetOfficeJSON(dailyJson, hourlyJson);
+  const items = await transformMetOfficeJSON(
+    dailyJson,
+    hourlyJson,
+    specialDates
+  );
   return items;
 };
 
-const getMockForecast = async () => {
+export const getMockForecast = async (specialDates) => {
   log('getMockForecast');
-  return getItemsFromMetOfficeJSON(
-    mockDailyMetOfficeJSON(),
-    generateMockHourlyMetOfficeJSON(dayjs().toISOString())
+  return transformMetOfficeJSON(
+    generateMockDailyMetOfficeJSON(specialDates),
+    generateMockHourlyMetOfficeJSON(dayjs().toISOString()),
+    specialDates
   );
 };
 
-const getForecast = async () => {
+const getForecast = async (specialDates) => {
   let items = [];
   if (process.env.NODE_ENV === 'production') {
-    if (!process.env.GATSBY_MET_WEATHER_DAILY_URL)
-      {throw new Error(
+    if (!process.env.GATSBY_MET_WEATHER_DAILY_URL) {
+      throw new Error(
         'You need to set your GATSBY_MET_WEATHER_DAILY_URL environment variable'
-      );}
-    if (!process.env.GATSBY_MET_WEATHER_HOURLY_URL)
-      {throw new Error(
+      );
+    }
+    if (!process.env.GATSBY_MET_WEATHER_HOURLY_URL) {
+      throw new Error(
         'You need to set your GATSBY_MET_WEATHER_HOURLY_URL environment variable'
-      );}
-    if (!process.env.GATSBY_MET_WEATHER_SECRET)
-      {throw new Error(
+      );
+    }
+    if (!process.env.GATSBY_MET_WEATHER_SECRET) {
+      throw new Error(
         'You need to set your GATSBY_MET_WEATHER_SECRET environment variable'
-      );}
+      );
+    }
     try {
-      items = await getMetOfficeForecast();
+      items = await getMetOfficeForecast(specialDates);
     } catch (error) {
       log('Error getting forecast');
       log(error);
@@ -75,7 +82,7 @@ const getForecast = async () => {
     }
   } else {
     try {
-      items = await getMockForecast();
+      items = await getMockForecast(specialDates);
     } catch (error) {
       log('Error getting mock forecast');
       log(error);

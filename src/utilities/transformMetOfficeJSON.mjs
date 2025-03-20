@@ -10,8 +10,9 @@ import {
 } from './metOfficeWeatherUtils.mjs';
 import { getIsHourInTheRemainingDay } from './getIsHourInTheRemainingDay.mjs';
 import getAverageTemperaturefromHourly from './getAverageTemperatureFromHourly.mjs';
+import getFriendlyDateFromISODate from './getFriendlyDateFromISODate.mjs';
 
-const transformMetOfficeJSON = (dailyJson, hourlyJson) => {
+const transformMetOfficeJSON = async (dailyJson, hourlyJson, specialDates) => {
   log(`dailyJson: ${JSON.stringify(dailyJson, null, '  ')}`);
   log(`hourlyJson: ${JSON.stringify(hourlyJson, null, '  ')}`);
 
@@ -22,8 +23,21 @@ const transformMetOfficeJSON = (dailyJson, hourlyJson) => {
   const items = dailyJson.features[0].properties.timeSeries
     .filter(filter)
     .map((day) => {
+      console.log(
+        'day.daySignificantWeatherCode',
+        day.daySignificantWeatherCode
+      );
+
+      if (!day.daySignificantWeatherCode) {
+        console.log(
+          'day.daySignificantWeatherCode undefined',
+          day.daySignificantWeatherCode
+        );
+      }
+
       return {
         time: day.time,
+        friendlyDate: getFriendlyDateFromISODate(day.time, specialDates),
         description: getDescriptionFromMetOfficeWeatherCode(
           day.daySignificantWeatherCode.toString()
         ),
