@@ -74,7 +74,16 @@ const Footer = (props) => {
 
       <Typography variant="body2" component="p" paragraph align="center">
         Data from: Met Office | Contains public sector information licensed
-        under the Open Government Licence
+        under the{' '}
+        <a href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">
+          Open Government Licence v3.0
+        </a>
+        .{' '}
+        <a href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">
+          <img src="https://www.nationalarchives.gov.uk/images/infoman/ogl-symbol-41px-retina-black.png" width="40" height="16" style={{width: 40, height: 16}} alt="OGL logo" />
+        </a>
+
+        
       </Typography>
 
       <Typography
