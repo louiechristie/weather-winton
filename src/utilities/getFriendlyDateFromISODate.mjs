@@ -24,8 +24,6 @@ export default function getFriendlyDateFromISODate(ISODate, specialDates) {
   }
 
   switch (true) {
-    case isSpecialDate:
-      return specialDateName;
     case dayjs(ISODate).month() === 11 /* in days months are zero indexed */ &&
       dayjs(ISODate).date() === 25:
       return 'Christmas';
@@ -38,6 +36,8 @@ export default function getFriendlyDateFromISODate(ISODate, specialDates) {
     case dayjs(ISODate).month() === 1 /* in days months are zero indexed */ &&
       dayjs(ISODate).date() === 14:
       return 'Valentines Day ❤️';
+    case isSpecialDate:
+      return specialDateName;
     default:
       return theDate.calendar(null, {
         sameDay: '[Today]',

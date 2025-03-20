@@ -102,8 +102,11 @@ export const createPages = async ({ actions: { createPage } }) => {
       const bankHolidays =
         bankHolidaysResponse.data['england-and-wales']?.events;
 
+      const aprilFoolsDay = dayjs().set('date', 1).set('month', 3);
+
       specialDates = [
         { date: pancakeDayDate, name: 'Pancake Day 🥞' },
+        { date: aprilFoolsDay, name: 'April fools day 🤹' },
         ...bankHolidays.map((event) => {
           return {
             date: dayjs(event.date, 'YYYY-DD-MM'),

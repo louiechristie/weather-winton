@@ -40,3 +40,13 @@ test('Easter Monday', async ({ page }) => {
     .poll(() => page.getByText('Easter Monday').count())
     .toBeGreaterThan(0);
 });
+
+test('April fools day 🤹', async ({ page }) => {
+  await page.goto(
+    process.env.BASE_URL
+      ? process.env.BASE_URL + '/test'
+      : 'http://127.0.0.1:8000' + '/test'
+  );
+
+  await expect(page.getByText('April fools day 🤹')).toBeVisible();
+});
