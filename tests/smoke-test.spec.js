@@ -2,7 +2,7 @@
 import { test, expect } from '@playwright/test';
 
 test('has title', async ({ page }) => {
-  // eslint-disable-next-line no-console
+   
   console.log('BASE_URL: ', process.env.BASE_URL);
   await page.goto(process.env.BASE_URL || 'http://127.0.0.1:8000');
 

@@ -55,17 +55,17 @@ const getForecast = async () => {
   let items = [];
   if (process.env.NODE_ENV === 'production') {
     if (!process.env.GATSBY_MET_WEATHER_DAILY_URL)
-      throw new Error(
+      {throw new Error(
         'You need to set your GATSBY_MET_WEATHER_DAILY_URL environment variable'
-      );
+      );}
     if (!process.env.GATSBY_MET_WEATHER_HOURLY_URL)
-      throw new Error(
+      {throw new Error(
         'You need to set your GATSBY_MET_WEATHER_HOURLY_URL environment variable'
-      );
+      );}
     if (!process.env.GATSBY_MET_WEATHER_SECRET)
-      throw new Error(
+      {throw new Error(
         'You need to set your GATSBY_MET_WEATHER_SECRET environment variable'
-      );
+      );}
     try {
       items = await getMetOfficeForecast();
     } catch (error) {

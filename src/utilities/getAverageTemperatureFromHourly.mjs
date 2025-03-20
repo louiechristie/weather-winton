@@ -19,7 +19,7 @@ const getAverageTemperaturefromHourly = (hourlyTimeSeries, fromTime) => {
   );
 
   if (!temperatures || temperatures.length === 0)
-    throw Error('no temperatures in remaining day to average');
+    {throw Error('no temperatures in remaining day to average');}
 
   return average(temperatures);
 };

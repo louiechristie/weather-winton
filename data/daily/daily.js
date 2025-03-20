@@ -55,7 +55,7 @@ async function combineData() {
 
   log(`sortedString: ${sortedSting}`);
 
-  let output = {};
+  const output = {};
 
   // output = {
   //   freezingNumber: sorted.filter(temperature => {

@@ -54,10 +54,10 @@ test('test all after now are 18 degrees', () => {
   testData.features[0].properties.timeSeries =
     testData.features[0].properties.timeSeries.map((hour) => {
       if (getIsHourInTheRemainingDay(hour.time))
-        return {
+        {return {
           ...hour,
           screenTemperature: 18,
-        };
+        };}
       else return hour;
     });
 
@@ -72,10 +72,10 @@ test('test all after now are 18 degrees', () => {
   testData.features[0].properties.timeSeries =
     testData.features[0].properties.timeSeries.map((hour) => {
       if (getIsHourInTheRemainingDay(hour.time))
-        return {
+        {return {
           ...hour,
           screenTemperature: 18,
-        };
+        };}
       else return hour;
     });
 

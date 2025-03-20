@@ -165,9 +165,9 @@ const Day = (props) => {
       // If a decent temp change show range, or if unusually high/low show temp
       if (isDialTemp) return temperatureNumberHTML;
       if (isMinTemp)
-        return <span style={{ opacity: 0.75 }}>{temperatureNumberHTML}</span>;
+        {return <span style={{ opacity: 0.75 }}>{temperatureNumberHTML}</span>;}
       if (isMaxTemp)
-        return <span style={{ opacity: 0.75 }}>{temperatureNumberHTML}</span>;
+        {return <span style={{ opacity: 0.75 }}>{temperatureNumberHTML}</span>;}
       if (isDialTemp) return temperatureNumberHTML;
     } else {
       // Else show average only decent temp change
@@ -190,7 +190,7 @@ const Day = (props) => {
         isAwayFromMinTemp &&
         isAwayFromMaxTemp
       )
-        return <span style={{ opacity: 0.75 }}>{temperatureNumberHTML}</span>;
+        {return <span style={{ opacity: 0.75 }}>{temperatureNumberHTML}</span>;}
     }
 
     return '';

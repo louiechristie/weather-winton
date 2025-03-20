@@ -19,8 +19,8 @@
     "test:smoke": "npx playwright test",
     "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch -t test",
     "test:debug": "node --experimental-vm-modules node_modules/jest/bin/jest.js -t 'test default generateMockHourlyMetOfficeJSON from hourly file'",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx,.mjs --ignore-pattern 'playwright-report' --ignore-pattern 'node_modules' --ignore-pattern '.cache' --ignore-pattern 'public' && stylelint --ignore-path .gitignore '**/*.css'",
-    "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx,.mjs --ignore-pattern 'playwright-report' --ignore-pattern 'node_modules' --ignore-pattern '.cache' --ignore-pattern 'public' --fix && stylelint --ignore-path .gitignore '**/*.css' --fix",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx,.mjs --ignore-pattern 'playwright-report' --ignore-pattern 'node_modules' --ignore-pattern '.cache' --ignore-pattern 'public' ; stylelint --ignore-path .gitignore '**/*.css'",
+    "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx,.mjs --ignore-pattern 'playwright-report' --ignore-pattern 'node_modules' --ignore-pattern '.cache' --ignore-pattern 'public' --fix ; stylelint --ignore-path .gitignore '**/*.css' --fix",
     "npm:check": "npx npm-check --specials=eslint,gatsby,jest,prettier"
   },
   "resolutions": {
@@ -41,7 +41,7 @@
     "react-dom": "^18.3.1",
     "react-helmet": "^6.1.0",
     "sharp": "^0.33.5",
-    "stylelint": "16.16.0",
+    "stylelint": "^16.16.0",
     "stylelint-config-prettier": "9.0.5",
     "stylelint-config-standard": "^37.0.0",
     "stylelint-prettier": "5.0.3",
@@ -68,9 +68,6 @@
     "prettier": "3.5.3",
     "typescript": "^5.8.2"
   },
-  "simple-git-hooks": {
-    "pre-commit": "npx lint-staged"
-  },
   "engines": {
     "node": "22.x"
   },
@@ -79,5 +76,5 @@
   },
   "overridesNotes": {
     "eslint": "Because stylelint-config-standard conflicts with Styelint"
-  } 
+  }
 }
