@@ -10,9 +10,11 @@ import sharp from 'sharp';
 import manifest from './package.json' with { type: 'json' };
 import getForecast, { getMockForecast } from './src/utilities/getForecast.mjs';
 import { getTemperatureFriendly } from './src/utilities/getRoomTemperatureComfortFromCelsius.mjs';
+import getSpecialDates from './src/utilities/getSpecialDates.mjs';
+
 import log from './src/utilities/log.mjs';
 
-axios.defaults.timeout === 30000;
+axios.defaults.timeout = 20000;
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -79,46 +81,9 @@ function getTemperatureColor(celsius) {
   return '#f1d220';
 }
 
-const isItPancakeDayAPI =
-  'https://api.isitpancakeday.com/?format=json&daysuntil&recipe';
-
-const bankHolidaysAPI = 'https://www.gov.uk/bank-holidays.json';
-
 export const createPages = async ({ actions: { createPage } }) => {
   try {
-    let specialDates;
-
-    try {
-      const isItPancakeDayResponse = await axios.get(
-        'https://api.isitpancakeday.com/?format=json&daysuntil&recipe'
-      );
-      const pancakeDayDate = dayjs(
-        isItPancakeDayResponse?.data?.next_pancakeday?.date,
-        'DD-MM-YYYY'
-      );
-
-      const bankHolidaysResponse = await axios.get(bankHolidaysAPI);
-
-      const bankHolidays =
-        bankHolidaysResponse.data['england-and-wales']?.events;
-
-      const aprilFoolsDay = dayjs().set('date', 1).set('month', 3);
-
-      specialDates = [
-        { date: pancakeDayDate, name: 'Pancake Day 🥞' },
-        { date: aprilFoolsDay, name: 'April fools day 🤹' },
-        ...bankHolidays.map((event) => {
-          return {
-            date: dayjs(event.date, 'YYYY-DD-MM'),
-            name: event.title,
-          };
-        }),
-      ];
-    } catch (error) {
-      console.error(
-        `Can't fetch special days from ${isItPancakeDayAPI} or ${bankHolidaysAPI}. Error: ${error}`
-      );
-    }
+    const specialDates = await getSpecialDates();
 
     const items = await getForecast(specialDates);
     // log('getForecast items: ', items);
@@ -177,7 +142,7 @@ export const createPages = async ({ actions: { createPage } }) => {
     let mockItems;
 
     try {
-      mockItems = await getMockForecast(specialDates);
+      mockItems = await getMockForecast(specialDates, true);
     } catch (error) {
       log('Error getting mock forecast');
       log(error);

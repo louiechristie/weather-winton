@@ -1,5 +1,4 @@
 import dayjs from 'dayjs';
-import log from './log.mjs';
 import getCurrentTemperature from './getCurrentTemperature.mjs';
 import {
   getDescriptionFromMetOfficeWeatherCode,

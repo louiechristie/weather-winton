@@ -4,41 +4,74 @@ import utc from 'dayjs/plugin/utc.js';
 import customParseFormat from 'dayjs/plugin/customParseFormat.js';
 
 import getFriendlyDateFromISODate from './getFriendlyDateFromISODate.mjs';
+import getSpecialDates from './getSpecialDates.mjs';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.tz.setDefault('Europe/London');
 dayjs.extend(customParseFormat);
 
-test('Christmas', () => {
-  expect(getFriendlyDateFromISODate('2024-12-25T14:59:43+0000')).toBe(
-    'Christmas'
-  );
-});
+describe('get friendly dates', () => {
+  let specialDates;
 
-test("New Year's Eve 🎉", () => {
-  expect(getFriendlyDateFromISODate('2024-12-31T14:59:43+0000')).toBe(
-    "New Year's Eve 🎉"
-  );
-});
+  beforeAll(async () => {
+    specialDates = await getSpecialDates();
+  });
 
-test("New Year's Day", () => {
-  expect(getFriendlyDateFromISODate('2024-01-01T14:59:43+0000')).toBe(
-    "New Year's Day"
-  );
-});
+  test('Christmas', () => {
+    expect(
+      getFriendlyDateFromISODate(
+        dayjs()
+          .month(12 - 1)
+          .date(25)
+          .startOf('day'),
+        specialDates
+      )
+    ).toBe('Christmas 🎄');
+  });
 
-test('Valentines Day ❤️', () => {
-  expect(getFriendlyDateFromISODate('2024-02-14T14:59:43+0000')).toBe(
-    'Valentines Day ❤️'
-  );
-});
+  test("New Year's Eve 🎉", () => {
+    expect(
+      getFriendlyDateFromISODate(
+        dayjs()
+          .month(12 - 1)
+          .date(31)
+          .startOf('day'),
+        specialDates
+      )
+    ).toBe("New Year's Eve 🎉");
+  });
 
-test('Pancake Day 🥞', () => {
-  const pancakeDayDate = dayjs('26-02-2026', 'DD-MM-YYYY');
-  const specialDates = [{ date: pancakeDayDate, name: 'Pancake Day 🥞' }];
+  test('New Year’s Day', () => {
+    expect(
+      getFriendlyDateFromISODate(
+        dayjs()
+          .month(1 - 1)
+          .date(1)
+          .startOf('day'),
+        specialDates
+      )
+    ).toBe('New Year’s Day');
+  });
 
-  expect(getFriendlyDateFromISODate(pancakeDayDate, specialDates)).toBe(
-    'Pancake Day 🥞'
-  );
+  test('Valentines Day ❤️', () => {
+    expect(
+      getFriendlyDateFromISODate(
+        dayjs()
+          .month(2 - 1)
+          .date(14)
+          .startOf('day'),
+        specialDates,
+        specialDates
+      )
+    ).toBe('Valentines Day ❤️');
+  });
+
+  test('Pancake Day 🥞', () => {
+    const pancakeDayDate = dayjs('17-02-2026', 'DD-MM-YYYY');
+
+    expect(getFriendlyDateFromISODate(pancakeDayDate, specialDates)).toBe(
+      'Pancake Day 🥞'
+    );
+  });
 });

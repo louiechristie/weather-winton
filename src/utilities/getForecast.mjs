@@ -46,16 +46,16 @@ const getMetOfficeForecast = async (specialDates) => {
   return items;
 };
 
-export const getMockForecast = async (specialDates) => {
+export const getMockForecast = async (specialDates, isTest) => {
   log('getMockForecast');
   return transformMetOfficeJSON(
-    generateMockDailyMetOfficeJSON(specialDates),
+    generateMockDailyMetOfficeJSON(specialDates, isTest),
     generateMockHourlyMetOfficeJSON(dayjs().toISOString()),
     specialDates
   );
 };
 
-const getForecast = async (specialDates) => {
+const getForecast = async (specialDates, isTest) => {
   let items = [];
   if (process.env.NODE_ENV === 'production') {
     if (!process.env.GATSBY_MET_WEATHER_DAILY_URL) {
@@ -82,7 +82,7 @@ const getForecast = async (specialDates) => {
     }
   } else {
     try {
-      items = await getMockForecast(specialDates);
+      items = await getMockForecast(specialDates, isTest);
     } catch (error) {
       log('Error getting mock forecast');
       log(error);
