@@ -52,3 +52,15 @@ test('April fools day 🤹', async ({ page }) => {
     .poll(() => page.getByText('April fools day 🤹').count())
     .toBeGreaterThan(0);
 });
+
+test("Mother's day", async ({ page }) => {
+  await page.goto(
+    process.env.BASE_URL
+      ? process.env.BASE_URL + '/test'
+      : 'http://127.0.0.1:8000' + '/test'
+  );
+
+  await expect
+    .poll(() => page.getByText("Mother's day").count())
+    .toBeGreaterThan(0);
+});

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import dayjs from 'dayjs';
+import Holidays from 'date-holidays';
 
 const isItPancakeDayAPI =
   'https://api.isitpancakeday.com/?format=json&daysuntil&recipe';
@@ -111,6 +112,17 @@ const getSpecialDates = async () => {
     ];
 
     const mergedDates = {};
+
+    const hd = new Holidays('GB');
+
+    const holidays = hd.getHolidays(dayjs().year());
+
+    console.log('holidays: ', holidays);
+
+    holidays.forEach((holiday) => {
+      const date = dayjs(holiday.date).format('YYYY-MM-DD');
+      mergedDates[date] = holiday.name;
+    });
 
     bankHolidaysFiltered.forEach((bankHoliday) => {
       mergedDates[bankHoliday.date] = bankHoliday.title;
