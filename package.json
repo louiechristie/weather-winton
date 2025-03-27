@@ -18,7 +18,7 @@
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js && npx playwright test",
     "test:smoke": "npx playwright test",
     "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch -t test",
-    "test:debug": "node --experimental-vm-modules node_modules/jest/bin/jest.js -t 'test default generateMockHourlyMetOfficeJSON from hourly file'",
+    "test:debug": "node --experimental-vm-modules node_modules/jest/bin/jest.js && npx playwright test --ui",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx,.mjs --ignore-pattern 'playwright-report' --ignore-pattern 'node_modules' --ignore-pattern '.cache' --ignore-pattern 'public' ; stylelint --ignore-path .gitignore '**/*.css'",
     "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx,.mjs --ignore-pattern 'playwright-report' --ignore-pattern 'node_modules' --ignore-pattern '.cache' --ignore-pattern 'public' --fix ; stylelint --ignore-path .gitignore '**/*.css' --fix",
     "npm:check": "npx npm-check --specials=eslint,gatsby,jest,prettier"

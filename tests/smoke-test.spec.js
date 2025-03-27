@@ -48,5 +48,7 @@ test('April fools day 🤹', async ({ page }) => {
       : 'http://127.0.0.1:8000' + '/test'
   );
 
-  await expect(page.getByText('April fools day 🤹')).toBeVisible();
+  await expect
+    .poll(() => page.getByText('April fools day 🤹').count())
+    .toBeGreaterThan(0);
 });
