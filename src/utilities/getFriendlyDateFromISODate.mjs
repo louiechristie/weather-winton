@@ -20,7 +20,7 @@ export default function getFriendlyDateFromISODate(ISODate, specialDates) {
     let isSpecialDate = false;
     let name;
     specialDates.forEach((specialDate) => {
-      if (theDate.isSame(specialDate.date, 'day')) {
+      if (theDate.tz().isSame(specialDate.date, 'day')) {
         isSpecialDate = true;
         name = specialDate.name;
       }
