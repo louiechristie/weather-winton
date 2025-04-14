@@ -2,8 +2,13 @@ import axios from 'axios';
 import dayjs from 'dayjs';
 import Holidays from 'date-holidays';
 import { Temporal } from 'temporal-polyfill';
+import timezone from 'dayjs/plugin/timezone.js';
+import utc from 'dayjs/plugin/utc.js';
 import customParseFormat from 'dayjs/plugin/customParseFormat.js';
 
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.tz.setDefault('Europe/London');
 dayjs.extend(customParseFormat);
 
 const isItPancakeDayAPI =
@@ -185,7 +190,7 @@ const getSpecialDates = async () => {
     .toSorted()
     .map((key) => {
       return {
-        date: dayjs(key, 'YYYY-MM-DD'),
+        date: dayjs(key, 'YYYY-MM-DD').tz().startOf('day'),
         name: mergedDates[key],
       };
     });
