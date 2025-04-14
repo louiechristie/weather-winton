@@ -8,7 +8,10 @@ import path from 'path';
 import sharp from 'sharp';
 
 import manifest from './package.json' with { type: 'json' };
-import getForecast, { getMockForecast } from './src/utilities/getForecast.mjs';
+import getForecast, {
+  getMockForecast,
+  getSpecialDatesForecast,
+} from './src/utilities/getForecast.mjs';
 import { getTemperatureFriendly } from './src/utilities/getRoomTemperatureComfortFromCelsius.mjs';
 import getSpecialDates from './src/utilities/getSpecialDates.mjs';
 
@@ -82,9 +85,9 @@ function getTemperatureColor(celsius) {
 }
 
 export const createPages = async ({ actions: { createPage } }) => {
-  try {
-    const specialDates = await getSpecialDates();
+  const specialDates = await getSpecialDates();
 
+  try {
     const items = await getForecast(specialDates);
     // log('getForecast items: ', items);
 
@@ -138,22 +141,6 @@ export const createPages = async ({ actions: { createPage } }) => {
       component: path.resolve('./src/templates/WeatherContainer.mjs'),
       context: { items, meta },
     });
-
-    let mockItems;
-
-    try {
-      mockItems = await getMockForecast(specialDates, true);
-    } catch (error) {
-      log('Error getting mock forecast');
-      log(error);
-      throw error;
-    }
-
-    createPage({
-      path: `/test`,
-      component: path.resolve('./src/templates/WeatherContainer.mjs'),
-      context: { items: mockItems, meta },
-    });
   } catch (error) {
     console.error('Error creating pages');
     console.error(error);
@@ -183,5 +170,31 @@ export const createPages = async ({ actions: { createPage } }) => {
       component: path.resolve('./src/templates/WeatherContainer.mjs'),
       context: { items: mock, meta },
     });
+  }
+
+  try {
+    const mockItems = await getMockForecast(specialDates);
+    createPage({
+      path: `/test`,
+      component: path.resolve('./src/templates/WeatherContainer.mjs'),
+      context: { items: mockItems, meta },
+    });
+  } catch (error) {
+    log('Error getting mock forecast');
+    log(error);
+    throw error;
+  }
+
+  try {
+    const specialItems = await getSpecialDatesForecast(specialDates);
+    createPage({
+      path: `/fun`,
+      component: path.resolve('./src/templates/WeatherContainer.mjs'),
+      context: { items: specialItems, meta },
+    });
+  } catch (error) {
+    log('Error getting special dates forecast');
+    log(error);
+    throw error;
   }
 };

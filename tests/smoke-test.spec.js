@@ -16,51 +16,45 @@ test('doesn\'t say "Probably Raining"', async ({ page }) => {
   });
 });
 
-test('pancake day', async ({ page }) => {
-  await page.goto(
-    process.env.BASE_URL
-      ? process.env.BASE_URL + '/test'
-      : 'http://127.0.0.1:8000' + '/test'
-  );
+test('doesn\'t have "Yesterday"', async ({ page }) => {
+  await page.goto(process.env.BASE_URL || 'http://127.0.0.1:8000');
 
-  await expect(page.getByText('Pancake Day 🥞')).toBeVisible();
+  await expect(page.getByText('Yesterday')).toBeVisible({
+    visible: false,
+  });
 });
 
-test('Easter Monday', async ({ page }) => {
-  await page.goto(
-    process.env.BASE_URL
-      ? process.env.BASE_URL + '/test'
-      : 'http://127.0.0.1:8000' + '/test'
-  );
+test.describe('fun dates', async () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto(
+      process.env.BASE_URL
+        ? process.env.BASE_URL + '/fun'
+        : 'http://127.0.0.1:8000' + '/fun'
+    );
+  });
 
-  const easterMonday = page.getByText('Easter Monday');
-  console.log('easterMonday: ', easterMonday);
+  test('pancake day', async ({ page }) => {
+    await expect(page.getByText('Pancake Day 🥞')).toBeVisible();
+  });
 
-  await expect
-    .poll(() => page.getByText('Easter Monday').count())
-    .toBeGreaterThan(0);
-});
+  test('Easter Monday', async ({ page }) => {
+    const easterMonday = page.getByText('Easter Monday');
+    console.log('easterMonday: ', easterMonday);
 
-test('April fools day 🤹', async ({ page }) => {
-  await page.goto(
-    process.env.BASE_URL
-      ? process.env.BASE_URL + '/test'
-      : 'http://127.0.0.1:8000' + '/test'
-  );
+    await expect
+      .poll(() => page.getByText('Easter Monday').count())
+      .toBeGreaterThan(0);
+  });
 
-  await expect
-    .poll(() => page.getByText('April fools day 🤹').count())
-    .toBeGreaterThan(0);
-});
+  test('April fools day 🤹', async ({ page }) => {
+    await expect
+      .poll(() => page.getByText('April fools day 🤹').count())
+      .toBeGreaterThan(0);
+  });
 
-test("Mother's day", async ({ page }) => {
-  await page.goto(
-    process.env.BASE_URL
-      ? process.env.BASE_URL + '/test'
-      : 'http://127.0.0.1:8000' + '/test'
-  );
-
-  await expect
-    .poll(() => page.getByText("Mother's day").count())
-    .toBeGreaterThan(0);
+  test("Mother's day", async ({ page }) => {
+    await expect
+      .poll(() => page.getByText("Mother's day").count())
+      .toBeGreaterThan(0);
+  });
 });
