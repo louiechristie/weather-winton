@@ -128,7 +128,7 @@ const getSpecialDates = async () => {
   const holidays = hd.getHolidays(dayjs().year());
 
   holidays.forEach((holiday) => {
-    const date = dayjs(holiday.start).format('YYYY-MM-DD');
+    const date = dayjs(holiday.start).tz().format('YYYY-MM-DD');
     mergedDates[date] = holiday.name;
   });
 
@@ -137,7 +137,7 @@ const getSpecialDates = async () => {
     (holiday) => holiday.name === "Mother's Day"
   );
   if (mothersDay) {
-    mergedDates[dayjs(mothersDay.start).format('YYYY-MM-DD')] =
+    mergedDates[dayjs(mothersDay.start).tz().format('YYYY-MM-DD')] =
       "Mother's Day 💐";
   }
 
