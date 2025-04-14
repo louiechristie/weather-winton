@@ -70,7 +70,7 @@ const getSpecialDates = async () => {
       date: dayjs()
         .month(4 - 1)
         .date(22),
-      name: '🥳',
+      name: '22nd April 🥳',
     },
 
     // June
@@ -78,7 +78,7 @@ const getSpecialDates = async () => {
       date: dayjs()
         .month(6 - 1)
         .date(27),
-      name: '🎉',
+      name: '27th June 🎉',
     },
 
     // November - Thanksgiving (4th Thursday)
