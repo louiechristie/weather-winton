@@ -161,13 +161,19 @@ const Day = (props) => {
 
     const temperatureNumberHTML = `${tempInt}\u00A0`;
 
-    if ((maxTempInt - minTempInt >= spacer) || minTempInt < 1 || maxTempInt > 26) {
+    if (
+      maxTempInt - minTempInt >= spacer ||
+      minTempInt < 1 ||
+      maxTempInt > 26
+    ) {
       // If a decent temp change show range, or if unusually high/low show temp
       if (isDialTemp) return temperatureNumberHTML;
-      if (isMinTemp)
-        {return <span style={{ opacity: 0.75 }}>{temperatureNumberHTML}</span>;}
-      if (isMaxTemp)
-        {return <span style={{ opacity: 0.75 }}>{temperatureNumberHTML}</span>;}
+      if (isMinTemp) {
+        return <span style={{ opacity: 0.75 }}>{temperatureNumberHTML}</span>;
+      }
+      if (isMaxTemp) {
+        return <span style={{ opacity: 0.75 }}>{temperatureNumberHTML}</span>;
+      }
       if (isDialTemp) return temperatureNumberHTML;
     } else {
       // Else show average only decent temp change
@@ -189,8 +195,9 @@ const Day = (props) => {
         isAwayFromAverageTemp &&
         isAwayFromMinTemp &&
         isAwayFromMaxTemp
-      )
-        {return <span style={{ opacity: 0.75 }}>{temperatureNumberHTML}</span>;}
+      ) {
+        return <span style={{ opacity: 0.75 }}>{temperatureNumberHTML}</span>;
+      }
     }
 
     return '';
@@ -202,7 +209,11 @@ const Day = (props) => {
     const isMinTemp = tempInt === minTempInt;
     const isMaxTemp = tempInt === maxTempInt;
 
-    if ((maxTempInt - minTempInt >= spacer) || minTempInt < 1 || maxTempInt > 26) {
+    if (
+      maxTempInt - minTempInt >= spacer ||
+      minTempInt < 1 ||
+      maxTempInt > 26
+    ) {
       // If a decent temp change show range, or if unusually high/low show temp
       if (isToday && isCurrentTemp) return '▲';
       if (!isToday && isAverageTemp) return '▲';
@@ -294,11 +305,9 @@ const Day = (props) => {
         <Typography variant="h5" component="h2" style={styles.friendlyDate}>
           {friendlyDate}
         </Typography>
-        {/* 
-          <Typography variant="h6" component="p">
-            Time: {time}
-          </Typography> 
-        */}
+        <Typography variant="h6" component="p" style={{ display: 'none' }}>
+          Time: {time}
+        </Typography>
       </div>
       <div>
         <img style={styles.svgIcon} src={icon} alt={description} />

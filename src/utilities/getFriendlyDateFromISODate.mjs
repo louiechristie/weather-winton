@@ -1,8 +1,13 @@
 import dayjs from 'dayjs';
 import calendar from 'dayjs/plugin/calendar.js';
+import timezone from 'dayjs/plugin/timezone.js';
+import utc from 'dayjs/plugin/utc.js';
 
 // Load plugin
 dayjs.extend(calendar);
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.tz.setDefault('Europe/London');
 
 export default function getFriendlyDateFromISODate(ISODate, specialDates) {
   const theDate = dayjs(ISODate);
