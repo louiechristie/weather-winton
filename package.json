@@ -2,7 +2,7 @@
   "name": "weather-winton",
   "title": "Weather Winton",
   "description": "Weather Winton is an experiment in friendly weather forecasting.",
-  "version": "0.33.0",
+  "version": "0.34.0",
   "private": true,
   "author": {
     "name": "Louie Christie",
