@@ -19,8 +19,9 @@ const generateSpecialDatesMetOfficeJSON = (specialDates) => {
   mockMetOfficeJSON.features[0].properties.timeSeries = [
     ...specialDates.map((specialDate) => {
       const date = specialDate.date;
-      if (specialDate.name.includes('Pancake')) {
-        console.log('pancake');
+      if (typeof specialDate.name !== 'string') {
+        console.error('special date with no name:');
+        console.error(specialDate);
       }
       const isoTime = date.toISOString();
 

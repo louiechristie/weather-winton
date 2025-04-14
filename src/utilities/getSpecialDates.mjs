@@ -31,20 +31,7 @@ const isThisYearOrIsNextYearEarlyJanuary = (bankHoliday) => {
 
 const getSpecialDates = async () => {
   let specialDates = [];
-  let bankHolidays = [];
-
-  try {
-    const bankHolidaysResponse = await axios.get(bankHolidaysAPI);
-    bankHolidays = bankHolidaysResponse.data['england-and-wales']?.events;
-  } catch (error) {
-    console.error(
-      `Can't fetch special days from ${isItPancakeDayAPI} or ${bankHolidaysAPI}. Error: ${error}`
-    );
-  }
-
-  const bankHolidaysFiltered = bankHolidays.filter(
-    isThisYearOrIsNextYearEarlyJanuary
-  );
+  const mergedDates = {};
 
   const today = dayjs();
 
@@ -128,27 +115,61 @@ const getSpecialDates = async () => {
     },
   ];
 
-  const mergedDates = {};
+  /*
+   * Add Holidays
+   */
 
   const hd = new Holidays('GB');
-
   const holidays = hd.getHolidays(dayjs().year());
 
-  // Get Mother's Day from holidays
+  holidays.forEach((holiday) => {
+    const date = dayjs(holiday.start).format('YYYY-MM-DD');
+    mergedDates[date] = holiday.name;
+  });
+
+  // Modify Mother's Day from holidays
   const mothersDay = holidays.find(
     (holiday) => holiday.name === "Mother's Day"
   );
   if (mothersDay) {
-    mergedDates[dayjs(mothersDay.start).format('YYYY-MM-DD')] = {
-      date: dayjs(mothersDay.start),
-      name: "Mother's Day 💐",
-    };
+    mergedDates[dayjs(mothersDay.start).format('YYYY-MM-DD')] =
+      "Mother's Day 💐";
   }
+
+  /*
+   * Add Bank Holidays
+   */
+
+  try {
+    const bankHolidaysResponse = await axios.get(bankHolidaysAPI);
+    const bankHolidays = bankHolidaysResponse.data['england-and-wales']?.events;
+    const bankHolidaysFiltered = bankHolidays.filter(
+      isThisYearOrIsNextYearEarlyJanuary
+    );
+    bankHolidaysFiltered.forEach((bankHoliday) => {
+      mergedDates[bankHoliday.date] = bankHoliday.title;
+    });
+  } catch (error) {
+    console.error(
+      `Can't fetch bank holidays from ${bankHolidaysAPI}. Error: ${error}`
+    );
+  }
+
+  /*
+   * Add fun dates
+   */
+
+  funDates.forEach((funDate) => {
+    mergedDates[funDate.date.format('YYYY-MM-DD')] = funDate.name;
+  });
+
+  /*
+   * Add Pancake day
+   */
 
   try {
     const isItPancakeDayResponse = await axios.get(isItPancakeDayAPI);
     const pancakeDayDate = isItPancakeDayResponse?.data?.next_pancakeday?.date;
-
     if (pancakeDayDate) {
       const pancakeDayJS = dayjs(pancakeDayDate, 'DD-MM-YYYY');
       const pancakeDayDateFormatted = pancakeDayJS.format('YYYY-MM-DD');
@@ -156,29 +177,18 @@ const getSpecialDates = async () => {
     }
   } catch (error) {
     console.error(
-      `Can't fetch special days from ${isItPancakeDayAPI}. Error: ${error}`
+      `Can't fetch pancake day from ${isItPancakeDayAPI}. Error: ${error}`
     );
   }
 
-  holidays.forEach((holiday) => {
-    const date = dayjs(holiday.start).format('YYYY-MM-DD');
-    mergedDates[date] = holiday.name;
-  });
-
-  bankHolidaysFiltered.forEach((bankHoliday) => {
-    mergedDates[bankHoliday.date] = bankHoliday.title;
-  });
-
-  funDates.forEach((funDate) => {
-    mergedDates[funDate.date.format('YYYY-MM-DD')] = funDate.name;
-  });
-
-  specialDates = Object.keys(mergedDates).map((key) => {
-    return {
-      date: dayjs(key, 'YYYY-MM-DD'),
-      name: mergedDates[key],
-    };
-  });
+  specialDates = Object.keys(mergedDates)
+    .toSorted()
+    .map((key) => {
+      return {
+        date: dayjs(key, 'YYYY-MM-DD'),
+        name: mergedDates[key],
+      };
+    });
 
   return specialDates;
 };
