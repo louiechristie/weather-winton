@@ -132,21 +132,6 @@ const getSpecialDates = async () => {
     mergedDates[date] = holiday.name;
   });
 
-  // Day's from holidays
-  const mothersDay = holidays.find(
-    (holiday) => holiday.name === "Mother's Day"
-  );
-  if (mothersDay) {
-    mergedDates[dayjs(mothersDay.start).tz().format('YYYY-MM-DD')] =
-      "Mother's Day 💐";
-  }
-
-  const easter = holidays.find((holiday) => holiday.name === 'Easter Sunday');
-  if (easter) {
-    mergedDates[dayjs(easter.start).tz().format('YYYY-MM-DD')] =
-      'Easter Sunday 🐣';
-  }
-
   /*
    * Add Bank Holidays
    */
@@ -164,6 +149,27 @@ const getSpecialDates = async () => {
     console.error(
       `Can't fetch bank holidays from ${bankHolidaysAPI}. Error: ${error}`
     );
+  }
+
+  // Modify holidays
+  const mothersDay = holidays.find(
+    (holiday) => holiday.name === "Mother's Day"
+  );
+  if (mothersDay) {
+    mergedDates[dayjs(mothersDay.start).tz().format('YYYY-MM-DD')] =
+      "Mother's Day 💐";
+  }
+
+  const easter = holidays.find((holiday) => holiday.name === 'Easter Sunday');
+  if (easter) {
+    mergedDates[dayjs(easter.start).tz().format('YYYY-MM-DD')] =
+      'Easter Sunday 🐣';
+  }
+
+  const boxingDay = holidays.find((holiday) => holiday.name === 'Boxing Day');
+  if (boxingDay) {
+    mergedDates[dayjs(boxingDay.start).tz().format('YYYY-MM-DD')] =
+      "Boxing Day /\n St Stephen's";
   }
 
   /*
