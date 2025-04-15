@@ -67,7 +67,7 @@ const getSpecialDates = async () => {
       date: dayjs()
         .month(3 - 1)
         .date(17),
-      name: "Saint Patrick's Day 🍀",
+      name: "Saint Patrick's Day ☘️",
     },
 
     // April
@@ -132,13 +132,19 @@ const getSpecialDates = async () => {
     mergedDates[date] = holiday.name;
   });
 
-  // Modify Mother's Day from holidays
+  // Day's from holidays
   const mothersDay = holidays.find(
     (holiday) => holiday.name === "Mother's Day"
   );
   if (mothersDay) {
     mergedDates[dayjs(mothersDay.start).tz().format('YYYY-MM-DD')] =
       "Mother's Day 💐";
+  }
+
+  const easter = holidays.find((holiday) => holiday.name === 'Easter Sunday');
+  if (easter) {
+    mergedDates[dayjs(easter.start).tz().format('YYYY-MM-DD')] =
+      'Easter Sunday 🐣';
   }
 
   /*
