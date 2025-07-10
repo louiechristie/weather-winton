@@ -115,32 +115,27 @@ const Advert = () => {
     <li style={{ ...styles.li, ...styles.adContainer }}>
       <h6 style={styles.adText}>Advert</h6>
 
-      <div style={styles.adLinked}>
-        <blockquote className="twitter-tweet">
-          <p lang="en" dir="ltr">
-            Enjoy Beer, au naturel this weekend 🥵☀️
-            <br />
-            <br />
-            New Stella Artois Unfiltered, available in stores and online across
-            the UK.{' '}
-            <a href="https://twitter.com/hashtag/BeerAuNaturel?src=hash&amp;ref_src=twsrc%5Etfw">
-              #BeerAuNaturel
-            </a>{' '}
-            <a href="https://twitter.com/hashtag/WeatherAuNaturel?src=hash&amp;ref_src=twsrc%5Etfw">
-              #WeatherAuNaturel
-            </a>
-          </p>
-          &mdash; StellaArtoisUK (@StellaArtoisUK){' '}
-          <a href="https://twitter.com/StellaArtoisUK/status/1547990626641137666?ref_src=twsrc%5Etfw">
-            July 15, 2022
+      <blockquote className="twitter-tweet" data-dnt="true" align="center">
+        <p lang="en" dir="ltr">
+          Enjoy Beer, au naturel this weekend 🥵☀️<br></br>New Stella Artois
+          Unfiltered, available in stores and online across the UK.{' '}
+          <a href="https://twitter.com/hashtag/BeerAuNaturel?src=hash&amp;ref_src=twsrc%5Etfw">
+            #BeerAuNaturel
+          </a>{' '}
+          <a href="https://twitter.com/hashtag/WeatherAuNaturel?src=hash&amp;ref_src=twsrc%5Etfw">
+            #WeatherAuNaturel
           </a>
-        </blockquote>
-
-        <Link
-          style={{ ...styles.link, ...styles.ad }}
-          to="https://twitter.com/StellaArtoisUK/status/1547990626641137666"
-        />
-      </div>
+        </p>
+        &mdash; StellaArtoisUK (@StellaArtoisUK){' '}
+        <a href="https://twitter.com/StellaArtoisUK/status/1547990626641137666?ref_src=twsrc%5Etfw">
+          July 15, 2022
+        </a>
+      </blockquote>
+      <script
+        async
+        src="https://platform.twitter.com/widgets.js"
+        charset="utf-8"
+      ></script>
 
       <p style={styles.adText}>
         Why?: Because it&apos;s a heatwave, let&apos;s show a picture of{' '}
