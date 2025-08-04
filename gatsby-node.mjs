@@ -11,6 +11,7 @@ import manifest from './package.json' with { type: 'json' };
 import getForecast, {
   getMockForecast,
   getSpecialDatesForecast,
+  getStormForecast,
 } from './src/utilities/getForecast.mjs';
 import { getTemperatureFriendly } from './src/utilities/getRoomTemperatureComfortFromCelsius.mjs';
 import getSpecialDates from './src/utilities/getSpecialDates.mjs';
@@ -194,6 +195,18 @@ export const createPages = async ({ actions: { createPage } }) => {
     });
   } catch (error) {
     log('Error getting special dates forecast');
+    log(error);
+    throw error;
+  }
+
+  try {
+    createPage({
+      path: `/test/storm/`,
+      component: path.resolve('./src/templates/WeatherContainer.mjs'),
+      context: { items: await getStormForecast(specialDates), meta },
+    });
+  } catch (error) {
+    log('Error getting storm forecast');
     log(error);
     throw error;
   }

@@ -5,6 +5,8 @@ import generateSpecialDatesDailyMetOfficeJSON from '../tests/generateSpecialDate
 import generateMockHourlyMetOfficeJSON from '../tests/generateMockHourlyMetOfficeJSON.mjs';
 import log from './log.mjs';
 import transformMetOfficeJSON from './transformMetOfficeJSON.mjs';
+import stormTestDailyForecast from './stormTestDailyForecast.mjs';
+import stormTestHourlyForecast from './stormTestHourlyForecast.mjs';
 
 const todayOnwardsFilterMetOfficeJSON = (metOfficeJSON) => {
   const filtered = structuredClone(metOfficeJSON);
@@ -92,6 +94,18 @@ export const getSpecialDatesForecast = async (specialDates) => {
     mockHourlyMetOfficeJSON,
     specialDates
   );
+};
+
+export const getStormForecast = async (specialDates) => {
+  log('getStormForecast');
+
+  const transformedMetOfficeJSON = await transformMetOfficeJSON(
+    stormTestDailyForecast,
+    stormTestHourlyForecast,
+    specialDates
+  );
+
+  return transformedMetOfficeJSON;
 };
 
 const getForecast = async (specialDates) => {

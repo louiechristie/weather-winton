@@ -15,46 +15,41 @@ const transformMetOfficeJSON = async (dailyJson, hourlyJson, specialDates) => {
   // log(`dailyJson: ${JSON.stringify(dailyJson, null, '  ')}`);
   // log(`hourlyJson: ${JSON.stringify(hourlyJson, null, '  ')}`);
 
-  const items = dailyJson.features[0].properties.timeSeries.map((day) => {
-    if (!day.daySignificantWeatherCode) {
-      console.log(
-        'day.daySignificantWeatherCode undefined',
-        day.daySignificantWeatherCode
-      );
-    }
-
-    return {
-      time: day.time,
-      friendlyDate: getFriendlyDateFromISODate(day.time, specialDates),
-      description: getDescriptionFromMetOfficeWeatherCode(
-        day.daySignificantWeatherCode.toString()
-      ),
-      icon: getEmojiFromMetOfficeWeatherCode(
-        day.daySignificantWeatherCode.toString()
-      ),
-      minTemperature: Math.min(
-        day.dayMaxScreenTemperature,
-        day.nightMinScreenTemperature
-      ),
-      maxTemperature: Math.max(
-        day.dayMaxScreenTemperature,
-        day.nightMinScreenTemperature
-      ),
-      relativeHumidity: day.middayRelativeHumidity,
-      isTakeRaincoat:
-        day.dayProbabilityOfPrecipitation >= 50 ||
-        day.nightProbabilityOfPrecipitation >= 50 ||
-        day.daySignificantWeatherCode > 9 ||
-        day.nightSignificantWeatherCode > 9,
-      isSnowDay:
-        day.dayProbabilityOfSnow >= 50 || day.nightProbabilityOfSnow >= 50,
-      averageTemperature: avg(
-        day.dayMaxScreenTemperature,
-        day.dayLowerBoundMaxTemp
-      ),
-      currentTemperature: null,
-    };
-  });
+  const items = dailyJson.features[0].properties.timeSeries
+    .filter((day) => day.daySignificantWeatherCode !== undefined)
+    .map((day) => {
+      return {
+        time: day.time,
+        friendlyDate: getFriendlyDateFromISODate(day.time, specialDates),
+        description: getDescriptionFromMetOfficeWeatherCode(
+          day.daySignificantWeatherCode.toString()
+        ),
+        icon: getEmojiFromMetOfficeWeatherCode(
+          day.daySignificantWeatherCode.toString()
+        ),
+        minTemperature: Math.min(
+          day.dayMaxScreenTemperature,
+          day.nightMinScreenTemperature
+        ),
+        maxTemperature: Math.max(
+          day.dayMaxScreenTemperature,
+          day.nightMinScreenTemperature
+        ),
+        relativeHumidity: day.middayRelativeHumidity,
+        isTakeRaincoat:
+          day.dayProbabilityOfPrecipitation >= 50 ||
+          day.nightProbabilityOfPrecipitation >= 50 ||
+          day.daySignificantWeatherCode > 9 ||
+          day.nightSignificantWeatherCode > 9,
+        isSnowDay:
+          day.dayProbabilityOfSnow >= 50 || day.nightProbabilityOfSnow >= 50,
+        averageTemperature: avg(
+          day.dayMaxScreenTemperature,
+          day.dayLowerBoundMaxTemp
+        ),
+        currentTemperature: null,
+      };
+    });
 
   const hourlyTimeSeries = hourlyJson.features[0].properties.timeSeries;
 

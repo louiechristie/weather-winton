@@ -5,14 +5,12 @@ import { Temporal } from 'temporal-polyfill';
 import timezone from 'dayjs/plugin/timezone.js';
 import utc from 'dayjs/plugin/utc.js';
 import customParseFormat from 'dayjs/plugin/customParseFormat.js';
+import getPancakeDayDate from './getPancakeDayDate.mjs';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.tz.setDefault('Europe/London');
 dayjs.extend(customParseFormat);
-
-const isItPancakeDayAPI =
-  'https://api.isitpancakeday.com/?format=json&daysuntil&recipe';
 
 const bankHolidaysAPI = 'https://www.gov.uk/bank-holidays.json';
 
@@ -184,18 +182,11 @@ const getSpecialDates = async () => {
    * Add Pancake day
    */
 
-  try {
-    const isItPancakeDayResponse = await axios.get(isItPancakeDayAPI);
-    const pancakeDayDate = isItPancakeDayResponse?.data?.next_pancakeday?.date;
-    if (pancakeDayDate) {
-      const pancakeDayJS = dayjs(pancakeDayDate, 'DD-MM-YYYY');
-      const pancakeDayDateFormatted = pancakeDayJS.format('YYYY-MM-DD');
-      mergedDates[pancakeDayDateFormatted] = 'Pancake Day 🥞';
-    }
-  } catch (error) {
-    console.error(
-      `Can't fetch pancake day from ${isItPancakeDayAPI}. Error: ${error}`
-    );
+  const pancakeDayDate = await getPancakeDayDate();
+  if (pancakeDayDate) {
+    const pancakeDayJS = dayjs(pancakeDayDate, 'DD-MM-YYYY');
+    const pancakeDayDateFormatted = pancakeDayJS.format('YYYY-MM-DD');
+    mergedDates[pancakeDayDateFormatted] = 'Pancake Day 🥞';
   }
 
   specialDates = Object.keys(mergedDates)
