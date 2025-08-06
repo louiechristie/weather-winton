@@ -35,7 +35,7 @@
     "date-holidays": "^3.24.1",
     "dayjs": "^1.11.13",
     "dotenv": "^16.5.0",
-    "gatsby": "^5.14.3",
+    "gatsby": "^5.14.6",
     "globals": "^16.0.0",
     "neostandard": "^0.12.1",
     "react": "^18.3.1",
