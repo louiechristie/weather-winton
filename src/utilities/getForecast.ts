@@ -112,7 +112,7 @@ export const getStormForecast = async (specialDates) => {
 
 const getForecast = async (specialDates): Promise<items> => {
   let items = [];
-  if (process.env.NODE_ENV === 'production' || true) {
+  if (process.env.NODE_ENV === 'production') {
     if (!process.env.GATSBY_MET_WEATHER_DAILY_URL) {
       throw new Error(
         'You need to set your GATSBY_MET_WEATHER_DAILY_URL environment variable'
