@@ -11,7 +11,27 @@ import { getIsHourInTheRemainingDay } from './getIsHourInTheRemainingDay.mjs';
 import getAverageTemperaturefromHourly from './getAverageTemperatureFromHourly.mjs';
 import getFriendlyDateFromISODate from './getFriendlyDateFromISODate.mjs';
 
-const transformMetOfficeJSON = async (dailyJson, hourlyJson, specialDates) => {
+export type item = {
+  time: string;
+  friendlyDate: string;
+  description: string;
+  icon: string;
+  minTemperature: number;
+  maxTemperature: number;
+  relativeHumidity: string;
+  isTakeRaincoat: boolean;
+  isSnowDay: boolean;
+  averageTemperature: number;
+  currentTemperature: number;
+};
+
+export type items = item[];
+
+const transformMetOfficeJSON = async (
+  dailyJson,
+  hourlyJson,
+  specialDates
+): Promise<item[]> => {
   // log(`dailyJson: ${JSON.stringify(dailyJson, null, '  ')}`);
   // log(`hourlyJson: ${JSON.stringify(hourlyJson, null, '  ')}`);
 

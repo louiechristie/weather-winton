@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { Link } from 'gatsby';
+import Link from 'next/link';
 import React from 'react';
 import { theme } from '../utilities/theme.mjs';
 import { getIsTooDryFromRelativeHumidity } from '../utilities/getComfortFromRelativeHumidity.mjs';
@@ -79,7 +79,7 @@ const Days = (props) => {
             <li style={styles.li}>
               <Link
                 style={styles.link}
-                to={`https://www.metoffice.gov.uk/weather/forecast/gcpuyudzk#?nearestTo=New%20Cross%20(Lewisham)&date=${dayjs(
+                href={`https://www.metoffice.gov.uk/weather/forecast/gcpuyudzk#?nearestTo=New%20Cross%20(Lewisham)&date=${dayjs(
                   time
                 ).format('YYYY-MM-DD')}`}
               >
@@ -139,7 +139,7 @@ const Advert = () => {
 
       <p style={styles.adText}>
         Why?: Because it&apos;s a heatwave, let&apos;s show a picture of{' '}
-        <Link to="https://undergroundcomedian.wordpress.com/gonzo/">
+        <Link href="https://undergroundcomedian.wordpress.com/gonzo/">
           Nigel Thomas
         </Link>{' '}
         with his shirt off

@@ -48,8 +48,6 @@ function Header(props) {
     },
   } = props;
 
-  log('siteUrl: ' + siteUrl);
-
   return (
     <AppBar
       position="static"

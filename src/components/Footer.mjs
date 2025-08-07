@@ -80,10 +80,14 @@ const Footer = (props) => {
         </a>
         .{' '}
         <a href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">
-          <img src="https://www.nationalarchives.gov.uk/images/infoman/ogl-symbol-41px-retina-black.png" width="40" height="16" style={{width: 40, height: 16}} alt="OGL logo" />
+          <img
+            src="https://www.nationalarchives.gov.uk/images/infoman/ogl-symbol-41px-retina-black.png"
+            width="40"
+            height="16"
+            style={{ width: 40, height: 16 }}
+            alt="OGL logo"
+          />
         </a>
-
-        
       </Typography>
 
       <Typography

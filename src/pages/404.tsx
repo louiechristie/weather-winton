@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'gatsby';
+import Link from 'next/link';
 import { Typography, theme } from '../utilities/theme.mjs';
 
 const styles = {
@@ -25,7 +25,7 @@ const NotFoundPage = () => {
           Page not found
         </Typography>
         <Typography variant="body1" component="p">
-          Try the <Link to="/">weather forecast</Link>
+          Try the <Link href="/">weather forecast</Link>
         </Typography>
       </div>
     </div>

@@ -4,9 +4,11 @@ import generateMockDailyMetOfficeJSON from '../tests/generateMockDailyMetOfficeJ
 import generateSpecialDatesDailyMetOfficeJSON from '../tests/generateSpecialDatesMetOfficeJSON.mjs';
 import generateMockHourlyMetOfficeJSON from '../tests/generateMockHourlyMetOfficeJSON.mjs';
 import log from './log.mjs';
-import transformMetOfficeJSON from './transformMetOfficeJSON.mjs';
+import transformMetOfficeJSON from './transformMetOfficeJSON.ts';
 import stormTestDailyForecast from './stormTestDailyForecast.mjs';
 import stormTestHourlyForecast from './stormTestHourlyForecast.mjs';
+
+import type { items } from '@/utilities/transformMetOfficeJSON';
 
 const todayOnwardsFilterMetOfficeJSON = (metOfficeJSON) => {
   const filtered = structuredClone(metOfficeJSON);
@@ -108,9 +110,9 @@ export const getStormForecast = async (specialDates) => {
   return transformedMetOfficeJSON;
 };
 
-const getForecast = async (specialDates) => {
+const getForecast = async (specialDates): Promise<items> => {
   let items = [];
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV === 'production' || true) {
     if (!process.env.GATSBY_MET_WEATHER_DAILY_URL) {
       throw new Error(
         'You need to set your GATSBY_MET_WEATHER_DAILY_URL environment variable'
@@ -134,13 +136,6 @@ const getForecast = async (specialDates) => {
       throw error;
     }
   } else {
-    try {
-      items = await getMockForecast(specialDates);
-    } catch (error) {
-      log('Error getting mock forecast');
-      log(error);
-      throw error;
-    }
   }
 
   return items;
