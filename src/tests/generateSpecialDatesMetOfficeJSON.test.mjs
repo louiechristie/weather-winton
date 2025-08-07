@@ -1,4 +1,4 @@
-import getSpecialDates from '../utilities/getSpecialDates.mjs';
+import getSpecialDates from '../utilities/getSpecialDates.ts';
 import generateSpecialDatesMetOfficeJSON from './generateSpecialDatesMetOfficeJSON.mjs';
 
 test('Once forecast per special date', async () => {

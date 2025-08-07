@@ -1,11 +1,11 @@
 import dayjs from 'dayjs';
 import Link from 'next/link';
 import React from 'react';
-import { theme } from '../utilities/theme.mjs';
-import { getIsTooDryFromRelativeHumidity } from '../utilities/getComfortFromRelativeHumidity.mjs';
-import getIsStickyFromCelsiusAndRelativeHumidity from '../utilities/getIsStickyFromCelsiusAndRelativeHumidity.mjs';
+import { theme } from '../utilities/theme';
 import getThirdDayOfHeatwaveIndex from '../utilities/heatWaveUtils.mjs';
-import Day from './Day.mjs';
+import Day from './Day';
+
+import { items } from '@/utilities/transformMetOfficeJSON';
 
 const styles = {
   ul: {
@@ -52,9 +52,13 @@ const styles = {
   adText: {
     textAlign: 'center',
   },
-};
+} as const;
 
-const Days = (props) => {
+interface Props {
+  items: items;
+}
+
+const Days = (props: Props) => {
   const { items } = props;
 
   return (
@@ -68,6 +72,8 @@ const Days = (props) => {
           minTemperature,
           maxTemperature,
           relativeHumidity,
+          isSticky,
+          isDry,
           isTakeRaincoat,
           isSnowDay,
           averageTemperature,
@@ -91,11 +97,9 @@ const Days = (props) => {
                   minTemperature={minTemperature}
                   maxTemperature={maxTemperature}
                   averageTemperature={averageTemperature}
-                  isSticky={getIsStickyFromCelsiusAndRelativeHumidity(
-                    averageTemperature,
-                    relativeHumidity
-                  )}
-                  isDry={getIsTooDryFromRelativeHumidity(relativeHumidity)}
+                  relativeHumidity={relativeHumidity}
+                  isSticky={isSticky}
+                  isDry={isDry}
                   isTakeRaincoat={isTakeRaincoat}
                   isSnowDay={isSnowDay}
                   currentTemperature={currentTemperature}
@@ -115,7 +119,7 @@ const Advert = () => {
     <li style={{ ...styles.li, ...styles.adContainer }}>
       <h6 style={styles.adText}>Advert</h6>
 
-      <blockquote className="twitter-tweet" data-dnt="true" align="center">
+      <blockquote className="twitter-tweet" data-dnt="true">
         <p lang="en" dir="ltr">
           Enjoy Beer, au naturel this weekend 🥵☀️<br></br>New Stella Artois
           Unfiltered, available in stores and online across the UK.{' '}
@@ -131,11 +135,7 @@ const Advert = () => {
           July 15, 2022
         </a>
       </blockquote>
-      <script
-        async
-        src="https://platform.twitter.com/widgets.js"
-        charSet="utf-8"
-      ></script>
+      <script async src="https://platform.twitter.com/widgets.js"></script>
 
       <p style={styles.adText}>
         Why?: Because it&apos;s a heatwave, let&apos;s show a picture of{' '}

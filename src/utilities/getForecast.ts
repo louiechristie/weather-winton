@@ -3,12 +3,11 @@ import axios from 'axios';
 import generateMockDailyMetOfficeJSON from '../tests/generateMockDailyMetOfficeJSON.mjs';
 import generateSpecialDatesDailyMetOfficeJSON from '../tests/generateSpecialDatesMetOfficeJSON.mjs';
 import generateMockHourlyMetOfficeJSON from '../tests/generateMockHourlyMetOfficeJSON.mjs';
-import log from './log.mjs';
-import transformMetOfficeJSON from './transformMetOfficeJSON.ts';
+import transformMetOfficeJSON from './transformMetOfficeJSON';
 import stormTestDailyForecast from './stormTestDailyForecast.mjs';
 import stormTestHourlyForecast from './stormTestHourlyForecast.mjs';
 
-import type { items } from '@/utilities/transformMetOfficeJSON';
+import type { item, items } from '@/utilities/transformMetOfficeJSON';
 
 const todayOnwardsFilterMetOfficeJSON = (metOfficeJSON) => {
   const filtered = structuredClone(metOfficeJSON);
@@ -21,7 +20,7 @@ const todayOnwardsFilterMetOfficeJSON = (metOfficeJSON) => {
   return filtered;
 };
 
-const justTodayFilter = (day) => {
+const justTodayFilter = (day: item) => {
   return dayjs(day.time).tz().isSameOrAfter(dayjs(), 'day');
 };
 
@@ -31,6 +30,10 @@ const headers = {
 };
 
 const getMetOfficeForecast = async (specialDates) => {
+  if (!process.env.GATSBY_MET_WEATHER_DAILY_URL)
+    throw new Error('MET_WEATHER_DAILY_URL missing');
+  if (!process.env.GATSBY_MET_WEATHER_HOURLY_URL)
+    throw new Error('MET_WEATHER_HOURLY_URL missing');
   const response = await axios.get(process.env.GATSBY_MET_WEATHER_DAILY_URL, {
     headers,
   });
@@ -52,9 +55,9 @@ const getMetOfficeForecast = async (specialDates) => {
   );
   // const text = await hourlyResponse.text();
   // log('text: ' + text);
-  log(
-    `hourlyResponse.data: ${JSON.stringify(hourlyResponse.data, null, '  ')}`
-  );
+  // console.log(
+  //   `hourlyResponse.data: ${JSON.stringify(hourlyResponse.data, null, '  ')}`
+  // );
   const hourlyJson = hourlyResponse.data;
   if (!hourlyResponse) {
     throw new Error('No hourlyResponse from server.');
@@ -69,7 +72,7 @@ const getMetOfficeForecast = async (specialDates) => {
 };
 
 export const getMockForecast = async (specialDates) => {
-  log('getMockForecast');
+  // log('getMockForecast');
   const mockDailyMetOfficeJSON = generateMockDailyMetOfficeJSON(specialDates);
   const dailyFromTodayJson = todayOnwardsFilterMetOfficeJSON(
     mockDailyMetOfficeJSON
@@ -85,7 +88,7 @@ export const getMockForecast = async (specialDates) => {
 };
 
 export const getSpecialDatesForecast = async (specialDates) => {
-  log('getSpecialDatesForecast');
+  // log('getSpecialDatesForecast');
   const specialDatesDailyMetOfficeJSON =
     generateSpecialDatesDailyMetOfficeJSON(specialDates);
   const mockHourlyMetOfficeJSON = generateMockHourlyMetOfficeJSON(
@@ -99,7 +102,7 @@ export const getSpecialDatesForecast = async (specialDates) => {
 };
 
 export const getStormForecast = async (specialDates) => {
-  log('getStormForecast');
+  // log('getStormForecast');
 
   const transformedMetOfficeJSON = await transformMetOfficeJSON(
     stormTestDailyForecast,
@@ -116,8 +119,8 @@ const getForecast = async (specialDates): Promise<items> => {
   try {
     items = await getMetOfficeForecast(specialDates);
   } catch (error) {
-    log('Error getting forecast');
-    log(error);
+    console.error('Error getting forecast');
+    console.error(error);
     throw error;
   }
 

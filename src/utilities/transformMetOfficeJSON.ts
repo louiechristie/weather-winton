@@ -7,6 +7,8 @@ import {
   getIsHourSnowy,
   getIsTakeRaincoatToday,
 } from './metOfficeWeatherUtils.mjs';
+import { getIsTooDryFromRelativeHumidity } from '../utilities/getComfortFromRelativeHumidity.mjs';
+import getIsStickyFromCelsiusAndRelativeHumidity from '../utilities/getIsStickyFromCelsiusAndRelativeHumidity.mjs';
 import { getIsHourInTheRemainingDay } from './getIsHourInTheRemainingDay.mjs';
 import getAverageTemperaturefromHourly from './getAverageTemperatureFromHourly.mjs';
 import getFriendlyDateFromISODate from './getFriendlyDateFromISODate.mjs';
@@ -19,6 +21,8 @@ export type item = {
   minTemperature: number;
   maxTemperature: number;
   relativeHumidity: string;
+  isSticky: boolean;
+  isDry: boolean;
   isTakeRaincoat: boolean;
   isSnowDay: boolean;
   averageTemperature: number;
@@ -56,6 +60,11 @@ const transformMetOfficeJSON = async (
           day.nightMinScreenTemperature
         ),
         relativeHumidity: day.middayRelativeHumidity,
+        isSticky: getIsStickyFromCelsiusAndRelativeHumidity(
+          day.averageTemperature,
+          day.relativeHumidity
+        ),
+        isDry: getIsTooDryFromRelativeHumidity(day.relativeHumidity),
         isTakeRaincoat:
           day.dayProbabilityOfPrecipitation >= 50 ||
           day.nightProbabilityOfPrecipitation >= 50 ||

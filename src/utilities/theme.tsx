@@ -1,6 +1,6 @@
-// import React from 'react';
+import React from 'react';
 
-const spacing = (multiple) => {
+const spacing = (multiple: number) => {
   return `${multiple * 8}px`;
 };
 
@@ -25,7 +25,29 @@ export const theme = {
 //   </div>
 // );
 // export const Box = Div;
-// export const Card = Div;
+
+const styles = {
+  card: {
+    borderWidth: 2,
+    borderColor: 'black',
+    borderStyle: 'solid',
+    borderRadius: 20,
+    minWidth: 300,
+    paddingTop: theme.spacing(2),
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'stretch',
+    overflow: 'hidden',
+    textAlign: 'center',
+  },
+} as const;
+
+export const Card = (props: React.ComponentProps<'div'>) => (
+  <div {...props} style={styles.card}>
+    {props.children ?? null}
+  </div>
+);
 
 export {
   Typography,
@@ -33,6 +55,5 @@ export {
   Toolbar,
   IconButton,
   Paper,
-  Card,
   Box,
 } from '@mui/material';

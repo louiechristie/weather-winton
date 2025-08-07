@@ -39,7 +39,10 @@ export function getIsFrostyFromCelsius(celsius) {
 // }
 
 export function getTemperatureFriendly(celsius) {
-  if (!isFinite(celsius)) return null;
+  if (!isFinite(celsius))
+    throw new Error(
+      'Cannot get friendly temperature from celsius value: ${celsius}'
+    );
   if (getIsTooHotForRoomTemperatureFromCelsius(celsius)) {
     return 'Hot 🥵';
   }

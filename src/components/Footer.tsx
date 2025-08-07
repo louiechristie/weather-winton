@@ -1,6 +1,8 @@
 import React from 'react';
 import dayjs from 'dayjs';
-import { theme, Paper, Typography } from '../utilities/theme.mjs';
+import { theme, Paper, Typography } from '../utilities/theme';
+
+import Meta from '@/types/meta';
 
 const styles = {
   footer: {
@@ -16,7 +18,7 @@ const styles = {
     backgroundColor: '#F8F8F8',
     marginBottom: '0',
   },
-};
+} as const;
 
 const HostedOn = () => {
   const GitHubBadge = () => (
@@ -59,7 +61,7 @@ const HostedOn = () => {
   return <>Local</>;
 };
 
-const Footer = (props) => {
+const Footer = (props: { meta: Meta }) => {
   const { meta } = props;
   return (
     <Paper style={styles.footer} elevation={24} square>

@@ -39,7 +39,6 @@ test.describe('fun dates', async () => {
 
   test('Easter Monday', async ({ page }) => {
     const easterMonday = page.getByText('Easter Monday');
-    console.log('easterMonday: ', easterMonday);
 
     await expect
       .poll(() => page.getByText('Easter Monday').count())

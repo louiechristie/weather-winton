@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Typography, theme } from '../utilities/theme.mjs';
+import { Typography, theme } from '../utilities/theme';
 
 const styles = {
   container: {
@@ -15,7 +15,7 @@ const styles = {
     flexDirection: 'column',
     justifyContent: 'space-between',
   },
-};
+} as const;
 
 const NotFoundPage = () => {
   return (

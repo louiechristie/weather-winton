@@ -6,6 +6,7 @@ import timezone from 'dayjs/plugin/timezone.js';
 import utc from 'dayjs/plugin/utc.js';
 import customParseFormat from 'dayjs/plugin/customParseFormat.js';
 import getPancakeDayDate from './getPancakeDayDate.mjs';
+import SpecialDates from "@/types/specialDates"
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -32,7 +33,7 @@ const isThisYearOrIsNextYearEarlyJanuary = (bankHoliday) => {
   return false;
 };
 
-const getSpecialDates = async () => {
+const getSpecialDates = async (): SpecialDates => {
   let specialDates = [];
   const mergedDates = {};
 

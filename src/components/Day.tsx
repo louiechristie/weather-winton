@@ -1,21 +1,10 @@
 import React from 'react';
 
-import { theme, Box, Card, Typography } from '../utilities/theme.mjs';
+import { theme, Card, Box, Typography } from '../utilities/theme';
 import { getTemperatureFriendly } from '../utilities/getRoomTemperatureComfortFromCelsius.mjs';
+import { item } from '@/utilities/transformMetOfficeJSON';
 
-const styles = {
-  card: {
-    borderWidth: 2,
-    borderColor: 'black',
-    borderStyle: 'solid',
-    borderRadius: 20,
-    boxSizing: 'border-box',
-    minWidth: 300,
-    paddingTop: theme.spacing(2),
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-  },
+const styles: { [key: string]: React.CSSProperties } = {
   friendlyDate: {},
   svgIcon: {
     width: 48 * 2,
@@ -113,7 +102,22 @@ const styles = {
   // }
 };
 
-const Day = (props) => {
+const getDayTempFriendlyStyle = (temperature: number) => {
+  if (getTemperatureFriendly(temperature) === 'Hot 🥵') {
+    return styles.hot;
+  }
+  if (getTemperatureFriendly(temperature) === 'Warm') {
+    return styles.warm;
+  }
+  if (getTemperatureFriendly(temperature) === 'Cold') {
+    return styles.cold;
+  }
+  if (getTemperatureFriendly(temperature) === 'Freezing 🥶') {
+    return styles.freezing;
+  }
+};
+
+const Day = (props: item) => {
   const {
     friendlyDate,
     time,
@@ -135,24 +139,9 @@ const Day = (props) => {
   const averageTempInt = Math.round(averageTemperature);
   const currentTempInt = currentTemperature && Math.round(currentTemperature);
 
-  const getTempFriendlyStyle = (temperature) => {
-    if (getTemperatureFriendly(temperature) === 'Hot 🥵') {
-      return styles.hot;
-    }
-    if (getTemperatureFriendly(temperature) === 'Warm') {
-      return styles.warm;
-    }
-    if (getTemperatureFriendly(temperature) === 'Cold') {
-      return styles.cold;
-    }
-    if (getTemperatureFriendly(temperature) === 'Freezing 🥶') {
-      return styles.freezing;
-    }
-  };
-
   const spacer = isToday ? 1 : 4;
 
-  const getNumberForScale = (tempInt) => {
+  const getNumberForScale = (tempInt: number) => {
     const isDialTemp = isToday
       ? tempInt === currentTempInt
       : tempInt === averageTempInt;
@@ -203,7 +192,7 @@ const Day = (props) => {
     return '';
   };
 
-  const getIndicator = (tempInt) => {
+  const getIndicator = (tempInt: number) => {
     const isCurrentTemp = tempInt === currentTempInt;
     const isAverageTemp = tempInt === averageTempInt;
     const isMinTemp = tempInt === minTempInt;
@@ -230,7 +219,7 @@ const Day = (props) => {
 
   // Temperatures and tally of days ever had that temperature in UK
   // Previously calculated using command line utility /data/daily/daily.js
-  const tempTallies = {
+  const tempTallies: { [key: number]: number } = {
     0: 40972,
     1: 59690,
     2: 73070,
@@ -288,8 +277,11 @@ const Day = (props) => {
     '-1': 27092,
   };
 
-  const temperatures = Object.keys(tempTallies).sort(function (a, b) {
-    return a - b;
+  const temperatures: string[] = Object.keys(tempTallies).sort(function (
+    a: string,
+    b: string
+  ) {
+    return Number(a) - Number(b);
   });
 
   const isOffTheScaleHot =
@@ -300,7 +292,7 @@ const Day = (props) => {
     Math.round(minTemperature) < parseInt(temperatures[0], 10);
 
   return (
-    <Card key={time} style={styles.card} align="center">
+    <Card key={time}>
       <div>
         <Typography variant="h5" component="h2" style={styles.friendlyDate}>
           {friendlyDate}
@@ -332,7 +324,7 @@ const Day = (props) => {
           {isTakeRaincoat && <div style={styles.label}>Take raincoat 🧥</div>}
           {isSnowDay && <div style={styles.label}>Snow ❄️☃️</div>}
           <div style={styles.temperatureOuter}>
-            <Box style={{ ...styles.swatch, ...minTemperature, flex: 1 }}>
+            <Box style={{ ...styles.swatch, flex: 1 }}>
               <div style={styles.scaleNumber}>
                 {isOffTheScaleCold && getNumberForScale(minTempInt)}{' '}
               </div>
@@ -350,20 +342,20 @@ const Day = (props) => {
             <Box
               style={{
                 ...styles.temperatureContainer,
-                ...getTempFriendlyStyle(averageTempInt),
+                ...getDayTempFriendlyStyle(averageTempInt),
               }}
             >
               <Box style={styles.colorScale}>
                 {temperatures.map((key) => {
                   const tempInt = parseInt(key, 10);
-                  const tally = tempTallies[key];
+                  const tally = tempTallies[tempInt];
 
                   return (
                     <Box
                       key={key}
                       style={{
                         ...styles.swatch,
-                        ...getTempFriendlyStyle(tempInt),
+                        ...getDayTempFriendlyStyle(tempInt),
                         flex: tally,
                         display: 'flex',
                         flexDirection: 'column',

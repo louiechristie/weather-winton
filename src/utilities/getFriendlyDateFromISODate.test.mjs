@@ -4,7 +4,7 @@ import utc from 'dayjs/plugin/utc.js';
 import customParseFormat from 'dayjs/plugin/customParseFormat.js';
 
 import getFriendlyDateFromISODate from './getFriendlyDateFromISODate.mjs';
-import getSpecialDates from './getSpecialDates.mjs';
+import getSpecialDates from './getSpecialDates.ts';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
