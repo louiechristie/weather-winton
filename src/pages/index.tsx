@@ -139,8 +139,28 @@ export async function getStaticProps() {
   }
 
   try {
-    items = await getForecast(specialDates);
-    // log('getForecast items: ', items);
+    if (process.env.NODE_ENV === 'production') {
+      if (!process.env.GATSBY_MET_WEATHER_DAILY_URL) {
+        throw new Error(
+          'You need to set your GATSBY_MET_WEATHER_DAILY_URL environment variable'
+        );
+      }
+      if (!process.env.GATSBY_MET_WEATHER_HOURLY_URL) {
+        throw new Error(
+          'You need to set your GATSBY_MET_WEATHER_HOURLY_URL environment variable'
+        );
+      }
+      if (!process.env.GATSBY_MET_WEATHER_SECRET) {
+        throw new Error(
+          'You need to set your GATSBY_MET_WEATHER_SECRET environment variable'
+        );
+      }
+
+      items = await getForecast(specialDates);
+      // log('getForecast items: ', items);
+    } else {
+      items = await getMockForecast(specialDates);
+    }
 
     meta.timeStamp = `${dayjs(new Date()).tz().format('YYYY-MM-DD HHmm')}`;
 
@@ -190,24 +210,22 @@ export async function getStaticProps() {
     console.error('Error creating pages');
     console.error(error);
 
-    const mock: items = [
+    const errorDisplayItems = [
       {
         friendlyDate: 'Today',
-        time: today,
+        time: nowTimeStamp,
         description: PROBABLY_RAINING,
         icon: CLOUDY_IMAGE_SRC,
-        temperature: null,
       },
       {
         friendlyDate: 'Sorry, problem getting forecast.',
-        time: today,
+        time: nowTimeStamp,
         description: `${error}`,
         icon: CLOUDY_IMAGE_SRC,
-        temperature: null,
       },
     ];
 
-    items = mock;
+    items = errorDisplayItems;
   }
 
   return {
