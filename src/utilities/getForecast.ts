@@ -30,10 +30,12 @@ const headers = {
 };
 
 const getMetOfficeForecast = async (specialDates) => {
-  if (!process.env.GATSBY_MET_WEATHER_DAILY_URL)
+  if (!process.env.GATSBY_MET_WEATHER_DAILY_URL) {
     throw new Error('MET_WEATHER_DAILY_URL missing');
-  if (!process.env.GATSBY_MET_WEATHER_HOURLY_URL)
+  }
+  if (!process.env.GATSBY_MET_WEATHER_HOURLY_URL) {
     throw new Error('MET_WEATHER_HOURLY_URL missing');
+  }
   const response = await axios.get(process.env.GATSBY_MET_WEATHER_DAILY_URL, {
     headers,
   });

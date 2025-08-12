@@ -121,8 +121,10 @@ const Advert = () => {
 
       <blockquote className="twitter-tweet" data-dnt="true">
         <p lang="en" dir="ltr">
-          Enjoy Beer, au naturel this weekend 🥵☀️<br></br>New Stella Artois
-          Unfiltered, available in stores and online across the UK.{' '}
+          Enjoy Beer, au naturel this weekend 🥵☀️
+          <br />
+          New Stella Artois Unfiltered, available in stores and online across
+          the UK.{' '}
           <a href="https://twitter.com/hashtag/BeerAuNaturel?src=hash&amp;ref_src=twsrc%5Etfw">
             #BeerAuNaturel
           </a>{' '}
@@ -135,7 +137,7 @@ const Advert = () => {
           July 15, 2022
         </a>
       </blockquote>
-      <script async src="https://platform.twitter.com/widgets.js"></script>
+      <script async src="https://platform.twitter.com/widgets.js" />
 
       <p style={styles.adText}>
         Why?: Because it&apos;s a heatwave, let&apos;s show a picture of{' '}

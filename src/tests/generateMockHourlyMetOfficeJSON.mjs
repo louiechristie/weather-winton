@@ -17,9 +17,9 @@ const getMockMetOfficeJSON = (
 
   let timeSeries = mockMetOfficeJSON.features[0].properties.timeSeries;
 
-  const generatedTimeSeries = timeSeries.map((hour) => {
-    hour.time = getMockDate();
-  });
+  const generatedTimeSeries = timeSeries.map(
+    (hour) => (hour.time = getMockDate())
+  );
 
   timeSeries = generatedTimeSeries;
 

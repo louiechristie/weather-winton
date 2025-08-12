@@ -1,4 +1,3 @@
-// eslint-disable-next-line node/no-unpublished-import
 import { defineConfig, devices } from '@playwright/test';
 
 /**

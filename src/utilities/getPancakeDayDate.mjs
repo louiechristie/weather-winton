@@ -3,21 +3,23 @@ import axios from 'axios';
 let pancakeDayDate;
 
 const isItPancakeDayAPI =
-  'https://api.isitpancakeday.com/?format=json&daysuntil';
+  'http://api.isitpancakeday.com/?format=json&daysuntil';
 
-try {
-  // Get pancake day date once on initialisation
-  const isItPancakeDayResponse = await axios.get(isItPancakeDayAPI, {
-    timeout: 5000,
-  });
+const getPancakeDayDate = async () => {
+  if (pancakeDayDate) {
+    return pancakeDayDate;
+  } else {
+    try {
+      // Get pancake day date once
+      const isItPancakeDayResponse = await axios.get(isItPancakeDayAPI, {
+        timeout: 5000,
+      });
 
-  pancakeDayDate = isItPancakeDayResponse?.data?.next_pancakeday?.date;
-} catch (error) {
-  console.error('Failed to fetch pancake day:', error);
-}
-
-// Use closure to return cached pancake day date to avoid api limits (this may not be necessary if using http and not https)
-const getPancakeDayDate = () => {
+      pancakeDayDate = isItPancakeDayResponse?.data?.next_pancakeday?.date;
+    } catch (error) {
+      console.error('Failed to fetch pancake day:', error);
+    }
+  }
   return pancakeDayDate;
 };
 

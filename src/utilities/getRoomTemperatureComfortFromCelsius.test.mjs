@@ -36,10 +36,8 @@ test(`getTemperatureFriendly: very hot`, () => {
   expect(getTemperatureFriendly(50)).toBe('Hot 🥵');
 });
 
-test('"string" celsius to equal null', () => {
-  expect(getTemperatureFriendly('string')).toBe(null);
-});
-
-test('[object] celsius to equal null', () => {
-  expect(getTemperatureFriendly({})).toBe(null);
+test('getTemperatureFriendly Infinity celsius to throw error', () => {
+  expect(() => {
+    getTemperatureFriendly(Infinity);
+  }).toThrow('Cannot get friendly temperature from Infinite celsius value');
 });

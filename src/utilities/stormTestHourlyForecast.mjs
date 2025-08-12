@@ -1,4 +1,4 @@
-export default {
+const stormTestHourlyForecast = {
   type: 'FeatureCollection',
   features: [
     {
@@ -1242,3 +1242,5 @@ export default {
     },
   ],
 };
+
+export default stormTestHourlyForecast;

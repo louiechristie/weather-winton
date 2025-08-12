@@ -6,8 +6,6 @@ import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone.js';
 import utc from 'dayjs/plugin/utc.js';
 import customParseFormat from 'dayjs/plugin/customParseFormat.js';
-import path from 'path';
-import sharp from 'sharp';
 
 import Footer from '../components/Footer';
 import Days from '../components/Days';
@@ -22,7 +20,6 @@ import Header from '@/components/Header';
 
 import type Meta from '@/types/meta';
 import type { item, items } from '@/utilities/transformMetOfficeJSON';
-import { CSSProperties } from 'react';
 
 axios.defaults.timeout = 20000;
 
@@ -101,21 +98,21 @@ export default function Home(props: Props) {
     siteDescription,
     siteUrl,
     monetization,
-    author: { name, url },
-    version,
-    timeStamp,
+    // author: { name, url },
+    // version,
+    // timeStamp,
     todaysWeather,
     location,
-    ogImage,
+    // ogImage,
   } = meta;
+
+  const generatedTitle = `${todaysWeather} | ${location} | ${siteTitle}`;
 
   return (
     <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>
-          {todaysWeather} | {location} | {siteTitle}
-        </title>
+        <title>{generatedTitle}</title>
         <meta name="description" content={siteDescription} />
         <meta
           property="og:title"
@@ -203,10 +200,11 @@ export async function getStaticProps() {
   }
 
   function getTemperatureColor(celsius: number) {
-    if (!isFinite(celsius))
+    if (!isFinite(celsius)) {
       throw new Error(
-        'Cannot get friendly temperature from celsius value: ${celsius}'
+        `Cannot get friendly temperature from Infinite celsius value`
       );
+    }
     if (getIsTooHotForRoomTemperatureFromCelsius(celsius)) {
       return '#cc0605';
     }
@@ -250,10 +248,11 @@ export async function getStaticProps() {
     }
 
     const today = items[0];
-    const backgroundColor =
-      Color(getTemperatureColor(today.averageTemperature))
-        .lighten(0.75)
-        .hex() || '#FFFFFF';
+    // @TODO generate favicon and opengraph images
+    // const backgroundColor =
+    //   Color(getTemperatureColor(today.averageTemperature))
+    //     .lighten(0.75)
+    //     .hex() || '#FFFFFF';
 
     const input = (
       await axios({
@@ -263,26 +262,6 @@ export async function getStaticProps() {
         headers: { 'Accept-Encoding': 'gzip,deflate,compress' },
       })
     ).data;
-
-    // await sharp(input, { density: 450 })
-    //   .flatten({ background: backgroundColor })
-    //   .resize(1200, 630, {
-    //     fit: 'contain',
-    //     background: backgroundColor,
-    //   })
-    //   .png()
-    //   .toFile(`public/${meta.ogImage}`);
-
-    // await sharp(input, { density: 450 })
-    //   .flatten({ background: backgroundColor })
-    //   .png()
-    //   .resize(48)
-    //   .toFile(`public/favicon.ico`);
-
-    // await sharp(input, { density: 450 })
-    //   .flatten({ background: backgroundColor })
-    //   .resize(180)
-    //   .toFile(`public/apple-touch-icon.png`);
 
     meta.todaysWeather = `It's ${getTemperatureFriendly(
       today.averageTemperature

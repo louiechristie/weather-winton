@@ -40,22 +40,7 @@ interface Props {
 }
 
 function Header(props: Props) {
-  const {
-    title,
-    description,
-    image,
-    alt,
-    temperatureClass,
-    meta: {
-      siteTitle,
-      siteDescription,
-      siteUrl,
-      monetization,
-      todaysWeather,
-      location,
-      ogImage,
-    },
-  } = props;
+  const { title, description, image, alt, temperatureClass } = props;
 
   return (
     <AppBar position="static" style={{ ...styles.appBar, ...temperatureClass }}>
