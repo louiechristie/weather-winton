@@ -20,7 +20,7 @@
     "test:debug": "node --experimental-vm-modules --disable-warning=ExperimentalWarning node_modules/jest/bin/jest.js && npx playwright test --ui",
     "lint:next": "next lint",
     "lint:tsc": "tsc",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx,.mjs --ignore-pattern 'playwright-report' --ignore-pattern 'node_modules' --ignore-pattern '.cache' --ignore-pattern 'public' --ignore-pattern '.next' --ignore-pattern 'data/daily/daily.js'; stylelint --ignore-path .gitignore '**/*.css'",
+    "lint": "npm run lint:tsc && eslint --ext .js,.jsx,.ts,.tsx,.mjs --ignore-pattern 'playwright-report' --ignore-pattern 'node_modules' --ignore-pattern '.cache' --ignore-pattern 'public' --ignore-pattern '.next' --ignore-pattern 'data/daily/daily.js' && stylelint --ignore-path .gitignore '**/*.css'",
     "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx,.mjs --ignore-pattern 'playwright-report' --ignore-pattern 'node_modules' --ignore-pattern '.cache' --ignore-pattern 'public' --fix ; stylelint --ignore-path .gitignore '**/*.css' --fix",
     "npm:check": "npx npm-check --specials=eslint,gatsby,jest,prettier"
   },
