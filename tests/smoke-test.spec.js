@@ -1,15 +1,17 @@
 import { test, expect } from '@playwright/test';
 
+const baseUrl = process.env.BASE_URL || 'http://localhost:3000';
+
 test('has title', async ({ page }) => {
-  console.log('BASE_URL: ', process.env.BASE_URL);
-  await page.goto(process.env.BASE_URL || 'http://127.0.0.1:8000');
+  console.log('baseUrl: ', baseUrl);
+  await page.goto(baseUrl);
 
   // Expect a title "to contain" a substring.
   await expect(page).toHaveTitle(/South London | Weather Winton/);
 });
 
 test('doesn\'t say "Probably Raining"', async ({ page }) => {
-  await page.goto(process.env.BASE_URL || 'http://127.0.0.1:8000');
+  await page.goto(baseUrl);
 
   await expect(page.getByText('Probably Raining')).toBeVisible({
     visible: false,
@@ -17,7 +19,7 @@ test('doesn\'t say "Probably Raining"', async ({ page }) => {
 });
 
 test('doesn\'t have "Yesterday"', async ({ page }) => {
-  await page.goto(process.env.BASE_URL || 'http://127.0.0.1:8000');
+  await page.goto(baseUrl);
 
   await expect(page.getByText('Yesterday')).toBeVisible({
     visible: false,
@@ -26,11 +28,7 @@ test('doesn\'t have "Yesterday"', async ({ page }) => {
 
 test.describe('fun dates', async () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto(
-      process.env.BASE_URL
-        ? process.env.BASE_URL + '/fun'
-        : 'http://127.0.0.1:8000' + '/fun'
-    );
+    await page.goto(baseUrl + '/fun');
   });
 
   test('pancake day', async ({ page }) => {
@@ -58,11 +56,7 @@ test.describe('fun dates', async () => {
 
 test.describe('named storm', async () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto(
-      process.env.BASE_URL
-        ? process.env.BASE_URL + '/test/storm/'
-        : 'http://127.0.0.1:8000' + '/test/storm/'
-    );
+    await page.goto(baseUrl + '/test/storm/');
   });
 
   test('storm Floris', async ({ page }) => {
