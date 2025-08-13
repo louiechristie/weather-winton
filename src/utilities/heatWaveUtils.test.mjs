@@ -55,7 +55,7 @@ describe('two days over 28 degrees', () => {
     expect(getIsAtLeastThirdDayOfHeatwave(testMockItems, 2)).toBe(false);
   });
 
-  test.only('getThirdDayOfHeatwaveIndex returns -1', () => {
+  test('getThirdDayOfHeatwaveIndex returns -1', () => {
     expect(getThirdDayOfHeatwaveIndex(testMockItems)).toBe(-1);
   });
 });
