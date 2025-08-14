@@ -1,19 +1,19 @@
 import dayjs from 'dayjs';
-
+import { MetOfficeDailyForecastGeoJSON } from '../types/metOffice';
 const now = dayjs();
 
 const today = now.toISOString();
-const tomorrow = now.add('1', 'day').toISOString();
-const yesterday = now.subtract('1', 'day').toISOString();
+const tomorrow = now.add(1, 'day').toISOString();
+const yesterday = now.subtract(1, 'day').toISOString();
 
-const generateMockDailyMetOfficeJSON = () => {
+const generateMockDailyMetOfficeJSON = (): MetOfficeDailyForecastGeoJSON => {
   const mockMetOfficeJSON = {
-    type: 'FeatureCollection',
+    type: 'FeatureCollection' as const,
     features: [
       {
-        type: 'Feature',
+        type: 'Feature' as const,
         geometry: {
-          type: 'Point',
+          type: 'Point' as const,
           coordinates: [-0.03304, 51.47686, 8],
         },
         properties: {
@@ -153,7 +153,7 @@ const generateMockDailyMetOfficeJSON = () => {
               nightProbabilityOfSferics: 0,
             },
             {
-              time: now.add('2', 'day').toISOString(),
+              time: now.add(2, 'day').toISOString(),
               midday10MWindSpeed: 6.6296477,
               midnight10MWindSpeed: 6.2341933,
               midday10MWindDirection: 188,
@@ -197,7 +197,7 @@ const generateMockDailyMetOfficeJSON = () => {
               nightProbabilityOfSferics: 1,
             },
             {
-              time: now.add('3', 'day').toISOString(),
+              time: now.add(3, 'day').toISOString(),
               midday10MWindSpeed: 3.8277774,
               midnight10MWindSpeed: 2.9654999,
               midday10MWindDirection: 249,
@@ -241,7 +241,7 @@ const generateMockDailyMetOfficeJSON = () => {
               nightProbabilityOfSferics: 0,
             },
             {
-              time: now.add('4', 'day').toISOString(),
+              time: now.add(4, 'day').toISOString(),
               midday10MWindSpeed: 6.3946247,
               midnight10MWindSpeed: 4.949157,
               midday10MWindDirection: 238,
@@ -285,7 +285,7 @@ const generateMockDailyMetOfficeJSON = () => {
               nightProbabilityOfSferics: 0,
             },
             {
-              time: now.add('5', 'day').toISOString(),
+              time: now.add(5, 'day').toISOString(),
               midday10MWindSpeed: 6.9091043,
               midnight10MWindSpeed: 4.317048,
               midday10MWindDirection: 254,
@@ -329,7 +329,7 @@ const generateMockDailyMetOfficeJSON = () => {
               nightProbabilityOfSferics: 0,
             },
             {
-              time: now.add('6', 'day').toISOString(),
+              time: now.add(6, 'day').toISOString(),
               midday10MWindSpeed: 5.6398087,
               midnight10MWindSpeed: 2.817324,
               midday10MWindDirection: 264,
@@ -379,7 +379,7 @@ const generateMockDailyMetOfficeJSON = () => {
     parameters: [
       {
         daySignificantWeatherCode: {
-          type: 'Parameter',
+          type: 'Parameter' as const,
           description: 'Day Significant Weather Code',
           unit: {
             label: 'dimensionless',
@@ -391,7 +391,7 @@ const generateMockDailyMetOfficeJSON = () => {
           },
         },
         midnightRelativeHumidity: {
-          type: 'Parameter',
+          type: 'Parameter' as const,
           description: 'Relative Humidity at Local Midnight',
           unit: {
             label: 'percentage',
@@ -402,7 +402,7 @@ const generateMockDailyMetOfficeJSON = () => {
           },
         },
         nightProbabilityOfHeavyRain: {
-          type: 'Parameter',
+          type: 'Parameter' as const,
           description: 'Probability of Heavy Rain During The Night',
           unit: {
             label: 'percentage',
@@ -413,7 +413,7 @@ const generateMockDailyMetOfficeJSON = () => {
           },
         },
         midnight10MWindSpeed: {
-          type: 'Parameter',
+          type: 'Parameter' as const,
           description: '10m Wind Speed at Local Midnight',
           unit: {
             label: 'metres per second',
@@ -424,7 +424,7 @@ const generateMockDailyMetOfficeJSON = () => {
           },
         },
         nightUpperBoundMinFeelsLikeTemp: {
-          type: 'Parameter',
+          type: 'Parameter' as const,
           description:
             'Upper Bound on Night Minimum Feels Like Air Temperature',
           unit: {
@@ -436,7 +436,7 @@ const generateMockDailyMetOfficeJSON = () => {
           },
         },
         nightUpperBoundMinTemp: {
-          type: 'Parameter',
+          type: 'Parameter' as const,
           description: 'Upper Bound on Night Minimum Screen Air Temperature',
           unit: {
             label: 'degrees Celsius',
@@ -447,7 +447,7 @@ const generateMockDailyMetOfficeJSON = () => {
           },
         },
         nightProbabilityOfRain: {
-          type: 'Parameter',
+          type: 'Parameter' as const,
           description: 'Probability of Rain During The Night',
           unit: {
             label: 'percentage',
@@ -458,7 +458,7 @@ const generateMockDailyMetOfficeJSON = () => {
           },
         },
         dayUpperBoundMaxFeelsLikeTemp: {
-          type: 'Parameter',
+          type: 'Parameter' as const,
           description: 'Upper Bound on Day Maximum Feels Like Air Temperature',
           unit: {
             label: 'degrees Celsius',
@@ -469,7 +469,7 @@ const generateMockDailyMetOfficeJSON = () => {
           },
         },
         midnightVisibility: {
-          type: 'Parameter',
+          type: 'Parameter' as const,
           description: 'Visibility at Local Midnight',
           unit: {
             label: 'metres',
@@ -480,7 +480,7 @@ const generateMockDailyMetOfficeJSON = () => {
           },
         },
         midday10MWindDirection: {
-          type: 'Parameter',
+          type: 'Parameter' as const,
           description: '10m Wind Direction at Local Midday',
           unit: {
             label: 'degrees',
@@ -491,7 +491,7 @@ const generateMockDailyMetOfficeJSON = () => {
           },
         },
         nightLowerBoundMinFeelsLikeTemp: {
-          type: 'Parameter',
+          type: 'Parameter' as const,
           description:
             'Lower Bound on Night Minimum Feels Like Air Temperature',
           unit: {
@@ -503,7 +503,7 @@ const generateMockDailyMetOfficeJSON = () => {
           },
         },
         nightProbabilityOfHail: {
-          type: 'Parameter',
+          type: 'Parameter' as const,
           description: 'Probability of Hail During The Night',
           unit: {
             label: 'percentage',
@@ -514,7 +514,7 @@ const generateMockDailyMetOfficeJSON = () => {
           },
         },
         middayMslp: {
-          type: 'Parameter',
+          type: 'Parameter' as const,
           description: 'Mean Sea Level Pressure at Local Midday',
           unit: {
             label: 'pascals',
@@ -525,7 +525,7 @@ const generateMockDailyMetOfficeJSON = () => {
           },
         },
         dayProbabilityOfHeavySnow: {
-          type: 'Parameter',
+          type: 'Parameter' as const,
           description: 'Probability of Heavy Snow During The Day',
           unit: {
             label: 'percentage',
@@ -536,7 +536,7 @@ const generateMockDailyMetOfficeJSON = () => {
           },
         },
         nightProbabilityOfPrecipitation: {
-          type: 'Parameter',
+          type: 'Parameter' as const,
           description: 'Probability of Precipitation During The Night',
           unit: {
             label: 'percentage',
@@ -547,7 +547,7 @@ const generateMockDailyMetOfficeJSON = () => {
           },
         },
         dayProbabilityOfHail: {
-          type: 'Parameter',
+          type: 'Parameter' as const,
           description: 'Probability of Hail During The Day',
           unit: {
             label: 'percentage',
@@ -558,7 +558,7 @@ const generateMockDailyMetOfficeJSON = () => {
           },
         },
         dayProbabilityOfRain: {
-          type: 'Parameter',
+          type: 'Parameter' as const,
           description: 'Probability of Rain During The Day',
           unit: {
             label: 'percentage',
@@ -569,7 +569,7 @@ const generateMockDailyMetOfficeJSON = () => {
           },
         },
         midday10MWindSpeed: {
-          type: 'Parameter',
+          type: 'Parameter' as const,
           description: '10m Wind Speed at Local Midday',
           unit: {
             label: 'metres per second',
@@ -580,7 +580,7 @@ const generateMockDailyMetOfficeJSON = () => {
           },
         },
         midday10MWindGust: {
-          type: 'Parameter',
+          type: 'Parameter' as const,
           description: '10m Wind Gust Speed at Local Midday',
           unit: {
             label: 'metres per second',
@@ -591,7 +591,7 @@ const generateMockDailyMetOfficeJSON = () => {
           },
         },
         middayVisibility: {
-          type: 'Parameter',
+          type: 'Parameter' as const,
           description: 'Visibility at Local Midday',
           unit: {
             label: 'metres',
@@ -602,7 +602,7 @@ const generateMockDailyMetOfficeJSON = () => {
           },
         },
         midnight10MWindGust: {
-          type: 'Parameter',
+          type: 'Parameter' as const,
           description: '10m Wind Gust Speed at Local Midnight',
           unit: {
             label: 'metres per second',
@@ -613,7 +613,7 @@ const generateMockDailyMetOfficeJSON = () => {
           },
         },
         dayProbabilityOfSferics: {
-          type: 'Parameter',
+          type: 'Parameter' as const,
           description: 'Probability of Sferics During The Day',
           unit: {
             label: 'percentage',
@@ -624,7 +624,7 @@ const generateMockDailyMetOfficeJSON = () => {
           },
         },
         midnightMslp: {
-          type: 'Parameter',
+          type: 'Parameter' as const,
           description: 'Mean Sea Level Pressure at Local Midnight',
           unit: {
             label: 'pascals',
@@ -635,7 +635,7 @@ const generateMockDailyMetOfficeJSON = () => {
           },
         },
         nightSignificantWeatherCode: {
-          type: 'Parameter',
+          type: 'Parameter' as const,
           description: 'Night Significant Weather Code',
           unit: {
             label: 'dimensionless',
@@ -647,7 +647,7 @@ const generateMockDailyMetOfficeJSON = () => {
           },
         },
         dayProbabilityOfPrecipitation: {
-          type: 'Parameter',
+          type: 'Parameter' as const,
           description: 'Probability of Precipitation During The Day',
           unit: {
             label: 'percentage',
@@ -658,7 +658,7 @@ const generateMockDailyMetOfficeJSON = () => {
           },
         },
         dayProbabilityOfHeavyRain: {
-          type: 'Parameter',
+          type: 'Parameter' as const,
           description: 'Probability of Heavy Rain During The Day',
           unit: {
             label: 'percentage',
@@ -669,7 +669,7 @@ const generateMockDailyMetOfficeJSON = () => {
           },
         },
         dayMaxScreenTemperature: {
-          type: 'Parameter',
+          type: 'Parameter' as const,
           description: 'Day Maximum Screen Air Temperature',
           unit: {
             label: 'degrees Celsius',
@@ -680,7 +680,7 @@ const generateMockDailyMetOfficeJSON = () => {
           },
         },
         nightMinScreenTemperature: {
-          type: 'Parameter',
+          type: 'Parameter' as const,
           description: 'Night Minimum Screen Air Temperature',
           unit: {
             label: 'degrees Celsius',
@@ -691,7 +691,7 @@ const generateMockDailyMetOfficeJSON = () => {
           },
         },
         midnight10MWindDirection: {
-          type: 'Parameter',
+          type: 'Parameter' as const,
           description: '10m Wind Direction at Local Midnight',
           unit: {
             label: 'degrees',
@@ -702,7 +702,7 @@ const generateMockDailyMetOfficeJSON = () => {
           },
         },
         maxUvIndex: {
-          type: 'Parameter',
+          type: 'Parameter' as const,
           description: 'Day Maximum UV Index',
           unit: {
             label: 'dimensionless',
@@ -713,7 +713,7 @@ const generateMockDailyMetOfficeJSON = () => {
           },
         },
         dayProbabilityOfSnow: {
-          type: 'Parameter',
+          type: 'Parameter' as const,
           description: 'Probability of Snow During The Day',
           unit: {
             label: 'percentage',
@@ -724,7 +724,7 @@ const generateMockDailyMetOfficeJSON = () => {
           },
         },
         nightProbabilityOfSnow: {
-          type: 'Parameter',
+          type: 'Parameter' as const,
           description: 'Probability of Snow During The Night',
           unit: {
             label: 'percentage',
@@ -735,7 +735,7 @@ const generateMockDailyMetOfficeJSON = () => {
           },
         },
         nightProbabilityOfHeavySnow: {
-          type: 'Parameter',
+          type: 'Parameter' as const,
           description: 'Probability of Heavy Snow During The Night',
           unit: {
             label: 'percentage',
@@ -746,7 +746,7 @@ const generateMockDailyMetOfficeJSON = () => {
           },
         },
         dayLowerBoundMaxTemp: {
-          type: 'Parameter',
+          type: 'Parameter' as const,
           description: 'Lower Bound on Day Maximum Screen Air Temperature',
           unit: {
             label: 'degrees Celsius',
@@ -757,7 +757,7 @@ const generateMockDailyMetOfficeJSON = () => {
           },
         },
         dayLowerBoundMaxFeelsLikeTemp: {
-          type: 'Parameter',
+          type: 'Parameter' as const,
           description: 'Lower Bound on Day Maximum Feels Like Air Temperature',
           unit: {
             label: 'degrees Celsius',
@@ -768,7 +768,7 @@ const generateMockDailyMetOfficeJSON = () => {
           },
         },
         dayUpperBoundMaxTemp: {
-          type: 'Parameter',
+          type: 'Parameter' as const,
           description: 'Upper Bound on Day Maximum Screen Air Temperature',
           unit: {
             label: 'degrees Celsius',
@@ -779,7 +779,7 @@ const generateMockDailyMetOfficeJSON = () => {
           },
         },
         dayMaxFeelsLikeTemp: {
-          type: 'Parameter',
+          type: 'Parameter' as const,
           description: 'Day Maximum Feels Like Air Temperature',
           unit: {
             label: 'degrees Celsius',
@@ -790,7 +790,7 @@ const generateMockDailyMetOfficeJSON = () => {
           },
         },
         nightMinFeelsLikeTemp: {
-          type: 'Parameter',
+          type: 'Parameter' as const,
           description: 'Night Minimum Feels Like Air Temperature',
           unit: {
             label: 'degrees Celsius',
@@ -801,7 +801,7 @@ const generateMockDailyMetOfficeJSON = () => {
           },
         },
         nightLowerBoundMinTemp: {
-          type: 'Parameter',
+          type: 'Parameter' as const,
           description: 'Lower Bound on Night Minimum Screen Air Temperature',
           unit: {
             label: 'degrees Celsius',
@@ -812,7 +812,7 @@ const generateMockDailyMetOfficeJSON = () => {
           },
         },
         middayRelativeHumidity: {
-          type: 'Parameter',
+          type: 'Parameter' as const,
           description: 'Relative Humidity at Local Midday',
           unit: {
             label: 'percentage',
@@ -823,7 +823,7 @@ const generateMockDailyMetOfficeJSON = () => {
           },
         },
         nightProbabilityOfSferics: {
-          type: 'Parameter',
+          type: 'Parameter' as const,
           description: 'Probability of Sferics During The Night',
           unit: {
             label: 'percentage',

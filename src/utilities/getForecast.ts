@@ -1,15 +1,22 @@
 import dayjs from 'dayjs';
 import axios from 'axios';
-import generateMockDailyMetOfficeJSON from '../tests/generateMockDailyMetOfficeJSON.mjs';
-import generateSpecialDatesDailyMetOfficeJSON from '../tests/generateSpecialDatesMetOfficeJSON.mjs';
-import generateMockHourlyMetOfficeJSON from '../tests/generateMockHourlyMetOfficeJSON.mjs';
+import generateMockDailyMetOfficeJSON from '../tests/generateMockDailyMetOfficeJSON';
+import generateSpecialDatesDailyMetOfficeJSON from '../tests/generateSpecialDatesMetOfficeJSON';
+import generateMockHourlyMetOfficeJSON from '../tests/generateMockHourlyMetOfficeJSON';
 import transformMetOfficeJSON from './transformMetOfficeJSON';
-import stormTestDailyForecast from './stormTestDailyForecast.mjs';
-import stormTestHourlyForecast from './stormTestHourlyForecast.mjs';
 
-import type { item, items } from '@/utilities/transformMetOfficeJSON';
+import {
+  MetOfficeDailyForecastGeoJSON,
+  DailyWeatherData,
+  isMetOfficeDailyForecastGeoJSON,
+  isMetOfficeHourlyForecastGeoJSON,
+} from '../types/metOffice';
+import type { items } from '@/utilities/transformMetOfficeJSON';
+import SpecialDate from '../types/specialDate';
 
-const todayOnwardsFilterMetOfficeJSON = (metOfficeJSON) => {
+const todayOnwardsFilterMetOfficeJSON = (
+  metOfficeJSON: MetOfficeDailyForecastGeoJSON
+): MetOfficeDailyForecastGeoJSON => {
   const filtered = structuredClone(metOfficeJSON);
   filtered.features[0].properties.timeSeries = [];
 
@@ -20,7 +27,7 @@ const todayOnwardsFilterMetOfficeJSON = (metOfficeJSON) => {
   return filtered;
 };
 
-const justTodayFilter = (day: item) => {
+const justTodayFilter = (day: DailyWeatherData) => {
   return dayjs(day.time).tz().isSameOrAfter(dayjs(), 'day');
 };
 
@@ -29,7 +36,7 @@ const headers = {
   apikey: process.env.GATSBY_MET_WEATHER_SECRET,
 };
 
-const getMetOfficeForecast = async (specialDates) => {
+const getMetOfficeForecast = async (specialDates: SpecialDate[]) => {
   if (!process.env.GATSBY_MET_WEATHER_DAILY_URL) {
     throw new Error('MET_WEATHER_DAILY_URL missing');
   }
@@ -46,8 +53,14 @@ const getMetOfficeForecast = async (specialDates) => {
   }
   // log(`response.data: ${JSON.stringify(response.data, null, '  ')}`);
 
-  const dailyJson = response.data;
-  const dailyFromTodayJson = todayOnwardsFilterMetOfficeJSON(dailyJson);
+  const dailyJson: MetOfficeDailyForecastGeoJSON = response.data;
+
+  if (!isMetOfficeDailyForecastGeoJSON(dailyJson)) {
+    throw new Error('Invalid Met Office Daily Forecast GeoJSON');
+  }
+
+  const dailyFromTodayJson: MetOfficeDailyForecastGeoJSON =
+    todayOnwardsFilterMetOfficeJSON(dailyJson);
 
   const hourlyResponse = await axios.get(
     process.env.GATSBY_MET_WEATHER_HOURLY_URL,
@@ -60,9 +73,14 @@ const getMetOfficeForecast = async (specialDates) => {
   // console.log(
   //   `hourlyResponse.data: ${JSON.stringify(hourlyResponse.data, null, '  ')}`
   // );
-  const hourlyJson = hourlyResponse.data;
   if (!hourlyResponse) {
     throw new Error('No hourlyResponse from server.');
+  }
+
+  const hourlyJson = hourlyResponse.data;
+
+  if (!isMetOfficeHourlyForecastGeoJSON(hourlyJson)) {
+    throw new Error('Invalid Met Office Hourly Forecast GeoJSON');
   }
 
   const items = await transformMetOfficeJSON(
@@ -73,9 +91,9 @@ const getMetOfficeForecast = async (specialDates) => {
   return items;
 };
 
-export const getMockForecast = async (specialDates) => {
+export const getMockForecast = async (specialDates: SpecialDate[]) => {
   // log('getMockForecast');
-  const mockDailyMetOfficeJSON = generateMockDailyMetOfficeJSON(specialDates);
+  const mockDailyMetOfficeJSON = generateMockDailyMetOfficeJSON();
   const dailyFromTodayJson = todayOnwardsFilterMetOfficeJSON(
     mockDailyMetOfficeJSON
   );
@@ -89,7 +107,7 @@ export const getMockForecast = async (specialDates) => {
   );
 };
 
-export const getSpecialDatesForecast = async (specialDates) => {
+export const getSpecialDatesForecast = async (specialDates: SpecialDate[]) => {
   // log('getSpecialDatesForecast');
   const specialDatesDailyMetOfficeJSON =
     generateSpecialDatesDailyMetOfficeJSON(specialDates);
@@ -103,19 +121,7 @@ export const getSpecialDatesForecast = async (specialDates) => {
   );
 };
 
-export const getStormForecast = async (specialDates) => {
-  // log('getStormForecast');
-
-  const transformedMetOfficeJSON = await transformMetOfficeJSON(
-    stormTestDailyForecast,
-    stormTestHourlyForecast,
-    specialDates
-  );
-
-  return transformedMetOfficeJSON;
-};
-
-const getForecast = async (specialDates): Promise<items> => {
+const getForecast = async (specialDates: SpecialDate[]): Promise<items> => {
   let items: items = [];
 
   try {

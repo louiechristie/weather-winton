@@ -10,8 +10,16 @@ import {
 import { getIsTooDryFromRelativeHumidity } from '../utilities/getComfortFromRelativeHumidity.mjs';
 import getIsStickyFromCelsiusAndRelativeHumidity from '../utilities/getIsStickyFromCelsiusAndRelativeHumidity.mjs';
 import { getIsHourInTheRemainingDay } from './getIsHourInTheRemainingDay.mjs';
-import getAverageTemperaturefromHourly from './getAverageTemperatureFromHourly.mjs';
-import getFriendlyDateFromISODate from './getFriendlyDateFromISODate.mjs';
+import getAverageTemperaturefromHourly from './getAverageTemperatureFromHourly';
+import getFriendlyDateFromISODate from './getFriendlyDateFromISODate';
+
+import {
+  MetOfficeDailyForecastGeoJSON,
+  MetOfficeHourlyForecastGeoJSON,
+  isMetOfficeDailyForecastGeoJSON,
+  isMetOfficeHourlyForecastGeoJSON,
+} from '../types/metOffice';
+import SpecialDate from '@/types/specialDate';
 
 export type item = {
   time: string;
@@ -20,7 +28,7 @@ export type item = {
   icon: string;
   minTemperature: number;
   maxTemperature: number;
-  relativeHumidity: string;
+  relativeHumidity: number;
   isSticky: boolean;
   isDry: boolean;
   isTakeRaincoat: boolean;
@@ -32,16 +40,29 @@ export type item = {
 export type items = item[];
 
 const transformMetOfficeJSON = async (
-  dailyJson,
-  hourlyJson,
-  specialDates
+  dailyJson: MetOfficeDailyForecastGeoJSON,
+  hourlyJson: MetOfficeHourlyForecastGeoJSON,
+  specialDates: SpecialDate[]
 ): Promise<item[]> => {
   // log(`dailyJson: ${JSON.stringify(dailyJson, null, '  ')}`);
   // log(`hourlyJson: ${JSON.stringify(hourlyJson, null, '  ')}`);
 
+  if (!isMetOfficeDailyForecastGeoJSON(dailyJson)) {
+    throw new Error('Invalid Met Office Daily Forecast GeoJSON');
+  }
+
+  if (!isMetOfficeHourlyForecastGeoJSON(hourlyJson)) {
+    throw new Error('Invalid Met Office Hourly Forecast GeoJSON');
+  }
+
   const items = dailyJson.features[0].properties.timeSeries
     .filter((day) => day.daySignificantWeatherCode !== undefined)
     .map((day) => {
+      const avgTemperature = avg(
+        day.dayMaxScreenTemperature,
+        day.dayLowerBoundMaxTemp
+      );
+      const currentTemperature = getCurrentTemperature(hourlyJson);
       return {
         time: day.time,
         friendlyDate: getFriendlyDateFromISODate(day.time, specialDates),
@@ -61,10 +82,10 @@ const transformMetOfficeJSON = async (
         ),
         relativeHumidity: day.middayRelativeHumidity,
         isSticky: getIsStickyFromCelsiusAndRelativeHumidity(
-          day.averageTemperature,
-          day.relativeHumidity
+          avgTemperature,
+          day.middayRelativeHumidity
         ),
-        isDry: getIsTooDryFromRelativeHumidity(day.relativeHumidity),
+        isDry: getIsTooDryFromRelativeHumidity(day.middayRelativeHumidity),
         isTakeRaincoat:
           day.dayProbabilityOfPrecipitation >= 50 ||
           day.nightProbabilityOfPrecipitation >= 50 ||
@@ -72,25 +93,24 @@ const transformMetOfficeJSON = async (
           day.nightSignificantWeatherCode > 9,
         isSnowDay:
           day.dayProbabilityOfSnow >= 50 || day.nightProbabilityOfSnow >= 50,
-        averageTemperature: avg(
-          day.dayMaxScreenTemperature,
-          day.dayLowerBoundMaxTemp
-        ),
-        currentTemperature: null,
+        averageTemperature: avgTemperature,
+        currentTemperature,
       };
     });
 
   const hourlyTimeSeries = hourlyJson.features[0].properties.timeSeries;
 
-  const isSnowDay = hourlyTimeSeries.reduce((acc, nextHour) => {
-    if (acc === true) return acc;
+  const isSnowDay =
+    hourlyTimeSeries.filter((nextHour) => {
+      if (
+        getIsHourInTheRemainingDay(nextHour.time) &&
+        getIsHourSnowy(nextHour)
+      ) {
+        return true;
+      }
 
-    if (getIsHourInTheRemainingDay(nextHour.time) && getIsHourSnowy(nextHour)) {
-      return true;
-    }
-
-    return false;
-  });
+      return false;
+    }).length > 0;
 
   items[0].isTakeRaincoat = getIsTakeRaincoatToday(hourlyJson);
   items[0].isSnowDay = isSnowDay;

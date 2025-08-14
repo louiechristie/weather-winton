@@ -1,7 +1,7 @@
 import hourly from '../tests/hourly.json' with { type: 'json' };
 import hourlyForBetween2300AndMidnightTesting from '../tests/hourlyForBetween2300AndMidnightTesting.json' with { type: 'json' };
-import getAverageTemperatureFromHourly from './getAverageTemperatureFromHourly.mjs';
-import generateMockHourlyMetOfficeJSON from '../tests/generateMockHourlyMetOfficeJSON.mjs';
+import getAverageTemperatureFromHourly from './getAverageTemperatureFromHourly';
+import generateMockHourlyMetOfficeJSON from '../tests/generateMockHourlyMetOfficeJSON';
 import dayjs from 'dayjs';
 import { getIsHourInTheRemainingDay } from './getIsHourInTheRemainingDay.mjs';
 
@@ -49,34 +49,21 @@ test('test all 21 degrees', () => {
 });
 
 test('test all after now are 18 degrees', () => {
-  const testData = generateMockHourlyMetOfficeJSON(dayjs().toISOString());
+  const nowString = dayjs().toISOString();
+  const testData = generateMockHourlyMetOfficeJSON(nowString);
 
   testData.features[0].properties.timeSeries =
     testData.features[0].properties.timeSeries.map((hour) => {
-      if (getIsHourInTheRemainingDay(hour.time))
-        {return {
+      const isHourInRemainingDay = getIsHourInTheRemainingDay(
+        hour.time,
+        dayjs(nowString)
+      );
+      if (isHourInRemainingDay) {
+        return {
           ...hour,
           screenTemperature: 18,
-        };}
-      else return hour;
-    });
-
-  expect(getAverageTemperatureFromHourly(testData, dayjs().toISOString())).toBe(
-    18
-  );
-});
-
-test('test all after now are 18 degrees', () => {
-  const testData = generateMockHourlyMetOfficeJSON(dayjs().toISOString());
-
-  testData.features[0].properties.timeSeries =
-    testData.features[0].properties.timeSeries.map((hour) => {
-      if (getIsHourInTheRemainingDay(hour.time))
-        {return {
-          ...hour,
-          screenTemperature: 18,
-        };}
-      else return hour;
+        };
+      } else return hour;
     });
 
   expect(getAverageTemperatureFromHourly(testData, dayjs().toISOString())).toBe(

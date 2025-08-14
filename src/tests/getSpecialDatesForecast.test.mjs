@@ -1,4 +1,4 @@
-import { getSpecialDatesForecast } from '../utilities/getForecast.mjs';
+import { getSpecialDatesForecast } from '../utilities/getForecast';
 import getSpecialDates from '../utilities/getSpecialDates';
 
 test('One forecast per special date', async () => {

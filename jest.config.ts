@@ -19,7 +19,8 @@ const config: JestConfigWithTsJest = {
   // clearMocks: false,
 
   // Indicates whether the coverage information should be collected while executing the test
-  collectCoverage: true,
+  // @TODO code coverage test
+  collectCoverage: false,
 
   // An array of glob patterns indicating a set of files for which coverage information should be collected
   // collectCoverageFrom: undefined,
@@ -76,18 +77,18 @@ const config: JestConfigWithTsJest = {
   // ],
 
   // An array of file extensions your modules use
-  // moduleFileExtensions: [
-  //   "js",
-  //   "mjs",
-  //   "cjs",
-  //   "jsx",
-  //   "ts",
-  //   "mts",
-  //   "cts",
-  //   "tsx",
-  //   "json",
-  //   "node"
-  // ],
+  moduleFileExtensions: [
+    'js',
+    'mjs',
+    'cjs',
+    'jsx',
+    'ts',
+    'mts',
+    'cts',
+    'tsx',
+    'json',
+    'node',
+  ],
 
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
   // moduleNameMapper: {},
@@ -108,7 +109,7 @@ const config: JestConfigWithTsJest = {
   // projects: undefined,
 
   // Use this configuration option to add custom reporters to Jest
-  // reporters: undefined,
+  reporters: [['jest-silent-reporter', { useDots: true }]],
 
   // Automatically reset mock state before every test
   // resetMocks: false,
@@ -161,7 +162,7 @@ const config: JestConfigWithTsJest = {
   // ],
 
   // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
-  testPathIgnorePatterns: ['/tests/'],
+  testPathIgnorePatterns: ['.spec.'],
 
   // The regexp pattern or array of patterns that Jest uses to detect test files
   // testRegex: [],

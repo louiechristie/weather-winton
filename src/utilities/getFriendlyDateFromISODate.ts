@@ -1,3 +1,4 @@
+import SpecialDate from '@/types/specialDate';
 import dayjs from 'dayjs';
 import calendar from 'dayjs/plugin/calendar.js';
 import timezone from 'dayjs/plugin/timezone.js';
@@ -9,7 +10,10 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.tz.setDefault('Europe/London');
 
-export default function getFriendlyDateFromISODate(ISODate, specialDates) {
+export default function getFriendlyDateFromISODate(
+  ISODate: string,
+  specialDates: SpecialDate[]
+): string {
   const theDate = dayjs(ISODate);
 
   if (!theDate.isValid()) {
@@ -25,10 +29,10 @@ export default function getFriendlyDateFromISODate(ISODate, specialDates) {
         name = specialDate.name;
       }
     });
-    if (isSpecialDate) return name;
+    if (isSpecialDate && name) return name;
   }
 
-  return theDate.calendar(null, {
+  const friendlyDate = theDate.calendar(null, {
     sameDay: '[Today]',
     nextDay: '[Tomorrow]',
     nextWeek: 'dddd',
@@ -36,4 +40,6 @@ export default function getFriendlyDateFromISODate(ISODate, specialDates) {
     lastWeek: '[Last] dddd',
     sameElse: 'DD/MM/YYYY',
   });
+
+  return friendlyDate;
 }

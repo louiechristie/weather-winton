@@ -6,7 +6,8 @@ import timezone from 'dayjs/plugin/timezone.js';
 import utc from 'dayjs/plugin/utc.js';
 import customParseFormat from 'dayjs/plugin/customParseFormat.js';
 import getPancakeDayDate from './getPancakeDayDate.mjs';
-import SpecialDates from "@/types/specialDates"
+import SpecialDate from '@/types/specialDate';
+import { BankHoliday } from '@/types/bankHolidays';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -15,7 +16,9 @@ dayjs.extend(customParseFormat);
 
 const bankHolidaysAPI = 'https://www.gov.uk/bank-holidays.json';
 
-const isThisYearOrIsNextYearEarlyJanuary = (bankHoliday) => {
+const isThisYearOrIsNextYearEarlyJanuary = (
+  bankHoliday: BankHoliday
+): boolean => {
   const govDateString = bankHoliday.date;
   const isSameYear = dayjs().isSame(govDateString, 'year');
   const isNextYear = dayjs().add(1, 'year').isSame(govDateString, 'year');
@@ -33,9 +36,12 @@ const isThisYearOrIsNextYearEarlyJanuary = (bankHoliday) => {
   return false;
 };
 
-const getSpecialDates = async (): SpecialDates => {
+const getSpecialDates = async (): Promise<SpecialDate[]> => {
   let specialDates = [];
-  const mergedDates = {};
+  type MergedDates = {
+    [key: string]: string;
+  };
+  const mergedDates: MergedDates = {};
 
   const today = dayjs();
 
@@ -137,7 +143,8 @@ const getSpecialDates = async (): SpecialDates => {
 
   try {
     const bankHolidaysResponse = await axios.get(bankHolidaysAPI);
-    const bankHolidays = bankHolidaysResponse.data['england-and-wales']?.events;
+    const bankHolidays: BankHoliday[] =
+      bankHolidaysResponse.data['england-and-wales']?.events;
     const bankHolidaysFiltered = bankHolidays.filter(
       isThisYearOrIsNextYearEarlyJanuary
     );
