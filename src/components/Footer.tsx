@@ -45,7 +45,7 @@ const HostedOn = () => {
     );
   }
 
-  if (process.env.VERCEL_ENV === 'production') {
+  if (process.env.NODE_ENV === 'production') {
     return (
       <>
         <img
@@ -58,7 +58,7 @@ const HostedOn = () => {
     );
   }
   
-  return <>Local, VERCEL_ENV: {process.env.VERCEL_ENV}, Vercel: {process.env.VERCEL} </>;
+  return <>Local</>;
 };
 
 const Footer = (props: { meta: Meta }) => {
