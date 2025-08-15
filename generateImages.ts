@@ -126,18 +126,18 @@ try {
         background: backgroundColor,
       })
       .png()
-      .toFile(`public/${meta.ogImage}`);
+      .toFile(`./public/${meta.ogImage}`);
 
     await sharp(input, { density: 450 })
       .flatten({ background: backgroundColor })
       .png()
       .resize(48)
-      .toFile(`public/favicon.ico`);
+      .toFile(`./public/favicon.ico`);
 
     await sharp(input, { density: 450 })
       .flatten({ background: backgroundColor })
       .resize(180)
-      .toFile(`public/apple-touch-icon.png`);
+      .toFile(`./public/apple-touch-icon.png`);
   }
 } catch (error) {
   console.error('Error generating images: ', error);
