@@ -57,6 +57,8 @@ const HostedOn = () => {
       </>
     );
   }
+  
+  return <>Local</>;
 };
 
 const Footer = (props: { meta: Meta }) => {
