@@ -8,8 +8,6 @@ import transformMetOfficeJSON from './transformMetOfficeJSON';
 import {
   MetOfficeDailyForecastGeoJSON,
   DailyWeatherData,
-  isMetOfficeDailyForecastGeoJSON,
-  isMetOfficeHourlyForecastGeoJSON,
 } from '../types/metOffice';
 import type { Items } from '@/utilities/transformMetOfficeJSON';
 import SpecialDate from '../types/specialDate';
@@ -55,11 +53,6 @@ const getMetOfficeForecast = async (specialDates: SpecialDate[]) => {
 
   const dailyJson: MetOfficeDailyForecastGeoJSON = response.data;
 
-  // @TODO fix
-  // if (!isMetOfficeDailyForecastGeoJSON(dailyJson)) {
-  //   throw new Error('Invalid Met Office Daily Forecast GeoJSON');
-  // }
-
   const dailyFromTodayJson: MetOfficeDailyForecastGeoJSON =
     todayOnwardsFilterMetOfficeJSON(dailyJson);
 
@@ -79,11 +72,6 @@ const getMetOfficeForecast = async (specialDates: SpecialDate[]) => {
   }
 
   const hourlyJson = hourlyResponse.data;
-
-  // @TODO fix
-  // if (!isMetOfficeHourlyForecastGeoJSON(hourlyJson)) {
-  //   throw new Error('Invalid Met Office Hourly Forecast GeoJSON');
-  // }
 
   const items = await transformMetOfficeJSON(
     dailyFromTodayJson,
@@ -143,7 +131,6 @@ const getForecast = async (specialDates: SpecialDate[]): Promise<Items> => {
       );
     }
     items = await getMetOfficeForecast(specialDates);
-    console.log('items: ', items);
   } catch (error) {
     console.error('Error getting forecast');
     console.error(error);
