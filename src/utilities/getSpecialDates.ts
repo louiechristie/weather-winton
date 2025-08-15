@@ -1,4 +1,3 @@
-import axios from 'axios';
 import dayjs from 'dayjs';
 import Holidays from 'date-holidays';
 import { Temporal } from 'temporal-polyfill';
@@ -142,9 +141,11 @@ const getSpecialDates = async (): Promise<SpecialDate[]> => {
    */
 
   try {
-    const bankHolidaysResponse = await axios.get(bankHolidaysAPI);
+    const bankHolidaysResponse = await fetch(bankHolidaysAPI);
+    const bankHolidaysResponseJson = await bankHolidaysResponse.json();
+
     const bankHolidays: BankHoliday[] =
-      bankHolidaysResponse.data['england-and-wales']?.events;
+      await bankHolidaysResponseJson['england-and-wales']?.events;
     const bankHolidaysFiltered = bankHolidays.filter(
       isThisYearOrIsNextYearEarlyJanuary
     );

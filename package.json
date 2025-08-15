@@ -32,7 +32,6 @@
     "@eslint/eslintrc": "^3",
     "@mui/material": "^6.4.11",
     "@types/geojson": "^7946.0.16",
-    "axios": "^1.8.4",
     "color": "^4.2.3",
     "date-holidays": "^3.24.1",
     "dayjs": "^1.11.13",

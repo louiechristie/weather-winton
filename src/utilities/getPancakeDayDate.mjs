@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 let pancakeDayDate;
 
 const isItPancakeDayAPI =
@@ -11,8 +9,8 @@ const getPancakeDayDate = async () => {
   } else {
     try {
       // Get pancake day date once
-      const isItPancakeDayResponse = await axios.get(isItPancakeDayAPI, {
-        timeout: 5000,
+      const isItPancakeDayResponse = await fetch(isItPancakeDayAPI, {
+        signal: AbortSignal.timeout(5000),
       });
 
       pancakeDayDate = isItPancakeDayResponse?.data?.next_pancakeday?.date;

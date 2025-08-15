@@ -1,5 +1,4 @@
 import dayjs from 'dayjs';
-import axios from 'axios';
 import generateMockDailyMetOfficeJSON from '../tests/generateMockDailyMetOfficeJSON';
 import generateSpecialDatesDailyMetOfficeJSON from '../tests/generateSpecialDatesMetOfficeJSON';
 import generateMockHourlyMetOfficeJSON from '../tests/generateMockHourlyMetOfficeJSON';
@@ -29,9 +28,17 @@ const justTodayFilter = (day: DailyWeatherData) => {
   return dayjs(day.time).tz().isSameOrAfter(dayjs(), 'day');
 };
 
-const headers = {
-  accept: 'application/json',
-  apikey: process.env.GATSBY_MET_WEATHER_SECRET,
+if (!process.env.GATSBY_MET_WEATHER_SECRET) {
+  throw new Error(
+    'You need to set your GATSBY_MET_WEATHER_SECRET environment variable'
+  );
+}
+
+const headers: HeadersInit = {
+  // prettier-ignore
+  'accept': 'application/json',
+  // prettier-ignore
+  'apikey': process.env.GATSBY_MET_WEATHER_SECRET,
 };
 
 const getMetOfficeForecast = async (specialDates: SpecialDate[]) => {
@@ -41,7 +48,7 @@ const getMetOfficeForecast = async (specialDates: SpecialDate[]) => {
   if (!process.env.GATSBY_MET_WEATHER_HOURLY_URL) {
     throw new Error('MET_WEATHER_HOURLY_URL missing');
   }
-  const response = await axios.get(process.env.GATSBY_MET_WEATHER_DAILY_URL, {
+  const response = await fetch(process.env.GATSBY_MET_WEATHER_DAILY_URL, {
     headers,
   });
   // const text = await response.text();
@@ -51,27 +58,23 @@ const getMetOfficeForecast = async (specialDates: SpecialDate[]) => {
   }
   // log(`response.data: ${JSON.stringify(response.data, null, '  ')}`);
 
-  const dailyJson: MetOfficeDailyForecastGeoJSON = response.data;
+  const dailyJson: MetOfficeDailyForecastGeoJSON = await response.json();
 
   const dailyFromTodayJson: MetOfficeDailyForecastGeoJSON =
     todayOnwardsFilterMetOfficeJSON(dailyJson);
 
-  const hourlyResponse = await axios.get(
+  const hourlyResponse = await fetch(
     process.env.GATSBY_MET_WEATHER_HOURLY_URL,
     {
       headers,
     }
   );
-  // const text = await hourlyResponse.text();
-  // log('text: ' + text);
-  // console.log(
-  //   `hourlyResponse.data: ${JSON.stringify(hourlyResponse.data, null, '  ')}`
-  // );
+
   if (!hourlyResponse) {
     throw new Error('No hourlyResponse from server.');
   }
 
-  const hourlyJson = hourlyResponse.data;
+  const hourlyJson = await hourlyResponse.json();
 
   const items = await transformMetOfficeJSON(
     dailyFromTodayJson,
@@ -115,21 +118,6 @@ const getForecast = async (specialDates: SpecialDate[]): Promise<Items> => {
   let items: Items = [];
 
   try {
-    if (!process.env.GATSBY_MET_WEATHER_DAILY_URL) {
-      throw new Error(
-        'You need to set your GATSBY_MET_WEATHER_DAILY_URL environment variable'
-      );
-    }
-    if (!process.env.GATSBY_MET_WEATHER_HOURLY_URL) {
-      throw new Error(
-        'You need to set your GATSBY_MET_WEATHER_HOURLY_URL environment variable'
-      );
-    }
-    if (!process.env.GATSBY_MET_WEATHER_SECRET) {
-      throw new Error(
-        'You need to set your GATSBY_MET_WEATHER_SECRET environment variable'
-      );
-    }
     items = await getMetOfficeForecast(specialDates);
   } catch (error) {
     console.error('Error getting forecast');
