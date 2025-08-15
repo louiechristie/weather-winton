@@ -11,7 +11,7 @@ import {
   isMetOfficeDailyForecastGeoJSON,
   isMetOfficeHourlyForecastGeoJSON,
 } from '../types/metOffice';
-import type { items } from '@/utilities/transformMetOfficeJSON';
+import type { Items } from '@/utilities/transformMetOfficeJSON';
 import SpecialDate from '../types/specialDate';
 
 const todayOnwardsFilterMetOfficeJSON = (
@@ -121,10 +121,25 @@ export const getSpecialDatesForecast = async (specialDates: SpecialDate[]) => {
   );
 };
 
-const getForecast = async (specialDates: SpecialDate[]): Promise<items> => {
-  let items: items = [];
+const getForecast = async (specialDates: SpecialDate[]): Promise<Items> => {
+  let items: Items = [];
 
   try {
+    if (!process.env.GATSBY_MET_WEATHER_DAILY_URL) {
+      throw new Error(
+        'You need to set your GATSBY_MET_WEATHER_DAILY_URL environment variable'
+      );
+    }
+    if (!process.env.GATSBY_MET_WEATHER_HOURLY_URL) {
+      throw new Error(
+        'You need to set your GATSBY_MET_WEATHER_HOURLY_URL environment variable'
+      );
+    }
+    if (!process.env.GATSBY_MET_WEATHER_SECRET) {
+      throw new Error(
+        'You need to set your GATSBY_MET_WEATHER_SECRET environment variable'
+      );
+    }
     items = await getMetOfficeForecast(specialDates);
   } catch (error) {
     console.error('Error getting forecast');

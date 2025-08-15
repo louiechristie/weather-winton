@@ -21,7 +21,7 @@ import {
 } from '../types/metOffice';
 import SpecialDate from '@/types/specialDate';
 
-export type item = {
+export type Item = {
   time: string;
   friendlyDate: string;
   description: string;
@@ -37,13 +37,37 @@ export type item = {
   currentTemperature: number;
 };
 
-export type items = item[];
+export type Items = Item[];
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function isItem(item: any): item is Item {
+  return item && 
+    typeof item === 'object' && 
+    'time' in item &&
+    'friendlyDate' in item &&
+    'description' in item &&
+    'icon' in item &&
+    'minTemperature' in item &&
+    'maxTemperature' in item &&
+    'relativeHumidity' in item &&
+    'isSticky' in item &&
+    'isDry' in item &&
+    'isTakeRaincoat' in item &&
+    'isSnowDay' in item &&
+    'averageTemperature' in item &&
+    'currentTemperature' in item;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function isItems(items: any): items is Items {
+  return Array.isArray(items) && items.length > 0 && isItem(items[0]);
+}
 
 const transformMetOfficeJSON = async (
   dailyJson: MetOfficeDailyForecastGeoJSON,
   hourlyJson: MetOfficeHourlyForecastGeoJSON,
   specialDates: SpecialDate[]
-): Promise<item[]> => {
+): Promise<Item[]> => {
   // log(`dailyJson: ${JSON.stringify(dailyJson, null, '  ')}`);
   // log(`hourlyJson: ${JSON.stringify(hourlyJson, null, '  ')}`);
 

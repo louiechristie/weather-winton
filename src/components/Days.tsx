@@ -5,9 +5,9 @@ import { theme } from '../utilities/theme';
 import getThirdDayOfHeatwaveIndex from '../utilities/heatWaveUtils.mjs';
 import Day from './Day';
 
-import { items } from '@/utilities/transformMetOfficeJSON';
+import { Items } from '@/utilities/transformMetOfficeJSON';
 
-const styles = {
+export const styles = {
   ul: {
     margin: 0,
     padding: 0,
@@ -55,7 +55,7 @@ const styles = {
 } as const;
 
 interface Props {
-  items: items;
+  items: Items;
 }
 
 const Days = (props: Props) => {

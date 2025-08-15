@@ -2,7 +2,7 @@ import React from 'react';
 
 import { theme, Card, Box, Typography } from '../utilities/theme';
 import { getTemperatureFriendly } from '../utilities/getRoomTemperatureComfortFromCelsius.mjs';
-import { item } from '@/utilities/transformMetOfficeJSON';
+import { Item } from '@/utilities/transformMetOfficeJSON';
 
 const styles: { [key: string]: React.CSSProperties } = {
   friendlyDate: {},
@@ -117,7 +117,7 @@ const getDayTempFriendlyStyle = (temperature: number) => {
   }
 };
 
-const Day = (props: item) => {
+const Day = (props: Item) => {
   const {
     friendlyDate,
     time,
