@@ -32,7 +32,7 @@ export default function Home(props: PageProps) {
 
   return (
     <>
-      <Head meta={meta} items={items} />
+      <Head meta={meta} />
 
       <Header
         title={meta.siteTitle}
