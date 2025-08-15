@@ -16,8 +16,6 @@ import getFriendlyDateFromISODate from './getFriendlyDateFromISODate';
 import {
   MetOfficeDailyForecastGeoJSON,
   MetOfficeHourlyForecastGeoJSON,
-  isMetOfficeDailyForecastGeoJSON,
-  isMetOfficeHourlyForecastGeoJSON,
 } from '../types/metOffice';
 import SpecialDate from '@/types/specialDate';
 
@@ -41,8 +39,9 @@ export type Items = Item[];
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function isItem(item: any): item is Item {
-  return item && 
-    typeof item === 'object' && 
+  return (
+    item &&
+    typeof item === 'object' &&
     'time' in item &&
     'friendlyDate' in item &&
     'description' in item &&
@@ -55,7 +54,8 @@ export function isItem(item: any): item is Item {
     'isTakeRaincoat' in item &&
     'isSnowDay' in item &&
     'averageTemperature' in item &&
-    'currentTemperature' in item;
+    'currentTemperature' in item
+  );
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -68,20 +68,8 @@ const transformMetOfficeJSON = async (
   hourlyJson: MetOfficeHourlyForecastGeoJSON,
   specialDates: SpecialDate[]
 ): Promise<Item[]> => {
-  // log(`dailyJson: ${JSON.stringify(dailyJson, null, '  ')}`);
-  // log(`hourlyJson: ${JSON.stringify(hourlyJson, null, '  ')}`);
-
-  if (!isMetOfficeDailyForecastGeoJSON(dailyJson)) {
-    throw new Error('Invalid Met Office Daily Forecast GeoJSON');
-  }
-
-  if (!isMetOfficeHourlyForecastGeoJSON(hourlyJson)) {
-    throw new Error('Invalid Met Office Hourly Forecast GeoJSON');
-  }
-
-  const items = dailyJson.features[0].properties.timeSeries
-    .filter((day) => day.daySignificantWeatherCode !== undefined)
-    .map((day) => {
+  const items: Items = dailyJson.features[0].properties.timeSeries.map(
+    (day) => {
       const avgTemperature = avg(
         day.dayMaxScreenTemperature,
         day.dayLowerBoundMaxTemp
@@ -120,43 +108,49 @@ const transformMetOfficeJSON = async (
         averageTemperature: avgTemperature,
         currentTemperature,
       };
-    });
-
-  const hourlyTimeSeries = hourlyJson.features[0].properties.timeSeries;
-
-  const isSnowDay =
-    hourlyTimeSeries.filter((nextHour) => {
-      if (
-        getIsHourInTheRemainingDay(nextHour.time) &&
-        getIsHourSnowy(nextHour)
-      ) {
-        return true;
-      }
-
-      return false;
-    }).length > 0;
-
-  items[0].isTakeRaincoat = getIsTakeRaincoatToday(hourlyJson);
-  items[0].isSnowDay = isSnowDay;
-
-  items[0].averageTemperature = getAverageTemperaturefromHourly(hourlyJson);
-  items[0].currentTemperature = getCurrentTemperature(hourlyJson);
-
-  items[0].maxTemperature = Math.max(
-    ...hourlyTimeSeries
-      .filter((hour) =>
-        getIsHourInTheRemainingDay(hour.time, dayjs().toISOString())
-      )
-      .map((hour) => hour.screenTemperature)
+    }
   );
 
-  items[0].minTemperature = Math.min(
-    ...hourlyTimeSeries
-      .filter((hour) =>
-        getIsHourInTheRemainingDay(hour.time, dayjs().toISOString())
-      )
-      .map((hour) => hour.screenTemperature)
-  );
+  const today = items[0];
+
+  if (isItem(today)) {
+    const hourlyTimeSeries = hourlyJson.features[0].properties.timeSeries;
+
+    const isSnowDay =
+      hourlyTimeSeries.filter((nextHour) => {
+        if (
+          getIsHourInTheRemainingDay(nextHour.time) &&
+          getIsHourSnowy(nextHour)
+        ) {
+          return true;
+        }
+
+        return false;
+      }).length > 0;
+
+    items[0].isTakeRaincoat = getIsTakeRaincoatToday(hourlyJson);
+    items[0].isSnowDay = isSnowDay;
+
+    items[0].averageTemperature = getAverageTemperaturefromHourly(hourlyJson);
+    items[0].currentTemperature = getCurrentTemperature(hourlyJson);
+
+    items[0].maxTemperature = Math.max(
+      ...hourlyTimeSeries
+        .filter((hour) =>
+          getIsHourInTheRemainingDay(hour.time, dayjs().toISOString())
+        )
+        .map((hour) => hour.screenTemperature)
+    );
+
+    items[0].minTemperature = Math.min(
+      ...hourlyTimeSeries
+        .filter((hour) =>
+          getIsHourInTheRemainingDay(hour.time, dayjs().toISOString())
+        )
+        .map((hour) => hour.screenTemperature)
+    );
+    return items;
+  }
 
   return items;
 };

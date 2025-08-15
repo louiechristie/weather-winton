@@ -242,6 +242,54 @@ enum MetOfficeWeatherCode {
 }
 
 /**
+ * Type guard to validate a single hourly weather data object
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function isHourlyWeatherData(data: any): data is HourlyWeatherData {
+  return (
+    data &&
+    typeof data === 'object' &&
+    typeof data.time === 'string' &&
+    typeof data.screenTemperature === 'number' &&
+    typeof data.maxScreenAirTemp === 'number' &&
+    typeof data.minScreenAirTemp === 'number' &&
+    typeof data.screenDewPointTemperature === 'number' &&
+    typeof data.feelsLikeTemperature === 'number' &&
+    typeof data.windSpeed10m === 'number' &&
+    typeof data.windDirectionFrom10m === 'number' &&
+    typeof data.windGustSpeed10m === 'number' &&
+    typeof data.max10mWindGust === 'number' &&
+    typeof data.visibility === 'number' &&
+    typeof data.screenRelativeHumidity === 'number' &&
+    typeof data.mslp === 'number' &&
+    typeof data.uvIndex === 'number' &&
+    typeof data.significantWeatherCode === 'number' &&
+    typeof data.precipitationRate === 'number' &&
+    typeof data.totalPrecipAmount === 'number' &&
+    typeof data.totalSnowAmount === 'number' &&
+    typeof data.probOfPrecipitation === 'number'
+  );
+}
+
+/**
+ * Type guard to validate hourly weather forecast properties
+ */
+
+function isHourlyWeatherForecastProperties(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data: any
+): data is HourlyWeatherForecastProperties {
+  return (
+    data &&
+    typeof data === 'object' &&
+    typeof data.requestPointDistance === 'number' &&
+    typeof data.modelRunDate === 'string' &&
+    Array.isArray(data.timeSeries) &&
+    data.timeSeries.every(isHourlyWeatherData)
+  );
+}
+
+/**
  * Type guard to check if response is valid Met Office hourly forecast GeoJSON
  */
 function isMetOfficeHourlyForecastGeoJSON(
@@ -262,12 +310,7 @@ function isMetOfficeHourlyForecastGeoJSON(
         Array.isArray(feature.geometry.coordinates) &&
         feature.geometry.coordinates.length >= 2 &&
         feature.properties &&
-        Array.isArray(feature.properties.timeSeries) &&
-        feature.properties.timeSeries.every(
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          (hour: any) =>
-            hour && typeof hour === 'object' && typeof hour.time === 'string'
-        )
+        isHourlyWeatherForecastProperties(feature.properties)
     )
   );
 }
@@ -353,6 +396,77 @@ function getAvailableHours(
 
   return feature.properties.timeSeries.map((hour) => hour.time);
 }
+
+/**
+ * Type guard to validate a single daily weather data object
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function isDailyWeatherData(data: any): data is DailyWeatherData {
+  return (
+    data &&
+    typeof data === 'object' &&
+    typeof data.time === 'string' &&
+    typeof data.midday10MWindSpeed === 'number' &&
+    typeof data.midnight10MWindSpeed === 'number' &&
+    typeof data.midday10MWindDirection === 'number' &&
+    typeof data.midnight10MWindDirection === 'number' &&
+    typeof data.midday10MWindGust === 'number' &&
+    typeof data.midnight10MWindGust === 'number' &&
+    typeof data.middayVisibility === 'number' &&
+    typeof data.midnightVisibility === 'number' &&
+    typeof data.middayRelativeHumidity === 'number' &&
+    typeof data.midnightRelativeHumidity === 'number' &&
+    typeof data.middayMslp === 'number' &&
+    typeof data.midnightMslp === 'number' &&
+    typeof data.maxUvIndex === 'number' &&
+    typeof data.daySignificantWeatherCode === 'number' &&
+    typeof data.nightSignificantWeatherCode === 'number' &&
+    typeof data.dayMaxScreenTemperature === 'number' &&
+    typeof data.nightMinScreenTemperature === 'number' &&
+    typeof data.dayUpperBoundMaxTemp === 'number' &&
+    typeof data.nightUpperBoundMinTemp === 'number' &&
+    typeof data.dayLowerBoundMaxTemp === 'number' &&
+    typeof data.nightLowerBoundMinTemp === 'number' &&
+    typeof data.dayMaxFeelsLikeTemp === 'number' &&
+    typeof data.nightMinFeelsLikeTemp === 'number' &&
+    typeof data.dayUpperBoundMaxFeelsLikeTemp === 'number' &&
+    typeof data.nightUpperBoundMinFeelsLikeTemp === 'number' &&
+    typeof data.dayLowerBoundMaxFeelsLikeTemp === 'number' &&
+    typeof data.nightLowerBoundMinFeelsLikeTemp === 'number' &&
+    typeof data.dayProbabilityOfPrecipitation === 'number' &&
+    typeof data.nightProbabilityOfPrecipitation === 'number' &&
+    typeof data.dayProbabilityOfSnow === 'number' &&
+    typeof data.nightProbabilityOfSnow === 'number' &&
+    typeof data.dayProbabilityOfHeavySnow === 'number' &&
+    typeof data.nightProbabilityOfHeavySnow === 'number' &&
+    typeof data.dayProbabilityOfRain === 'number' &&
+    typeof data.nightProbabilityOfRain === 'number' &&
+    typeof data.dayProbabilityOfHeavyRain === 'number' &&
+    typeof data.nightProbabilityOfHeavyRain === 'number' &&
+    typeof data.dayProbabilityOfHail === 'number' &&
+    typeof data.nightProbabilityOfHail === 'number' &&
+    typeof data.dayProbabilityOfSferics === 'number' &&
+    typeof data.nightProbabilityOfSferics === 'number'
+  );
+}
+
+/**
+ * Type guard to validate daily weather forecast properties
+ */
+function isDailyWeatherForecastProperties(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data: any
+): data is DailyWeatherForecastProperties {
+  return (
+    data &&
+    typeof data === 'object' &&
+    typeof data.requestPointDistance === 'number' &&
+    typeof data.modelRunDate === 'string' &&
+    Array.isArray(data.timeSeries) &&
+    data.timeSeries.every(isDailyWeatherData)
+  );
+}
+
 /**
  * Type guard to check if response is valid Met Office daily forecast GeoJSON
  */
@@ -374,12 +488,7 @@ function isMetOfficeDailyForecastGeoJSON(
         Array.isArray(feature.geometry.coordinates) &&
         feature.geometry.coordinates.length >= 2 &&
         feature.properties &&
-        Array.isArray(feature.properties.timeSeries) &&
-        feature.properties.timeSeries.every(
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          (day: any) =>
-            day && typeof day === 'object' && typeof day.time === 'string'
-        )
+        isDailyWeatherForecastProperties(feature.properties)
     )
   );
 }
@@ -650,6 +759,8 @@ export {
   MetOfficeWeatherCode,
 
   // Hourly forecast utilities
+  isHourlyWeatherData,
+  isHourlyWeatherForecastProperties,
   isMetOfficeHourlyForecastGeoJSON,
   getHourlyWeatherForTime,
   getCurrentHourlyWeather,
@@ -659,6 +770,8 @@ export {
   getHourlyPrecipitationForecast,
 
   // Daily forecast utilities
+  isDailyWeatherData,
+  isDailyWeatherForecastProperties,
   isMetOfficeDailyForecastGeoJSON,
   getWeatherForDate,
   getCurrentWeather,
