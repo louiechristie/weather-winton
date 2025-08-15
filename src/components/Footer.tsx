@@ -45,7 +45,7 @@ const HostedOn = () => {
     );
   }
 
-  if (true || process.env.VERCEL_ENV === 'production') {
+  if (process.env.VERCEL_ENV === 'production') {
     return (
       <>
         <img
