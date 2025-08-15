@@ -58,7 +58,7 @@ const HostedOn = () => {
     );
   }
   
-  return <>Local</>;
+  return <>Local, VERCEL_ENV: {process.env.VERCEL_ENV}, Vercel: {process.env.VERCEL} </>;
 };
 
 const Footer = (props: { meta: Meta }) => {
