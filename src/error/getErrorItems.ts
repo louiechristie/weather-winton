@@ -1,9 +1,5 @@
 import meta from '@/utilities/meta/meta';
 
-const CLOUDY_IMAGE_SRC =
-  'https://www.metoffice.gov.uk/webfiles/latest/images/icons/weather/12.svg';
-const PROBABLY_RAINING = 'Probably Raining';
-
 type ErrorItem = {
   friendlyDate: string;
   time: string;
@@ -18,14 +14,14 @@ const getErrorItems = (error: string) => {
     {
       friendlyDate: 'Today',
       time: meta.timeStamp,
-      description: PROBABLY_RAINING,
-      icon: CLOUDY_IMAGE_SRC,
+      description: meta.todaysWeather,
+      icon: meta.image,
     },
     {
       friendlyDate: 'Sorry, problem getting forecast.',
       time: meta.timeStamp,
       description: `${error}`,
-      icon: CLOUDY_IMAGE_SRC,
+      icon: meta.image,
     },
   ];
   return errorDisplayItems;

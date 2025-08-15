@@ -34,7 +34,10 @@ export async function getPageProps(
 
   const pageProps: PageProps = {
     items,
-    meta,
+    meta: {
+      ...meta,
+      image: items[0].icon,
+    },
     errorMessage,
   };
 

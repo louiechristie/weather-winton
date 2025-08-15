@@ -12,6 +12,7 @@ type Meta = {
   todaysWeather: string;
   location: string;
   ogImage: string;
+  image: string;
 };
 
 export default Meta;

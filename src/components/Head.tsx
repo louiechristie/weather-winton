@@ -19,7 +19,8 @@ const CustomHead = (props: Props) => {
     // timeStamp,
     todaysWeather,
     location,
-    // ogImage,
+    ogImage,
+    image,
   } = meta;
 
   const generatedTitle = `${todaysWeather} | ${location} | ${siteTitle}`;
@@ -34,11 +35,24 @@ const CustomHead = (props: Props) => {
         content={`${todaysWeather} in ${location} | ${siteTitle}`}
       />
       <meta property="og:description" content={siteDescription} />
-      <meta name="apple-mobile-web-app-title" content={siteTitle} />
-      <meta property="og:type" content="website" />
-      <meta property="og:url" content={`${siteUrl}/`} />
+
       <meta name="twitter:card" content="summary" />
       <meta name="monetization" content={monetization} />
+      <link id="favicon" rel="icon" sizes="any" href={image} />
+      <link rel="mask-icon" href={image} color="DimGrey" />
+      <meta property="og:title" content={generatedTitle} />
+      <meta property="og:description" content={siteDescription} />
+      <meta property="og:type" content="website" />
+      <meta property="og:url" content={`${siteUrl}/`} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="600" />
+      <meta property="og:image" content={`${siteUrl}/${ogImage}`} />
+      <meta name="apple-mobile-web-app-title" content={siteTitle} />
+      <link
+        rel="apple-touch-icon"
+        href={`${siteUrl}/apple-touch-icon.png?v=${ogImage}`}
+      />
+      <meta name="twitter:card" content="summary" />
     </Head>
   );
 };

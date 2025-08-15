@@ -14,6 +14,9 @@ const { title, description, author, version } = manifest;
 
 const now = dayjs();
 const nowTimeStamp = now.toISOString();
+
+const CLOUDY_IMAGE_SRC =
+  'https://www.metoffice.gov.uk/webfiles/latest/images/icons/weather/12.svg';
 const PROBABLY_RAINING = 'Probably Raining';
 
 const meta: Meta = {
@@ -26,7 +29,8 @@ const meta: Meta = {
   timeStamp: nowTimeStamp,
   todaysWeather: PROBABLY_RAINING,
   location: 'South London',
-  ogImage: `og-image-${dayjs().tz().format('YYYY-MM-DD-HH:mm:ss')}.png`,
+  ogImage: `og-image-${dayjs().tz().format('YYYY-MM-DD-HH')}.png`,
+  image: CLOUDY_IMAGE_SRC,
 };
 
 export default meta;
