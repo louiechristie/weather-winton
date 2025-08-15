@@ -36,6 +36,7 @@ export async function getPageProps(
     items,
     meta: {
       ...meta,
+      todaysWeather: items[0].description,
       image: items[0].icon,
     },
     errorMessage,
