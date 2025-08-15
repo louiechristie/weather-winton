@@ -45,7 +45,7 @@ const HostedOn = () => {
     );
   }
 
-  if (process.env.GATSBY_VERCEL_ENV === 'production') {
+  if (true || process.env.VERCEL_ENV === 'production') {
     return (
       <>
         <img
@@ -57,8 +57,6 @@ const HostedOn = () => {
       </>
     );
   }
-
-  return <>Local</>;
 };
 
 const Footer = (props: { meta: Meta }) => {
@@ -67,6 +65,10 @@ const Footer = (props: { meta: Meta }) => {
     <Paper style={styles.footer} elevation={24} square>
       <Typography variant="body2" component="p" align="center">
         Last updated: {meta.timeStamp} | Hosted on: {HostedOn()}
+      </Typography>
+
+      <Typography variant="body2" component="p" align="center">
+        Tech: Next.js, React.js, TypeScript, HTML, CSS, etc
       </Typography>
 
       <Typography variant="body2" component="p" align="center">
