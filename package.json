@@ -15,17 +15,17 @@
     "build": "npm run generate:images && next build",
     "start": "npx serve@latest out",
     "test": "npm run test:unit && npm run test:integration",
-    "test:unit": "node --experimental-vm-modules --disable-warning=ExperimentalWarning node_modules/jest/bin/jest.js --runInBand",
-    "test:unit:watch": "node --experimental-vm-modules --disable-warning=ExperimentalWarning node_modules/jest/bin/jest.js --watch -t test",
+    "test:unit": "node --experimental-vm-modules --disable-warning=ExperimentalWarning node_modules/jest/bin/jest.js --runInBand --setupFiles dotenv/config",
+    "test:unit:watch": "node --experimental-vm-modules --disable-warning=ExperimentalWarning node_modules/jest/bin/jest.js --watch -t test --setupFiles dotenv/config",
     "test:unit:debug": "node --experimental-vm-modules --disable-warning=ExperimentalWarning node_modules/jest/bin/jest.js --runInBand getAverageTemperatureFromHourly.test.mjs",
     "test:integration": "npx playwright test",
     "test:integration:debug": "npx playwright test --ui",
     "lint:next": "next lint",
     "lint:tsc": "tsc",
-    "lint": "npm run lint:tsc && eslint --ext .js,.jsx,.ts,.tsx,.mjs --ignore-pattern 'playwright-report' --ignore-pattern 'node_modules' --ignore-pattern '.cache' --ignore-pattern 'public' --ignore-pattern '.next' --ignore-pattern 'data/daily/daily.js' && stylelint --ignore-path .gitignore '**/*.css'",
+    "lint": "npm run lint:tsc && eslint --ext .js,.jsx,.ts,.tsx,.mjs --ignore-pattern 'playwright-report' --ignore-pattern 'node_modules' --ignore-pattern '.cache' --ignore-pattern 'public' --ignore-pattern 'out' --ignore-pattern '.next' --ignore-pattern 'data/daily/daily.js' && stylelint --ignore-path .gitignore '**/*.css'",
     "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx,.mjs --ignore-pattern 'playwright-report' --ignore-pattern 'node_modules' --ignore-pattern '.cache' --ignore-pattern 'public' --fix ; stylelint --ignore-path .gitignore '**/*.css' --fix",
     "npm:check": "npx npm-check --specials=eslint,gatsby,jest,prettier",
-    "generate:images": "NODE_ENV=production node --experimental-strip-types  ./generateImages.ts"
+    "generate:images": "NODE_ENV=production node --experimental-transform-types ./generateImages.ts"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

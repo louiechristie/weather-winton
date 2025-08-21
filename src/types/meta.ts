@@ -11,7 +11,7 @@ type Meta = {
   timeStamp: string;
   todaysWeather: string;
   location: string;
-  ogImage: string;
+  ogImageDirectory: string;
   image: string;
 };
 

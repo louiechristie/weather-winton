@@ -66,6 +66,7 @@ const Days = (props: Props) => {
       {items.map((item, index) => {
         const {
           friendlyDate,
+          friendlyTemperature,
           time,
           icon,
           description,
@@ -91,6 +92,7 @@ const Days = (props: Props) => {
               >
                 <Day
                   friendlyDate={friendlyDate}
+                  friendlyTemperature={friendlyTemperature}
                   time={time}
                   icon={icon}
                   description={description}

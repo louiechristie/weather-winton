@@ -55,3 +55,21 @@ export function getTemperatureFriendly(celsius) {
   }
   return 'Warm';
 }
+
+export function getTemperatureFriendlyDirectoryName(celsius) {
+  if (!isFinite(celsius)) {
+    throw new Error(
+      `Cannot get friendly temperature from Infinite celsius value`
+    );
+  }
+  if (getIsTooHotForRoomTemperatureFromCelsius(celsius)) {
+    return 'hot';
+  }
+  if (getIsFrostyFromCelsius(celsius)) {
+    return 'freezing';
+  }
+  if (getIsTooColdForRoomTemperatureFromCelsius(celsius)) {
+    return 'cold';
+  }
+  return 'warm';
+}

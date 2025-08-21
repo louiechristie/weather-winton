@@ -4,21 +4,25 @@ import type SpecialDate from '@/types/specialDate';
 
 import meta from '@/utilities/meta/meta';
 
-import type { Items } from '@/utilities/transformMetOfficeJSON';
+import type { Item, Items } from '@/utilities/transformMetOfficeJSON';
 import getErrorItems, { ErrorItems } from '@/error/getErrorItems';
+import { getImageDirectoryFromWeatherItem } from '@/utilities/file/getImageDirectory';
 
 export async function getPageProps(
   getItems: (specialDates: SpecialDate[]) => Promise<Items>
 ) {
   let items: Items | ErrorItems;
   let errorMessage: ErrorMessage = null;
+  let todayWeatherItem;
 
   try {
     const specialDates: SpecialDate[] = await getSpecialDates();
 
     items = await getItems(specialDates);
 
-    if (!items || items.length < 1) {
+    todayWeatherItem = <Item>(<unknown>items[0]);
+
+    if (!items || items.length < 1 || todayWeatherItem === undefined) {
       throw new Error(`No items in retrieved weather forecast`);
     }
   } catch (error) {
@@ -32,12 +36,19 @@ export async function getPageProps(
     items = getErrorItems(errorMessage);
   }
 
+  const imageDirectory = todayWeatherItem
+    ? getImageDirectoryFromWeatherItem(todayWeatherItem)
+    : meta.ogImageDirectory;
+
   const pageProps: PageProps = {
     items,
     meta: {
       ...meta,
-      todaysWeather: items[0].description,
-      image: items[0].icon,
+      todaysWeather: todayWeatherItem
+        ? todayWeatherItem.description
+        : meta.todaysWeather,
+      image: todayWeatherItem ? todayWeatherItem.icon : meta.image,
+      ogImageDirectory: imageDirectory,
     },
     errorMessage,
   };

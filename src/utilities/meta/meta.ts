@@ -22,14 +22,14 @@ const PROBABLY_RAINING = 'Probably Raining';
 const meta: Meta = {
   siteTitle: title,
   siteDescription: description,
-  siteUrl: process.env.GATSBY_SITE_URL,
+  siteUrl: process.env.BASE_URL,
   monetization: `$ilp.gatehub.net/484331722`,
   author,
   version,
   timeStamp: nowTimeStamp,
   todaysWeather: PROBABLY_RAINING,
   location: 'South London',
-  ogImage: `og-image-${dayjs().tz().format('YYYY-MM-DD-HH')}.png`,
+  ogImageDirectory: `/cold/12`,
   image: CLOUDY_IMAGE_SRC,
 };
 

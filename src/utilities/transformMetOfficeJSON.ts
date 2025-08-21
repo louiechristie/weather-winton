@@ -12,6 +12,7 @@ import getIsStickyFromCelsiusAndRelativeHumidity from '../utilities/getIsStickyF
 import { getIsHourInTheRemainingDay } from './getIsHourInTheRemainingDay.mjs';
 import getAverageTemperaturefromHourly from './getAverageTemperatureFromHourly';
 import getFriendlyDateFromISODate from './getFriendlyDateFromISODate';
+import { getTemperatureFriendly } from './getRoomTemperatureComfortFromCelsius.mjs';
 
 import {
   MetOfficeDailyForecastGeoJSON,
@@ -22,6 +23,7 @@ import SpecialDate from '@/types/specialDate';
 export type Item = {
   time: string;
   friendlyDate: string;
+  friendlyTemperature: string;
   description: string;
   icon: string;
   minTemperature: number;
@@ -84,6 +86,7 @@ const transformMetOfficeJSON = async (
         icon: getEmojiFromMetOfficeWeatherCode(
           day.daySignificantWeatherCode.toString()
         ),
+        friendlyTemperature: getTemperatureFriendly(avgTemperature),
         minTemperature: Math.min(
           day.dayMaxScreenTemperature,
           day.nightMinScreenTemperature
