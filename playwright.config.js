@@ -68,10 +68,14 @@ export default defineConfig({
     // },
   ],
 
-  /* Run your local dev server before starting the tests */
+  /* Run your local server before starting the tests */
   webServer: {
-    command: 'npm run serve',
-    url: 'http://127.0.0.1:3000',
+    command: process.env.CI
+      ? 'npm run build && npm run serve'
+      : 'npm run start',
+    url: 'http://localhost:3000/',
     reuseExistingServer: !process.env.CI,
+    stdout: 'pipe', // See build output
+    stderr: 'pipe', // See error output
   },
 });
