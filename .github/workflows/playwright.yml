@@ -4,6 +4,8 @@ on:
   deployment_status:
 jobs:
   test:
+    environment:
+      name: Continuous Integration
     if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success'
     runs-on: ubuntu-latest
     container:
