@@ -39,7 +39,7 @@
     "dayjs": "^1.11.13",
     "globals": "^16.0.0",
     "neostandard": "^0.12.1",
-    "next": "15.4.6",
+    "next": "15.4.7",
     "react": "^18",
     "react-dom": "^18",
     "react-helmet": "^6.1.0",
