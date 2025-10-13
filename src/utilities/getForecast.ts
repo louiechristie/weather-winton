@@ -28,9 +28,9 @@ const justTodayFilter = (day: DailyWeatherData) => {
   return dayjs(day.time).tz().isSameOrAfter(dayjs(), 'day');
 };
 
-if (!process.env.GATSBY_MET_WEATHER_SECRET) {
+if (!process.env.MET_WEATHER_SECRET) {
   throw new Error(
-    'You need to set your GATSBY_MET_WEATHER_SECRET environment variable'
+    'You need to set your MET_WEATHER_SECRET environment variable'
   );
 }
 
@@ -38,17 +38,17 @@ const headers: HeadersInit = {
   // prettier-ignore
   'accept': 'application/json',
   // prettier-ignore
-  'apikey': process.env.GATSBY_MET_WEATHER_SECRET,
+  'apikey': process.env.MET_WEATHER_SECRET,
 };
 
 const getMetOfficeForecast = async (specialDates: SpecialDate[]) => {
-  if (!process.env.GATSBY_MET_WEATHER_DAILY_URL) {
+  if (!process.env.MET_WEATHER_DAILY_URL) {
     throw new Error('MET_WEATHER_DAILY_URL missing');
   }
-  if (!process.env.GATSBY_MET_WEATHER_HOURLY_URL) {
+  if (!process.env.MET_WEATHER_HOURLY_URL) {
     throw new Error('MET_WEATHER_HOURLY_URL missing');
   }
-  const response = await fetch(process.env.GATSBY_MET_WEATHER_DAILY_URL, {
+  const response = await fetch(process.env.MET_WEATHER_DAILY_URL, {
     headers,
   });
   // const text = await response.text();
@@ -63,12 +63,9 @@ const getMetOfficeForecast = async (specialDates: SpecialDate[]) => {
   const dailyFromTodayJson: MetOfficeDailyForecastGeoJSON =
     todayOnwardsFilterMetOfficeJSON(dailyJson);
 
-  const hourlyResponse = await fetch(
-    process.env.GATSBY_MET_WEATHER_HOURLY_URL,
-    {
-      headers,
-    }
-  );
+  const hourlyResponse = await fetch(process.env.MET_WEATHER_HOURLY_URL, {
+    headers,
+  });
 
   if (!hourlyResponse) {
     throw new Error('No hourlyResponse from server.');

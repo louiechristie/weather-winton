@@ -24,7 +24,7 @@
     "lint:tsc": "tsc",
     "lint": "npm run lint:tsc && eslint --ext .js,.jsx,.ts,.tsx,.mjs --ignore-pattern 'playwright-report' --ignore-pattern 'node_modules' --ignore-pattern '.cache' --ignore-pattern 'public' --ignore-pattern 'out' --ignore-pattern '.next' --ignore-pattern 'data/daily/daily.js' && stylelint --ignore-path .gitignore '**/*.css'",
     "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx,.mjs --ignore-pattern 'playwright-report' --ignore-pattern 'node_modules' --ignore-pattern '.cache' --ignore-pattern 'public' --fix ; stylelint --ignore-path .gitignore '**/*.css' --fix",
-    "npm:check": "npx npm-check --specials=eslint,gatsby,jest,prettier",
+    "npm:check": "npx npm-check --specials=eslint,jest,prettier",
     "generate:images": "NODE_ENV=production node --experimental-transform-types ./generateImages.ts"
   },
   "dependencies": {
