@@ -1,8 +1,9 @@
 import React from 'react';
 import dayjs from 'dayjs';
 import { theme, Paper, Typography } from '../utilities/theme';
-
 import Meta from '@/types/meta';
+import utc from 'dayjs/plugin/utc';
+dayjs.extend(utc);
 
 const styles = {
   footer: {
@@ -20,18 +21,19 @@ const styles = {
   },
 } as const;
 
+const GitHubBadge = () => (
+  <>
+    <a href="https://github.com/louiechristie/weather-winton/">
+      <img
+        style={{ verticalAlign: 'middle' }}
+        src="https://github.com/louiechristie/weather-winton/actions/workflows/playwright.yml/badge.svg"
+        alt="Github logo"
+      />
+    </a>
+  </>
+);
+
 const HostedOn = () => {
-  const GitHubBadge = () => (
-    <>
-      <a href="https://github.com/louiechristie/weather-winton/">
-        <img
-          style={{ verticalAlign: 'middle' }}
-          src="https://github.com/louiechristie/weather-winton/actions/workflows/playwright.yml/badge.svg"
-          alt="Github logo"
-        />
-      </a>
-    </>
-  );
   if (process.env.NETLIFY) {
     return (
       <>
@@ -57,16 +59,18 @@ const HostedOn = () => {
       </>
     );
   }
-  
+
   return <>Local</>;
 };
 
 const Footer = (props: { meta: Meta }) => {
   const { meta } = props;
+  const localTime = dayjs.utc(meta.timeStamp).local().format();
+
   return (
     <Paper style={styles.footer} elevation={24} square>
       <Typography variant="body2" component="p" align="center">
-        Last updated: {meta.timeStamp} | Hosted on: {HostedOn()}
+        Last updated: {localTime} | Hosted on: {HostedOn()}
       </Typography>
 
       <Typography variant="body2" component="p" align="center">
