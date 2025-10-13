@@ -19,6 +19,9 @@ jobs:
         run: npm run test
         env:
           BASE_URL: ${{ github.event.deployment_status.environment_url }}
+          MET_WEATHER_DAILY_URL: ${{ variables.MET_WEATHER_DAILY_URL }}
+          MET_WEATHER_HOURLY_URL: ${{ variables.MET_WEATHER_HOURLY_URL }}
+          MET_WEATHER_SECRET: ${{ secrets.MET_WEATHER_SECRET }}
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
