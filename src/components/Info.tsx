@@ -54,7 +54,7 @@ const Info = (props: Props) => {
           Advert
         </Typography>
         <Typography variant="h6" component="h2" gutterBottom align="center">
-          <a href="https://www.louiechristie.com/blog/contact/">
+          <a href="https://www.louiechristie.com/contact/">
             Like this? Let&apos;s make friendly technology together...
           </a>
         </Typography>
