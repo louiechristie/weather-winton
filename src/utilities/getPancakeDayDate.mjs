@@ -13,7 +13,9 @@ const getPancakeDayDate = async () => {
         signal: AbortSignal.timeout(5000),
       });
 
-      pancakeDayDate = isItPancakeDayResponse?.data?.next_pancakeday?.date;
+      const isItPancakeDayResponseData = await isItPancakeDayResponse.json();
+
+      pancakeDayDate = isItPancakeDayResponseData?.next_pancakeday?.date;
     } catch (error) {
       console.error('Failed to fetch pancake day:', error);
     }
