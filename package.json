@@ -14,7 +14,7 @@
     "start": "next dev --turbopack",
     "build": "npm run generate:images && next build",
     "serve": "npx serve@latest out",
-    "test": "npm run test:unit ; npm run test:integration",
+    "test": "npm run test:unit && npm run test:integration",
     "test:unit": "node --experimental-vm-modules --disable-warning=ExperimentalWarning node_modules/jest/bin/jest.js --runInBand --setupFiles dotenv/config",
     "test:unit:watch": "node --experimental-vm-modules --disable-warning=ExperimentalWarning node_modules/jest/bin/jest.js --watch -t test --setupFiles dotenv/config",
     "test:unit:debug": "node --experimental-vm-modules --disable-warning=ExperimentalWarning node_modules/jest/bin/jest.js --runInBand getAverageTemperatureFromHourly.test.mjs",
