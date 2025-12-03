@@ -40,7 +40,7 @@
     "dayjs": "^1.11.18",
     "globals": "^16.4.0",
     "neostandard": "^0.12.2",
-    "next": "15.5.4",
+    "next": "15.5.7",
     "react": "^19",
     "react-dom": "^19",
     "react-helmet": "^6.1.0",
