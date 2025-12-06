@@ -10,7 +10,7 @@ const getPancakeDayDate = async () => {
     try {
       // Get pancake day date once
       const isItPancakeDayResponse = await fetch(isItPancakeDayAPI, {
-        signal: AbortSignal.timeout(5000),
+        signal: AbortSignal.timeout(1000),
       });
 
       const isItPancakeDayResponseData = await isItPancakeDayResponse.json();
