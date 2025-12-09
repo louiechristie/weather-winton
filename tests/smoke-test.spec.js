@@ -54,13 +54,12 @@ test.describe('fun dates', async () => {
   });
 });
 
-// @TODO
-// test.describe('named storm', async () => {
-//   test.beforeEach(async ({ page }) => {
-//     await page.goto(baseUrl + '/test/storm/');
-//   });
+test.describe('named storm', async () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto(baseUrl + '/test/storm/');
+  });
 
-//   test('storm Floris', async ({ page }) => {
-//     await expect(page.getByText('storm Floris')).toBeVisible();
-//   });
-// });
+  test('storm Bram', async ({ page }) => {
+    await expect(page.getByText('Storm Bram')).toBeVisible();
+  });
+});
