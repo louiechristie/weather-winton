@@ -19,4 +19,10 @@ describe('get storm name', () => {
 
     expect(getStormName(instant)).toEqual(null);
   });
+
+  test('should return null, when date is 12 December 2025', () => {
+    const instant = Temporal.Instant.from('2025-12-12T00:00:00Z');
+
+    expect(getStormName(instant)).toEqual(null);
+  });
 });
