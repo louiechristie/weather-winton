@@ -13,6 +13,7 @@ import { getIsHourInTheRemainingDay } from './getIsHourInTheRemainingDay.mjs';
 import getAverageTemperaturefromHourly from './getAverageTemperatureFromHourly';
 import getFriendlyDateFromISODate from './getFriendlyDateFromISODate';
 import { getTemperatureFriendly } from './getRoomTemperatureComfortFromCelsius.mjs';
+import { getIsWindy } from './getIsWindy';
 
 import {
   MetOfficeDailyForecastGeoJSON,
@@ -60,7 +61,8 @@ export function isItem(item: any): item is Item {
     'isSnowDay' in item &&
     'averageTemperature' in item &&
     'currentTemperature' in item &&
-    'stormName' in item
+    'stormName' in item &&
+    'isWindy' in item
   );
 }
 
@@ -114,7 +116,8 @@ const transformMetOfficeJSON = async (
           day.dayProbabilityOfSnow >= 50 || day.nightProbabilityOfSnow >= 50,
         averageTemperature: avgTemperature,
         currentTemperature,
-        stormName: getStormName(Temporal.Instant.from(day.time)),
+        stormName: getStormName(Temporal.Instant.from(day.time), getIsWindy()),
+        isWindy: getIsWindy(),
       };
     }
   );
