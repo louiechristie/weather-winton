@@ -131,6 +131,7 @@ const Day = (props: Item) => {
     isSnowDay,
     averageTemperature,
     currentTemperature,
+    stormName,
   } = props;
 
   const minTempInt = Math.round(minTemperature);
@@ -323,6 +324,9 @@ const Day = (props: Item) => {
           )}
           {isTakeRaincoat && <div style={styles.label}>Take raincoat 🧥</div>}
           {isSnowDay && <div style={styles.label}>Snow ❄️☃️</div>}
+
+          {stormName && <div style={styles.label}>🌬️ Storm {stormName}</div>}
+
           <div style={styles.temperatureOuter}>
             <Box style={{ ...styles.swatch, flex: 1 }}>
               <div style={styles.scaleNumber}>

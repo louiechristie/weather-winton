@@ -79,6 +79,7 @@ const Days = (props: Props) => {
           isSnowDay,
           averageTemperature,
           currentTemperature,
+          stormName,
         } = item;
 
         return (
@@ -105,6 +106,7 @@ const Days = (props: Props) => {
                   isTakeRaincoat={isTakeRaincoat}
                   isSnowDay={isSnowDay}
                   currentTemperature={currentTemperature}
+                  stormName={stormName}
                 />
               </Link>
             </li>

@@ -6,8 +6,8 @@ const getStormName = (date: Temporal.Instant) => {
     Temporal.Instant.from('2025-12-08T00+00:00[Europe/London]')
       .epochMilliseconds;
   const isAfter =
-    date.epochMilliseconds >
-    Temporal.Instant.from('2025-12-15T00+00:00[Europe/London]')
+    date.epochMilliseconds >=
+    Temporal.Instant.from('2025-12-12T00+00:00[Europe/London]')
       .epochMilliseconds;
   if (!isBefore && !isAfter) {
     return 'Bram';

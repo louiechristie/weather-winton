@@ -19,6 +19,8 @@ import {
   MetOfficeHourlyForecastGeoJSON,
 } from '../types/metOffice';
 import SpecialDate from '@/types/specialDate';
+import getStormName from './getStormName';
+import { Temporal } from 'temporal-polyfill';
 
 export type Item = {
   time: string;
@@ -35,6 +37,7 @@ export type Item = {
   isSnowDay: boolean;
   averageTemperature: number;
   currentTemperature: number;
+  stormName: string | null;
 };
 
 export type Items = Item[];
@@ -56,7 +59,8 @@ export function isItem(item: any): item is Item {
     'isTakeRaincoat' in item &&
     'isSnowDay' in item &&
     'averageTemperature' in item &&
-    'currentTemperature' in item
+    'currentTemperature' in item &&
+    'stormName' in item
   );
 }
 
@@ -110,6 +114,7 @@ const transformMetOfficeJSON = async (
           day.dayProbabilityOfSnow >= 50 || day.nightProbabilityOfSnow >= 50,
         averageTemperature: avgTemperature,
         currentTemperature,
+        stormName: getStormName(Temporal.Instant.from(day.time)),
       };
     }
   );
