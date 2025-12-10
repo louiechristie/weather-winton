@@ -13,7 +13,8 @@ import { getIsHourInTheRemainingDay } from './getIsHourInTheRemainingDay.mjs';
 import getAverageTemperaturefromHourly from './getAverageTemperatureFromHourly';
 import getFriendlyDateFromISODate from './getFriendlyDateFromISODate';
 import { getTemperatureFriendly } from './getRoomTemperatureComfortFromCelsius.mjs';
-import { getIsWindy } from './getIsWindy';
+import getIsWindy from './getIsWindy';
+import getIsTakeRainCoat from './getIsTakeRainCoat';
 
 import {
   MetOfficeDailyForecastGeoJSON,
@@ -107,17 +108,17 @@ const transformMetOfficeJSON = async (
           day.middayRelativeHumidity
         ),
         isDry: getIsTooDryFromRelativeHumidity(day.middayRelativeHumidity),
-        isTakeRaincoat:
-          day.dayProbabilityOfPrecipitation >= 50 ||
-          day.nightProbabilityOfPrecipitation >= 50 ||
-          day.daySignificantWeatherCode > 9 ||
-          day.nightSignificantWeatherCode > 9,
+        isTakeRaincoat: getIsTakeRainCoat(day),
         isSnowDay:
           day.dayProbabilityOfSnow >= 50 || day.nightProbabilityOfSnow >= 50,
         averageTemperature: avgTemperature,
         currentTemperature,
-        stormName: getStormName(Temporal.Instant.from(day.time), getIsWindy()),
-        isWindy: getIsWindy(),
+        stormName: getStormName(
+          Temporal.Instant.from(day.time),
+          getIsWindy(day.midday10MWindGust),
+          getIsTakeRainCoat(day)
+        ),
+        isWindy: getIsWindy(day.midday10MWindGust),
       };
     }
   );
