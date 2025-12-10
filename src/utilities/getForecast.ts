@@ -2,12 +2,14 @@ import dayjs from 'dayjs';
 import generateMockDailyMetOfficeJSON from '../tests/generateMockDailyMetOfficeJSON';
 import generateSpecialDatesDailyMetOfficeJSON from '../tests/generateSpecialDatesMetOfficeJSON';
 import generateMockHourlyMetOfficeJSON from '../tests/generateMockHourlyMetOfficeJSON';
+import generateStormBramDailyMetOfficeJSON from '../tests/generateStormBramMetOfficeJSON';
 import transformMetOfficeJSON from './transformMetOfficeJSON';
-
 import {
+  MetOfficeDailyForecastGeoJSONSchema,
   MetOfficeDailyForecastGeoJSON,
   DailyWeatherData,
 } from '../types/metOffice';
+
 import type { Items } from '@/utilities/transformMetOfficeJSON';
 import SpecialDate from '../types/specialDate';
 
@@ -106,6 +108,20 @@ export const getSpecialDatesForecast = async (specialDates: SpecialDate[]) => {
   );
   return transformMetOfficeJSON(
     specialDatesDailyMetOfficeJSON,
+    mockHourlyMetOfficeJSON,
+    specialDates
+  );
+};
+
+export const getStormDatesForecast = async (specialDates: SpecialDate[]) => {
+  const stormDatesForecast = MetOfficeDailyForecastGeoJSONSchema.parse(
+    generateStormBramDailyMetOfficeJSON()
+  );
+  const mockHourlyMetOfficeJSON = generateMockHourlyMetOfficeJSON(
+    dayjs().toISOString()
+  );
+  return transformMetOfficeJSON(
+    stormDatesForecast,
     mockHourlyMetOfficeJSON,
     specialDates
   );

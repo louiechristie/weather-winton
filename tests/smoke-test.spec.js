@@ -56,7 +56,7 @@ test.describe('fun dates', async () => {
 
 test.describe('named storm', async () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto(baseUrl + '/test/storm/');
+    await page.goto(baseUrl + '/storm/');
   });
 
   test('storm Bram', async ({ page }) => {
