@@ -39,7 +39,7 @@
     "dayjs": "1.11.19",
     "globals": "16.5.0",
     "neostandard": "0.12.2",
-    "next": "16.0.7",
+    "next": "16.0.9",
     "react": "19",
     "react-dom": "19",
     "temporal-polyfill": "0.3.0",
