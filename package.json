@@ -2,7 +2,7 @@
   "name": "weather-winton",
   "title": "Weather Winton",
   "description": "Weather Winton is an experiment in friendly weather forecasting.",
-  "version": "0.37.0",
+  "version": "0.38.0",
   "type": "module",
   "private": true,
   "author": {
@@ -11,10 +11,10 @@
   },
   "main": "index.js",
   "scripts": {
-    "start": "next dev --turbopack",
-    "build": "next build",
+    "start": "npm run fetch-storms && next dev --turbopack",
+    "build": "npm run fetch-storms && next build",
     "serve": "npx serve@latest out",
-    "test": "npm run test:unit && npm run test:integration",
+    "test": "npm run lint && npm run test:unit && npm run test:integration",
     "test:unit": "TZ='Europe/London' node --experimental-vm-modules --disable-warning=ExperimentalWarning node_modules/jest/bin/jest.js --setupFiles dotenv/config",
     "test:unit:watch": "TZ='Europe/London' node --experimental-vm-modules --disable-warning=ExperimentalWarning node_modules/jest/bin/jest.js --watch --setupFiles dotenv/config",
     "test:unit:debug": "TZ='Europe/London' node --experimental-vm-modules --disable-warning=ExperimentalWarning node_modules/jest/bin/jest.js --runInBand getAverageTemperatureFromHourly.test.mjs",
@@ -26,7 +26,9 @@
     "lint": "npm run lint:tsc && eslint --ext .js,.jsx,.ts,.tsx,.mjs --ignore-pattern 'playwright-report' --ignore-pattern 'node_modules' --ignore-pattern '.cache' --ignore-pattern 'public' --ignore-pattern 'out' --ignore-pattern '.next' --ignore-pattern 'data/daily/daily.js' && stylelint --ignore-path .gitignore '**/*.css'",
     "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx,.mjs --ignore-pattern 'playwright-report' --ignore-pattern 'node_modules' --ignore-pattern '.cache' --ignore-pattern 'public' --fix ; stylelint --ignore-path .gitignore '**/*.css' --fix",
     "npm:check": "npx npm-check --specials=eslint,jest,prettier",
-    "generate:images": "NODE_ENV=production node --experimental-transform-types ./generateImages.ts"
+    "generate:images": "NODE_ENV=production node --experimental-transform-types ./generateImages.ts",
+    "fetch-storms": "node ./scripts/fetchStorms.mjs",
+    "cache-metoffice": "node ./scripts/cacheMetOffice.mjs"
   },
   "dependencies": {
     "@emotion/react": "11.14.0",
@@ -76,6 +78,7 @@
     "stylelint-prettier": "5.0.3",
     "ts-jest": "29.4.6",
     "ts-node": "10.9.2",
+    "cheerio": "1.1.2",
     "typescript": "5",
     "typescript-eslint": "8.48.1"
   },

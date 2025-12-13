@@ -1,21 +1,34 @@
 import { Temporal } from 'temporal-polyfill';
 
+type StormEntry = {
+  name: string;
+  dateRaw?: string;
+  start?: string | null;
+  end?: string | null;
+};
+
 const getStormName = (
   date: Temporal.Instant,
   isWindy: boolean,
-  isTakeRaincoat: boolean
+  isTakeRaincoat: boolean,
+  storms: StormEntry[] = []
 ) => {
-  const isBefore =
-    date.epochMilliseconds <
-    Temporal.Instant.from('2025-12-08T00+00:00[Europe/London]')
-      .epochMilliseconds;
-  const isAfter =
-    date.epochMilliseconds >=
-    Temporal.Instant.from('2025-12-12T00+00:00[Europe/London]')
-      .epochMilliseconds;
+  if (!(isWindy || isTakeRaincoat)) return null;
 
-  if (!isBefore && !isAfter && (isWindy || isTakeRaincoat)) {
-    return 'Bram';
+  for (const s of storms) {
+    if (!s.start || !s.end) continue;
+    try {
+      const startInstant = Temporal.Instant.from(s.start);
+      const endInstant = Temporal.Instant.from(s.end);
+      if (
+        date.epochMilliseconds >= startInstant.epochMilliseconds &&
+        date.epochMilliseconds < endInstant.epochMilliseconds
+      ) {
+        return s.name;
+      }
+    } catch (e) {
+      continue;
+    }
   }
   return null;
 };

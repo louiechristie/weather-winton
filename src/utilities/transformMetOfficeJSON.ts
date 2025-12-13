@@ -72,10 +72,18 @@ export function isItems(items: any): items is Items {
   return Array.isArray(items) && items.length > 0 && isItem(items[0]);
 }
 
+type StormEntry = {
+  name: string;
+  dateRaw?: string;
+  start?: string | null;
+  end?: string | null;
+};
+
 const transformMetOfficeJSON = async (
   dailyJson: MetOfficeDailyForecastGeoJSON,
   hourlyJson: MetOfficeHourlyForecastGeoJSON,
-  specialDates: SpecialDate[]
+  specialDates: SpecialDate[],
+  storms: StormEntry[] = []
 ): Promise<Item[]> => {
   const items: Items = dailyJson.features[0].properties.timeSeries.map(
     (day) => {
@@ -116,7 +124,8 @@ const transformMetOfficeJSON = async (
         stormName: getStormName(
           Temporal.Instant.from(day.time),
           getIsWindy(day.midday10MWindGust),
-          getIsTakeRainCoat(day)
+          getIsTakeRainCoat(day),
+          storms
         ),
         isWindy: getIsWindy(day.midday10MWindGust),
       };

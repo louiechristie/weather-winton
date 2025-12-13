@@ -62,4 +62,10 @@ test.describe('named storm', async () => {
   test('storm Bram', async ({ page }) => {
     await expect(page.getByText('Storm Bram')).toBeVisible();
   });
+
+  test('storm Bram date range is not visible', async ({ page }) => {
+    await expect(page.getByText('8 Dec – 11 Dec 2025')).toBeVisible({
+      visible: false,
+    });
+  });
 });

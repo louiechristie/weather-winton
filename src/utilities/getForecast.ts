@@ -1,4 +1,6 @@
 import dayjs from 'dayjs';
+import fs from 'fs';
+import path from 'path';
 import generateMockDailyMetOfficeJSON from '../tests/generateMockDailyMetOfficeJSON';
 import generateSpecialDatesDailyMetOfficeJSON from '../tests/generateSpecialDatesMetOfficeJSON';
 import generateMockHourlyMetOfficeJSON from '../tests/generateMockHourlyMetOfficeJSON';
@@ -7,6 +9,7 @@ import transformMetOfficeJSON from './transformMetOfficeJSON';
 import {
   MetOfficeDailyForecastGeoJSONSchema,
   MetOfficeDailyForecastGeoJSON,
+  MetOfficeHourlyForecastGeoJSON,
   DailyWeatherData,
 } from '../types/metOffice';
 
@@ -30,55 +33,104 @@ const justTodayFilter = (day: DailyWeatherData) => {
   return dayjs(day.time).tz().isSameOrAfter(dayjs(), 'day');
 };
 
-if (!process.env.MET_WEATHER_SECRET) {
-  throw new Error(
-    'You need to set your MET_WEATHER_SECRET environment variable'
-  );
-}
+// MET_WEATHER_SECRET is only required when not using cached JSON
 
 const headers: HeadersInit = {
   // prettier-ignore
   'accept': 'application/json',
   // prettier-ignore
-  'apikey': process.env.MET_WEATHER_SECRET,
+  'apikey': process.env.MET_WEATHER_SECRET ?? '',
 };
 
 const getMetOfficeForecast = async (specialDates: SpecialDate[]) => {
-  if (!process.env.MET_WEATHER_DAILY_URL) {
-    throw new Error('MET_WEATHER_DAILY_URL missing');
+  const useCache = process.env.MET_WEATHER_USE_CACHE === 'true';
+  if (!useCache) {
+    if (!process.env.MET_WEATHER_DAILY_URL) {
+      throw new Error('MET_WEATHER_DAILY_URL missing');
+    }
+    if (!process.env.MET_WEATHER_HOURLY_URL) {
+      throw new Error('MET_WEATHER_HOURLY_URL missing');
+    }
   }
-  if (!process.env.MET_WEATHER_HOURLY_URL) {
-    throw new Error('MET_WEATHER_HOURLY_URL missing');
-  }
-  const response = await fetch(process.env.MET_WEATHER_DAILY_URL, {
-    headers,
-  });
-  // const text = await response.text();
-  // log('text: ' + text);
-  if (!response) {
-    throw new Error('No response from server.');
-  }
-  // log(`response.data: ${JSON.stringify(response.data, null, '  ')}`);
+  let dailyJson: MetOfficeDailyForecastGeoJSON;
+  let hourlyJson: MetOfficeHourlyForecastGeoJSON;
 
-  const dailyJson: MetOfficeDailyForecastGeoJSON = await response.json();
+  if (useCache) {
+    const dailyCacheFile = path.resolve(
+      process.cwd(),
+      'data',
+      'daily',
+      'cached-daily.json'
+    );
+    const hourlyCacheFile = path.resolve(
+      process.cwd(),
+      'data',
+      'daily',
+      'cached-hourly.json'
+    );
+    if (!fs.existsSync(dailyCacheFile) || !fs.existsSync(hourlyCacheFile)) {
+      throw new Error(
+        'Cache files missing; run npm run cache-metoffice or unset MET_WEATHER_USE_CACHE'
+      );
+    }
+    dailyJson = JSON.parse(
+      fs.readFileSync(dailyCacheFile, 'utf8')
+    ) as MetOfficeDailyForecastGeoJSON;
+    hourlyJson = JSON.parse(
+      fs.readFileSync(hourlyCacheFile, 'utf8')
+    ) as MetOfficeHourlyForecastGeoJSON;
+  } else {
+    if (!process.env.MET_WEATHER_SECRET) {
+      throw new Error(
+        'You need to set your MET_WEATHER_SECRET environment variable'
+      );
+    }
+    const dailyUrl = process.env.MET_WEATHER_DAILY_URL as string;
+    const hourlyUrl = process.env.MET_WEATHER_HOURLY_URL as string;
+    const response = await fetch(dailyUrl, {
+      headers,
+    });
+    if (!response) {
+      throw new Error('No response from server.');
+    }
+    dailyJson = await response.json();
 
+    const hourlyResponse = await fetch(hourlyUrl, {
+      headers,
+    });
+    if (!hourlyResponse) {
+      throw new Error('No hourlyResponse from server.');
+    }
+    hourlyJson = await hourlyResponse.json();
+  }
   const dailyFromTodayJson: MetOfficeDailyForecastGeoJSON =
     todayOnwardsFilterMetOfficeJSON(dailyJson);
 
-  const hourlyResponse = await fetch(process.env.MET_WEATHER_HOURLY_URL, {
-    headers,
-  });
-
-  if (!hourlyResponse) {
-    throw new Error('No hourlyResponse from server.');
+  const stormsFile = path.resolve(
+    process.cwd(),
+    'data',
+    'storms',
+    'season_effects.json'
+  );
+  let storms: {
+    name: string;
+    dateRaw?: string;
+    start?: string | null;
+    end?: string | null;
+  }[] = [];
+  try {
+    if (fs.existsSync(stormsFile)) {
+      storms = JSON.parse(fs.readFileSync(stormsFile, 'utf8'));
+    }
+  } catch (e) {
+    // ignore
   }
-
-  const hourlyJson = await hourlyResponse.json();
 
   const items = await transformMetOfficeJSON(
     dailyFromTodayJson,
     hourlyJson,
-    specialDates
+    specialDates,
+    storms
   );
   return items;
 };
@@ -92,10 +144,28 @@ export const getMockForecast = async (specialDates: SpecialDate[]) => {
   const mockHourlyMetOfficeJSON = generateMockHourlyMetOfficeJSON(
     dayjs().toISOString()
   );
+  const stormsFile = path.resolve(
+    process.cwd(),
+    'data',
+    'storms',
+    'season_effects.json'
+  );
+  let storms: {
+    name: string;
+    dateRaw?: string;
+    start?: string | null;
+    end?: string | null;
+  }[] = [];
+  try {
+    if (fs.existsSync(stormsFile)) {
+      storms = JSON.parse(fs.readFileSync(stormsFile, 'utf8'));
+    }
+  } catch (e) {}
   return transformMetOfficeJSON(
     dailyFromTodayJson,
     mockHourlyMetOfficeJSON,
-    specialDates
+    specialDates,
+    storms
   );
 };
 
@@ -106,10 +176,28 @@ export const getSpecialDatesForecast = async (specialDates: SpecialDate[]) => {
   const mockHourlyMetOfficeJSON = generateMockHourlyMetOfficeJSON(
     dayjs().toISOString()
   );
+  const stormsFile = path.resolve(
+    process.cwd(),
+    'data',
+    'storms',
+    'season_effects.json'
+  );
+  let storms: {
+    name: string;
+    dateRaw?: string;
+    start?: string | null;
+    end?: string | null;
+  }[] = [];
+  try {
+    if (fs.existsSync(stormsFile)) {
+      storms = JSON.parse(fs.readFileSync(stormsFile, 'utf8'));
+    }
+  } catch (e) {}
   return transformMetOfficeJSON(
     specialDatesDailyMetOfficeJSON,
     mockHourlyMetOfficeJSON,
-    specialDates
+    specialDates,
+    storms
   );
 };
 
@@ -120,10 +208,28 @@ export const getStormDatesForecast = async (specialDates: SpecialDate[]) => {
   const mockHourlyMetOfficeJSON = generateMockHourlyMetOfficeJSON(
     dayjs().toISOString()
   );
+  const stormsFile = path.resolve(
+    process.cwd(),
+    'data',
+    'storms',
+    'season_effects.json'
+  );
+  let storms: {
+    name: string;
+    dateRaw?: string;
+    start?: string | null;
+    end?: string | null;
+  }[] = [];
+  try {
+    if (fs.existsSync(stormsFile)) {
+      storms = JSON.parse(fs.readFileSync(stormsFile, 'utf8'));
+    }
+  } catch (e) {}
   return transformMetOfficeJSON(
     stormDatesForecast,
     mockHourlyMetOfficeJSON,
-    specialDates
+    specialDates,
+    storms
   );
 };
 
