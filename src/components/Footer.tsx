@@ -50,7 +50,7 @@ const HostedOn = () => {
     );
   }
 
-  if (process.env.VERCEL) {
+  if (process.env.NODE_ENV === 'production') {
     return (
       <>
         <img
