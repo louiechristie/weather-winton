@@ -4,7 +4,7 @@ import { Temporal } from 'temporal-polyfill';
 import timezone from 'dayjs/plugin/timezone.js';
 import utc from 'dayjs/plugin/utc.js';
 import customParseFormat from 'dayjs/plugin/customParseFormat.js';
-import getPancakeDayDate from './getPancakeDayDate.mjs';
+import getPancakeDayDate from './getPancakeDayDate';
 import SpecialDate from '@/types/specialDate';
 import { BankHoliday } from '@/types/bankHolidays';
 
@@ -191,12 +191,16 @@ const getSpecialDates = async (): Promise<SpecialDate[]> => {
    * Add Pancake day
    */
 
-  const pancakeDayDate = await getPancakeDayDate();
-  if (pancakeDayDate) {
-    const pancakeDayJS = dayjs(pancakeDayDate, 'DD-MM-YYYY');
-    const pancakeDayDateFormatted = pancakeDayJS.format('YYYY-MM-DD');
-    mergedDates[pancakeDayDateFormatted] = 'Pancake Day 🥞';
+  let pancakeDayDate;
+  const thisYear = dayjs().year();
+  const pancakeDayDateThisYear = getPancakeDayDate(thisYear).toString();
+  if (dayjs(pancakeDayDateThisYear, 'YYYY-MM-DD').isBefore(today)) {
+    pancakeDayDate = getPancakeDayDate(dayjs().add(1, 'year').year());
+  } else {
+    pancakeDayDate = pancakeDayDateThisYear;
   }
+  const pancakeDayDateFormatted = pancakeDayDate.toString();
+  mergedDates[pancakeDayDateFormatted] = 'Pancake Day 🥞';
 
   specialDates = Object.keys(mergedDates)
     .toSorted()
