@@ -63,3 +63,15 @@ test.describe('named storm', async () => {
     await expect(page.getByText('Storm Bram')).toHaveCount(2);
   });
 });
+
+test.describe('weather conditions', async () => {
+  test('windy', async ({ page }) => {
+    await page.goto(baseUrl + '/test/windy');
+    await expect(page.getByText('Windy')).toBeVisible();
+  });
+
+  test('heatwave', async ({ page }) => {
+    await page.goto(baseUrl + '/test/heatwave');
+    await expect(page.getByText('heatwave')).toBeVisible();
+  });
+});

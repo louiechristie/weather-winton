@@ -61,35 +61,36 @@ interface Props {
 const Days = (props: Props) => {
   const { items } = props;
 
-  return (
-    <ul style={styles.ul}>
-      {items.map((item, index) => {
-        const { time } = item;
+  const thirdDayOfHeatWaveIndex = getThirdDayOfHeatwaveIndex(items);
 
-        return (
-          <div key={time}>
-            <li style={styles.li}>
-              <Link
-                style={styles.link}
-                href={`https://www.metoffice.gov.uk/weather/forecast/gcpuyudzk#?nearestTo=New%20Cross%20(Lewisham)&date=${dayjs(
-                  time
-                ).format('YYYY-MM-DD')}`}
-              >
-                <Day {...item} />
-              </Link>
-            </li>
-            <>{getThirdDayOfHeatwaveIndex(items) === index && <Advert />}</>
-          </div>
-        );
-      })}
-    </ul>
-  );
+  let days = items.map((item, index) => {
+    const { time } = item;
+
+    return (
+      <li style={styles.li} key={time}>
+        <Link
+          style={styles.link}
+          href={`https://www.metoffice.gov.uk/weather/forecast/gcpuyudzk#?nearestTo=New%20Cross%20(Lewisham)&date=${dayjs(
+            time
+          ).format('YYYY-MM-DD')}`}
+        >
+          <Day {...item} />
+        </Link>
+      </li>
+    );
+  });
+
+  if (thirdDayOfHeatWaveIndex) {
+    days = days.toSpliced(thirdDayOfHeatWaveIndex, 0, <Advert />);
+  }
+
+  return <ul style={styles.ul}>{days}</ul>;
 };
 
 const Advert = () => {
   return (
     <li style={{ ...styles.li, ...styles.adContainer }}>
-      <h6 style={styles.adText}>Advert</h6>
+      <h3 style={styles.adText}>Advert</h3>
 
       <blockquote className="twitter-tweet" data-dnt="true">
         <p lang="en" dir="ltr">
@@ -112,14 +113,13 @@ const Advert = () => {
       <script async src="https://platform.twitter.com/widgets.js" />
 
       <p style={styles.adText}>
-        Why?: Because it&apos;s a heatwave, let&apos;s show a picture of{' '}
+        Why this Ad?: Because it&apos;s a heatwave, let&apos;s show a picture of{' '}
         <Link href="https://undergroundcomedian.wordpress.com/gonzo/">
           Nigel Thomas
         </Link>{' '}
-        with his shirt off
+        with his shirt off. (Sunglasses recommended 😎)
       </p>
-      <p style={styles.adText}>(Sunglasses recommended 😎)</p>
-      <h6 style={styles.adText}>End of Advert</h6>
+      <h3 style={styles.adText}>End of Advert</h3>
     </li>
   );
 };

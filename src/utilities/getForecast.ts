@@ -15,7 +15,9 @@ import type { Items } from '@/utilities/transformMetOfficeJSON';
 import SpecialDate from '../types/specialDate';
 
 import windyDailyForecastJSON from '../../data/windy/windy-daily.json' with { type: 'json' };
-import windHourlyForecastJSON from '../../data/windy/windy-hourly.json' with { type: 'json' };
+import windyHourlyForecastJSON from '../../data/windy/windy-hourly.json' with { type: 'json' };
+import heatwaveDailyForecastJSON from '../../data/heatwave/heatwave-daily.json' with { type: 'json' };
+import heatwaveHourlyForecastJSON from '../../data/heatwave/heatwave-hourly.json' with { type: 'json' };
 
 const todayOnwardsFilterMetOfficeJSON = (
   metOfficeJSON: MetOfficeDailyForecastGeoJSON
@@ -137,12 +139,28 @@ export const getWindyForecast = async (specialDates: SpecialDate[]) => {
   );
 
   const windyHourlyForecast = MetOfficeHourlyForecastGeoJSONSchema.parse(
-    windHourlyForecastJSON
+    windyHourlyForecastJSON
   );
 
   return transformMetOfficeJSON(
     windyDailyForecast,
     windyHourlyForecast,
+    specialDates
+  );
+};
+
+export const getHeatWaveForecast = async (specialDates: SpecialDate[]) => {
+  const heatwaveDailyForecast = MetOfficeDailyForecastGeoJSONSchema.parse(
+    heatwaveDailyForecastJSON
+  );
+
+  const heatwaveHourlyForecast = MetOfficeHourlyForecastGeoJSONSchema.parse(
+    heatwaveHourlyForecastJSON
+  );
+
+  return transformMetOfficeJSON(
+    heatwaveDailyForecast,
+    heatwaveHourlyForecast,
     specialDates
   );
 };
