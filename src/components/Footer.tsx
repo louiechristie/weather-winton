@@ -31,6 +31,7 @@ const GitHubBadge = () => (
         width={139}
         height={20}
         alt="Github Integration Tests"
+        unoptimized
       />
     </a>
   </>
