@@ -11,3 +11,4 @@ neostandard
 ss
 stringify
 polyfill
+Zod
