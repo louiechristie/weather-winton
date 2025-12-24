@@ -151,7 +151,7 @@ const Day = (props: Item) => {
     const temperatureNumberHTML = `${tempInt}\u00A0`;
 
     const dialTemperatureHtml = (
-      <span style={{ fontWeight: 400, fontSize: '1.08rem' }}>
+      <span style={{ fontWeight: 500, fontSize: '1.1rem' }}>
         {temperatureNumberHTML}
       </span>
     );
@@ -210,20 +210,24 @@ const Day = (props: Item) => {
     const isMinTemp = tempInt === minTempInt;
     const isMaxTemp = tempInt === maxTempInt;
 
+    const indicatorHtml = <span style={{ fontSize: '1rem' }}>{'▲'}</span>;
+
     if (
       maxTempInt - minTempInt >= spacer ||
       minTempInt < 1 ||
       maxTempInt > 26
     ) {
       // If a decent temp change show range, or if unusually high/low show temp
-      if (isToday && isCurrentTemp) return '▲';
-      if (!isToday && isAverageTemp) return '▲';
+      if (isToday && isCurrentTemp) {
+        return indicatorHtml;
+      }
+      if (!isToday && isAverageTemp) return indicatorHtml;
       if (isMinTemp) return <span style={{}}>{'⇤'}</span>;
       if (isMaxTemp) return <span style={{}}>{'⇥'}</span>;
     } else {
       // Else show average only
-      if (isToday && isCurrentTemp) return '▲';
-      if (!isToday && isAverageTemp) return '▲';
+      if (isToday && isCurrentTemp) return indicatorHtml;
+      if (!isToday && isAverageTemp) return indicatorHtml;
     }
 
     return '';
