@@ -1,6 +1,6 @@
 import { Temporal } from 'temporal-polyfill';
 
-import getEaster from './date/getEaster';
+import getEaster from './getEaster';
 
 const getPancakeDayDate = (year: number = Temporal.Now.plainDateISO().year) => {
   const easter = getEaster(year);

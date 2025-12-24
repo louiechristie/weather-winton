@@ -1,4 +1,4 @@
-import getPancakeDayDate from '../getPancakeDayDate';
+import getPancakeDayDate from './getPancakeDay';
 
 // Dates from https://en.wikipedia.org/wiki/Shrove_Tuesday
 

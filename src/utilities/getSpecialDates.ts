@@ -4,7 +4,7 @@ import { Temporal } from 'temporal-polyfill';
 import timezone from 'dayjs/plugin/timezone.js';
 import utc from 'dayjs/plugin/utc.js';
 import customParseFormat from 'dayjs/plugin/customParseFormat.js';
-import getPancakeDayDate from './getPancakeDayDate';
+import getPancakeDayDate from './date/getPancakeDay';
 import SpecialDate from '@/types/specialDate';
 import { BankHoliday } from '@/types/bankHolidays';
 
