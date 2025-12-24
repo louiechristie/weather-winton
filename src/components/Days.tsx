@@ -80,7 +80,7 @@ const Days = (props: Props) => {
     );
   });
 
-  if (thirdDayOfHeatWaveIndex) {
+  if (thirdDayOfHeatWaveIndex !== -1) {
     days = days.toSpliced(thirdDayOfHeatWaveIndex, 0, <Advert />);
   }
 
