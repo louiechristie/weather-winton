@@ -64,23 +64,7 @@ const Days = (props: Props) => {
   return (
     <ul style={styles.ul}>
       {items.map((item, index) => {
-        const {
-          friendlyDate,
-          friendlyTemperature,
-          time,
-          icon,
-          description,
-          minTemperature,
-          maxTemperature,
-          relativeHumidity,
-          isSticky,
-          isDry,
-          isTakeRaincoat,
-          isSnowDay,
-          averageTemperature,
-          currentTemperature,
-          stormName,
-        } = item;
+        const { time } = item;
 
         return (
           <div key={time}>
@@ -91,23 +75,7 @@ const Days = (props: Props) => {
                   time
                 ).format('YYYY-MM-DD')}`}
               >
-                <Day
-                  friendlyDate={friendlyDate}
-                  friendlyTemperature={friendlyTemperature}
-                  time={time}
-                  icon={icon}
-                  description={description}
-                  minTemperature={minTemperature}
-                  maxTemperature={maxTemperature}
-                  averageTemperature={averageTemperature}
-                  relativeHumidity={relativeHumidity}
-                  isSticky={isSticky}
-                  isDry={isDry}
-                  isTakeRaincoat={isTakeRaincoat}
-                  isSnowDay={isSnowDay}
-                  currentTemperature={currentTemperature}
-                  stormName={stormName}
-                />
+                <Day {...item} />
               </Link>
             </li>
             <>{getThirdDayOfHeatwaveIndex(items) === index && <Advert />}</>
