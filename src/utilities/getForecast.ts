@@ -5,13 +5,17 @@ import generateMockHourlyMetOfficeJSON from '../tests/generateMockHourlyMetOffic
 import generateStormBramDailyMetOfficeJSON from '../tests/generateStormBramMetOfficeJSON';
 import transformMetOfficeJSON from './transformMetOfficeJSON';
 import {
-  MetOfficeDailyForecastGeoJSONSchema,
   MetOfficeDailyForecastGeoJSON,
+  MetOfficeDailyForecastGeoJSONSchema,
+  MetOfficeHourlyForecastGeoJSONSchema,
   DailyWeatherData,
 } from '../types/metOffice';
 
 import type { Items } from '@/utilities/transformMetOfficeJSON';
 import SpecialDate from '../types/specialDate';
+
+import windyDailyForecastJSON from '../../data/windy/windy-daily.json' with { type: 'json' };
+import windHourlyForecastJSON from '../../data/windy/windy-hourly.json' with { type: 'json' };
 
 const todayOnwardsFilterMetOfficeJSON = (
   metOfficeJSON: MetOfficeDailyForecastGeoJSON
@@ -123,6 +127,22 @@ export const getStormDatesForecast = async (specialDates: SpecialDate[]) => {
   return transformMetOfficeJSON(
     stormDatesForecast,
     mockHourlyMetOfficeJSON,
+    specialDates
+  );
+};
+
+export const getWindyForecast = async (specialDates: SpecialDate[]) => {
+  const windyDailyForecast = MetOfficeDailyForecastGeoJSONSchema.parse(
+    windyDailyForecastJSON
+  );
+
+  const windyHourlyForecast = MetOfficeHourlyForecastGeoJSONSchema.parse(
+    windHourlyForecastJSON
+  );
+
+  return transformMetOfficeJSON(
+    windyDailyForecast,
+    windyHourlyForecast,
     specialDates
   );
 };

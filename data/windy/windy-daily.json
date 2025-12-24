@@ -1,0 +1,62 @@
+{
+  "features": [
+    {
+      "geometry": {
+        "coordinates": [0.042, 51.4862, 31],
+        "type": "Point"
+      },
+      "properties": {
+        "modelRunDate": "2025-12-24T08:00Z",
+        "requestPointDistance": 1029.857,
+        "timeSeries": [
+          {
+            "dayLowerBoundMaxFeelsLikeTemp": -0.12,
+            "dayLowerBoundMaxTemp": 4.75,
+            "dayMaxFeelsLikeTemp": 0.24,
+            "dayMaxScreenTemperature": 5.23,
+            "dayProbabilityOfHail": 0,
+            "dayProbabilityOfHeavyRain": 0,
+            "dayProbabilityOfHeavySnow": 0,
+            "dayProbabilityOfPrecipitation": 8,
+            "dayProbabilityOfRain": 7,
+            "dayProbabilityOfSferics": 0,
+            "dayProbabilityOfSnow": 2,
+            "daySignificantWeatherCode": 7,
+            "dayUpperBoundMaxFeelsLikeTemp": 1.38,
+            "dayUpperBoundMaxTemp": 6.1,
+            "maxUvIndex": 1,
+            "midday10MWindDirection": 68,
+            "midday10MWindGust": 15.96,
+            "midday10MWindSpeed": 8.86,
+            "middayMslp": 103239,
+            "middayRelativeHumidity": 60.08,
+            "middayVisibility": 28577,
+            "midnight10MWindDirection": 42,
+            "midnight10MWindGust": 13.11,
+            "midnight10MWindSpeed": 6.57,
+            "midnightMslp": 103160,
+            "midnightRelativeHumidity": 71.53,
+            "midnightVisibility": 37800,
+            "nightLowerBoundMinFeelsLikeTemp": -3.91,
+            "nightLowerBoundMinTemp": 1.07,
+            "nightMinFeelsLikeTemp": -2.41,
+            "nightMinScreenTemperature": 2.66,
+            "nightProbabilityOfHail": 0,
+            "nightProbabilityOfHeavyRain": 0,
+            "nightProbabilityOfHeavySnow": 0,
+            "nightProbabilityOfPrecipitation": 4,
+            "nightProbabilityOfRain": 4,
+            "nightProbabilityOfSferics": 0,
+            "nightProbabilityOfSnow": 2,
+            "nightSignificantWeatherCode": 2,
+            "nightUpperBoundMinFeelsLikeTemp": -1.8,
+            "nightUpperBoundMinTemp": 3.7,
+            "time": "2025-12-24T00:00Z"
+          }
+        ]
+      },
+      "type": "Feature"
+    }
+  ],
+  "type": "FeatureCollection"
+}
