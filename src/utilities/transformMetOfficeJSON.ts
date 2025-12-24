@@ -40,6 +40,7 @@ export type Item = {
   averageTemperature: number;
   currentTemperature: number;
   stormName: string | null;
+  isWindy: boolean;
 };
 
 export type Items = Item[];
