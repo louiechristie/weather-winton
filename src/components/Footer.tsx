@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from 'next/image';
 import dayjs from 'dayjs';
 import { theme, Paper, Typography } from '../utilities/theme';
 import Meta from '@/types/meta';
@@ -25,13 +24,12 @@ const styles = {
 const GitHubBadge = () => (
   <>
     <a href="https://github.com/louiechristie/weather-winton/">
-      <Image
+      <img
         style={{ verticalAlign: 'middle' }}
         src="https://github.com/louiechristie/weather-winton/actions/workflows/playwright.yml/badge.svg"
         width={139}
         height={20}
         alt="Github Integration Tests"
-        unoptimized
       />
     </a>
   </>
