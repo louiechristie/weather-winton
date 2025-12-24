@@ -1,4 +1,4 @@
-import getForecast, { getMockForecast } from '@/utilities/getForecast';
+import { getMockForecast } from '@/utilities/getForecast';
 import { getPageProps } from '@/utilities/display/getPageProps';
 import Page, { PageProps } from '@/components/Page';
 
@@ -9,8 +9,5 @@ export default function Home(props: PageProps) {
 }
 
 export async function getStaticProps() {
-  if (process.env.NODE_ENV === 'production') {
-    return await getPageProps(getForecast);
-  }
   return await getPageProps(getMockForecast);
 }
