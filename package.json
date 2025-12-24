@@ -2,7 +2,7 @@
   "name": "weather-winton",
   "title": "Weather Winton",
   "description": "Weather Winton is an experiment in friendly weather forecasting.",
-  "version": "0.38.0",
+  "version": "0.39.0",
   "type": "module",
   "private": true,
   "author": {
@@ -35,11 +35,11 @@
     "@mui/material": "7.3.6",
     "axios": "1.13.2",
     "color": "5.0.3",
-    "date-holidays": "3.26.5",
+    "date-holidays": "3.26.6",
     "dayjs": "1.11.19",
     "globals": "16.5.0",
     "neostandard": "0.12.2",
-    "next": "16.1.0",
+    "next": "16.1.1",
     "react": "19",
     "react-dom": "19",
     "temporal-polyfill": "0.3.0",
@@ -56,11 +56,11 @@
     "@types/node": "24",
     "@types/react": "19",
     "@types/react-dom": "19",
-    "@typescript-eslint/eslint-plugin": "8.50.0",
-    "@typescript-eslint/parser": "8.50.0",
+    "@typescript-eslint/eslint-plugin": "8.50.1",
+    "@typescript-eslint/parser": "8.50.1",
     "dotenv": "17.2.3",
     "eslint": "9",
-    "eslint-config-next": "16.1.0",
+    "eslint-config-next": "16.1.1",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-import": "2.32.0",
     "eslint-plugin-jsx-a11y": "6.10.2",
@@ -79,10 +79,10 @@
     "ts-jest": "29.4.6",
     "ts-node": "10.9.2",
     "typescript": "5",
-    "typescript-eslint": "8.50.0"
+    "typescript-eslint": "8.50.1"
   },
   "overrides": {
-    "@typescript-eslint/parser": "8.50.0"
+    "@typescript-eslint/parser": "8.50.1"
   },
   "engines": {
     "node": "24.x"
