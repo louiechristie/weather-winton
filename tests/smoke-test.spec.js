@@ -60,6 +60,6 @@ test.describe('named storm', async () => {
   });
 
   test('storm Bram', async ({ page }) => {
-    await expect(page.getByText('Storm Bram')).toBeVisible();
+    await expect(page.getByText('Storm Bram')).toHaveCount(2);
   });
 });
