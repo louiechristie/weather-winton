@@ -4,7 +4,14 @@ import { AxeResults } from 'axe-core';
 
 const baseUrl = process.env.BASE_URL || 'http://localhost:3000';
 
-const stubs = ['/', '/test/', '/fun/', '/test/windy/', '/test/heatwave/'];
+const stubs = [
+  '/',
+  '/test/',
+  '/fun/',
+  '/test/windy/',
+  '/test/heatwave/',
+  '/error/',
+];
 
 test.describe('Accessibility', () => {
   let totalNumberOfAccessiblityIssues = 0;
