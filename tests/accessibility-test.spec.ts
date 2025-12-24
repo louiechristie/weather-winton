@@ -1,30 +1,62 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+import { AxeResults } from 'axe-core';
 
 const baseUrl = process.env.BASE_URL || 'http://localhost:3000';
 
+const stubs = ['/', '/test/', '/fun/', '/test/windy/', '/test/heatwave/'];
+
 test.describe('Accessibility', () => {
-  test('should not have any automatically detectable accessibility issues', async ({
-    page,
-  }) => {
-    await page.goto(baseUrl);
+  let totalNumberOfAccessiblityIssues = 0;
 
-    const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
+  type Violations = AxeResults['violations']; // the array type
+  type Violation = Violations[number]; // a single violation item
 
-    const numberOfAccessiblityIssues =
-      accessibilityScanResults.violations.length;
+  interface HashMap<T> {
+    [key: string]: T;
+  }
 
-    if (numberOfAccessiblityIssues > 0) {
-      console.warn(
-        'Number of accessibility issues: ',
-        numberOfAccessiblityIssues
-      );
+  type AccessibilityIssue = Violation & {
+    count: number;
+  };
 
-      accessibilityScanResults.violations.forEach((violation) => {
-        console.warn(violation.description, ': ', violation.nodes.length);
-      });
-    }
+  // init the map
+  const accessibilityIssueMap: HashMap<AccessibilityIssue> = {};
 
-    expect(accessibilityScanResults.violations).toEqual([]);
+  stubs.forEach((stub) => {
+    test(`${stub} should not have any automatically detectable accessibility issues`, async ({
+      page,
+    }) => {
+      await page.goto(`${baseUrl}${stub}`);
+
+      const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
+
+      const violations = accessibilityScanResults.violations;
+      const numberOfAccessiblityIssues = violations.length;
+
+      totalNumberOfAccessiblityIssues =
+        totalNumberOfAccessiblityIssues + numberOfAccessiblityIssues;
+
+      if (numberOfAccessiblityIssues > 0) {
+        violations.forEach((violation) => {
+          accessibilityIssueMap[violation.id] = {
+            ...violation,
+            count: accessibilityIssueMap[violation.id]?.count + 1,
+          };
+          console.warn(violation.description, ': ', violation.nodes.length);
+        });
+      }
+
+      expect(accessibilityScanResults.violations).toEqual([]);
+    });
   });
+
+  if (totalNumberOfAccessiblityIssues > 0) {
+    Object.values(accessibilityIssueMap).forEach((issue) => {
+      console.warn(issue.description, ': ', issue.count);
+    });
+  }
+
+  expect(totalNumberOfAccessiblityIssues).toEqual(0);
+  expect(accessibilityIssueMap).toEqual({});
 });
