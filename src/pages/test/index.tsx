@@ -9,8 +9,5 @@ export default function Home(props: PageProps) {
 }
 
 export async function getStaticProps() {
-  if (process.env.NODE_ENV === 'production') {
-    return await getPageProps(getMockForecast);
-  }
   return await getPageProps(getMockForecast);
 }
