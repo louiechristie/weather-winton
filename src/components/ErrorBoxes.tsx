@@ -45,9 +45,6 @@ const styles: { [key: string]: React.CSSProperties } = {
     flexDirection: 'row',
     overflow: 'hidden',
   },
-  scaleNumber: {
-    fontSize: '0.8rem',
-  },
   indicator: {
     fontSize: '0.6rem',
     lineHeight: '0.6rem',
@@ -71,7 +68,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     flex: 11,
   },
   warm: {
-    color: 'rgba(0,0,0, 0.7)',
+    color: 'rgba(0,0,0, 0.75)',
     borderWidth: 0,
     backgroundColor: '#f1d220',
   },
@@ -86,7 +83,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     backgroundColor: '#0075c4',
   },
   freezing: {
-    color: 'white',
+    color: 'rgba(1,1,1, 0.75)',
     borderWidth: 0,
     backgroundColor: '#004a93',
   },

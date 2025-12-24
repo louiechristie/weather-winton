@@ -43,9 +43,6 @@ const styles: { [key: string]: React.CSSProperties } = {
     flexDirection: 'row',
     overflow: 'hidden',
   },
-  scaleNumber: {
-    fontSize: '0.8rem',
-  },
   indicator: {
     fontSize: '0.6rem',
     lineHeight: '0.6rem',
@@ -55,6 +52,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     paddingTop: '4px',
     paddingBottom: '8px',
   },
+  temperatureName: { fontSize: '1.2rem', fontWeight: 400 },
   swatch: {},
   freezingSwatch: {
     flex: 18035,
@@ -69,7 +67,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     flex: 11,
   },
   warm: {
-    color: 'rgba(0,0,0, 0.7)',
+    color: 'black',
     borderWidth: 0,
     backgroundColor: '#f1d220',
   },
@@ -152,23 +150,35 @@ const Day = (props: Item) => {
 
     const temperatureNumberHTML = `${tempInt}\u00A0`;
 
+    const dialTemperatureHtml = (
+      <span style={{ fontWeight: 400, fontSize: '1.08rem' }}>
+        {temperatureNumberHTML}
+      </span>
+    );
+
+    const otherTemperatures = <span>{temperatureNumberHTML}</span>;
+
     if (
       maxTempInt - minTempInt >= spacer ||
       minTempInt < 1 ||
       maxTempInt > 26
     ) {
       // If a decent temp change show range, or if unusually high/low show temp
-      if (isDialTemp) return temperatureNumberHTML;
+      if (isDialTemp) return dialTemperatureHtml;
       if (isMinTemp) {
-        return <span style={{ opacity: 0.75 }}>{temperatureNumberHTML}</span>;
+        return otherTemperatures;
       }
       if (isMaxTemp) {
-        return <span style={{ opacity: 0.75 }}>{temperatureNumberHTML}</span>;
+        return otherTemperatures;
       }
-      if (isDialTemp) return temperatureNumberHTML;
+      if (isDialTemp) {
+        return dialTemperatureHtml;
+      }
     } else {
       // Else show average only decent temp change
-      if (isDialTemp) return temperatureNumberHTML;
+      if (isDialTemp) {
+        return dialTemperatureHtml;
+      }
     }
 
     if (tempInt % 10 === 0) {
@@ -187,7 +197,7 @@ const Day = (props: Item) => {
         isAwayFromMinTemp &&
         isAwayFromMaxTemp
       ) {
-        return <span style={{ opacity: 0.75 }}>{temperatureNumberHTML}</span>;
+        return otherTemperatures;
       }
     }
 
@@ -208,8 +218,8 @@ const Day = (props: Item) => {
       // If a decent temp change show range, or if unusually high/low show temp
       if (isToday && isCurrentTemp) return '▲';
       if (!isToday && isAverageTemp) return '▲';
-      if (isMinTemp) return <span style={{ opacity: 0.75 }}>{'⇤'}</span>;
-      if (isMaxTemp) return <span style={{ opacity: 0.75 }}>{'⇥'}</span>;
+      if (isMinTemp) return <span style={{}}>{'⇤'}</span>;
+      if (isMaxTemp) return <span style={{}}>{'⇥'}</span>;
     } else {
       // Else show average only
       if (isToday && isCurrentTemp) return '▲';
@@ -380,7 +390,11 @@ const Day = (props: Item) => {
                 })}
               </Box>
               <Box style={styles.temperature}>
-                <Typography variant="body1" component="p">
+                <Typography
+                  variant="body1"
+                  component="p"
+                  style={styles.temperatureName}
+                >
                   {getTemperatureFriendly(averageTempInt)}
                 </Typography>
               </Box>
