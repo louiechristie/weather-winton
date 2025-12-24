@@ -1,6 +1,3 @@
-// From https://www.rmg.co.uk/stories/time/when-easter
-
-import { Temporal } from 'temporal-polyfill';
 import getEaster from './getEaster';
 
 describe('getEaster', () => {
