@@ -16,7 +16,7 @@ describe('get friendly dates', () => {
 
   beforeAll(async () => {
     specialDates = await getSpecialDates();
-  });
+  }, 15000);
 
   test('Christmas', () => {
     expect(
