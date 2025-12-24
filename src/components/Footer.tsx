@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import dayjs from 'dayjs';
 import { theme, Paper, Typography } from '../utilities/theme';
 import Meta from '@/types/meta';
@@ -24,10 +25,12 @@ const styles = {
 const GitHubBadge = () => (
   <>
     <a href="https://github.com/louiechristie/weather-winton/">
-      <img
+      <Image
         style={{ verticalAlign: 'middle' }}
         src="https://github.com/louiechristie/weather-winton/actions/workflows/playwright.yml/badge.svg"
-        alt="Github logo"
+        width={139}
+        height={20}
+        alt="Github Integration Tests"
       />
     </a>
   </>
@@ -47,7 +50,7 @@ const HostedOn = () => {
     );
   }
 
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.VERCEL) {
     return (
       <>
         <img
