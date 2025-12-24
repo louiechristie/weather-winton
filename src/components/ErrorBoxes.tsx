@@ -116,38 +116,36 @@ const ErrorBoxes = (props: Props) => {
         const { friendlyDate, time, icon, description } = item;
 
         return (
-          <div key={time}>
-            <li style={listStyles.li}>
-              <Card key={time}>
-                <div>
-                  <Typography
-                    variant="h5"
-                    component="h2"
-                    style={styles.friendlyDate}
-                  >
-                    {friendlyDate}
-                  </Typography>
-                  <Typography
-                    variant="h6"
-                    component="p"
-                    style={{ display: 'none' }}
-                  >
-                    Time: {time}
-                  </Typography>
-                </div>
-                <div>
-                  <img style={styles.svgIcon} src={icon} alt={description} />
-                  <Typography
-                    style={styles.description}
-                    variant="h6"
-                    component="p"
-                  >
-                    {description}
-                  </Typography>
-                </div>
-              </Card>
-            </li>
-          </div>
+          <li style={listStyles.li} key={time}>
+            <Card>
+              <div>
+                <Typography
+                  variant="h5"
+                  component="h2"
+                  style={styles.friendlyDate}
+                >
+                  {friendlyDate}
+                </Typography>
+                <Typography
+                  variant="h6"
+                  component="p"
+                  style={{ display: 'none' }}
+                >
+                  Time: {time}
+                </Typography>
+              </div>
+              <div>
+                <img style={styles.svgIcon} src={icon} alt={description} />
+                <Typography
+                  style={styles.description}
+                  variant="h6"
+                  component="p"
+                >
+                  {description}
+                </Typography>
+              </div>
+            </Card>
+          </li>
         );
       })}
     </ul>
