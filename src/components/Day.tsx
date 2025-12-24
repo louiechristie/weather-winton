@@ -132,6 +132,7 @@ const Day = (props: Item) => {
     averageTemperature,
     currentTemperature,
     stormName,
+    isWindy,
   } = props;
 
   const minTempInt = Math.round(minTemperature);
@@ -294,6 +295,7 @@ const Day = (props: Item) => {
 
   return (
     <Card key={time}>
+      {/* <pre>{JSON.stringify(props, null, 2)}</pre> */}
       <div>
         <Typography variant="h5" component="h2" style={styles.friendlyDate}>
           {friendlyDate}
@@ -324,6 +326,7 @@ const Day = (props: Item) => {
           )}
           {isTakeRaincoat && <div style={styles.label}>Take raincoat 🧥</div>}
           {isSnowDay && <div style={styles.label}>Snow ❄️☃️</div>}
+          {isWindy && <div style={styles.label}>Windy 🌬️</div>}
 
           {stormName && <div style={styles.label}>Storm {stormName} 🌬️</div>}
 
