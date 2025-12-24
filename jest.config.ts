@@ -108,7 +108,7 @@ const config: JestConfigWithTsJest = {
   // projects: undefined,
 
   // Use this configuration option to add custom reporters to Jest
-  // reporters: ['jest-silent-reporter'],
+  reporters: ['jest-silent-reporter'],
 
   // Automatically reset mock state before every test
   // resetMocks: false,
