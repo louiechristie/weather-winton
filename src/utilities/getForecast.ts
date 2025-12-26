@@ -15,9 +15,7 @@ import type { Items } from '@/utilities/transformMetOfficeJSON';
 import SpecialDate from '../types/specialDate';
 
 import windyDailyForecastJSON from '../../data/windy/windy-daily.json' with { type: 'json' };
-import windyHourlyForecastJSON from '../../data/windy/windy-hourly.json' with { type: 'json' };
 import heatwaveDailyForecastJSON from '../../data/heatwave/heatwave-daily.json' with { type: 'json' };
-import heatwaveHourlyForecastJSON from '../../data/heatwave/heatwave-hourly.json' with { type: 'json' };
 
 const todayOnwardsFilterMetOfficeJSON = (
   metOfficeJSON: MetOfficeDailyForecastGeoJSON
@@ -81,10 +79,12 @@ const getMetOfficeForecast = async (specialDates: SpecialDate[]) => {
 
   const hourlyJson = await hourlyResponse.json();
 
+  const hourlyForecast = MetOfficeHourlyForecastGeoJSONSchema.parse(hourlyJson);
+
   const items = await transformMetOfficeJSON(
+    specialDates,
     dailyFromTodayJson,
-    hourlyJson,
-    specialDates
+    hourlyForecast
   );
   return items;
 };
@@ -99,9 +99,9 @@ export const getMockForecast = async (specialDates: SpecialDate[]) => {
     dayjs().toISOString()
   );
   return transformMetOfficeJSON(
+    specialDates,
     dailyFromTodayJson,
-    mockHourlyMetOfficeJSON,
-    specialDates
+    mockHourlyMetOfficeJSON
   );
 };
 
@@ -113,9 +113,9 @@ export const getSpecialDatesForecast = async (specialDates: SpecialDate[]) => {
     dayjs().toISOString()
   );
   return transformMetOfficeJSON(
+    specialDates,
     specialDatesDailyMetOfficeJSON,
-    mockHourlyMetOfficeJSON,
-    specialDates
+    mockHourlyMetOfficeJSON
   );
 };
 
@@ -127,9 +127,9 @@ export const getStormDatesForecast = async (specialDates: SpecialDate[]) => {
     dayjs().toISOString()
   );
   return transformMetOfficeJSON(
+    specialDates,
     stormDatesForecast,
-    mockHourlyMetOfficeJSON,
-    specialDates
+    mockHourlyMetOfficeJSON
   );
 };
 
@@ -138,15 +138,7 @@ export const getWindyForecast = async (specialDates: SpecialDate[]) => {
     windyDailyForecastJSON
   );
 
-  const windyHourlyForecast = MetOfficeHourlyForecastGeoJSONSchema.parse(
-    windyHourlyForecastJSON
-  );
-
-  return transformMetOfficeJSON(
-    windyDailyForecast,
-    windyHourlyForecast,
-    specialDates
-  );
+  return transformMetOfficeJSON(specialDates, windyDailyForecast);
 };
 
 export const getHeatWaveForecast = async (specialDates: SpecialDate[]) => {
@@ -154,15 +146,7 @@ export const getHeatWaveForecast = async (specialDates: SpecialDate[]) => {
     heatwaveDailyForecastJSON
   );
 
-  const heatwaveHourlyForecast = MetOfficeHourlyForecastGeoJSONSchema.parse(
-    heatwaveHourlyForecastJSON
-  );
-
-  return transformMetOfficeJSON(
-    heatwaveDailyForecast,
-    heatwaveHourlyForecast,
-    specialDates
-  );
+  return transformMetOfficeJSON(specialDates, heatwaveDailyForecast);
 };
 
 const getForecast = async (specialDates: SpecialDate[]): Promise<Items> => {

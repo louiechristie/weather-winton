@@ -74,9 +74,9 @@ export function isItems(items: any): items is Items {
 }
 
 const transformMetOfficeJSON = async (
+  specialDates: SpecialDate[],
   dailyJson: MetOfficeDailyForecastGeoJSON,
-  hourlyJson: MetOfficeHourlyForecastGeoJSON,
-  specialDates: SpecialDate[]
+  hourlyJson?: MetOfficeHourlyForecastGeoJSON
 ): Promise<Item[]> => {
   const items: Items = dailyJson.features[0].properties.timeSeries.map(
     (day) => {
@@ -84,7 +84,12 @@ const transformMetOfficeJSON = async (
         day.dayMaxScreenTemperature,
         day.dayLowerBoundMaxTemp
       );
-      const currentTemperature = getCurrentTemperature(hourlyJson);
+      let currentTemperature = avgTemperature;
+
+      if (hourlyJson) {
+        currentTemperature = getCurrentTemperature(hourlyJson);
+      }
+
       return {
         time: day.time,
         friendlyDate: getFriendlyDateFromISODate(day.time, specialDates),
@@ -126,7 +131,7 @@ const transformMetOfficeJSON = async (
 
   const today = items[0];
 
-  if (isItem(today)) {
+  if (hourlyJson && isItem(today)) {
     const hourlyTimeSeries = hourlyJson.features[0].properties.timeSeries;
 
     const isSnowDay =
