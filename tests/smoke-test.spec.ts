@@ -1,53 +1,71 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, Page } from '@playwright/test';
 
 const baseUrl = process.env.BASE_URL || 'http://localhost:3000';
 
-test('has title', async ({ page }) => {
-  console.log('baseUrl: ', baseUrl);
-  await page.goto(baseUrl);
+test.describe('main page', () => {
+  test.describe.configure({ mode: 'serial' });
 
-  // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle(/South London | Weather Winton/);
-});
+  let page: Page;
 
-test('doesn\'t say "Probably Raining"', async ({ page }) => {
-  await page.goto(baseUrl);
-
-  await expect(page.getByText('Probably Raining')).toBeVisible({
-    visible: false,
+  test.beforeAll(async ({ browser }) => {
+    page = await browser.newPage();
+    console.log('baseUrl: ', baseUrl);
+    await page.goto(baseUrl);
   });
-});
 
-test('doesn\'t have "Yesterday"', async ({ page }) => {
-  await page.goto(baseUrl);
+  test.afterAll(async () => {
+    await page.close();
+  });
 
-  await expect(page.getByText('Yesterday')).toBeVisible({
-    visible: false,
+  test('has title', async () => {
+    // Expect a title "to contain" a substring.
+    await expect(page).toHaveTitle(/South London | Weather Winton/);
+  });
+
+  test('doesn\'t say "Probably Raining"', async () => {
+    await expect(page.getByText('Probably Raining')).toBeVisible({
+      visible: false,
+    });
+  });
+
+  test('doesn\'t have "Yesterday"', async () => {
+    await expect(page.getByText('Yesterday')).toBeVisible({
+      visible: false,
+    });
   });
 });
 
 test.describe('fun dates', async () => {
-  test.beforeEach(async ({ page }) => {
+  test.describe.configure({ mode: 'serial' });
+
+  let page: Page;
+
+  test.beforeAll(async ({ browser }) => {
+    page = await browser.newPage();
     await page.goto(baseUrl + '/fun');
   });
 
-  test('pancake day', async ({ page }) => {
+  test.afterAll(async () => {
+    await page.close();
+  });
+
+  test('pancake day', async () => {
     await expect(page.getByText('Pancake Day 🥞')).toBeVisible();
   });
 
-  test('Easter Monday', async ({ page }) => {
+  test('Easter Monday', async () => {
     await expect
       .poll(() => page.getByText('Easter Monday').count())
       .toBeGreaterThan(0);
   });
 
-  test('April fools day 🤹', async ({ page }) => {
+  test('April fools day 🤹', async () => {
     await expect
       .poll(() => page.getByText('April fools day 🤹').count())
       .toBeGreaterThan(0);
   });
 
-  test("Mother's day", async ({ page }) => {
+  test("Mother's day", async () => {
     await expect
       .poll(() => page.getByText("Mother's day").count())
       .toBeGreaterThan(0);
@@ -55,11 +73,8 @@ test.describe('fun dates', async () => {
 });
 
 test.describe('named storm', async () => {
-  test.beforeEach(async ({ page }) => {
-    await page.goto(baseUrl + '/storm/');
-  });
-
   test('storm Bram', async ({ page }) => {
+    await page.goto(baseUrl + '/storm/');
     await expect(page.getByText('Storm Bram')).toHaveCount(2);
     await expect(page.getByText('heatwave')).toHaveCount(0);
     await expect(page.getByText('Windy').first()).toBeVisible();
