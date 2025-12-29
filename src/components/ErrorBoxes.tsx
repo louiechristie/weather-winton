@@ -116,7 +116,7 @@ const ErrorBoxes = (props: Props) => {
         const { friendlyDate, time, icon, description } = item;
 
         return (
-          <li style={listStyles.li} key={time}>
+          <li style={listStyles.li} key={description}>
             <Card>
               <div>
                 <Typography
