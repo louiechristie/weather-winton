@@ -25,7 +25,7 @@ import getStormName from './getStormName';
 import { Temporal } from 'temporal-polyfill';
 
 export type Item = {
-  time: string;
+  time: string; //  e.g. 2025-12-27T00:00Z - ISO 8601 format
   friendlyDate: string;
   friendlyTemperature: string;
   description: string;
@@ -44,6 +44,16 @@ export type Item = {
 };
 
 export type Items = Item[];
+
+const isValidTime = (time: string) => {
+  try {
+    Temporal.Instant.from(time);
+  } catch (e) {
+    console.error(`Invalid time error for ${time}: `, e);
+    return false;
+  }
+  return true;
+};
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function isItem(item: any): item is Item {
@@ -88,6 +98,10 @@ const transformMetOfficeJSON = async (
 
       if (hourlyJson) {
         currentTemperature = getCurrentTemperature(hourlyJson);
+      }
+
+      if (!isValidTime(day.time)) {
+        throw new Error(`invalid date string: ${day.time}`);
       }
 
       return {
