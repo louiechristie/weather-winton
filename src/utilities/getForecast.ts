@@ -24,13 +24,13 @@ const todayOnwardsFilterMetOfficeJSON = (
   filtered.features[0].properties.timeSeries = [];
 
   const days = metOfficeJSON.features[0].properties.timeSeries;
-  const daysFiltered = days.filter(justTodayFilter);
+  const daysFiltered = days.filter(isSameOrAfterFilter);
   filtered.features[0].properties.timeSeries = daysFiltered;
 
   return filtered;
 };
 
-const justTodayFilter = (day: DailyWeatherData) => {
+const isSameOrAfterFilter = (day: DailyWeatherData) => {
   return dayjs(day.time).tz().isSameOrAfter(dayjs(), 'day');
 };
 
