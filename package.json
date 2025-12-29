@@ -9,6 +9,7 @@
     "name": "Louie Christie",
     "url": "https://www.louiechristie.com/"
   },
+  "license": "UNLICENSED",
   "main": "index.js",
   "scripts": {
     "start": "next dev --turbopack",
