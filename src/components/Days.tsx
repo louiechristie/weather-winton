@@ -81,7 +81,16 @@ const Days = (props: Props) => {
   });
 
   if (thirdDayOfHeatWaveIndex !== -1) {
-    days = days.toSpliced(thirdDayOfHeatWaveIndex, 0, <Advert />);
+    days = days.toSpliced(
+      thirdDayOfHeatWaveIndex,
+      0,
+      <li
+        style={{ ...styles.li, ...styles.adContainer }}
+        key={'advert-heatwave'}
+      >
+        <Advert />
+      </li>
+    );
   }
 
   return <ul style={styles.ul}>{days}</ul>;
@@ -89,9 +98,8 @@ const Days = (props: Props) => {
 
 const Advert = () => {
   return (
-    <li style={{ ...styles.li, ...styles.adContainer }}>
+    <>
       <h3 style={styles.adText}>Advert</h3>
-
       <blockquote className="twitter-tweet" data-dnt="true">
         <p lang="en" dir="ltr">
           Enjoy Beer, au naturel this weekend 🥵☀️
@@ -111,7 +119,6 @@ const Advert = () => {
         </a>
       </blockquote>
       <script async src="https://platform.twitter.com/widgets.js" />
-
       <p style={styles.adText}>
         Why this Ad?: Because it&apos;s a heatwave, let&apos;s show a picture of{' '}
         <Link href="https://undergroundcomedian.wordpress.com/gonzo/">
@@ -120,7 +127,7 @@ const Advert = () => {
         with his shirt off. (Sunglasses recommended 😎)
       </p>
       <h3 style={styles.adText}>End of Advert</h3>
-    </li>
+    </>
   );
 };
 
