@@ -42,7 +42,7 @@ test.describe('fun dates', async () => {
 
   test.beforeAll(async ({ browser }) => {
     page = await browser.newPage();
-    await page.goto(baseUrl + '/fun');
+    await page.goto(baseUrl + '/fun/');
   });
 
   test.afterAll(async () => {
@@ -83,15 +83,16 @@ test.describe('named storm', async () => {
 
 test.describe('weather conditions', async () => {
   test('windy', async ({ page }) => {
-    await page.goto(baseUrl + '/test/windy');
+    await page.goto(baseUrl + '/test/windy/');
     await expect(page.getByText('Windy')).toBeVisible();
     await expect(page.getByText('heatwave')).toHaveCount(0);
     await expect(page.getByText('Storm Bram')).toHaveCount(0);
   });
 
   test('heatwave', async ({ page }) => {
-    await page.goto(baseUrl + '/test/heatwave');
+    await page.goto(baseUrl + '/test/heatwave/');
     await expect(page.getByText('heatwave')).toBeVisible();
+    await expect(page.getByText('Enjoy Beer')).toBeVisible();
     await expect(page.getByText('Windy')).toHaveCount(0);
     await expect(page.getByText('Storm Bram')).toHaveCount(0);
   });
