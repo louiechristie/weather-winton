@@ -1,6 +1,6 @@
-import dayjs from 'dayjs';
+import { Temporal } from 'temporal-polyfill';
+
 import Link from 'next/link';
-import React from 'react';
 import { theme } from '../utilities/theme';
 import getThirdDayOfHeatwaveIndex from '../utilities/heatWaveUtils.mjs';
 import Day from './Day';
@@ -66,13 +66,18 @@ const Days = (props: Props) => {
   let days = items.map((item, index) => {
     const { time } = item;
 
+    const systemTimeZone = Temporal.Now.timeZoneId();
+
+    const plainDateString = Temporal.Instant.from(time)
+      .toZonedDateTimeISO(systemTimeZone)
+      .toPlainDate()
+      .toString();
+
     return (
       <li style={styles.li} key={time}>
         <Link
           style={styles.link}
-          href={`https://www.metoffice.gov.uk/weather/forecast/gcpuyudzk#?nearestTo=New%20Cross%20(Lewisham)&date=${dayjs(
-            time
-          ).format('YYYY-MM-DD')}`}
+          href={`https://www.metoffice.gov.uk/weather/forecast/gcpuyudzk#?nearestTo=New%20Cross%20(Lewisham)&date=${plainDateString}`}
         >
           <Day {...item} />
         </Link>
