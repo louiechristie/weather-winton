@@ -67,12 +67,11 @@ const HostedOn = () => {
 
 const Footer = (props: { meta: Meta }) => {
   const { meta } = props;
-  const localTime = dayjs.utc(meta.timeStamp).local().format();
 
   return (
     <Paper style={styles.footer} elevation={24} square>
       <Typography variant="body2" component="p" align="center">
-        Last updated: {localTime} | Hosted on: {HostedOn()}
+        Last updated: {meta.timeStamp} | Hosted on: {HostedOn()}
       </Typography>
 
       <Typography variant="body2" component="p" align="center">

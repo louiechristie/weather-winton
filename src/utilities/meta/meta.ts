@@ -1,19 +1,12 @@
-import dayjs from 'dayjs';
-import timezone from 'dayjs/plugin/timezone.js';
-import utc from 'dayjs/plugin/utc.js';
-import customParseFormat from 'dayjs/plugin/customParseFormat.js';
+import { Temporal } from 'temporal-polyfill';
+
 import manifest from 'package.json' with { type: 'json' };
 import type Meta from '@/types/meta';
 
-dayjs.extend(utc);
-dayjs.extend(timezone);
-dayjs.tz.setDefault('Europe/London');
-dayjs.extend(customParseFormat);
-
 const { title, description, author, version } = manifest;
 
-const now = dayjs();
-const nowTimeStamp = now.toISOString();
+const now = Temporal.Now.zonedDateTimeISO();
+const nowTimeStamp = now.toString();
 
 const CLOUDY_IMAGE_SRC =
   'https://www.metoffice.gov.uk/webfiles/latest/images/icons/weather/12.svg';
