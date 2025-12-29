@@ -22,6 +22,16 @@ test.describe('main page', () => {
     await expect(page).toHaveTitle(/South London | Weather Winton/);
   });
 
+  test('has heading 1', async () => {
+    await expect(
+      page.getByRole('heading', { name: 'Weather Winton', level: 1 })
+    ).toBeVisible();
+  });
+
+  test("has today's forecast", async () => {
+    await expect(page.getByText('Today')).toBeVisible({});
+  });
+
   test('doesn\'t say "Probably Raining"', async () => {
     await expect(page.getByText('Probably Raining')).toBeVisible({
       visible: false,
