@@ -13,6 +13,8 @@ import generateMockDailyMetOfficeJSON from '../tests/generateMockDailyMetOfficeJ
 import generateMockHourlyMetOfficeJSON from '../tests/generateMockHourlyMetOfficeJSON';
 import dayjs from 'dayjs';
 
+import SpecialDate from '@/types/specialDate';
+
 describe('getForecast module', () => {
   // ============================================================================
   // ENVIRONMENT VARIABLE TESTS
@@ -56,14 +58,16 @@ describe('getForecast module', () => {
   describe('Zod schema validation', () => {
     test('validates correct hourly forecast data', () => {
       const mockHourlyData = generateMockHourlyMetOfficeJSON();
-      const result = MetOfficeHourlyForecastGeoJSONSchema.safeParse(mockHourlyData);
+      const result =
+        MetOfficeHourlyForecastGeoJSONSchema.safeParse(mockHourlyData);
 
       expect(result.success).toBe(true);
     });
 
     test('validates correct daily forecast data', () => {
       const mockDailyData = generateMockDailyMetOfficeJSON();
-      const result = MetOfficeDailyForecastGeoJSONSchema.safeParse(mockDailyData);
+      const result =
+        MetOfficeDailyForecastGeoJSONSchema.safeParse(mockDailyData);
 
       expect(result.success).toBe(true);
     });
@@ -90,7 +94,8 @@ describe('getForecast module', () => {
 
     test('provides detailed error messages on validation failure', () => {
       const invalidData = { type: 'Wrong' };
-      const result = MetOfficeHourlyForecastGeoJSONSchema.safeParse(invalidData);
+      const result =
+        MetOfficeHourlyForecastGeoJSONSchema.safeParse(invalidData);
 
       expect(result.success).toBe(false);
       if (!result.success) {
@@ -105,8 +110,14 @@ describe('getForecast module', () => {
       const firstHour = mockData.features[0].properties.timeSeries[0];
 
       // These are optional in our schema
-      expect(firstHour.maxScreenAirTemp === undefined || typeof firstHour.maxScreenAirTemp === 'number').toBe(true);
-      expect(firstHour.minScreenAirTemp === undefined || typeof firstHour.minScreenAirTemp === 'number').toBe(true);
+      expect(
+        firstHour.maxScreenAirTemp === undefined ||
+          typeof firstHour.maxScreenAirTemp === 'number'
+      ).toBe(true);
+      expect(
+        firstHour.minScreenAirTemp === undefined ||
+          typeof firstHour.minScreenAirTemp === 'number'
+      ).toBe(true);
     });
   });
 
@@ -246,7 +257,7 @@ describe('getForecast module', () => {
     });
 
     test('returns a promise', () => {
-      const specialDates = [];
+      const specialDates: SpecialDate[] = [];
       const result = getForecast(specialDates);
       expect(result).toBeInstanceOf(Promise);
     });
