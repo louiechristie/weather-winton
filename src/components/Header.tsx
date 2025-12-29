@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Typography, AppBar, IconButton, Toolbar } from '../utilities/theme';
+import Link from 'next/link';
 
 import Meta from '@/types/meta';
 
@@ -45,9 +46,11 @@ function Header(props: Props) {
   return (
     <AppBar position="static" style={{ ...styles.appBar, ...temperatureClass }}>
       <Toolbar>
-        <IconButton edge="start" color="inherit" aria-label="menu">
-          <img style={styles.logo} src={image} alt={alt} />
-        </IconButton>
+        <Link href="/">
+          <IconButton edge="start" color="inherit" aria-label="menu">
+            <img style={styles.logo} src={image} alt={alt} />
+          </IconButton>
+        </Link>
         <div style={styles.titles}>
           <Typography variant="h6" component="h1">
             {title}
