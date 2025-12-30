@@ -96,7 +96,7 @@ const getMetOfficeForecast = async (specialDates: SpecialDate[]) => {
 
   const hourlyForecast = MetOfficeHourlyForecastGeoJSONSchema.parse(hourlyJson);
 
-  const items = await transformMetOfficeJSON(
+  const items = transformMetOfficeJSON(
     specialDates,
     dailyFromTodayJson,
     hourlyForecast

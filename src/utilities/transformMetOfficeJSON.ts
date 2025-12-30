@@ -1,4 +1,4 @@
-import dayjs from 'dayjs';
+import { Temporal } from 'temporal-polyfill';
 import getCurrentTemperature from './getCurrentTemperature.mjs';
 import {
   getDescriptionFromMetOfficeWeatherCode,
@@ -22,7 +22,6 @@ import {
 } from '../types/metOffice';
 import SpecialDate from '@/types/specialDate';
 import getStormName from './getStormName';
-import { Temporal } from 'temporal-polyfill';
 
 export type Item = {
   time: string; //  e.g. 2025-12-27T00:00Z - ISO 8601 format
@@ -83,11 +82,11 @@ export function isItems(items: any): items is Items {
   return Array.isArray(items) && items.length > 0 && isItem(items[0]);
 }
 
-const transformMetOfficeJSON = async (
+const transformMetOfficeJSON = (
   specialDates: SpecialDate[],
   dailyJson: MetOfficeDailyForecastGeoJSON,
   hourlyJson?: MetOfficeHourlyForecastGeoJSON
-): Promise<Item[]> => {
+): Item[] => {
   const items: Items = dailyJson.features[0].properties.timeSeries.map(
     (day) => {
       const avgTemperature = avg(
@@ -169,7 +168,10 @@ const transformMetOfficeJSON = async (
     items[0].maxTemperature = Math.max(
       ...hourlyTimeSeries
         .filter((hour) =>
-          getIsHourInTheRemainingDay(hour.time, dayjs().toISOString())
+          getIsHourInTheRemainingDay(
+            hour.time,
+            Temporal.Now.instant().toString()
+          )
         )
         .map((hour) => hour.screenTemperature)
     );
@@ -177,7 +179,10 @@ const transformMetOfficeJSON = async (
     items[0].minTemperature = Math.min(
       ...hourlyTimeSeries
         .filter((hour) =>
-          getIsHourInTheRemainingDay(hour.time, dayjs().toISOString())
+          getIsHourInTheRemainingDay(
+            hour.time,
+            Temporal.Now.instant().toString()
+          )
         )
         .map((hour) => hour.screenTemperature)
     );
