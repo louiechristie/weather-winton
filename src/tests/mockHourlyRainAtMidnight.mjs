@@ -1,5 +1,5 @@
 // import { SpotForecastFeatureCollection } from '../api/typescript-fetch-client/api';
-import getMockDate from './mockDate.mjs';
+import getMockDate from './getMockDate';
 
 const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
   type: 'FeatureCollection',
