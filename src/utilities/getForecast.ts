@@ -1,7 +1,4 @@
-import dayjs from 'dayjs';
-import isSameOrAfter from 'dayjs/plugin/isSameOrAfter.js';
-import timezone from 'dayjs/plugin/timezone.js';
-import utc from 'dayjs/plugin/utc.js';
+import { Temporal } from 'temporal-polyfill';
 
 import generateMockDailyMetOfficeJSON from '../tests/generateMockDailyMetOfficeJSON';
 import generateSpecialDatesDailyMetOfficeJSON from '../tests/generateSpecialDatesMetOfficeJSON';
@@ -21,10 +18,9 @@ import SpecialDate from '../types/specialDate';
 import windyDailyForecastJSON from '../../data/windy/windy-daily.json' with { type: 'json' };
 import heatwaveDailyForecastJSON from '../../data/heatwave/heatwave-daily.json' with { type: 'json' };
 
-dayjs.extend(utc);
-dayjs.extend(timezone);
-dayjs.tz.setDefault('Europe/London');
-dayjs.extend(isSameOrAfter);
+const Now = Temporal.Now;
+const instant = Now.instant();
+const now = instant.toString();
 
 const todayOnwardsFilterMetOfficeJSON = (
   metOfficeJSON: MetOfficeDailyForecastGeoJSON
@@ -33,14 +29,24 @@ const todayOnwardsFilterMetOfficeJSON = (
   filtered.features[0].properties.timeSeries = [];
 
   const days = metOfficeJSON.features[0].properties.timeSeries;
-  const daysFiltered = days.filter(isSameOrAfterFilter);
+  const daysFiltered = days.filter(todayOnwardsFilter);
   filtered.features[0].properties.timeSeries = daysFiltered;
 
   return filtered;
 };
 
-const isSameOrAfterFilter = (day: DailyWeatherData) => {
-  return dayjs(day.time).tz().isSameOrAfter(dayjs(), 'day');
+const todayOnwardsFilter = (day: DailyWeatherData) => {
+  const now = Temporal.Now;
+  const systemTimeZone = now.timeZoneId();
+  const nowZoned = now.zonedDateTimeISO(systemTimeZone);
+  const nowPlainDate = nowZoned.toPlainDate();
+
+  const time = day.time;
+  const timeInstant = Temporal.Instant.from(time);
+  const timeZoned = timeInstant.toZonedDateTimeISO(systemTimeZone);
+  const timePlainDate = timeZoned.toPlainDate();
+
+  return Temporal.PlainDateTime.compare(timePlainDate, nowPlainDate) >= 0;
 };
 
 if (!process.env.MET_WEATHER_SECRET) {
@@ -104,23 +110,20 @@ export const getMockForecast = async (specialDates: SpecialDate[]) => {
   const dailyFromTodayJson = todayOnwardsFilterMetOfficeJSON(
     mockDailyMetOfficeJSON
   );
-  const mockHourlyMetOfficeJSON = generateMockHourlyMetOfficeJSON(
-    dayjs().toISOString()
-  );
-  return transformMetOfficeJSON(
+  const mockHourlyMetOfficeJSON = generateMockHourlyMetOfficeJSON(now);
+  const items = transformMetOfficeJSON(
     specialDates,
     dailyFromTodayJson,
     mockHourlyMetOfficeJSON
   );
+  return items;
 };
 
 export const getSpecialDatesForecast = async (specialDates: SpecialDate[]) => {
   // log('getSpecialDatesForecast');
   const specialDatesDailyMetOfficeJSON =
     generateSpecialDatesDailyMetOfficeJSON(specialDates);
-  const mockHourlyMetOfficeJSON = generateMockHourlyMetOfficeJSON(
-    dayjs().toISOString()
-  );
+  const mockHourlyMetOfficeJSON = generateMockHourlyMetOfficeJSON(now);
   return transformMetOfficeJSON(
     specialDates,
     specialDatesDailyMetOfficeJSON,
@@ -132,9 +135,7 @@ export const getStormDatesForecast = async (specialDates: SpecialDate[]) => {
   const stormDatesForecast = MetOfficeDailyForecastGeoJSONSchema.parse(
     generateStormBramDailyMetOfficeJSON()
   );
-  const mockHourlyMetOfficeJSON = generateMockHourlyMetOfficeJSON(
-    dayjs().toISOString()
-  );
+  const mockHourlyMetOfficeJSON = generateMockHourlyMetOfficeJSON(now);
   return transformMetOfficeJSON(
     specialDates,
     stormDatesForecast,
