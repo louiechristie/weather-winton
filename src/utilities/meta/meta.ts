@@ -5,8 +5,10 @@ import type Meta from '@/types/meta';
 
 const { title, description, author, version } = manifest;
 
-const now = Temporal.Now.zonedDateTimeISO();
-const nowTimeStamp = now.toString();
+const Now = Temporal.Now;
+const systemTimeZone = Now.timeZoneId();
+const zonedDateTimeISO = Now.zonedDateTimeISO(systemTimeZone);
+const nowTimeStamp = zonedDateTimeISO.toString();
 
 const CLOUDY_IMAGE_SRC =
   'https://www.metoffice.gov.uk/webfiles/latest/images/icons/weather/12.svg';
