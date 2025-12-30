@@ -1,10 +1,15 @@
-import dayjs from 'dayjs';
+import { Temporal } from 'temporal-polyfill';
 import { MetOfficeDailyForecastGeoJSON } from '../types/metOffice';
-const now = dayjs();
-
-const today = now.toISOString();
-const tomorrow = now.add(1, 'day').toISOString();
-const yesterday = now.subtract(1, 'day').toISOString();
+const now = Temporal.Now;
+const instant = now.instant();
+const todayZonedDateTime = now.zonedDateTimeISO();
+const today = instant.toString();
+const oneDayDuration = Temporal.Duration.from({ days: 1 });
+const tomorrow = todayZonedDateTime.add(oneDayDuration).toInstant().toString();
+const yesterday = todayZonedDateTime
+  .subtract(oneDayDuration)
+  .toInstant()
+  .toString();
 
 const generateMockDailyMetOfficeJSON = (): MetOfficeDailyForecastGeoJSON => {
   const mockMetOfficeJSON = {
@@ -153,7 +158,10 @@ const generateMockDailyMetOfficeJSON = (): MetOfficeDailyForecastGeoJSON => {
               nightProbabilityOfSferics: 0,
             },
             {
-              time: now.add(2, 'day').toISOString(),
+              time: todayZonedDateTime
+                .add(Temporal.Duration.from({ days: 2 }))
+                .toInstant()
+                .toString(),
               midday10MWindSpeed: 6.6296477,
               midnight10MWindSpeed: 6.2341933,
               midday10MWindDirection: 188,
@@ -197,7 +205,10 @@ const generateMockDailyMetOfficeJSON = (): MetOfficeDailyForecastGeoJSON => {
               nightProbabilityOfSferics: 1,
             },
             {
-              time: now.add(3, 'day').toISOString(),
+              time: todayZonedDateTime
+                .add(Temporal.Duration.from({ days: 3 }))
+                .toInstant()
+                .toString(),
               midday10MWindSpeed: 3.8277774,
               midnight10MWindSpeed: 2.9654999,
               midday10MWindDirection: 249,
@@ -241,7 +252,10 @@ const generateMockDailyMetOfficeJSON = (): MetOfficeDailyForecastGeoJSON => {
               nightProbabilityOfSferics: 0,
             },
             {
-              time: now.add(4, 'day').toISOString(),
+              time: todayZonedDateTime
+                .add(Temporal.Duration.from({ days: 4 }))
+                .toInstant()
+                .toString(),
               midday10MWindSpeed: 6.3946247,
               midnight10MWindSpeed: 4.949157,
               midday10MWindDirection: 238,
@@ -285,7 +299,10 @@ const generateMockDailyMetOfficeJSON = (): MetOfficeDailyForecastGeoJSON => {
               nightProbabilityOfSferics: 0,
             },
             {
-              time: now.add(5, 'day').toISOString(),
+              time: todayZonedDateTime
+                .add(Temporal.Duration.from({ days: 5 }))
+                .toInstant()
+                .toString(),
               midday10MWindSpeed: 6.9091043,
               midnight10MWindSpeed: 4.317048,
               midday10MWindDirection: 254,
@@ -329,7 +346,10 @@ const generateMockDailyMetOfficeJSON = (): MetOfficeDailyForecastGeoJSON => {
               nightProbabilityOfSferics: 0,
             },
             {
-              time: now.add(6, 'day').toISOString(),
+              time: todayZonedDateTime
+                .add(Temporal.Duration.from({ days: 6 }))
+                .toInstant()
+                .toString(),
               midday10MWindSpeed: 5.6398087,
               midnight10MWindSpeed: 2.817324,
               midday10MWindDirection: 264,
