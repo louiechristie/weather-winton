@@ -13,9 +13,13 @@ const getAverageTemperaturefromHourly = (
     array.reduce((a, b) => a + b) / array.length;
 
   const hourlyTimeSeriesInRemainingDay: HourlyWeatherData[] =
-    hourlyTimeSeries.features[0].properties.timeSeries.filter((hour) =>
-      getIsHourInTheRemainingDay(hour.time, fromTime)
-    );
+    hourlyTimeSeries.features[0].properties.timeSeries.filter((hour) => {
+      const hourIsInTheRemainingDay = getIsHourInTheRemainingDay(
+        hour.time,
+        fromTime
+      );
+      return hourIsInTheRemainingDay;
+    });
 
   const temperatures = hourlyTimeSeriesInRemainingDay.map(
     (hour) => hour.screenTemperature

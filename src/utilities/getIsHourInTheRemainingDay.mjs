@@ -1,30 +1,71 @@
-import dayjs from 'dayjs';
+import { Temporal } from 'temporal-polyfill';
+
+const DEBUG = false;
 
 export const getIsHourInTheRemainingDay = (
   time,
-  currentTime = dayjs().toISOString()
+  currentTime = Temporal.Now.instant().toString()
 ) => {
-  const currentTimeDayJS = dayjs(currentTime);
-  const timeToCheckDayJS = dayjs(time);
+  const systemTimeZone = Temporal.Now.timeZoneId();
+  const instantTime = Temporal.Instant.from(time);
+  const instantCurrentTime = Temporal.Instant.from(currentTime);
+  const zonedDateTime = instantTime.toZonedDateTimeISO(systemTimeZone);
+  const currentZonedDateTime =
+    instantCurrentTime.toZonedDateTimeISO(systemTimeZone);
+  const currentHourZonedDateTime = currentZonedDateTime.with({
+    minute: 0,
+    second: 0,
+    microsecond: 0,
+  });
+  const hourZonedDateTime = zonedDateTime.with({
+    minute: 0,
+    second: 0,
+    microsecond: 0,
+  });
 
-  const differenceFromCurrentTime = currentTimeDayJS.diff(
-    timeToCheckDayJS,
-    'minutes',
-    true
+  const isSameDay = zonedDateTime
+    .toPlainDate()
+    .equals(currentZonedDateTime.toPlainDate());
+
+  const isBeforeMidnight =
+    currentHourZonedDateTime.hour < 23 ||
+    (currentHourZonedDateTime.hour === 23 &&
+      currentHourZonedDateTime.minute < 59);
+
+  if (DEBUG) {
+    const instantTimeString = instantTime.toString();
+    const instantCurrentTimeString = instantCurrentTime.toString();
+    const hourZonedDateTimeString = hourZonedDateTime.toString();
+
+    const currentHourZonedDateTimeString = currentHourZonedDateTime.toString();
+    const currentZonedDateTimeString = currentZonedDateTime.toString();
+    const zonedDateTimeString = zonedDateTime.toString();
+
+    console.info({
+      systemTimeZone,
+      instantTimeString,
+      instantCurrentTimeString,
+      zonedDateTimeString,
+      currentZonedDateTimeString,
+      currentHourZonedDateTimeString,
+      hourZonedDateTimeString,
+    });
+  }
+
+  const comparison = Temporal.ZonedDateTime.compare(
+    currentHourZonedDateTime,
+    hourZonedDateTime
   );
-  const isSameDay = timeToCheckDayJS.isSame(currentTimeDayJS, 'day');
-  const isHourInTheRemainingDay = isSameDay && differenceFromCurrentTime < 60;
 
-  // const isDaytime =
-  //   currentTimeDayJS.tz().hour() >= 9 && currentTimeDayJS.tz().hour() <= 19;
+  const isCurrentHour = comparison === 0;
 
-  // if (isDaytime) {
-  //   return (
-  //     isHourInTheRemainingDay &&
-  //     timeToCheckDayJS.tz().hour() >= 9 &&
-  //     timeToCheckDayJS.tz().hour() <= 19
-  //   );
-  // }
-  // console.log({ time, currentTime, isHourInTheRemainingDay });
-  return isHourInTheRemainingDay;
+  const isLater =
+    Temporal.ZonedDateTime.compare(currentZonedDateTime, zonedDateTime) < 0;
+
+  const isCurrentHourOrLater = isCurrentHour || isLater;
+
+  const isTodayAndRemaining =
+    isSameDay && isCurrentHourOrLater && isBeforeMidnight;
+
+  return isTodayAndRemaining;
 };

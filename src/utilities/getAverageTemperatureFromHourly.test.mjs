@@ -15,7 +15,7 @@ test('test default generateMockHourlyMetOfficeJSON from hourly file', () => {
   // );
   // console.log('temperatures', temperatures);
 
-  const timeNow = '2024-06-08T07:19:00+0100';
+  const timeNow = '2024-06-08T06:19Z';
 
   const expectedTemperatures = [
     11.35, 12.4, 13.49, 13.95, 14.7, 15.86, 16.16, 15.72, 16.25, 17.2, 17.67,
@@ -56,7 +56,7 @@ test('test all after now are 18 degrees', () => {
     testData.features[0].properties.timeSeries.map((hour) => {
       const isHourInRemainingDay = getIsHourInTheRemainingDay(
         hour.time,
-        dayjs(nowString)
+        dayjs(nowString).toISOString()
       );
       if (isHourInRemainingDay) {
         return {

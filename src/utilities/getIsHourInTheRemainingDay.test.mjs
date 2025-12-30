@@ -142,6 +142,12 @@ test('one hour before end of day', () => {
 
 test('one second before end of day', () => {
   expect(
+    getIsHourInTheRemainingDay('2025-12-30T23:00Z', '2025-12-30T23:59:59Z')
+  ).toBe(true);
+});
+
+test('one second before end of day summer', () => {
+  expect(
     getIsHourInTheRemainingDay('2024-06-12T23:00Z', '2024-06-12T23:59:59Z')
   ).toBe(true);
 });
