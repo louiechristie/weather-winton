@@ -1,9 +1,6 @@
-import React from 'react';
-import dayjs from 'dayjs';
+import { Temporal } from 'temporal-polyfill';
 import { theme, Paper, Typography } from '../utilities/theme';
 import Meta from '@/types/meta';
-import utc from 'dayjs/plugin/utc';
-dayjs.extend(utc);
 
 const styles = {
   footer: {
@@ -68,6 +65,11 @@ const HostedOn = () => {
 const Footer = (props: { meta: Meta }) => {
   const { meta } = props;
 
+  const systemTimeZone = Temporal.Now.timeZoneId();
+  const year = Temporal.Instant.from(meta.timeStamp).toZonedDateTimeISO(
+    systemTimeZone
+  ).year;
+
   return (
     <Paper style={styles.footer} elevation={24} square>
       <Typography variant="body2" component="p" align="center">
@@ -79,8 +81,7 @@ const Footer = (props: { meta: Meta }) => {
       </Typography>
 
       <Typography variant="body2" component="p" align="center">
-        Weather Winton ©️ {dayjs().year()} v{meta.version} | Tags: user
-        experience, UX
+        Weather Winton ©️ {year} v{meta.version} | Tags: user experience, UX
       </Typography>
 
       <Typography variant="body2" component="p" paragraph align="center">
