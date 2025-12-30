@@ -1,5 +1,5 @@
 import { Temporal } from 'temporal-polyfill';
-import getCurrentTemperature from './getCurrentTemperature.mjs';
+import getCurrentTemperature from './getCurrentTemperature';
 import {
   getDescriptionFromMetOfficeWeatherCode,
   getEmojiFromMetOfficeWeatherCode,
