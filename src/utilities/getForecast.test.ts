@@ -1,3 +1,7 @@
+import { Temporal } from 'temporal-polyfill';
+
+import type SpecialDate from '@/types/specialDate';
+
 import getForecast, {
   getMockForecast,
   getSpecialDatesForecast,
@@ -11,9 +15,16 @@ import {
 } from '../types/metOffice';
 import generateMockDailyMetOfficeJSON from '../tests/generateMockDailyMetOfficeJSON';
 import generateMockHourlyMetOfficeJSON from '../tests/generateMockHourlyMetOfficeJSON';
-import dayjs from 'dayjs';
 
-import SpecialDate from '@/types/specialDate';
+const isValidTime = (time: string) => {
+  try {
+    Temporal.Instant.from(time);
+  } catch (e) {
+    console.error(`Invalid time error for ${time}: `, e);
+    return false;
+  }
+  return true;
+};
 
 describe('getForecast module', () => {
   // ============================================================================
@@ -149,11 +160,22 @@ describe('getForecast module', () => {
     test('filters dates to today onwards only', async () => {
       const specialDates = await getSpecialDates();
       const items = await getMockForecast(specialDates);
-      const today = dayjs().startOf('day');
+      const todaysDateInSystemTZ = Temporal.Now.plainDateISO();
 
       items.forEach((item) => {
-        const itemDate = dayjs(item.time);
-        expect(itemDate.isSameOrAfter(today, 'day')).toBe(true);
+        const time = item.time;
+        const timeInstant = Temporal.Instant.from(time);
+        const systemTimeZone = Temporal.Now.timeZoneId();
+        const zonedDateTimeISO = timeInstant.toZonedDateTimeISO(systemTimeZone);
+        const dateInSystemTZ = Temporal.ZonedDateTime.from(zonedDateTimeISO);
+        const plainDateInSystemTZ = dateInSystemTZ.toPlainDate();
+
+        expect(
+          Temporal.PlainDate.compare(
+            plainDateInSystemTZ,
+            todaysDateInSystemTZ
+          ) >= 0
+        ).toBe(true);
       });
     });
 
@@ -190,7 +212,7 @@ describe('getForecast module', () => {
       const items = await getMockForecast(specialDates);
 
       items.forEach((item) => {
-        expect(dayjs(item.time).isValid()).toBe(true);
+        expect(isValidTime(item.time)).toBe(true);
       });
     });
   });
@@ -243,7 +265,7 @@ describe('getForecast module', () => {
 
       // Each item should have a valid date
       items.forEach((item) => {
-        expect(dayjs(item.time).isValid()).toBe(true);
+        expect(isValidTime(item.time)).toBe(true);
       });
     });
   });
@@ -299,18 +321,6 @@ describe('getForecast module', () => {
 
       // Special dates forecast should match special dates count
       expect(specialItems.length).toBe(specialDates.length);
-    });
-
-    test('date filtering works correctly across functions', async () => {
-      const specialDates = await getSpecialDates();
-      const mockItems = await getMockForecast(specialDates);
-      const today = dayjs().startOf('day');
-
-      // All mock items should be today or future
-      mockItems.forEach((item) => {
-        const itemDate = dayjs(item.time);
-        expect(itemDate.isSameOrAfter(today, 'day')).toBe(true);
-      });
     });
 
     test('all items have non-empty descriptions', async () => {
