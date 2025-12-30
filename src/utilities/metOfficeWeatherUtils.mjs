@@ -1,14 +1,5 @@
-import dayjs from 'dayjs';
-import isSameOrAfter from 'dayjs/plugin/isSameOrAfter.js';
-import timezone from 'dayjs/plugin/timezone.js';
-import utc from 'dayjs/plugin/utc.js';
 import { getIsHourInTheRemainingDay } from './getIsHourInTheRemainingDay.mjs';
 import { weatherTypes } from '../types/metOffice';
-
-dayjs.extend(utc);
-dayjs.extend(timezone);
-dayjs.tz.setDefault('Europe/London');
-dayjs.extend(isSameOrAfter);
 
 export function getDescriptionFromMetOfficeWeatherCode(code) {
   return weatherTypes[code];

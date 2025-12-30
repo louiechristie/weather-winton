@@ -1,4 +1,8 @@
 import dayjs from 'dayjs';
+import isSameOrAfter from 'dayjs/plugin/isSameOrAfter.js';
+import timezone from 'dayjs/plugin/timezone.js';
+import utc from 'dayjs/plugin/utc.js';
+
 import generateMockDailyMetOfficeJSON from '../tests/generateMockDailyMetOfficeJSON';
 import generateSpecialDatesDailyMetOfficeJSON from '../tests/generateSpecialDatesMetOfficeJSON';
 import generateMockHourlyMetOfficeJSON from '../tests/generateMockHourlyMetOfficeJSON';
@@ -16,6 +20,11 @@ import SpecialDate from '../types/specialDate';
 
 import windyDailyForecastJSON from '../../data/windy/windy-daily.json' with { type: 'json' };
 import heatwaveDailyForecastJSON from '../../data/heatwave/heatwave-daily.json' with { type: 'json' };
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.tz.setDefault('Europe/London');
+dayjs.extend(isSameOrAfter);
 
 const todayOnwardsFilterMetOfficeJSON = (
   metOfficeJSON: MetOfficeDailyForecastGeoJSON
