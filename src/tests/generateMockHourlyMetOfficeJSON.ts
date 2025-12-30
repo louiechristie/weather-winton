@@ -1,6 +1,7 @@
-import dayjs from 'dayjs';
 import hourly from './hourly.json' with { type: 'json' };
 import { MetOfficeHourlyForecastGeoJSON } from '../types/metOffice';
+
+import getMockDate from './getMockDate';
 
 const hourlyObject: MetOfficeHourlyForecastGeoJSON =
   hourly as MetOfficeHourlyForecastGeoJSON;
@@ -8,24 +9,15 @@ const hourlyObject: MetOfficeHourlyForecastGeoJSON =
 const getMockMetOfficeJSON = (
   startTime: string = hourly.features[0].properties.timeSeries[0].time
 ): MetOfficeHourlyForecastGeoJSON => {
-  const startTimeDayJS = dayjs(startTime).startOf('hour');
-
-  let hour = -2;
-
-  const getMockDate = () => {
-    hour++;
-    return startTimeDayJS.add(hour, 'hour').format('YYYY-MM-DDTHH:mm[Z]');
-  };
-
   const ret: MetOfficeHourlyForecastGeoJSON = {
     ...hourlyObject,
     features: hourlyObject.features.map((feature) => ({
       ...feature,
       properties: {
         ...feature.properties,
-        timeSeries: feature.properties.timeSeries.map((timeEntry) => ({
+        timeSeries: feature.properties.timeSeries.map((timeEntry, index) => ({
           ...timeEntry,
-          time: getMockDate(),
+          time: index === 0 ? getMockDate(startTime) : getMockDate(),
         })),
       },
     })),

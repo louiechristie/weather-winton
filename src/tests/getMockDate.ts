@@ -1,14 +1,28 @@
 import dayjs from 'dayjs';
 
-let hour: number = -2;
+let offset: number = -2;
+let start: dayjs.Dayjs | null = null;
 
 const getMockDate = (time?: string) => {
-  const start: dayjs.Dayjs = time ? dayjs(time) : dayjs();
   if (time) {
-    hour = -2;
+    start = dayjs(time);
   }
-  hour++;
-  const ret: string = start.startOf('hour').add(hour, 'hour').toISOString();
+  let ret: string;
+  if (time) {
+    offset = -2;
+  }
+  offset++;
+  if (start) {
+    ret = start
+      .add(offset, 'hour')
+      .startOf('hour')
+      .format('YYYY-MM-DDTHH:mm[Z]');
+  } else {
+    ret = dayjs()
+      .add(offset, 'hour')
+      .startOf('hour')
+      .format('YYYY-MM-DDTHH:mm[Z]');
+  }
 
   return ret;
 };

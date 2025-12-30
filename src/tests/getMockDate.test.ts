@@ -2,9 +2,9 @@ import getMockDate from './getMockDate';
 import { Temporal } from 'temporal-polyfill';
 
 describe('getMockDate', () => {
-  test('getMockDate to be beginning of previous hour to input time', () => {
-    const res = getMockDate('2024-08-12T12:44:41.313Z');
-    const expected = '2024-08-12T11:00:00.000Z';
+  test('getMockDate to be beginning hour to input time', () => {
+    const res = getMockDate('2025-12-29T12:44Z');
+    const expected = '2025-12-29T11:00Z';
 
     expect(res).toEqual(expected);
   });
