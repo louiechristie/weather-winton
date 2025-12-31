@@ -1,4 +1,7 @@
 import { test, expect, Page } from '@playwright/test';
+import { Temporal } from 'temporal-polyfill';
+import getFriendlyDateFromISODate from '@/utilities/getFriendlyDateFromISODate';
+import getSpecialDates from '@/utilities/getSpecialDates';
 
 const baseUrl = process.env.BASE_URL || 'http://localhost:3000';
 
@@ -29,7 +32,15 @@ test.describe('main page', () => {
   });
 
   test("has today's forecast", async () => {
-    await expect(page.getByText('Today')).toBeVisible({});
+    const specialDates = await getSpecialDates();
+    await expect(
+      page.getByText(
+        getFriendlyDateFromISODate(
+          Temporal.Now.instant().toString(),
+          specialDates
+        )
+      )
+    ).toBeVisible({});
   });
 
   test('doesn\'t say "Probably Raining"', async () => {
