@@ -319,7 +319,12 @@ const Day = (props: Item) => {
         </Typography>
       </div>
       <div>
-        <img style={styles.svgIcon} src={icon} alt={description} />
+        <img
+          style={styles.svgIcon}
+          src={icon}
+          alt={description}
+          fetchPriority="high"
+        />
         <Typography style={styles.description} variant="h6" component="p">
           {description}
         </Typography>
