@@ -71,7 +71,7 @@ const Footer = (props: { meta: Meta }) => {
   ).year;
 
   return (
-    <Paper style={styles.footer} elevation={24} square>
+    <Paper style={styles.footer}>
       <Typography variant="body2" component="p" align="center">
         Last updated: {meta.timeStamp} | Hosted on: {HostedOn()}
       </Typography>
