@@ -93,9 +93,7 @@ const Footer = (props: { meta: Meta }) => {
         Data from: Met Office | Contains public sector information licensed
         under the{' '}
         <a href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">
-          Open Government Licence v3.0
-        </a>{' '}
-        <a href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">
+          Open Government Licence v3.0{' '}
           {/* Source, footer of https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/open-government-licence/copyright-notices-attribution-statements/how-to-use-the-ogl-symbol/*/}
           <svg
             style={{ color: 'black', verticalAlign: 'text-bottom' }}
