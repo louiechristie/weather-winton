@@ -31,3 +31,5 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
+      - name: Lighthouse
+        run: lhci autorun
