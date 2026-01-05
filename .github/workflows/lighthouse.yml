@@ -9,7 +9,8 @@ jobs:
         with:
           node-version: 24
       - run: npm install && npm install -g @lhci/cli@0.15.x
-      - run: npm run build
+      - name: Build
+        run: npm run build
         env:
           BASE_URL: ${{ env.BASE_URL || github.event.deployment_status.environment_url }}
           MET_WEATHER_DAILY_URL: ${{ env.MET_WEATHER_DAILY_URL || vars.MET_WEATHER_DAILY_URL }}
