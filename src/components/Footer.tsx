@@ -53,6 +53,8 @@ const HostedOn = () => {
           style={{ verticalAlign: 'middle' }}
           src="https://deploy-badge.vercel.app/vercel/weather-winton"
           alt="Vercel logo"
+          width={119}
+          height={20}
         />{' '}
         <GitHubBadge />
       </>
