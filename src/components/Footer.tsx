@@ -23,7 +23,7 @@ const GitHubBadge = () => (
     <a href="https://github.com/louiechristie/weather-winton/">
       <img
         style={{ verticalAlign: 'middle' }}
-        src="https://github.com/louiechristie/weather-winton/actions/workflows/playwright.yml/badge.svg"
+        src="https://github.com/louiechristie/weather-winton/actions/workflows/tests.yml/badge.svg"
         width={139}
         height={20}
         alt="Github Integration Tests"
