@@ -27,6 +27,7 @@ const GitHubBadge = () => (
         width={139}
         height={20}
         alt="Github Integration Tests"
+        loading="lazy"
       />
     </a>
   </>
@@ -40,6 +41,7 @@ const HostedOn = () => {
           style={{ verticalAlign: 'middle' }}
           src="https://api.netlify.com/api/v1/badges/f0ee41e4-eb3b-44f3-8810-07d0a72ca9a1/deploy-status"
           alt="Netlify logo"
+          loading="lazy"
         />{' '}
         <GitHubBadge />
       </>
@@ -55,6 +57,7 @@ const HostedOn = () => {
           alt="Vercel logo"
           width={119}
           height={20}
+          loading="lazy"
         />{' '}
         <GitHubBadge />
       </>
@@ -100,6 +103,7 @@ const Footer = (props: { meta: Meta }) => {
             height="16"
             style={{ width: 40, height: 16 }}
             alt="OGL logo"
+            loading="lazy"
           />
         </a>
       </Typography>
