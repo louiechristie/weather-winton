@@ -1,3 +1,4 @@
+import fs from 'fs';
 import sharp from 'sharp';
 import axios from 'axios';
 import { mkdir } from 'fs/promises';
@@ -115,6 +116,9 @@ try {
         .flatten({ background: backgroundColor })
         .resize(180)
         .toFile(`${directory}/apple-touch-icon.png`);
+
+      const fsPromises = fs.promises;
+      await fsPromises.writeFile(`public/images/${weatherTypeCode}.svg`, input);
     }
   }
 } catch (error) {
