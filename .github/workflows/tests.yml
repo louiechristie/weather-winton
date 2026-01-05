@@ -31,5 +31,7 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
-      - name: Lighthouse
+      - name: Install lighthouse
+        run: lhci npm install -g @lhci/cli@0.15.x
+      - name: Run Lighthouse
         run: lhci autorun
