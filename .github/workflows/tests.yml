@@ -20,8 +20,6 @@ jobs:
         run: |
           npm ci
           npm run test
-          npm install -g @lhci/cli@0.15.x
-          lhci autorun
         env:
           BASE_URL: ${{ env.BASE_URL || github.event.deployment_status.environment_url }}
           MET_WEATHER_DAILY_URL: ${{ env.MET_WEATHER_DAILY_URL || vars.MET_WEATHER_DAILY_URL }}
