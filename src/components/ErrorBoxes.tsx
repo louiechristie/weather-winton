@@ -135,7 +135,12 @@ const ErrorBoxes = (props: Props) => {
                 </Typography>
               </div>
               <div>
-                <img style={styles.svgIcon} src={icon} alt={description} />
+                <img
+                  style={styles.svgIcon}
+                  src={icon}
+                  alt={description}
+                  fetchPriority="high"
+                />
                 <Typography
                   style={styles.description}
                   variant="h6"
