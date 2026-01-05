@@ -35,7 +35,7 @@ const CustomHead = (props: Props) => {
         content={`${todaysWeather} in ${location} | ${siteTitle}`}
       />
       <meta property="og:description" content={siteDescription} />
-
+      <link rel="preload" as="image" href={image} fetchPriority="high" />
       <meta name="twitter:card" content="summary" />
       <meta name="monetization" content={monetization} />
       <link rel="mask-icon" href={image} color="DimGrey" />
