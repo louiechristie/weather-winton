@@ -3,6 +3,7 @@ import React from 'react';
 import { theme, Card, Box, Typography } from '../utilities/theme';
 import { getTemperatureFriendly } from '../utilities/getRoomTemperatureComfortFromCelsius.mjs';
 import { Item } from '@/utilities/transformMetOfficeJSON';
+import { Temporal } from 'temporal-polyfill';
 
 const styles: { [key: string]: React.CSSProperties } = {
   friendlyDate: {},
@@ -135,7 +136,15 @@ const Day = (props: Item) => {
 
   const minTempInt = Math.round(minTemperature);
   const maxTempInt = Math.round(maxTemperature);
-  const isToday = friendlyDate === 'Today';
+  const timeZone = Temporal.Now.timeZoneId();
+  const nowInstant = Temporal.Now.instant();
+  const nowZoned = nowInstant.toZonedDateTimeISO(timeZone);
+  const nowPlainDate = nowZoned.toPlainDate();
+  const timeInstant = Temporal.Instant.from(time);
+  const timeZoned = timeInstant.toZonedDateTimeISO(timeZone);
+  const timePlainDate = timeZoned.toPlainDate();
+  const isToday =
+    nowPlainDate.toString() === timePlainDate.toString().toString();
   const averageTempInt = Math.round(averageTemperature);
   const currentTempInt = currentTemperature && Math.round(currentTemperature);
 
@@ -323,7 +332,7 @@ const Day = (props: Item) => {
           style={styles.svgIcon}
           src={icon}
           alt={description}
-          fetchPriority="high"
+          fetchPriority={isToday ? 'high' : 'auto'}
         />
         <Typography style={styles.description} variant="h6" component="p">
           {description}
