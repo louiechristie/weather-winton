@@ -3,9 +3,9 @@ import type { NextConfig } from 'next';
 const nextConfig: NextConfig = {
   /* config options here */
   reactStrictMode: true,
-  output: 'export',
+  output: 'export', // Static Site Generation (SSG)
   images: {
-    unoptimized: true, // because we are using SSR
+    unoptimized: true, // Because we are using Static Site Generation (SSG)
   },
   devIndicators: false,
 };
