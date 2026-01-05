@@ -1,0 +1,18 @@
+{
+  "ci": {
+    "collect": {
+      "autodiscoverUrlBlocklist": [
+        "http://localhost/404.html",
+        "http://localhost/error.html",
+        "http://localhost/fun.html",
+        "http://localhost/storm.html",
+        "http://localhost/test.html"
+      ],
+      "maxAutodiscoverUrls": 1,
+      "numberOfRuns": 1
+    },
+    "assert": {
+      "preset": "lighthouse:recommended"
+    }
+  }
+}

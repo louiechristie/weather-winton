@@ -2,7 +2,7 @@
   "name": "weather-winton",
   "title": "Weather Winton",
   "description": "Weather Winton is an experiment in friendly weather forecasting.",
-  "version": "0.41.2",
+  "version": "0.42",
   "type": "module",
   "private": true,
   "author": {
@@ -27,7 +27,10 @@
     "lint": "npm run lint:tsc && eslint --ext .js,.jsx,.ts,.tsx,.mjs --ignore-pattern 'playwright-report' --ignore-pattern 'node_modules' --ignore-pattern '.cache' --ignore-pattern 'public' --ignore-pattern 'out' --ignore-pattern '.next' --ignore-pattern 'data/daily/daily.js' && stylelint --ignore-path .gitignore '**/*.css'",
     "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx,.mjs --ignore-pattern 'playwright-report' --ignore-pattern 'node_modules' --ignore-pattern '.cache' --ignore-pattern 'public' --fix ; stylelint --ignore-path .gitignore '**/*.css' --fix",
     "npm:check": "npx npm-check --specials=eslint,jest,prettier",
-    "generate:images": "NODE_ENV=production node --experimental-transform-types ./generateImages.ts"
+    "generate:images": "NODE_ENV=production node --experimental-transform-types ./generateImages.ts",
+    "lighthouse:autorun": "npx @lhci/cli autorun",
+    "lighthouse:open": "npx @lhci/cli open",
+    "lighthouse": "npm run lighthouse:autorun ; npm run lighthouse:open"
   },
   "dependencies": {
     "@emotion/react": "11.14.0",
@@ -51,6 +54,7 @@
     "@babel/core": "7.28.5",
     "@babel/preset-typescript": "7.28.5",
     "@eslint/js": "^9.39.2",
+    "@lhci/cli": "^0.15.1",
     "@playwright/test": "1.57.0",
     "@types/color": "4.2.0",
     "@types/jest": "30.0.0",
