@@ -5,17 +5,30 @@ const getStormName = (
   isWindy: boolean,
   isTakeRaincoat: boolean
 ) => {
-  const isBefore =
+  let isBefore =
     date.epochMilliseconds <
     Temporal.Instant.from('2025-12-08T00+00:00[Europe/London]')
       .epochMilliseconds;
-  const isAfter =
+  let isAfter =
     date.epochMilliseconds >=
     Temporal.Instant.from('2025-12-12T00+00:00[Europe/London]')
       .epochMilliseconds;
 
   if (!isBefore && !isAfter && (isWindy || isTakeRaincoat)) {
     return 'Bram';
+  }
+
+  isBefore =
+    date.epochMilliseconds <
+    Temporal.Instant.from('2025-12-31T00+00:00[Europe/London]')
+      .epochMilliseconds;
+  isAfter =
+    date.epochMilliseconds >=
+    Temporal.Instant.from('2026-01-11T00+00:00[Europe/London]')
+      .epochMilliseconds;
+
+  if (!isBefore && !isAfter && (isWindy || isTakeRaincoat)) {
+    return 'Goretti';
   }
   return null;
 };
