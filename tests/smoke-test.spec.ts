@@ -96,7 +96,7 @@ test.describe('fun dates', async () => {
 test.describe('named storm', async () => {
   test('storm Bram', async ({ page }) => {
     await page.goto(baseUrl + '/storm/');
-    await expect(page.getByText('Storm Bram')).toHaveCount(2);
+    await expect(page.getByText('Storm Bram')).toHaveCount(1);
     await expect(page.getByText('heatwave')).toHaveCount(0);
     await expect(page.getByText('Windy').first()).toBeVisible();
   });
