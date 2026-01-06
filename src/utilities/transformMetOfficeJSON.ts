@@ -134,7 +134,7 @@ const transformMetOfficeJSON = (
         currentTemperature,
         stormName: getStormName(
           Temporal.Instant.from(day.time),
-          getIsWindy(day.midday10MWindGust),
+          getIsWindy(day.midday10MWindSpeed),
           getIsTakeRainCoat(day)
         ),
         isWindy: getIsWindy(day.midday10MWindGust),
