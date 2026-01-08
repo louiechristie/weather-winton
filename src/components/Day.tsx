@@ -1,11 +1,23 @@
 import React from 'react';
-
-import { theme, Card, Box, Typography } from '../utilities/theme';
+import Link from 'next/link';
+import { theme, Box, Typography, Card } from '../utilities/theme';
 import { getTemperatureFriendly } from '../utilities/getRoomTemperatureComfortFromCelsius.mjs';
 import { Item } from '@/utilities/transformMetOfficeJSON';
 import { Temporal } from 'temporal-polyfill';
 
 const styles: { [key: string]: React.CSSProperties } = {
+  li: {
+    flex: 1,
+    textIndent: 0,
+    listStyle: 'none',
+    margin: 0,
+    padding: 0,
+    marginBottom: theme.spacing(4),
+    // borderWidth: 2,
+    // borderStyle: 'solid',
+    // borderColor: 'red',
+  },
+  link: { textDecoration: 'none', color: 'black' },
   friendlyDate: {},
   svgIcon: {
     width: 48 * 2,
@@ -96,6 +108,26 @@ const styles: { [key: string]: React.CSSProperties } = {
     color: '#3F51B5',
     borderColor: '#3F51B5',
   },
+  actionButtons: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  stormName: {
+    padding: theme.spacing(1),
+    margin: theme.spacing(1),
+  },
+  actionButton: {
+    borderWidth: 2,
+    borderColor: 'gray',
+    borderStyle: 'solid',
+    borderRadius: 20,
+    padding: theme.spacing(1),
+    margin: theme.spacing(1),
+  },
+  actionButtonLink: {
+    textDecoration: 'none',
+  },
   // emoji: {
   //   textShadow: '-2px 0 white, 0 2px white, 2px 0 white, 0 -2px white',
   // }
@@ -143,8 +175,12 @@ const Day = (props: Item) => {
   const timeInstant = Temporal.Instant.from(time);
   const timeZoned = timeInstant.toZonedDateTimeISO(timeZone);
   const timePlainDate = timeZoned.toPlainDate();
-  const isToday =
-    nowPlainDate.toString() === timePlainDate.toString().toString();
+  const timePlainDateString = timePlainDate.toString();
+  const nowPlainDateString = nowPlainDate.toString();
+  const isToday = nowPlainDateString === timePlainDateString;
+  const yesterdayPlainDate = nowPlainDate.subtract({ days: 1 });
+  const yesterdayPlainDateString = yesterdayPlainDate.toString();
+  const isyesterday = yesterdayPlainDateString === timePlainDateString;
   const averageTempInt = Math.round(averageTemperature);
   const currentTempInt = currentTemperature && Math.round(currentTemperature);
 
@@ -316,128 +352,157 @@ const Day = (props: Item) => {
   const isOffTheScaleCold =
     Math.round(minTemperature) < parseInt(temperatures[0], 10);
 
+  let namedStormMapUrl = null;
+
+  if (stormName && isToday) {
+    namedStormMapUrl =
+      'https://page.met.fu-berlin.de/wetterpate/static/emtbkna.gif';
+  }
+
+  if (stormName && isyesterday) {
+    namedStormMapUrl = `https://page.met.fu-berlin.de/wetterpate/static/archiv/2026/Prognose_${timePlainDateString.replaceAll('-', '')}.gif`;
+  }
+
   return (
     <Card key={time}>
-      {/* <pre>{JSON.stringify(props, null, 2)}</pre> */}
-      <div>
-        <Typography variant="h5" component="h2" style={styles.friendlyDate}>
-          {friendlyDate}
-        </Typography>
-        <Typography variant="h6" component="p" style={{ display: 'none' }}>
-          Time: {time}
-        </Typography>
-      </div>
-      <div>
-        {isToday && (
-          <img
-            style={styles.svgIcon}
-            src={icon}
-            alt={description}
-            fetchPriority="high"
-          />
-        )}
-        {!isToday && (
-          <img style={styles.svgIcon} src={icon} alt={description} />
-        )}
-        <Typography style={styles.description} variant="h6" component="p">
-          {description}
-        </Typography>
-      </div>
-      <div>
-        <Box style={styles.labels}>
-          {isSticky && <div style={styles.label}>Sticky 💦</div>}
+      <Link
+        style={styles.link}
+        href={`https://www.metoffice.gov.uk/weather/forecast/gcpuyudzk#?nearestTo=New%20Cross%20(Lewisham)&date=${timePlainDateString}`}
+      >
+        {/* <pre>{JSON.stringify(props, null, 2)}</pre> */}
+        <div>
+          <Typography variant="h5" component="h2" style={styles.friendlyDate}>
+            {friendlyDate}
+          </Typography>
+          <Typography variant="h6" component="p" style={{ display: 'none' }}>
+            Time: {time}
+          </Typography>
+        </div>
+        <div>
+          {isToday && (
+            <img
+              style={styles.svgIcon}
+              src={icon}
+              alt={description}
+              fetchPriority="high"
+            />
+          )}
+          {!isToday && (
+            <img style={styles.svgIcon} src={icon} alt={description} />
+          )}
+          <Typography style={styles.description} variant="h6" component="p">
+            {description}
+          </Typography>
+        </div>
+        <div>
+          <Box style={styles.labels}>
+            {isSticky && <div style={styles.label}>Sticky 💦</div>}
 
-          {isDry && (
-            <div style={{ ...styles.label, ...styles.dry }}>
-              Dry eyes/skin 👁
+            {isDry && (
+              <div style={{ ...styles.label, ...styles.dry }}>
+                Dry eyes/skin 👁
+              </div>
+            )}
+            {(isOffTheScaleHot || isOffTheScaleCold) && (
+              <div style={styles.label}>{`Off the scale ${
+                isOffTheScaleHot ? 'hot 🥵' : 'cold 🥶'
+              }`}</div>
+            )}
+            {isTakeRaincoat && <div style={styles.label}>Take raincoat 🧥</div>}
+            {isSnowDay && <div style={styles.label}>Snow ❄️☃️</div>}
+            {isWindy && <div style={styles.label}>Windy 🌬️</div>}
+
+            <div style={styles.temperatureOuter}>
+              <Box style={{ ...styles.swatch, flex: 1 }}>
+                <div style={styles.scaleNumber}>
+                  {isOffTheScaleCold && getNumberForScale(minTempInt)}{' '}
+                </div>
+
+                {(isOffTheScaleCold || isOffTheScaleHot) && (
+                  <div style={{ ...styles.indicator, minWidth: '20px' }}>
+                    <Typography variant="body2" component="p">
+                      {isOffTheScaleCold && getIndicator(minTempInt)}
+                      {'\u00A0'}
+                    </Typography>
+                  </div>
+                )}
+              </Box>
+
+              <Box
+                style={{
+                  ...styles.temperatureContainer,
+                  ...getDayTempFriendlyStyle(averageTempInt),
+                }}
+              >
+                <Box style={styles.colorScale}>
+                  {temperatures.map((key) => {
+                    const tempInt = parseInt(key, 10);
+                    const tally = tempTallies[tempInt];
+
+                    return (
+                      <Box
+                        key={key}
+                        style={{
+                          ...styles.swatch,
+                          ...getDayTempFriendlyStyle(tempInt),
+                          flex: tally,
+                          display: 'flex',
+                          flexDirection: 'column',
+                          justifyContent: 'space-between',
+                        }}
+                      >
+                        <div style={styles.scaleNumber}>
+                          {getNumberForScale(tempInt)}
+                        </div>
+                        <div style={styles.indicator}>
+                          {getIndicator(tempInt)}
+                        </div>
+                      </Box>
+                    );
+                  })}
+                </Box>
+                <Box style={styles.temperature}>
+                  <Typography
+                    variant="body1"
+                    component="p"
+                    style={styles.temperatureName}
+                  >
+                    {getTemperatureFriendly(averageTempInt)}
+                  </Typography>
+                </Box>
+              </Box>
+
+              <Box style={{ ...styles.swatch, flex: 1 }}>
+                <div style={styles.scaleNumber}>
+                  {isOffTheScaleHot && getNumberForScale(maxTempInt)}
+                </div>
+
+                {(isOffTheScaleHot || isOffTheScaleCold) && (
+                  <div style={{ ...styles.indicator, minWidth: '20px' }}>
+                    {'\u00A0'}
+                    {isOffTheScaleHot && getIndicator(maxTempInt)}
+                  </div>
+                )}
+              </Box>
+            </div>
+          </Box>
+        </div>
+      </Link>
+      {stormName && (
+        <div style={styles.actionButtons}>
+          {namedStormMapUrl && (
+            <div style={styles.actionButton}>
+              <a
+                style={styles.actionButtonLink}
+                href={namedStormMapUrl}
+              >{`Storm ${stormName} 🌬️`}</a>
             </div>
           )}
-          {(isOffTheScaleHot || isOffTheScaleCold) && (
-            <div style={styles.label}>{`Off the scale ${
-              isOffTheScaleHot ? 'hot 🥵' : 'cold 🥶'
-            }`}</div>
+          {!namedStormMapUrl && (
+            <div style={styles.stormName}>{`Storm ${stormName} 🌬️`}</div>
           )}
-          {isTakeRaincoat && <div style={styles.label}>Take raincoat 🧥</div>}
-          {isSnowDay && <div style={styles.label}>Snow ❄️☃️</div>}
-          {isWindy && <div style={styles.label}>Windy 🌬️</div>}
-
-          {stormName && <div style={styles.label}>Storm {stormName} 🌬️</div>}
-
-          <div style={styles.temperatureOuter}>
-            <Box style={{ ...styles.swatch, flex: 1 }}>
-              <div style={styles.scaleNumber}>
-                {isOffTheScaleCold && getNumberForScale(minTempInt)}{' '}
-              </div>
-
-              {(isOffTheScaleCold || isOffTheScaleHot) && (
-                <div style={{ ...styles.indicator, minWidth: '20px' }}>
-                  <Typography variant="body2" component="p">
-                    {isOffTheScaleCold && getIndicator(minTempInt)}
-                    {'\u00A0'}
-                  </Typography>
-                </div>
-              )}
-            </Box>
-
-            <Box
-              style={{
-                ...styles.temperatureContainer,
-                ...getDayTempFriendlyStyle(averageTempInt),
-              }}
-            >
-              <Box style={styles.colorScale}>
-                {temperatures.map((key) => {
-                  const tempInt = parseInt(key, 10);
-                  const tally = tempTallies[tempInt];
-
-                  return (
-                    <Box
-                      key={key}
-                      style={{
-                        ...styles.swatch,
-                        ...getDayTempFriendlyStyle(tempInt),
-                        flex: tally,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'space-between',
-                      }}
-                    >
-                      <div style={styles.scaleNumber}>
-                        {getNumberForScale(tempInt)}
-                      </div>
-                      <div style={styles.indicator}>
-                        {getIndicator(tempInt)}
-                      </div>
-                    </Box>
-                  );
-                })}
-              </Box>
-              <Box style={styles.temperature}>
-                <Typography
-                  variant="body1"
-                  component="p"
-                  style={styles.temperatureName}
-                >
-                  {getTemperatureFriendly(averageTempInt)}
-                </Typography>
-              </Box>
-            </Box>
-
-            <Box style={{ ...styles.swatch, flex: 1 }}>
-              <div style={styles.scaleNumber}>
-                {isOffTheScaleHot && getNumberForScale(maxTempInt)}
-              </div>
-
-              {(isOffTheScaleHot || isOffTheScaleCold) && (
-                <div style={{ ...styles.indicator, minWidth: '20px' }}>
-                  {'\u00A0'}
-                  {isOffTheScaleHot && getIndicator(maxTempInt)}
-                </div>
-              )}
-            </Box>
-          </div>
-        </Box>
-      </div>
+        </div>
+      )}
     </Card>
   );
 };
