@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import React from 'react';
 import Meta from '@/types/meta';
+import { usePathname } from 'next/navigation';
 
 interface Props {
   meta: Meta;
@@ -8,6 +9,7 @@ interface Props {
 
 const CustomHead = (props: Props) => {
   const { meta } = props;
+  const pathname = usePathname();
 
   const {
     siteTitle,
@@ -35,6 +37,14 @@ const CustomHead = (props: Props) => {
         content={`${todaysWeather} in ${location} | ${siteTitle}`}
       />
       <meta property="og:description" content={siteDescription} />
+      <link
+        rel="canonical"
+        href={
+          pathname === `/`
+            ? `https://weather.louiechristie.com`
+            : `https://weather.louiechristie.com${pathname}`
+        }
+      />
       <link rel="preload" as="image" href={image} fetchPriority="high" />
       <meta name="twitter:card" content="summary" />
       <meta name="monetization" content={monetization} />
