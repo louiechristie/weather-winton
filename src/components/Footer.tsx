@@ -34,37 +34,20 @@ const GitHubBadge = () => (
 );
 
 const HostedOn = () => {
-  if (process.env.NETLIFY) {
-    return (
-      <>
-        <img
-          style={{ verticalAlign: 'middle' }}
-          src="https://api.netlify.com/api/v1/badges/f0ee41e4-eb3b-44f3-8810-07d0a72ca9a1/deploy-status"
-          alt="Netlify logo"
-          loading="lazy"
-        />{' '}
-        <GitHubBadge />
-      </>
-    );
-  }
-
-  if (process.env.NODE_ENV === 'production') {
-    return (
-      <>
-        <img
-          style={{ verticalAlign: 'middle' }}
-          src="https://deploy-badge.vercel.app/vercel/weather-winton"
-          alt="Vercel logo"
-          width={119}
-          height={20}
-          loading="lazy"
-        />{' '}
-        <GitHubBadge />
-      </>
-    );
-  }
-
-  return <>Local</>;
+  return (
+    <>
+      <img
+        style={{ verticalAlign: 'middle' }}
+        src="/images/vercel-badge.svg"
+        alt="Vercel logo"
+        width={119}
+        height={20}
+        loading="lazy"
+      />{' '}
+      {process.env.NODE_ENV !== 'production' && <>(Local Development) </>}
+      <GitHubBadge />
+    </>
+  );
 };
 
 const Footer = (props: { meta: Meta }) => {

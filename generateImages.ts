@@ -119,6 +119,20 @@ try {
 
       const fsPromises = fs.promises;
       await fsPromises.writeFile(`public/images/${weatherTypeCode}.svg`, input);
+
+      const vercelBadge = await fetch(
+        'https://deploy-badge.vercel.app/vercel/weather-winton'
+      );
+
+      if (vercelBadge.ok) {
+        const vercelBadgeBody = await vercelBadge.text();
+        await fsPromises.writeFile(
+          `public/images/vercel-badge.svg`,
+          vercelBadgeBody
+        );
+      } else {
+        console.error('Failed to fetch Vercel badge: ', vercelBadge.statusText);
+      }
     }
   }
 } catch (error) {
