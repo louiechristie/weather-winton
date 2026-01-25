@@ -30,6 +30,27 @@ const getStormName = (
   if (!isBefore && !isAfter && (isWindy || isTakeRaincoat)) {
     return 'Goretti';
   }
+
+  const stormStartDate = Temporal.Instant.from(
+    '2026-01-20T00+00:00[Europe/London]'
+  );
+  const stormEndDate = Temporal.Instant.from(
+    '2026-01-26T00+00:00[Europe/London]'
+  );
+
+  const dateIsAfterStormStart =
+    date.epochMilliseconds >= stormStartDate.epochMilliseconds;
+  const dateIsBeforeStormEnd =
+    date.epochMilliseconds < stormEndDate.epochMilliseconds;
+
+  if (
+    dateIsAfterStormStart &&
+    dateIsBeforeStormEnd &&
+    (isWindy || isTakeRaincoat)
+  ) {
+    return 'Ingrid';
+  }
+
   return null;
 };
 

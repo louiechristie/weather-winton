@@ -32,4 +32,10 @@ describe('get storm name', () => {
 
     expect(getStormName(instant, false, true)).toEqual(null);
   });
+
+  test('should return Ingrid, when date is 21 January 2026, and weather is windy and wet', () => {
+    const instant = Temporal.Instant.from('2026-01-21T00:00:00Z');
+
+    expect(getStormName(instant, true, true)).toEqual('Ingrid');
+  });
 });
