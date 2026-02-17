@@ -42,7 +42,7 @@ const getSpecialDates = async (): Promise<SpecialDate[]> => {
   };
   const mergedDates: MergedDates = {};
 
-  const today = dayjs();
+  const today = dayjs().startOf('day');
 
   /* in days months are zero indexed */
   // First week of January dates add 1 year to current date
@@ -191,16 +191,18 @@ const getSpecialDates = async (): Promise<SpecialDate[]> => {
    * Add Pancake day
    */
 
-  let pancakeDayDate;
   const thisYear = dayjs().year();
-  const pancakeDayDateThisYear = getPancakeDayDate(thisYear).toString();
-  if (dayjs(pancakeDayDateThisYear, 'YYYY-MM-DD').isBefore(today)) {
-    pancakeDayDate = getPancakeDayDate(dayjs().add(1, 'year').year());
-  } else {
-    pancakeDayDate = pancakeDayDateThisYear;
+  let pancakeDayDateString = getPancakeDayDate(thisYear).toString();
+  let pancakeDayFriendlyName = 'Pancake Day 🥞';
+
+  if (dayjs(pancakeDayDateString, 'YYYY-MM-DD').isSame(today)) {
+    pancakeDayFriendlyName = 'Today - Pancake Day 🥞';
+  } else if (dayjs(pancakeDayDateString, 'YYYY-MM-DD').isBefore(today)) {
+    pancakeDayDateString = getPancakeDayDate(
+      dayjs().add(1, 'year').year()
+    ).toString();
   }
-  const pancakeDayDateFormatted = pancakeDayDate.toString();
-  mergedDates[pancakeDayDateFormatted] = 'Pancake Day 🥞';
+  mergedDates[pancakeDayDateString] = pancakeDayFriendlyName;
 
   specialDates = Object.keys(mergedDates)
     .toSorted()

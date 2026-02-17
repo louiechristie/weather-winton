@@ -7,6 +7,7 @@ import getFriendlyDateFromISODate from './getFriendlyDateFromISODate';
 import getSpecialDates from './getSpecialDates';
 
 import SpecialDate from '@/types/specialDate';
+import { Temporal } from 'temporal-polyfill';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -70,8 +71,18 @@ describe('get friendly dates', () => {
 
     const ISODate = pancakeDayDate.toISOString();
 
-    expect(getFriendlyDateFromISODate(ISODate, specialDates)).toBe(
-      'Pancake Day 🥞'
-    );
+    if (
+      Temporal.Now.plainDateISO().year === 2026 &&
+      Temporal.Now.plainDateISO().month === 2 &&
+      Temporal.Now.plainDateISO().day === 17
+    ) {
+      expect(getFriendlyDateFromISODate(ISODate, specialDates)).toBe(
+        'Today - Pancake Day 🥞'
+      );
+    } else {
+      expect(getFriendlyDateFromISODate(ISODate, specialDates)).toBe(
+        'Pancake Day 🥞'
+      );
+    }
   });
 });
