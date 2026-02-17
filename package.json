@@ -2,7 +2,7 @@
   "name": "weather-winton",
   "title": "Weather Winton",
   "description": "Weather Winton is an experiment in friendly weather forecasting.",
-  "version": "0.43.2",
+  "version": "0.43.3",
   "type": "module",
   "private": true,
   "author": {
@@ -61,10 +61,10 @@
     "@types/node": "24",
     "@types/react": "19",
     "@types/react-dom": "19",
-    "@typescript-eslint/eslint-plugin": "8.55.0",
-    "@typescript-eslint/parser": "8.55.0",
+    "@typescript-eslint/eslint-plugin": "8.56.0",
+    "@typescript-eslint/parser": "8.56.0",
     "dotenv": "17.3.1",
-    "eslint": "9",
+    "eslint": "^9.39.2",
     "eslint-config-next": "16.1.6",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-import": "2.32.0",
@@ -84,10 +84,10 @@
     "ts-jest": "29.4.6",
     "ts-node": "10.9.2",
     "typescript": "5",
-    "typescript-eslint": "8.55.0"
+    "typescript-eslint": "8.56.0"
   },
   "overrides": {
-    "@typescript-eslint/parser": "8.55.0"
+    "@isaacs/brace-expansion": "5.0.1"
   },
   "engines": {
     "node": "24.x"
