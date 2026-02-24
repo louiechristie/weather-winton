@@ -35,13 +35,13 @@
   "dependencies": {
     "@emotion/react": "11.14.0",
     "@emotion/styled": "11.14.1",
-    "@eslint/eslintrc": "3",
+    "@eslint/eslintrc": "^3.3.4",
     "@mui/material": "7.3.8",
     "axios": "1.13.5",
     "color": "5.0.3",
     "date-holidays": "3.26.8",
     "dayjs": "1.11.19",
-    "globals": "16.5.0",
+    "globals": "17.3.0",
     "neostandard": "0.12.2",
     "next": "16.1.6",
     "react": "19",
@@ -51,8 +51,6 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.11.1",
-    "@babel/core": "7.29.0",
-    "@babel/preset-typescript": "7.28.5",
     "@eslint/js": "^9.39.2",
     "@lhci/cli": "^0.15.1",
     "@playwright/test": "1.58.2",
@@ -61,8 +59,8 @@
     "@types/node": "24",
     "@types/react": "19",
     "@types/react-dom": "19",
-    "@typescript-eslint/eslint-plugin": "8.56.0",
-    "@typescript-eslint/parser": "8.56.0",
+    "@typescript-eslint/eslint-plugin": "8.56.1",
+    "@typescript-eslint/parser": "8.56.1",
     "dotenv": "17.3.1",
     "eslint": "^9.39.2",
     "eslint-config-next": "16.1.6",
@@ -78,16 +76,16 @@
     "jest-silent-reporter": "^0.6.0",
     "prettier": "3.8.1",
     "sharp": "^0.34.5",
-    "stylelint": "16.26.1",
+    "stylelint": "17.3.0",
     "stylelint-config-standard": "39.0.1",
     "stylelint-prettier": "5.0.3",
     "ts-jest": "29.4.6",
     "ts-node": "10.9.2",
     "typescript": "5",
-    "typescript-eslint": "8.56.0"
+    "typescript-eslint": "8.56.1"
   },
   "overrides": {
-    "@isaacs/brace-expansion": "5.0.1"
+    "stylelint": "17.3.0"
   },
   "engines": {
     "node": "24.x"
