@@ -2,7 +2,7 @@
   "name": "weather-winton",
   "title": "Weather Winton",
   "description": "Weather Winton is an experiment in friendly weather forecasting.",
-  "version": "0.43.3",
+  "version": "0.44.0",
   "type": "module",
   "private": true,
   "author": {
@@ -85,7 +85,8 @@
     "typescript-eslint": "8.56.1"
   },
   "overrides": {
-    "stylelint": "17.3.0"
+    "stylelint": "17.3.0",
+    "minimatch": "10.2.2"
   },
   "engines": {
     "node": "24.x"
