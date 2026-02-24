@@ -1,0 +1,42 @@
+name: Auto-merge Dependabot
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+    branches: [main]
+
+jobs:
+  test:
+    if: github.event.pull_request.user.login == 'dependabot[bot]' && github.repository == 'louiechristie/weather-winton'
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.58.0-noble
+      options: --user 1001
+    steps:
+      - run: echo "event name is:" ${{ github.event_name }}
+      - run: echo "event type is:" ${{ github.event.action }}
+      - run: echo "event type is:" ${{ github.event.deployment_status.state }}
+      - uses: actions/checkout@v5
+      - name: Install dependencies and run tests
+        run: |
+          npm ci
+          npm run test
+        env:
+          BASE_URL: ${{ env.BASE_URL || github.event.deployment_status.environment_url }}
+          MET_WEATHER_DAILY_URL: ${{ env.MET_WEATHER_DAILY_URL || vars.MET_WEATHER_DAILY_URL }}
+          MET_WEATHER_HOURLY_URL: ${{ env.MET_WEATHER_HOURLY_URL || vars.MET_WEATHER_HOURLY_URL }}
+          MET_WEATHER_SECRET: ${{ env.MET_WEATHER_SECRET || secrets.MET_WEATHER_SECRET }}
+
+  merge:
+    needs: test
+    runs-on: ubuntu-latest
+    if: ${{ needs.test.result == 'success' }} && github.event.pull_request.user.login == 'dependabot[bot]' && github.repository == 'louiechristie/weather-winton
+    name: Dependabot auto-merge
+    steps:
+      - name: Dependabot metadata
+        id: dependabot-metadata
+        uses: dependabot/fetch-metadata@v2
+      - name: Enable auto-merge for Dependabot PRs
+        run: gh pr merge --auto --merge "${{github.event.pull_request.html_url}}"
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
