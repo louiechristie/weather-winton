@@ -22,6 +22,7 @@ import {
 } from '../types/metOffice';
 import SpecialDate from '@/types/specialDate';
 import getStormName from './getStormName';
+import { getIsLooney } from './moon/getIsLooney';
 
 export type Item = {
   time: string; //  e.g. 2025-12-27T00:00Z - ISO 8601 format
@@ -40,6 +41,7 @@ export type Item = {
   currentTemperature: number;
   stormName: string | null;
   isWindy: boolean;
+  isLooney: boolean;
 };
 
 export type Items = Item[];
@@ -73,7 +75,8 @@ export function isItem(item: any): item is Item {
     'averageTemperature' in item &&
     'currentTemperature' in item &&
     'stormName' in item &&
-    'isWindy' in item
+    'isWindy' in item &&
+    'isLooney' in item
   );
 }
 
@@ -102,6 +105,10 @@ const transformMetOfficeJSON = (
       if (!isValidTime(day.time)) {
         throw new Error(`invalid date string: ${day.time}`);
       }
+
+      const toZonedDateTimeISO = Temporal.Instant.from(
+        day.time
+      ).toZonedDateTimeISO('UTC');
 
       return {
         time: day.time,
@@ -138,6 +145,7 @@ const transformMetOfficeJSON = (
           getIsTakeRainCoat(day)
         ),
         isWindy: getIsWindy(day.midday10MWindGust),
+        isLooney: getIsLooney(toZonedDateTimeISO),
       };
     }
   );

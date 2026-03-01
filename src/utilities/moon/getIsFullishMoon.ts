@@ -9,7 +9,7 @@ const getIsFullishMoon = (date: Temporal.ZonedDateTime): boolean => {
   }
   const chineseCalendarDate = date.withCalendar('chinese');
   const day = chineseCalendarDate.day;
-  if (day < 15 + 4 && day > 15 - 4) {
+  if (day > 15 - 4 && day < 15 + 3) {
     return true;
   }
   return false;

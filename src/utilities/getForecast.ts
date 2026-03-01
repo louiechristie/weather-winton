@@ -15,6 +15,7 @@ import {
 import type { Items } from '@/utilities/transformMetOfficeJSON';
 import SpecialDate from '../types/specialDate';
 
+import looneyDailyForecastJSON from '../../data/looney/looney-daily.json' with { type: 'json' };
 import windyDailyForecastJSON from '../../data/windy/windy-daily.json' with { type: 'json' };
 import heatwaveDailyForecastJSON from '../../data/heatwave/heatwave-daily.json' with { type: 'json' };
 
@@ -141,6 +142,14 @@ export const getStormDatesForecast = async (specialDates: SpecialDate[]) => {
     stormDatesForecast,
     mockHourlyMetOfficeJSON
   );
+};
+
+export const getLooneyForecast = async (specialDates: SpecialDate[]) => {
+  const looneyDailyForecast = MetOfficeDailyForecastGeoJSONSchema.parse(
+    looneyDailyForecastJSON
+  );
+
+  return transformMetOfficeJSON(specialDates, looneyDailyForecast);
 };
 
 export const getWindyForecast = async (specialDates: SpecialDate[]) => {

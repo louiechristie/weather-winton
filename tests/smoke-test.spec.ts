@@ -117,3 +117,25 @@ test.describe('weather conditions', async () => {
     await expect(page.getByText('Storm Bram')).toHaveCount(0);
   });
 });
+
+test.describe('looney conditions', async () => {
+  test('🌕 🐺 Looney 🤪 on page once', async ({ page }) => {
+    await page.goto(baseUrl + '/test/looney/');
+    await expect(page.getByText('🌕 🐺 Looney 🤪')).toBeVisible();
+  });
+
+  test('🌕 🐺 Looney 🤪 in first item (Sat 28 Feb 2026)', async ({ page }) => {
+    await page.goto(baseUrl + '/test/looney/');
+    await expect(page.locator('li').nth(0)).toContainText('🌕 🐺 Looney 🤪');
+  });
+
+  test('🌕 🐺 Looney 🤪 not in second item (Sun 1 March 2026)', async ({
+    page,
+  }) => {
+    await page.goto(baseUrl + '/test/looney/');
+    // nth(1) is zero-indexed, so 1 = the second item.
+    await expect(page.locator('li').nth(1)).not.toContainText(
+      '🌕 🐺 Looney 🤪'
+    );
+  });
+});
