@@ -10,7 +10,7 @@ Inspired by Negroponte, N. (1995). Being digital. New York: Knopf. p.55.
 
 - Met Office account for [Met Office Data Hub](https://datahub.metoffice.gov.uk/)
 
-- Install node v20.14.0 or greater
+- Install [Node](http://nodejs.org/en/download) version listed in package.json file "engines" section
 
 Set up environment variables:
 
