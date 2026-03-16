@@ -1,4 +1,5 @@
-import { getIsHourInTheRemainingDay } from './getIsHourInTheRemainingDay.mjs';
+import { Temporal } from 'temporal-polyfill';
+import { getIsHourInTheRemainingDay } from './getIsHourInTheRemainingDay';
 
 import {
   MetOfficeHourlyForecastGeoJSON,
@@ -7,7 +8,7 @@ import {
 
 const getAverageTemperaturefromHourly = (
   hourlyTimeSeries: MetOfficeHourlyForecastGeoJSON,
-  fromTime?: string
+  fromTime: Temporal.Instant
 ) => {
   const average = (array: number[]) =>
     array.reduce((a, b) => a + b) / array.length;
@@ -15,8 +16,8 @@ const getAverageTemperaturefromHourly = (
   const hourlyTimeSeriesInRemainingDay: HourlyWeatherData[] =
     hourlyTimeSeries.features[0].properties.timeSeries.filter((hour) => {
       const hourIsInTheRemainingDay = getIsHourInTheRemainingDay(
-        hour.time,
-        fromTime
+        Temporal.Instant.from(hour.time),
+        Temporal.Instant.from(fromTime)
       );
       return hourIsInTheRemainingDay;
     });

@@ -1,6 +1,3 @@
-// import { SpotForecastFeatureCollection } from '../api/typescript-fetch-client/api';
-import getMockDate from './getMockDate';
-
 const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
   type: 'FeatureCollection',
   features: [
@@ -15,7 +12,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
         modelRunDate: '2023-07-10T17:00Z',
         timeSeries: [
           {
-            time: getMockDate(),
+            time: '2023-07-10T22:00Z',
             screenTemperature: 21.99,
             maxScreenAirTemp: 22.24,
             minScreenAirTemp: 21.98,
@@ -36,7 +33,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 5,
           },
           {
-            time: getMockDate(),
+            time: '2023-07-10T23:00Z',
             screenTemperature: 18.09,
             maxScreenAirTemp: 18.42,
             minScreenAirTemp: 18.07,

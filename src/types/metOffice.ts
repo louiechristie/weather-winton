@@ -6,7 +6,7 @@
 import { z } from 'zod';
 
 // Met Office weather type mapping
-export const weatherTypes = {
+export const weatherTypes: { [key: number]: string } = {
   // NA: 'Not available',
   0: 'Clear night',
   1: 'Sunny day',
@@ -170,7 +170,10 @@ const ParameterMetadataItemSchema = z.object({
   unit: ParameterUnitSchema,
 });
 
-export const ParameterMetadataSchema = z.record(z.string(), ParameterMetadataItemSchema);
+export const ParameterMetadataSchema = z.record(
+  z.string(),
+  ParameterMetadataItemSchema
+);
 
 export type ParameterMetadata = z.infer<typeof ParameterMetadataSchema>;
 export type ParameterUnit = z.infer<typeof ParameterUnitSchema>;
@@ -396,8 +399,8 @@ export function getCurrentHourlyWeather(
     now.getHours()
   ).toISOString();
 
-  const currentData = feature.properties.timeSeries.find(
-    (hour) => hour.time.startsWith(currentHour.substring(0, 13))
+  const currentData = feature.properties.timeSeries.find((hour) =>
+    hour.time.startsWith(currentHour.substring(0, 13))
   );
 
   if (currentData) return currentData;

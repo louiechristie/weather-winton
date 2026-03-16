@@ -6,10 +6,10 @@ import {
   avg,
   getIsHourSnowy,
   getIsTakeRaincoatToday,
-} from './metOfficeWeatherUtils.mjs';
+} from './metOfficeWeatherUtils';
 import { getIsTooDryFromRelativeHumidity } from '../utilities/getComfortFromRelativeHumidity.mjs';
 import getIsStickyFromCelsiusAndRelativeHumidity from '../utilities/getIsStickyFromCelsiusAndRelativeHumidity.mjs';
-import { getIsHourInTheRemainingDay } from './getIsHourInTheRemainingDay.mjs';
+import { getIsHourInTheRemainingDay } from './getIsHourInTheRemainingDay';
 import getAverageTemperaturefromHourly from './getAverageTemperatureFromHourly';
 import getFriendlyDateFromISODate from './getFriendlyDateFromISODate';
 import { getTemperatureFriendly } from './getRoomTemperatureComfortFromCelsius.mjs';
@@ -88,7 +88,8 @@ export function isItems(items: any): items is Items {
 const transformMetOfficeJSON = (
   specialDates: SpecialDate[],
   dailyJson: MetOfficeDailyForecastGeoJSON,
-  hourlyJson?: MetOfficeHourlyForecastGeoJSON
+  hourlyJson: MetOfficeHourlyForecastGeoJSON,
+  now: Temporal.Instant
 ): Item[] => {
   const items: Items = dailyJson.features[0].properties.timeSeries.map(
     (day) => {
@@ -114,11 +115,9 @@ const transformMetOfficeJSON = (
         time: day.time,
         friendlyDate: getFriendlyDateFromISODate(day.time, specialDates),
         description: getDescriptionFromMetOfficeWeatherCode(
-          day.daySignificantWeatherCode.toString()
+          day.daySignificantWeatherCode
         ),
-        icon: getEmojiFromMetOfficeWeatherCode(
-          day.daySignificantWeatherCode.toString()
-        ),
+        icon: getEmojiFromMetOfficeWeatherCode(day.daySignificantWeatherCode),
         friendlyTemperature: getTemperatureFriendly(avgTemperature),
         minTemperature: Math.min(
           day.dayMaxScreenTemperature,
@@ -157,8 +156,9 @@ const transformMetOfficeJSON = (
 
     const isSnowDay =
       hourlyTimeSeries.filter((nextHour) => {
+        const instant = Temporal.Instant.from(nextHour.time);
         if (
-          getIsHourInTheRemainingDay(nextHour.time) &&
+          getIsHourInTheRemainingDay(instant, now) &&
           getIsHourSnowy(nextHour)
         ) {
           return true;
@@ -167,18 +167,21 @@ const transformMetOfficeJSON = (
         return false;
       }).length > 0;
 
-    items[0].isTakeRaincoat = getIsTakeRaincoatToday(hourlyJson);
+    items[0].isTakeRaincoat = getIsTakeRaincoatToday(hourlyJson, now);
     items[0].isSnowDay = isSnowDay;
 
-    items[0].averageTemperature = getAverageTemperaturefromHourly(hourlyJson);
+    items[0].averageTemperature = getAverageTemperaturefromHourly(
+      hourlyJson,
+      Temporal.Now.instant()
+    );
     items[0].currentTemperature = getCurrentTemperature(hourlyJson);
 
     items[0].maxTemperature = Math.max(
       ...hourlyTimeSeries
         .filter((hour) =>
           getIsHourInTheRemainingDay(
-            hour.time,
-            Temporal.Now.instant().toString()
+            Temporal.Instant.from(hour.time),
+            Temporal.Now.instant()
           )
         )
         .map((hour) => hour.screenTemperature)
@@ -188,8 +191,8 @@ const transformMetOfficeJSON = (
       ...hourlyTimeSeries
         .filter((hour) =>
           getIsHourInTheRemainingDay(
-            hour.time,
-            Temporal.Now.instant().toString()
+            Temporal.Instant.from(hour.time),
+            Temporal.Now.instant()
           )
         )
         .map((hour) => hour.screenTemperature)

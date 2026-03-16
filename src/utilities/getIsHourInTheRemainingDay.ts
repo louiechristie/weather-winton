@@ -3,12 +3,12 @@ import { Temporal } from 'temporal-polyfill';
 const DEBUG = false;
 
 export const getIsHourInTheRemainingDay = (
-  time,
-  currentTime = Temporal.Now.instant().toString()
+  time: Temporal.Instant,
+  currentTime: Temporal.Instant
 ) => {
   const systemTimeZone = Temporal.Now.timeZoneId();
-  const instantTime = Temporal.Instant.from(time);
-  const instantCurrentTime = Temporal.Instant.from(currentTime);
+  const instantTime = time;
+  const instantCurrentTime = currentTime;
   const zonedDateTime = instantTime.toZonedDateTimeISO(systemTimeZone);
   const currentZonedDateTime =
     instantCurrentTime.toZonedDateTimeISO(systemTimeZone);

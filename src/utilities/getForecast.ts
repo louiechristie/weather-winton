@@ -19,9 +19,11 @@ import looneyDailyForecastJSON from '../../data/looney/looney-daily.json' with {
 import windyDailyForecastJSON from '../../data/windy/windy-daily.json' with { type: 'json' };
 import heatwaveDailyForecastJSON from '../../data/heatwave/heatwave-daily.json' with { type: 'json' };
 
-const Now = Temporal.Now;
-const instant = Now.instant();
-const now = instant.toString();
+const now = Temporal.Now.instant();
+const nowString = now.toString();
+const mockHourlyMetOfficeJSON = generateMockHourlyMetOfficeJSON(nowString);
+const systemTimeZone = Temporal.Now.timeZoneId();
+const nowZoned = Temporal.Now.zonedDateTimeISO(systemTimeZone);
 
 const todayOnwardsFilterMetOfficeJSON = (
   metOfficeJSON: MetOfficeDailyForecastGeoJSON
@@ -37,9 +39,6 @@ const todayOnwardsFilterMetOfficeJSON = (
 };
 
 const todayOnwardsFilter = (day: DailyWeatherData) => {
-  const now = Temporal.Now;
-  const systemTimeZone = now.timeZoneId();
-  const nowZoned = now.zonedDateTimeISO(systemTimeZone);
   const nowPlainDate = nowZoned.toPlainDate();
 
   const time = day.time;
@@ -100,7 +99,8 @@ const getMetOfficeForecast = async (specialDates: SpecialDate[]) => {
   const items = transformMetOfficeJSON(
     specialDates,
     dailyFromTodayJson,
-    hourlyForecast
+    hourlyForecast,
+    now
   );
   return items;
 };
@@ -111,11 +111,12 @@ export const getMockForecast = async (specialDates: SpecialDate[]) => {
   const dailyFromTodayJson = todayOnwardsFilterMetOfficeJSON(
     mockDailyMetOfficeJSON
   );
-  const mockHourlyMetOfficeJSON = generateMockHourlyMetOfficeJSON(now);
+  const mockHourlyMetOfficeJSON = generateMockHourlyMetOfficeJSON(nowString);
   const items = transformMetOfficeJSON(
     specialDates,
     dailyFromTodayJson,
-    mockHourlyMetOfficeJSON
+    mockHourlyMetOfficeJSON,
+    now
   );
   return items;
 };
@@ -124,11 +125,12 @@ export const getSpecialDatesForecast = async (specialDates: SpecialDate[]) => {
   // log('getSpecialDatesForecast');
   const specialDatesDailyMetOfficeJSON =
     generateSpecialDatesDailyMetOfficeJSON(specialDates);
-  const mockHourlyMetOfficeJSON = generateMockHourlyMetOfficeJSON(now);
+  const mockHourlyMetOfficeJSON = generateMockHourlyMetOfficeJSON(nowString);
   return transformMetOfficeJSON(
     specialDates,
     specialDatesDailyMetOfficeJSON,
-    mockHourlyMetOfficeJSON
+    mockHourlyMetOfficeJSON,
+    now
   );
 };
 
@@ -136,11 +138,11 @@ export const getStormDatesForecast = async (specialDates: SpecialDate[]) => {
   const stormDatesForecast = MetOfficeDailyForecastGeoJSONSchema.parse(
     generateStormBramDailyMetOfficeJSON()
   );
-  const mockHourlyMetOfficeJSON = generateMockHourlyMetOfficeJSON(now);
   return transformMetOfficeJSON(
     specialDates,
     stormDatesForecast,
-    mockHourlyMetOfficeJSON
+    mockHourlyMetOfficeJSON,
+    now
   );
 };
 
@@ -149,7 +151,12 @@ export const getLooneyForecast = async (specialDates: SpecialDate[]) => {
     looneyDailyForecastJSON
   );
 
-  return transformMetOfficeJSON(specialDates, looneyDailyForecast);
+  return transformMetOfficeJSON(
+    specialDates,
+    looneyDailyForecast,
+    mockHourlyMetOfficeJSON,
+    now
+  );
 };
 
 export const getWindyForecast = async (specialDates: SpecialDate[]) => {
@@ -157,7 +164,12 @@ export const getWindyForecast = async (specialDates: SpecialDate[]) => {
     windyDailyForecastJSON
   );
 
-  return transformMetOfficeJSON(specialDates, windyDailyForecast);
+  return transformMetOfficeJSON(
+    specialDates,
+    windyDailyForecast,
+    mockHourlyMetOfficeJSON,
+    now
+  );
 };
 
 export const getHeatWaveForecast = async (specialDates: SpecialDate[]) => {
@@ -165,7 +177,12 @@ export const getHeatWaveForecast = async (specialDates: SpecialDate[]) => {
     heatwaveDailyForecastJSON
   );
 
-  return transformMetOfficeJSON(specialDates, heatwaveDailyForecast);
+  return transformMetOfficeJSON(
+    specialDates,
+    heatwaveDailyForecast,
+    mockHourlyMetOfficeJSON,
+    now
+  );
 };
 
 const getForecast = async (specialDates: SpecialDate[]): Promise<Items> => {
