@@ -35,7 +35,7 @@ test('isTakeRaincoatToday true when there is rain one hour between now and the e
   expect(
     getIsTakeRaincoatToday(
       mockHourlyNeedRaincoat,
-      Temporal.Instant.from('2023-07-10T00:00Z')
+      Temporal.Instant.from('2023-07-10T22:00Z')
     )
   ).toBe(true);
 });

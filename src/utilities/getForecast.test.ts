@@ -10,11 +10,15 @@ import getSpecialDates from './getSpecialDates';
 import {
   MetOfficeHourlyForecastGeoJSONSchema,
   MetOfficeDailyForecastGeoJSONSchema,
-  isMetOfficeHourlyForecastGeoJSON,
-  isMetOfficeDailyForecastGeoJSON,
 } from '../types/metOffice';
-import generateMockDailyMetOfficeJSON from '../tests/generateMockDailyMetOfficeJSON';
+
 import generateMockHourlyMetOfficeJSON from '../tests/generateMockHourlyMetOfficeJSON';
+import generateMockDailyMetOfficeJSON from '../tests/generateMockDailyMetOfficeJSON';
+import {
+  getMidnightDailyData,
+  getMidnightHourlyData,
+} from '../tests/generateMidnightJSON';
+import transformMetOfficeJSON from './transformMetOfficeJSON';
 
 const isValidTime = (time: string) => {
   try {
@@ -85,22 +89,30 @@ describe('getForecast module', () => {
 
     test('type guards work with hourly data', () => {
       const mockHourlyData = generateMockHourlyMetOfficeJSON();
-      expect(isMetOfficeHourlyForecastGeoJSON(mockHourlyData)).toBe(true);
+      expect(
+        MetOfficeHourlyForecastGeoJSONSchema.safeParse(mockHourlyData).success
+      ).toBe(true);
     });
 
     test('type guards work with daily data', () => {
       const mockDailyData = generateMockDailyMetOfficeJSON();
-      expect(isMetOfficeDailyForecastGeoJSON(mockDailyData)).toBe(true);
+      expect(
+        MetOfficeDailyForecastGeoJSONSchema.safeParse(mockDailyData).success
+      ).toBe(true);
     });
 
     test('rejects invalid hourly data structure', () => {
       const invalidData = { type: 'Invalid', features: 'not-an-array' };
-      expect(isMetOfficeHourlyForecastGeoJSON(invalidData)).toBe(false);
+      expect(
+        MetOfficeHourlyForecastGeoJSONSchema.safeParse(invalidData).success
+      ).toBe(false);
     });
 
     test('rejects invalid daily data structure', () => {
       const invalidData = { type: 'Invalid', features: 'not-an-array' };
-      expect(isMetOfficeDailyForecastGeoJSON(invalidData)).toBe(false);
+      expect(
+        MetOfficeDailyForecastGeoJSONSchema.safeParse(invalidData).success
+      ).toBe(false);
     });
 
     test('provides detailed error messages on validation failure', () => {
@@ -348,6 +360,27 @@ describe('getForecast module', () => {
     test('temperature data is present and valid', async () => {
       const specialDates = await getSpecialDates();
       const mockItems = await getMockForecast(specialDates);
+
+      mockItems.forEach((item) => {
+        expect(item.minTemperature).toBeDefined();
+        expect(item.maxTemperature).toBeDefined();
+        expect(typeof item.minTemperature).toBe('number');
+        expect(typeof item.maxTemperature).toBe('number');
+      });
+    });
+
+    test('temperature data is present and valid between 11pm and midnight', async () => {
+      const specialDates = await getSpecialDates();
+
+      const midnightDailyData = getMidnightDailyData();
+      const midnightHourlyData = getMidnightHourlyData();
+
+      const mockItems = await transformMetOfficeJSON(
+        specialDates,
+        midnightDailyData,
+        midnightHourlyData,
+        Temporal.Instant.from('2026-03-17T23:30:00Z')
+      );
 
       mockItems.forEach((item) => {
         expect(item.minTemperature).toBeDefined();
