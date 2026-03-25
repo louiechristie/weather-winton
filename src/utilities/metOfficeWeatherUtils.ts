@@ -48,17 +48,24 @@ export const getIsTakeRaincoatToday = (
 
   const hourlyTimeSeries = hourlyMetOffice.features[0].properties.timeSeries;
 
+  let isTakeRaincoatToday = false;
+
   hourlyTimeSeries.forEach((nextHour) => {
     const nextHourTime = Temporal.Instant.from(nextHour.time);
+    const isHourInRemainingDay = getIsHourInTheRemainingDay(
+      nextHourTime,
+      currentTime
+    );
+    const isHourNeedsRaincoat = getIsHourNeedsRaincoat(nextHour);
+    const notHourSnowy = !getIsHourSnowy(nextHour);
 
-    if (
-      getIsHourInTheRemainingDay(nextHourTime, currentTime) &&
-      getIsHourNeedsRaincoat(nextHour) &&
-      getIsHourSnowy(nextHour) === false
-    ) {
-      return true;
+    const isTakeRaincoatThisHour =
+      isHourInRemainingDay && isHourNeedsRaincoat && notHourSnowy;
+
+    if (isTakeRaincoatThisHour) {
+      isTakeRaincoatToday = true;
     }
   });
 
-  return false;
+  return isTakeRaincoatToday;
 };

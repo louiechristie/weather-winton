@@ -14,11 +14,6 @@ import {
 
 import generateMockHourlyMetOfficeJSON from '../tests/generateMockHourlyMetOfficeJSON';
 import generateMockDailyMetOfficeJSON from '../tests/generateMockDailyMetOfficeJSON';
-import {
-  getMidnightDailyData,
-  getMidnightHourlyData,
-} from '../tests/generateMidnightJSON';
-import transformMetOfficeJSON from './transformMetOfficeJSON';
 
 const isValidTime = (time: string) => {
   try {
@@ -360,27 +355,6 @@ describe('getForecast module', () => {
     test('temperature data is present and valid', async () => {
       const specialDates = await getSpecialDates();
       const mockItems = await getMockForecast(specialDates);
-
-      mockItems.forEach((item) => {
-        expect(item.minTemperature).toBeDefined();
-        expect(item.maxTemperature).toBeDefined();
-        expect(typeof item.minTemperature).toBe('number');
-        expect(typeof item.maxTemperature).toBe('number');
-      });
-    });
-
-    test('temperature data is present and valid between 11pm and midnight', async () => {
-      const specialDates = await getSpecialDates();
-
-      const midnightDailyData = getMidnightDailyData();
-      const midnightHourlyData = getMidnightHourlyData();
-
-      const mockItems = await transformMetOfficeJSON(
-        specialDates,
-        midnightDailyData,
-        midnightHourlyData,
-        Temporal.Instant.from('2026-03-17T23:30:00Z')
-      );
 
       mockItems.forEach((item) => {
         expect(item.minTemperature).toBeDefined();

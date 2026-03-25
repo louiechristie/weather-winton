@@ -9,10 +9,10 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
       },
       properties: {
         requestPointDistance: 1383.1984,
-        modelRunDate: '2023-07-10T17:00Z',
+        modelRunDate: '2023-03-10T17:00Z',
         timeSeries: [
           {
-            time: '2023-07-10T22:00Z',
+            time: '2023-03-10T22:00Z',
             screenTemperature: 21.99,
             maxScreenAirTemp: 22.24,
             minScreenAirTemp: 21.98,
@@ -33,7 +33,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 5,
           },
           {
-            time: '2023-07-10T23:00Z',
+            time: '2023-03-10T23:00Z',
             screenTemperature: 18.09,
             maxScreenAirTemp: 18.42,
             minScreenAirTemp: 18.07,

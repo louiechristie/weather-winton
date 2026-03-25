@@ -12,7 +12,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
       },
       properties: {
         requestPointDistance: 1383.1984,
-        modelRunDate: '2023-07-10T17:00Z',
+        modelRunDate: '2023-03-10T17:00Z',
         timeSeries: [
           {
             time: getMockDate(),
@@ -36,7 +36,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 5,
           },
           {
-            time: '2023-07-10T18:00Z',
+            time: '2023-03-10T18:00Z',
             screenTemperature: 22.12,
             maxScreenAirTemp: 22.13,
             minScreenAirTemp: 21.99,
@@ -57,7 +57,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 4,
           },
           {
-            time: '2023-07-10T19:00Z',
+            time: '2023-03-10T19:00Z',
             screenTemperature: 21.6,
             maxScreenAirTemp: 22.12,
             minScreenAirTemp: 21.59,
@@ -78,7 +78,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 4,
           },
           {
-            time: '2023-07-10T20:00Z',
+            time: '2023-03-10T20:00Z',
             screenTemperature: 20.59,
             maxScreenAirTemp: 21.6,
             minScreenAirTemp: 20.58,
@@ -99,7 +99,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 4,
           },
           {
-            time: '2023-07-10T21:00Z',
+            time: '2023-03-10T21:00Z',
             screenTemperature: 20.14,
             maxScreenAirTemp: 20.59,
             minScreenAirTemp: 20.13,
@@ -120,7 +120,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 7,
           },
           {
-            time: '2023-07-10T22:00Z',
+            time: '2023-03-10T22:00Z',
             screenTemperature: 19.82,
             maxScreenAirTemp: 20.14,
             minScreenAirTemp: 19.8,
@@ -141,7 +141,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 7,
           },
           {
-            time: '2023-07-10T23:00Z',
+            time: '2023-03-10T23:00Z',
             screenTemperature: 19.45,
             maxScreenAirTemp: 19.82,
             minScreenAirTemp: 19.44,
@@ -162,7 +162,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 10,
           },
           {
-            time: '2023-07-11T00:00Z',
+            time: '2023-03-11T00:00Z',
             screenTemperature: 19.11,
             maxScreenAirTemp: 19.45,
             minScreenAirTemp: 19.1,
@@ -183,7 +183,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 50,
           },
           {
-            time: '2023-07-11T01:00Z',
+            time: '2023-03-11T01:00Z',
             screenTemperature: 19.41,
             maxScreenAirTemp: 19.42,
             minScreenAirTemp: 19.11,
@@ -204,7 +204,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 9,
           },
           {
-            time: '2023-07-11T02:00Z',
+            time: '2023-03-11T02:00Z',
             screenTemperature: 19.31,
             maxScreenAirTemp: 19.41,
             minScreenAirTemp: 19.27,
@@ -225,7 +225,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 8,
           },
           {
-            time: '2023-07-11T03:00Z',
+            time: '2023-03-11T03:00Z',
             screenTemperature: 19.11,
             maxScreenAirTemp: 19.31,
             minScreenAirTemp: 19.09,
@@ -246,7 +246,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 16,
           },
           {
-            time: '2023-07-11T04:00Z',
+            time: '2023-03-11T04:00Z',
             screenTemperature: 18.78,
             maxScreenAirTemp: 19.11,
             minScreenAirTemp: 18.76,
@@ -267,7 +267,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 20,
           },
           {
-            time: '2023-07-11T05:00Z',
+            time: '2023-03-11T05:00Z',
             screenTemperature: 18.42,
             maxScreenAirTemp: 18.78,
             minScreenAirTemp: 18.4,
@@ -288,7 +288,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 52,
           },
           {
-            time: '2023-07-11T06:00Z',
+            time: '2023-03-11T06:00Z',
             screenTemperature: 18.09,
             maxScreenAirTemp: 18.42,
             minScreenAirTemp: 18.07,
@@ -309,7 +309,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 82,
           },
           {
-            time: '2023-07-11T07:00Z',
+            time: '2023-03-11T07:00Z',
             screenTemperature: 17.59,
             maxScreenAirTemp: 18.09,
             minScreenAirTemp: 17.58,
@@ -330,7 +330,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 65,
           },
           {
-            time: '2023-07-11T08:00Z',
+            time: '2023-03-11T08:00Z',
             screenTemperature: 17.61,
             maxScreenAirTemp: 17.64,
             minScreenAirTemp: 17.52,
@@ -351,7 +351,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 15,
           },
           {
-            time: '2023-07-11T09:00Z',
+            time: '2023-03-11T09:00Z',
             screenTemperature: 17.81,
             maxScreenAirTemp: 17.85,
             minScreenAirTemp: 17.61,
@@ -372,7 +372,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 20,
           },
           {
-            time: '2023-07-11T10:00Z',
+            time: '2023-03-11T10:00Z',
             screenTemperature: 18.5,
             maxScreenAirTemp: 18.54,
             minScreenAirTemp: 17.81,
@@ -393,7 +393,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 9,
           },
           {
-            time: '2023-07-11T11:00Z',
+            time: '2023-03-11T11:00Z',
             screenTemperature: 19.37,
             maxScreenAirTemp: 19.4,
             minScreenAirTemp: 18.5,
@@ -414,7 +414,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 11,
           },
           {
-            time: '2023-07-11T12:00Z',
+            time: '2023-03-11T12:00Z',
             screenTemperature: 20.15,
             maxScreenAirTemp: 20.2,
             minScreenAirTemp: 19.37,
@@ -435,7 +435,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 10,
           },
           {
-            time: '2023-07-11T13:00Z',
+            time: '2023-03-11T13:00Z',
             screenTemperature: 20.62,
             maxScreenAirTemp: 20.71,
             minScreenAirTemp: 20.15,
@@ -456,7 +456,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 12,
           },
           {
-            time: '2023-07-11T14:00Z',
+            time: '2023-03-11T14:00Z',
             screenTemperature: 21.08,
             maxScreenAirTemp: 21.15,
             minScreenAirTemp: 20.62,
@@ -477,7 +477,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 8,
           },
           {
-            time: '2023-07-11T15:00Z',
+            time: '2023-03-11T15:00Z',
             screenTemperature: 20.82,
             maxScreenAirTemp: 21.08,
             minScreenAirTemp: 20.77,
@@ -498,7 +498,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 12,
           },
           {
-            time: '2023-07-11T16:00Z',
+            time: '2023-03-11T16:00Z',
             screenTemperature: 20.29,
             maxScreenAirTemp: 20.82,
             minScreenAirTemp: 20.26,
@@ -519,7 +519,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 6,
           },
           {
-            time: '2023-07-11T17:00Z',
+            time: '2023-03-11T17:00Z',
             screenTemperature: 19.98,
             maxScreenAirTemp: 20.29,
             minScreenAirTemp: 19.85,
@@ -540,7 +540,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 1,
           },
           {
-            time: '2023-07-11T18:00Z',
+            time: '2023-03-11T18:00Z',
             screenTemperature: 19.73,
             maxScreenAirTemp: 19.98,
             minScreenAirTemp: 19.67,
@@ -561,7 +561,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 4,
           },
           {
-            time: '2023-07-11T19:00Z',
+            time: '2023-03-11T19:00Z',
             screenTemperature: 19.18,
             maxScreenAirTemp: 19.73,
             minScreenAirTemp: 19.14,
@@ -582,7 +582,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 1,
           },
           {
-            time: '2023-07-11T20:00Z',
+            time: '2023-03-11T20:00Z',
             screenTemperature: 18.52,
             maxScreenAirTemp: 19.18,
             minScreenAirTemp: 18.5,
@@ -603,7 +603,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 3,
           },
           {
-            time: '2023-07-11T21:00Z',
+            time: '2023-03-11T21:00Z',
             screenTemperature: 18.0,
             maxScreenAirTemp: 18.52,
             minScreenAirTemp: 17.97,
@@ -624,7 +624,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 2,
           },
           {
-            time: '2023-07-11T22:00Z',
+            time: '2023-03-11T22:00Z',
             screenTemperature: 17.48,
             maxScreenAirTemp: 18.0,
             minScreenAirTemp: 17.46,
@@ -645,7 +645,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 1,
           },
           {
-            time: '2023-07-11T23:00Z',
+            time: '2023-03-11T23:00Z',
             screenTemperature: 16.95,
             maxScreenAirTemp: 17.48,
             minScreenAirTemp: 16.93,
@@ -666,7 +666,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 3,
           },
           {
-            time: '2023-07-12T00:00Z',
+            time: '2023-03-12T00:00Z',
             screenTemperature: 16.4,
             maxScreenAirTemp: 16.95,
             minScreenAirTemp: 16.38,
@@ -687,7 +687,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 3,
           },
           {
-            time: '2023-07-12T01:00Z',
+            time: '2023-03-12T01:00Z',
             screenTemperature: 15.86,
             maxScreenAirTemp: 16.4,
             minScreenAirTemp: 15.84,
@@ -708,7 +708,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 3,
           },
           {
-            time: '2023-07-12T02:00Z',
+            time: '2023-03-12T02:00Z',
             screenTemperature: 15.45,
             maxScreenAirTemp: 15.86,
             minScreenAirTemp: 15.44,
@@ -729,7 +729,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 0,
           },
           {
-            time: '2023-07-12T03:00Z',
+            time: '2023-03-12T03:00Z',
             screenTemperature: 15.03,
             maxScreenAirTemp: 15.45,
             minScreenAirTemp: 15.02,
@@ -750,7 +750,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 0,
           },
           {
-            time: '2023-07-12T04:00Z',
+            time: '2023-03-12T04:00Z',
             screenTemperature: 14.88,
             maxScreenAirTemp: 15.03,
             minScreenAirTemp: 14.88,
@@ -771,7 +771,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 0,
           },
           {
-            time: '2023-07-12T05:00Z',
+            time: '2023-03-12T05:00Z',
             screenTemperature: 14.84,
             maxScreenAirTemp: 14.88,
             minScreenAirTemp: 14.83,
@@ -792,7 +792,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 0,
           },
           {
-            time: '2023-07-12T06:00Z',
+            time: '2023-03-12T06:00Z',
             screenTemperature: 15.02,
             maxScreenAirTemp: 15.13,
             minScreenAirTemp: 14.84,
@@ -813,7 +813,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 0,
           },
           {
-            time: '2023-07-12T07:00Z',
+            time: '2023-03-12T07:00Z',
             screenTemperature: 15.99,
             maxScreenAirTemp: 16.0,
             minScreenAirTemp: 15.02,
@@ -834,7 +834,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 0,
           },
           {
-            time: '2023-07-12T08:00Z',
+            time: '2023-03-12T08:00Z',
             screenTemperature: 17.21,
             maxScreenAirTemp: 17.24,
             minScreenAirTemp: 15.99,
@@ -855,7 +855,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 3,
           },
           {
-            time: '2023-07-12T09:00Z',
+            time: '2023-03-12T09:00Z',
             screenTemperature: 18.31,
             maxScreenAirTemp: 18.45,
             minScreenAirTemp: 17.21,
@@ -876,7 +876,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 4,
           },
           {
-            time: '2023-07-12T10:00Z',
+            time: '2023-03-12T10:00Z',
             screenTemperature: 18.9,
             maxScreenAirTemp: 19.15,
             minScreenAirTemp: 18.31,
@@ -897,7 +897,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 6,
           },
           {
-            time: '2023-07-12T11:00Z',
+            time: '2023-03-12T11:00Z',
             screenTemperature: 19.64,
             maxScreenAirTemp: 19.93,
             minScreenAirTemp: 18.83,
@@ -918,7 +918,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 16,
           },
           {
-            time: '2023-07-12T12:00Z',
+            time: '2023-03-12T12:00Z',
             screenTemperature: 20.32,
             maxScreenAirTemp: 20.5,
             minScreenAirTemp: 19.64,
@@ -939,7 +939,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 9,
           },
           {
-            time: '2023-07-12T13:00Z',
+            time: '2023-03-12T13:00Z',
             screenTemperature: 20.46,
             maxScreenAirTemp: 20.48,
             minScreenAirTemp: 20.32,
@@ -960,7 +960,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 12,
           },
           {
-            time: '2023-07-12T14:00Z',
+            time: '2023-03-12T14:00Z',
             screenTemperature: 20.36,
             maxScreenAirTemp: 20.46,
             minScreenAirTemp: 20.2,
@@ -981,7 +981,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 34,
           },
           {
-            time: '2023-07-12T15:00Z',
+            time: '2023-03-12T15:00Z',
             screenTemperature: 20.48,
             screenDewPointTemperature: 11.5,
             feelsLikeTemperature: 17.33,
@@ -997,7 +997,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 35,
           },
           {
-            time: '2023-07-12T16:00Z',
+            time: '2023-03-12T16:00Z',
             screenTemperature: 20.18,
             screenDewPointTemperature: 11.71,
             feelsLikeTemperature: 17.21,
@@ -1013,7 +1013,7 @@ const mockHourlyMetOfficeJSON /* : SpotForecastFeatureCollection */ = {
             probOfPrecipitation: 35,
           },
           {
-            time: '2023-07-12T17:00Z',
+            time: '2023-03-12T17:00Z',
             screenTemperature: 19.96,
             screenDewPointTemperature: 11.72,
             feelsLikeTemperature: 17.17,

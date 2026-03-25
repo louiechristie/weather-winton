@@ -1,71 +1,38 @@
 import { Temporal } from 'temporal-polyfill';
 
-const DEBUG = false;
-
 export const getIsHourInTheRemainingDay = (
-  time: Temporal.Instant,
+  hour: Temporal.Instant,
   currentTime: Temporal.Instant
 ) => {
   const systemTimeZone = Temporal.Now.timeZoneId();
-  const instantTime = time;
-  const instantCurrentTime = currentTime;
-  const zonedDateTime = instantTime.toZonedDateTimeISO(systemTimeZone);
-  const currentZonedDateTime =
-    instantCurrentTime.toZonedDateTimeISO(systemTimeZone);
-  const currentHourZonedDateTime = currentZonedDateTime.with({
+
+  const zonedHour = hour.toZonedDateTimeISO(systemTimeZone);
+  const date = zonedHour.toPlainDate();
+
+  const currentTimeZoned = currentTime.toZonedDateTimeISO(systemTimeZone);
+  const currentHourZoned = currentTimeZoned.with({
     minute: 0,
     second: 0,
     microsecond: 0,
   });
-  const hourZonedDateTime = zonedDateTime.with({
-    minute: 0,
-    second: 0,
-    microsecond: 0,
-  });
+  const currentDate = currentHourZoned.toPlainDate();
 
-  const isSameDay = zonedDateTime
-    .toPlainDate()
-    .equals(currentZonedDateTime.toPlainDate());
-
-  const isBeforeMidnight =
-    currentHourZonedDateTime.hour < 23 ||
-    (currentHourZonedDateTime.hour === 23 &&
-      currentHourZonedDateTime.minute < 59);
-
-  if (DEBUG) {
-    const instantTimeString = instantTime.toString();
-    const instantCurrentTimeString = instantCurrentTime.toString();
-    const hourZonedDateTimeString = hourZonedDateTime.toString();
-
-    const currentHourZonedDateTimeString = currentHourZonedDateTime.toString();
-    const currentZonedDateTimeString = currentZonedDateTime.toString();
-    const zonedDateTimeString = zonedDateTime.toString();
-
-    console.info({
-      systemTimeZone,
-      instantTimeString,
-      instantCurrentTimeString,
-      zonedDateTimeString,
-      currentZonedDateTimeString,
-      currentHourZonedDateTimeString,
-      hourZonedDateTimeString,
-    });
-  }
+  const isSameDay = date.equals(currentDate);
 
   const comparison = Temporal.ZonedDateTime.compare(
-    currentHourZonedDateTime,
-    hourZonedDateTime
+    currentHourZoned,
+    zonedHour
   );
 
   const isCurrentHour = comparison === 0;
 
-  const isLater =
-    Temporal.ZonedDateTime.compare(currentZonedDateTime, zonedDateTime) < 0;
+  const isLater = comparison < 0;
 
   const isCurrentHourOrLater = isCurrentHour || isLater;
 
-  const isTodayAndRemaining =
-    isSameDay && isCurrentHourOrLater && isBeforeMidnight;
+  const isTodayBeforeMidnight = isSameDay && isCurrentHourOrLater;
+
+  const isTodayAndRemaining = isTodayBeforeMidnight;
 
   return isTodayAndRemaining;
 };
