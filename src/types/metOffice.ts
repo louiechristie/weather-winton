@@ -195,71 +195,75 @@ export type MetOfficeHourlyForecastGeoJSON = z.infer<
 // DAILY FORECAST SCHEMAS
 // ============================================================================
 
-/**
- * Zod schema for daily weather data
- */
-export const DailyWeatherDataSchema = z.object({
+const DailyWeatherPreviousNightDataSchema = z.object({
   time: z.string(), // ISO 8601 date string
-
-  // Wind parameters
-  midday10MWindSpeed: z.number(), // m/s
   midnight10MWindSpeed: z.number(), // m/s
-  midday10MWindDirection: z.number(), // degrees
   midnight10MWindDirection: z.number(), // degrees
-  midday10MWindGust: z.number(), // m/s
   midnight10MWindGust: z.number(), // m/s
-
-  // Visibility parameters (metres)
-  middayVisibility: z.number(),
   midnightVisibility: z.number(),
-
-  // Humidity parameters (percentage)
-  middayRelativeHumidity: z.number(),
   midnightRelativeHumidity: z.number(),
-
-  // Pressure parameters (pascals)
-  middayMslp: z.number(),
   midnightMslp: z.number(),
-
-  // UV parameters
-  maxUvIndex: z.number(),
-
-  // Weather codes
-  daySignificantWeatherCode: z.number(),
-  nightSignificantWeatherCode: z.number(),
-
-  // Temperature parameters (degrees Celsius)
-  dayMaxScreenTemperature: z.number(),
   nightMinScreenTemperature: z.number(),
-  dayUpperBoundMaxTemp: z.number(),
   nightUpperBoundMinTemp: z.number(),
-  dayLowerBoundMaxTemp: z.number(),
   nightLowerBoundMinTemp: z.number(),
-
-  // Feels like temperature parameters (degrees Celsius)
-  dayMaxFeelsLikeTemp: z.number(),
-  nightMinFeelsLikeTemp: z.number(),
-  dayUpperBoundMaxFeelsLikeTemp: z.number(),
   nightUpperBoundMinFeelsLikeTemp: z.number(),
-  dayLowerBoundMaxFeelsLikeTemp: z.number(),
   nightLowerBoundMinFeelsLikeTemp: z.number(),
-
-  // Precipitation probability parameters (percentage)
-  dayProbabilityOfPrecipitation: z.number(),
-  nightProbabilityOfPrecipitation: z.number(),
-  dayProbabilityOfSnow: z.number(),
-  nightProbabilityOfSnow: z.number(),
-  dayProbabilityOfHeavySnow: z.number(),
-  nightProbabilityOfHeavySnow: z.number(),
-  dayProbabilityOfRain: z.number(),
-  nightProbabilityOfRain: z.number(),
-  dayProbabilityOfHeavyRain: z.number(),
-  nightProbabilityOfHeavyRain: z.number(),
-  dayProbabilityOfHail: z.number(),
-  nightProbabilityOfHail: z.number(),
-  dayProbabilityOfSferics: z.number(),
-  nightProbabilityOfSferics: z.number(),
 });
+
+export type DailyWeatherPreviousNightData = z.infer<
+  typeof DailyWeatherPreviousNightDataSchema
+>;
+
+export const DailyWeatherDataSchema =
+  DailyWeatherPreviousNightDataSchema.extend({
+    // Wind parameters
+    midday10MWindSpeed: z.number(), // m/s
+    midday10MWindDirection: z.number(), // degrees
+    midday10MWindGust: z.number(), // m/s
+
+    // Visibility parameters (metres)
+    middayVisibility: z.number(),
+
+    // Humidity parameters (percentage)
+    middayRelativeHumidity: z.number(),
+
+    // Pressure parameters (pascals)
+    middayMslp: z.number(),
+
+    // UV parameters
+    maxUvIndex: z.number(),
+
+    // Weather codes
+    daySignificantWeatherCode: z.number(),
+    nightSignificantWeatherCode: z.number(),
+
+    // Temperature parameters (degrees Celsius)
+    dayMaxScreenTemperature: z.number(),
+    dayUpperBoundMaxTemp: z.number(),
+    dayLowerBoundMaxTemp: z.number(),
+
+    // Feels like temperature parameters (degrees Celsius)
+    dayMaxFeelsLikeTemp: z.number(),
+    nightMinFeelsLikeTemp: z.number(),
+    dayUpperBoundMaxFeelsLikeTemp: z.number(),
+    dayLowerBoundMaxFeelsLikeTemp: z.number(),
+
+    // Precipitation probability parameters (percentage)
+    dayProbabilityOfPrecipitation: z.number(),
+    nightProbabilityOfPrecipitation: z.number(),
+    dayProbabilityOfSnow: z.number(),
+    nightProbabilityOfSnow: z.number(),
+    dayProbabilityOfHeavySnow: z.number(),
+    nightProbabilityOfHeavySnow: z.number(),
+    dayProbabilityOfRain: z.number(),
+    nightProbabilityOfRain: z.number(),
+    dayProbabilityOfHeavyRain: z.number(),
+    nightProbabilityOfHeavyRain: z.number(),
+    dayProbabilityOfHail: z.number(),
+    nightProbabilityOfHail: z.number(),
+    dayProbabilityOfSferics: z.number(),
+    nightProbabilityOfSferics: z.number(),
+  });
 
 export type DailyWeatherData = z.infer<typeof DailyWeatherDataSchema>;
 
@@ -276,6 +280,25 @@ export type DailyWeatherForecastProperties = z.infer<
   typeof DailyWeatherForecastPropertiesSchema
 >;
 
+// Before filtering to today onwards, the first item is the previous night's forecast, which has a different schema (missing day parameters). We use a tuple to enforce this structure.
+export const DailyWeatherTimeSeriesRawSchema = z
+  .tuple([DailyWeatherPreviousNightDataSchema])
+  .rest(DailyWeatherDataSchema);
+
+export type DailyWeatherTimeSeriesRawData = z.infer<
+  typeof DailyWeatherTimeSeriesRawSchema
+>;
+
+export const DailyWeatherForecastPropertiesRawSchema = z.object({
+  requestPointDistance: z.number(), // metres
+  modelRunDate: z.string(), // ISO 8601 datetime string
+  timeSeries: DailyWeatherTimeSeriesRawSchema,
+});
+
+export type DailyWeatherForecastRawProperties = z.infer<
+  typeof DailyWeatherForecastPropertiesSchema
+>;
+
 /**
  * Zod schema for daily weather forecast feature
  */
@@ -289,6 +312,16 @@ export type DailyWeatherForecastFeature = z.infer<
   typeof DailyWeatherForecastFeatureSchema
 >;
 
+export const DailyWeatherForecastFeatureRawSchema = z.object({
+  type: z.literal('Feature'),
+  geometry: PointSchema,
+  properties: DailyWeatherForecastPropertiesRawSchema,
+});
+
+export type DailyWeatherForecastRawFeature = z.infer<
+  typeof DailyWeatherForecastFeatureRawSchema
+>;
+
 /**
  * Zod schema for Met Office daily forecast GeoJSON
  */
@@ -300,6 +333,19 @@ export const MetOfficeDailyForecastGeoJSONSchema = z.object({
 
 export type MetOfficeDailyForecastGeoJSON = z.infer<
   typeof MetOfficeDailyForecastGeoJSONSchema
+>;
+
+/**
+ * Zod schema for Met Office daily forecast GeoJSON
+ */
+export const MetOfficeDailyForecastGeoJSONRawSchema = z.object({
+  type: z.literal('FeatureCollection'),
+  features: z.array(DailyWeatherForecastFeatureRawSchema),
+  parameters: z.any().optional(), // Parameters structure varies, skip strict validation
+});
+
+export type MetOfficeDailyForecastGeoRawJSON = z.infer<
+  typeof MetOfficeDailyForecastGeoJSONRawSchema
 >;
 
 // ============================================================================
@@ -354,353 +400,4 @@ export function isMetOfficeDailyForecastGeoJSON(
   data: unknown
 ): data is MetOfficeDailyForecastGeoJSON {
   return MetOfficeDailyForecastGeoJSONSchema.safeParse(data).success;
-}
-
-// ============================================================================
-// UTILITY FUNCTIONS
-// ============================================================================
-
-/**
- * Get weather data for a specific hour
- */
-export function getHourlyWeatherForTime(
-  forecast: MetOfficeHourlyForecastGeoJSON,
-  dateTime: string | Date,
-  featureIndex: number = 0
-): HourlyWeatherData | null {
-  const feature = forecast.features[featureIndex];
-  if (!feature) return null;
-
-  const targetDateTime =
-    typeof dateTime === 'string' ? dateTime : dateTime.toISOString();
-
-  return (
-    feature.properties.timeSeries.find(
-      (hour) => hour.time === targetDateTime
-    ) || null
-  );
-}
-
-/**
- * Get current/latest hourly weather data
- */
-export function getCurrentHourlyWeather(
-  forecast: MetOfficeHourlyForecastGeoJSON,
-  featureIndex: number = 0
-): HourlyWeatherData | null {
-  const feature = forecast.features[featureIndex];
-  if (!feature || feature.properties.timeSeries.length === 0) return null;
-
-  const now = new Date();
-  const currentHour = new Date(
-    now.getFullYear(),
-    now.getMonth(),
-    now.getDate(),
-    now.getHours()
-  ).toISOString();
-
-  const currentData = feature.properties.timeSeries.find((hour) =>
-    hour.time.startsWith(currentHour.substring(0, 13))
-  );
-
-  if (currentData) return currentData;
-
-  return feature.properties.timeSeries[0];
-}
-
-/**
- * Get hourly data for a specific date
- */
-export function getHourlyWeatherForDate(
-  forecast: MetOfficeHourlyForecastGeoJSON,
-  date: string | Date,
-  featureIndex: number = 0
-): HourlyWeatherData[] {
-  const feature = forecast.features[featureIndex];
-  if (!feature) return [];
-
-  const targetDate =
-    typeof date === 'string' ? date : date.toISOString().split('T')[0];
-
-  return feature.properties.timeSeries.filter((hour) =>
-    hour.time.startsWith(targetDate)
-  );
-}
-
-/**
- * Get all available hours in the forecast
- */
-export function getAvailableHours(
-  forecast: MetOfficeHourlyForecastGeoJSON,
-  featureIndex: number = 0
-): string[] {
-  const feature = forecast.features[featureIndex];
-  if (!feature) return [];
-
-  return feature.properties.timeSeries.map((hour) => hour.time);
-}
-
-/**
- * Get weather data for a specific date
- */
-export function getWeatherForDate(
-  forecast: MetOfficeDailyForecastGeoJSON,
-  date: string | Date,
-  featureIndex: number = 0
-): DailyWeatherData | null {
-  const feature = forecast.features[featureIndex];
-  if (!feature) return null;
-
-  const targetDate =
-    typeof date === 'string' ? date : date.toISOString().split('T')[0];
-
-  return (
-    feature.properties.timeSeries.find((day) =>
-      day.time.startsWith(targetDate)
-    ) || null
-  );
-}
-
-/**
- * Get the latest/current weather data
- */
-export function getCurrentWeather(
-  forecast: MetOfficeDailyForecastGeoJSON,
-  featureIndex: number = 0
-): DailyWeatherData | null {
-  const feature = forecast.features[featureIndex];
-  if (!feature || feature.properties.timeSeries.length === 0) return null;
-
-  const now = new Date();
-  const today = now.toISOString().split('T')[0];
-
-  const todayData = feature.properties.timeSeries.find((day) =>
-    day.time.startsWith(today)
-  );
-
-  if (todayData) return todayData;
-
-  return feature.properties.timeSeries[0];
-}
-
-/**
- * Get all dates available in the forecast
- */
-export function getAvailableDates(
-  forecast: MetOfficeDailyForecastGeoJSON,
-  featureIndex: number = 0
-): string[] {
-  const feature = forecast.features[featureIndex];
-  if (!feature) return [];
-
-  return feature.properties.timeSeries.map((day) => day.time.split('T')[0]);
-}
-
-/**
- * Get parameter metadata by parameter name
- */
-export function getParameterMetadata(
-  forecast: MetOfficeDailyForecastGeoJSON,
-  parameterName: keyof DailyWeatherData
-): ParameterMetadata | null {
-  if (!forecast.parameters || !Array.isArray(forecast.parameters)) return null;
-
-  return (
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    forecast.parameters.find((param: any) =>
-      Object.prototype.hasOwnProperty.call(param, parameterName)
-    ) || null
-  );
-}
-
-/**
- * Temperature range interface
- */
-export interface TemperatureRange {
-  max: number;
-  min: number;
-  maxUpperBound?: number;
-  maxLowerBound?: number;
-  minUpperBound?: number;
-  minLowerBound?: number;
-}
-
-/**
- * Get temperature range for a day
- */
-export function getTemperatureRange(
-  day: DailyWeatherData
-): TemperatureRange | null {
-  if (
-    day.dayMaxScreenTemperature === undefined ||
-    day.nightMinScreenTemperature === undefined
-  ) {
-    return null;
-  }
-
-  return {
-    max: day.dayMaxScreenTemperature,
-    min: day.nightMinScreenTemperature,
-    maxUpperBound: day.dayUpperBoundMaxTemp,
-    maxLowerBound: day.dayLowerBoundMaxTemp,
-    minUpperBound: day.nightUpperBoundMinTemp,
-    minLowerBound: day.nightLowerBoundMinTemp,
-  };
-}
-
-/**
- * Temperature trend interface
- */
-export interface TemperatureTrend {
-  timestamps: string[];
-  temperatures: number[];
-  feelsLike: number[];
-  min: number;
-  max: number;
-  average: number;
-}
-
-/**
- * Get temperature trend over time (hourly data)
- */
-export function getHourlyTemperatureTrend(
-  forecast: MetOfficeHourlyForecastGeoJSON,
-  featureIndex: number = 0
-): TemperatureTrend | null {
-  const feature = forecast.features[featureIndex];
-  if (!feature) return null;
-
-  const validHours = feature.properties.timeSeries.filter(
-    (hour) =>
-      hour.screenTemperature !== undefined &&
-      hour.feelsLikeTemperature !== undefined
-  );
-
-  if (validHours.length === 0) return null;
-
-  const temperatures = validHours.map((hour) => hour.screenTemperature!);
-  const feelsLike = validHours.map((hour) => hour.feelsLikeTemperature!);
-
-  return {
-    timestamps: validHours.map((hour) => hour.time),
-    temperatures,
-    feelsLike,
-    min: Math.min(...temperatures),
-    max: Math.max(...temperatures),
-    average:
-      temperatures.reduce((sum, temp) => sum + temp, 0) / temperatures.length,
-  };
-}
-
-/**
- * Precipitation forecast interface
- */
-export interface PrecipitationForecast {
-  timestamps: string[];
-  rates: number[];
-  amounts: number[];
-  probabilities: number[];
-  snowAmounts: number[];
-  totalAmount: number;
-  peakRate: number;
-  averageProbability: number;
-}
-
-/**
- * Get precipitation forecast (hourly data)
- */
-export function getHourlyPrecipitationForecast(
-  forecast: MetOfficeHourlyForecastGeoJSON,
-  featureIndex: number = 0
-): PrecipitationForecast | null {
-  const feature = forecast.features[featureIndex];
-  if (!feature) return null;
-
-  const validHours = feature.properties.timeSeries.filter(
-    (hour) =>
-      hour.precipitationRate !== undefined ||
-      hour.totalPrecipAmount !== undefined ||
-      hour.probOfPrecipitation !== undefined
-  );
-
-  if (validHours.length === 0) return null;
-
-  const rates = validHours.map((hour) => hour.precipitationRate ?? 0);
-  const amounts = validHours.map((hour) => hour.totalPrecipAmount ?? 0);
-  const probabilities = validHours.map((hour) => hour.probOfPrecipitation ?? 0);
-  const snowAmounts = validHours.map((hour) => hour.totalSnowAmount ?? 0);
-
-  return {
-    timestamps: validHours.map((hour) => hour.time),
-    rates,
-    amounts,
-    probabilities,
-    snowAmounts,
-    totalAmount: amounts.reduce((sum, amount) => sum + amount, 0),
-    peakRate: Math.max(...rates),
-    averageProbability:
-      probabilities.reduce((sum, prob) => sum + prob, 0) / probabilities.length,
-  };
-}
-
-/**
- * Precipitation probabilities interface
- */
-export interface PrecipitationProbabilities {
-  day: {
-    precipitation?: number;
-    rain?: number;
-    heavyRain?: number;
-    snow?: number;
-    heavySnow?: number;
-    hail?: number;
-    sferics?: number;
-  };
-  night: {
-    precipitation?: number;
-    rain?: number;
-    heavyRain?: number;
-    snow?: number;
-    heavySnow?: number;
-    hail?: number;
-    sferics?: number;
-  };
-}
-
-/**
- * Get precipitation probabilities for a day
- */
-export function getPrecipitationProbabilities(
-  day: DailyWeatherData
-): PrecipitationProbabilities {
-  return {
-    day: {
-      precipitation: day.dayProbabilityOfPrecipitation,
-      rain: day.dayProbabilityOfRain,
-      heavyRain: day.dayProbabilityOfHeavyRain,
-      snow: day.dayProbabilityOfSnow,
-      heavySnow: day.dayProbabilityOfHeavySnow,
-      hail: day.dayProbabilityOfHail,
-      sferics: day.dayProbabilityOfSferics,
-    },
-    night: {
-      precipitation: day.nightProbabilityOfPrecipitation,
-      rain: day.nightProbabilityOfRain,
-      heavyRain: day.nightProbabilityOfHeavyRain,
-      snow: day.nightProbabilityOfSnow,
-      heavySnow: day.nightProbabilityOfHeavySnow,
-      hail: day.nightProbabilityOfHail,
-      sferics: day.nightProbabilityOfSferics,
-    },
-  };
-}
-
-/**
- * API response wrapper
- */
-export interface MetOfficeApiResponse {
-  data?: MetOfficeDailyForecastGeoJSON;
-  status?: string;
-  message?: string;
-  timestamp?: string;
 }

@@ -7,8 +7,11 @@ import generateStormBramDailyMetOfficeJSON from '../tests/generateStormBramMetOf
 import transformMetOfficeJSON from './transformMetOfficeJSON';
 import {
   MetOfficeDailyForecastGeoJSON,
+  MetOfficeDailyForecastGeoRawJSON,
   MetOfficeDailyForecastGeoJSONSchema,
+  MetOfficeDailyForecastGeoJSONRawSchema,
   MetOfficeHourlyForecastGeoJSONSchema,
+  DailyWeatherPreviousNightData,
   DailyWeatherData,
 } from '../types/metOffice';
 
@@ -26,19 +29,27 @@ const systemTimeZone = Temporal.Now.timeZoneId();
 const nowZoned = Temporal.Now.zonedDateTimeISO(systemTimeZone);
 
 const todayOnwardsFilterMetOfficeJSON = (
-  metOfficeJSON: MetOfficeDailyForecastGeoJSON
+  metOfficeJSON:
+    | MetOfficeDailyForecastGeoRawJSON
+    | MetOfficeDailyForecastGeoJSON
 ): MetOfficeDailyForecastGeoJSON => {
-  const filtered = structuredClone(metOfficeJSON);
-  filtered.features[0].properties.timeSeries = [];
+  const filtered: MetOfficeDailyForecastGeoJSON = structuredClone(
+    metOfficeJSON
+  ) as MetOfficeDailyForecastGeoJSON;
 
   const days = metOfficeJSON.features[0].properties.timeSeries;
-  const daysFiltered = days.filter(todayOnwardsFilter);
+  const daysFiltered: DailyWeatherData[] = days.filter(
+    todayOnwardsFilter
+  ) as DailyWeatherData[];
+
   filtered.features[0].properties.timeSeries = daysFiltered;
 
   return filtered;
 };
 
-const todayOnwardsFilter = (day: DailyWeatherData) => {
+const todayOnwardsFilter = (
+  day: DailyWeatherPreviousNightData | DailyWeatherData
+) => {
   const nowPlainDate = nowZoned.toPlainDate();
 
   const time = day.time;
@@ -81,8 +92,14 @@ const getMetOfficeForecast = async (specialDates: SpecialDate[]) => {
 
   const dailyJson: MetOfficeDailyForecastGeoJSON = await response.json();
 
+  const dailyForecastRaw =
+    MetOfficeDailyForecastGeoJSONRawSchema.parse(dailyJson);
+
   const dailyFromTodayJson: MetOfficeDailyForecastGeoJSON =
-    todayOnwardsFilterMetOfficeJSON(dailyJson);
+    todayOnwardsFilterMetOfficeJSON(dailyForecastRaw);
+
+  const dailyForecast =
+    MetOfficeDailyForecastGeoJSONSchema.parse(dailyFromTodayJson);
 
   const hourlyResponse = await fetch(process.env.MET_WEATHER_HOURLY_URL, {
     headers,
@@ -98,7 +115,7 @@ const getMetOfficeForecast = async (specialDates: SpecialDate[]) => {
 
   const items = transformMetOfficeJSON(
     specialDates,
-    dailyFromTodayJson,
+    dailyForecast,
     hourlyForecast,
     now
   );
@@ -111,11 +128,20 @@ export const getMockForecast = async (specialDates: SpecialDate[]) => {
   const dailyFromTodayJson = todayOnwardsFilterMetOfficeJSON(
     mockDailyMetOfficeJSON
   );
+
+  const dailyForecast =
+    MetOfficeDailyForecastGeoJSONSchema.parse(dailyFromTodayJson);
+
   const mockHourlyMetOfficeJSON = generateMockHourlyMetOfficeJSON(nowString);
+
+  const hourlyForecast = MetOfficeHourlyForecastGeoJSONSchema.parse(
+    mockHourlyMetOfficeJSON
+  );
+
   const items = transformMetOfficeJSON(
     specialDates,
-    dailyFromTodayJson,
-    mockHourlyMetOfficeJSON,
+    dailyForecast,
+    hourlyForecast,
     now
   );
   return items;
