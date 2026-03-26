@@ -25,13 +25,15 @@ describe('getMockDate', () => {
     });
 
     test('getMockDate on first instant to be beginning of previous hour', () => {
-      const expectedFirstMockDateZonedDateTime = nowZonedDateTime.with({
-        hour: nowZonedDateTime.hour - 1,
-        minute: 0,
-        second: 0,
-        millisecond: 0,
-      });
-
+      const expectedFirstMockDateZonedDateTime = nowZonedDateTime
+        .with({
+          minute: 0,
+          second: 0,
+          millisecond: 0,
+        })
+        .subtract({
+          hours: 1,
+        });
       const firstMockDate = getMockDate(nowString);
       const firstMockDateZonedDateTime =
         Temporal.Instant.from(firstMockDate).toZonedDateTimeISO(timeZoneId);
@@ -65,12 +67,13 @@ describe('getMockDate', () => {
     });
 
     test('getMockDate third time to be beginning of next hour', () => {
-      const expectedThirdTimeZonedDateTime = nowZonedDateTime.with({
-        hour: nowZonedDateTime.hour + 1,
-        minute: 0,
-        second: 0,
-        millisecond: 0,
-      });
+      const expectedThirdTimeZonedDateTime = nowZonedDateTime
+        .with({
+          minute: 0,
+          second: 0,
+          millisecond: 0,
+        })
+        .add({ hours: 1 });
 
       getMockDate(nowString);
       getMockDate();

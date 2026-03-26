@@ -49,13 +49,28 @@ test('test all 21 degrees', () => {
 
 test('test all after now are 18 degrees', () => {
   const now = Temporal.Now.instant();
-  const nowString = now.toString();
+  const nowZonedDateTime = now.toZonedDateTimeISO(Temporal.Now.timeZoneId());
+  const todayTenPm = nowZonedDateTime.with({ hour: 22 });
+  const todayTenPmPlainTime = todayTenPm.toPlainDateTime();
+  const todayTenPmInstant = todayTenPm.toInstant();
+
+  const yyyy = todayTenPmPlainTime.year.toString();
+  const mm = todayTenPmPlainTime.month.toString().padStart(2, '0');
+  const dd = todayTenPmPlainTime.day.toString().padStart(2, '0');
+  const hh = todayTenPmPlainTime.hour.toString().padStart(2, '0');
+  const min = todayTenPmPlainTime.minute.toString().padStart(2, '0');
+
+  const nowString = `${yyyy}-${mm}-${dd}T${hh}:${min}Z`;
+
   const testData = generateMockHourlyMetOfficeJSON(nowString);
 
   testData.features[0].properties.timeSeries =
     testData.features[0].properties.timeSeries.map((hour) => {
       const hourTime = Temporal.Instant.from(hour.time);
-      const isHourInRemainingDay = getIsHourInTheRemainingDay(hourTime, now);
+      const isHourInRemainingDay = getIsHourInTheRemainingDay(
+        hourTime,
+        todayTenPmInstant
+      );
       if (isHourInRemainingDay) {
         return {
           ...hour,
@@ -64,7 +79,7 @@ test('test all after now are 18 degrees', () => {
       } else return hour;
     });
 
-  expect(getAverageTemperatureFromHourly(testData, now)).toBe(18);
+  expect(getAverageTemperatureFromHourly(testData, todayTenPmInstant)).toBe(18);
 });
 
 describe('test around the edge case of 11pm to midnight', () => {

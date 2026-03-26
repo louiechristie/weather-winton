@@ -170,10 +170,9 @@ const transformMetOfficeJSON = (
     items[0].isTakeRaincoat = getIsTakeRaincoatToday(hourlyJson, now);
     items[0].isSnowDay = isSnowDay;
 
-    items[0].averageTemperature = getAverageTemperaturefromHourly(
-      hourlyJson,
-      Temporal.Now.instant()
-    );
+    items[0].averageTemperature =
+      getAverageTemperaturefromHourly(hourlyJson, Temporal.Now.instant()) ||
+      getCurrentTemperature(hourlyJson);
     items[0].currentTemperature = getCurrentTemperature(hourlyJson);
 
     items[0].maxTemperature = Math.max(

@@ -26,8 +26,8 @@ const getAverageTemperaturefromHourly = (
     (hour) => hour.screenTemperature
   );
 
-  if (!temperatures || temperatures.length === 0) {
-    throw Error('no temperatures in remaining day to average');
+  if (temperatures.length === 0) {
+    return null;
   }
 
   return average(temperatures);
