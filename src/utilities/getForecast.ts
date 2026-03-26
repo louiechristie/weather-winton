@@ -151,10 +151,13 @@ export const getSpecialDatesForecast = async (specialDates: SpecialDate[]) => {
   // log('getSpecialDatesForecast');
   const specialDatesDailyMetOfficeJSON =
     generateSpecialDatesDailyMetOfficeJSON(specialDates);
+  const dailyForecast = MetOfficeDailyForecastGeoJSONSchema.parse(
+    specialDatesDailyMetOfficeJSON
+  );
   const mockHourlyMetOfficeJSON = generateMockHourlyMetOfficeJSON(nowString);
   return transformMetOfficeJSON(
     specialDates,
-    specialDatesDailyMetOfficeJSON,
+    dailyForecast,
     mockHourlyMetOfficeJSON,
     now
   );
