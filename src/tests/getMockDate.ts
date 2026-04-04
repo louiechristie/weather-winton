@@ -3,7 +3,9 @@ import dayjs from 'dayjs';
 let offset: number = -2;
 let start: dayjs.Dayjs | null = null;
 
-const getMockDate = (time?: string /* ISO 8601 */) => {
+const getMockDate = (
+  time?: string /* ISO 8601 UTC e.g. 2025-12-24T08:00Z*/
+) => {
   if (time) {
     start = dayjs(time);
   }

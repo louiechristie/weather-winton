@@ -12,7 +12,7 @@ describe('getMockDate', () => {
   describe('getMockDate series', () => {
     let now: typeof Temporal.Now;
     let nowInstant: Temporal.Instant;
-    let nowStringISO8601: string;
+    let nowStringISO8601UTC: string;
     let nowZonedDateTime: Temporal.ZonedDateTime;
     let timeZoneId: string;
 
@@ -21,7 +21,7 @@ describe('getMockDate', () => {
       timeZoneId = 'UTC';
       nowInstant = now.instant();
       nowZonedDateTime = nowInstant.toZonedDateTimeISO(timeZoneId);
-      nowStringISO8601 = nowZonedDateTime.toString({
+      nowStringISO8601UTC = nowZonedDateTime.toString({
         timeZoneName: 'never',
         offset: 'never',
       });
@@ -37,7 +37,7 @@ describe('getMockDate', () => {
         .subtract({
           hours: 1,
         });
-      const firstMockDate = getMockDate(nowStringISO8601);
+      const firstMockDate = getMockDate(nowStringISO8601UTC);
       const firstMockDateZonedDateTime =
         Temporal.Instant.from(firstMockDate).toZonedDateTimeISO(timeZoneId);
 
@@ -56,7 +56,7 @@ describe('getMockDate', () => {
         millisecond: 0,
       });
 
-      getMockDate(nowStringISO8601);
+      getMockDate(nowStringISO8601UTC);
 
       const hourLaterZonedDateTime =
         Temporal.Instant.from(getMockDate()).toZonedDateTimeISO(timeZoneId);
@@ -78,7 +78,7 @@ describe('getMockDate', () => {
         })
         .add({ hours: 1 });
 
-      getMockDate(nowStringISO8601);
+      getMockDate(nowStringISO8601UTC);
       getMockDate();
 
       const thirdTimeZonedDateTime =
