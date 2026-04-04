@@ -111,6 +111,12 @@ const transformMetOfficeJSON = (
         day.time
       ).toZonedDateTimeISO('UTC');
 
+      const isWindy = getIsWindy(day.midday10MWindGust);
+
+      const isTakeRainCoat = getIsTakeRainCoat(day);
+
+      const isLooney = getIsLooney(toZonedDateTimeISO);
+
       return {
         time: day.time,
         friendlyDate: getFriendlyDateFromISODate(day.time, specialDates),
@@ -140,11 +146,11 @@ const transformMetOfficeJSON = (
         currentTemperature,
         stormName: getStormName(
           Temporal.Instant.from(day.time),
-          getIsWindy(day.midday10MWindSpeed),
-          getIsTakeRainCoat(day)
+          isWindy,
+          isTakeRainCoat
         ),
-        isWindy: getIsWindy(day.midday10MWindGust),
-        isLooney: getIsLooney(toZonedDateTimeISO),
+        isWindy,
+        isLooney,
       };
     }
   );
