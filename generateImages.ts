@@ -1,6 +1,5 @@
 import fs from 'fs';
 import sharp from 'sharp';
-import axios from 'axios';
 import { mkdir } from 'fs/promises';
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone.js';
@@ -85,14 +84,14 @@ try {
       // Create directories if they don't exist
       await mkdir(directory, { recursive: true });
 
-      const input = (
-        await axios({
-          method: 'get',
-          url: `https://www.metoffice.gov.uk/webfiles/latest/images/icons/weather/${weatherTypeCode}.svg`,
-          responseType: 'arraybuffer',
+      const response = await fetch(
+        `https://www.metoffice.gov.uk/webfiles/latest/images/icons/weather/${weatherTypeCode}.svg`,
+        {
           headers: { 'Accept-Encoding': 'gzip,deflate,compress' },
-        })
-      ).data;
+        }
+      );
+      const arrayBuffer = await response.arrayBuffer();
+      const input = Buffer.from(arrayBuffer);
 
       // Generate OG image for this combination
       await sharp(input, { density: 450 })
