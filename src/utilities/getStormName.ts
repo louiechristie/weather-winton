@@ -67,6 +67,22 @@ const getStormName = (
     return 'Chandra';
   }
 
+  stormStartDate = Temporal.Instant.from('2026-04-02T00+00:00[Europe/London]');
+  stormEndDate = Temporal.Instant.from('2026-04-07T00+00:00[Europe/London]');
+
+  dateIsAfterStormStart =
+    date.epochMilliseconds >= stormStartDate.epochMilliseconds;
+  dateIsBeforeStormEnd =
+    date.epochMilliseconds < stormEndDate.epochMilliseconds;
+
+  if (
+    dateIsAfterStormStart &&
+    dateIsBeforeStormEnd &&
+    (isWindy || isTakeRaincoat)
+  ) {
+    return 'Dave';
+  }
+
   return null;
 };
 
