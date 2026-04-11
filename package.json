@@ -31,6 +31,8 @@
     "lighthouse:autorun": "npx @lhci/cli autorun",
     "lighthouse:open": "npx @lhci/cli open",
     "lighthouse": "npm run lighthouse:autorun ; npm run lighthouse:open"
+    "lighthouse": "npm run lighthouse:autorun ; npm run lighthouse:open",
+    "upgrade": "npx npm-check-updates -u --target minor && npm install && npx playwright install"
   },
   "dependencies": {
     "@emotion/react": "11.14.0",
