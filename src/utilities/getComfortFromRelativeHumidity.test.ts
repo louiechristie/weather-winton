@@ -1,4 +1,6 @@
-import getComfortFromRelativeHumidity from './getComfortFromRelativeHumidity.mjs';
+import { expect, test } from '@jest/globals';
+
+import getComfortFromRelativeHumidity from './getComfortFromRelativeHumidity';
 
 test('0% relative humidity to equal "TOO_DRY"', () => {
   expect(getComfortFromRelativeHumidity(0)).toBe('TOO_DRY');
@@ -37,9 +39,5 @@ test('101% relative humidity to equal null', () => {
 });
 
 test('"string" relative humidity to equal null', () => {
-  expect(getComfortFromRelativeHumidity('string')).toBe(null);
-});
-
-test('[object] relative humidity to equal null', () => {
-  expect(getComfortFromRelativeHumidity({})).toBe(null);
+  expect(getComfortFromRelativeHumidity(Infinity)).toBe(null);
 });
