@@ -20,7 +20,7 @@
     "test:unit:watch": "TZ='Europe/London' node --experimental-vm-modules --disable-warning=ExperimentalWarning node_modules/jest/bin/jest.js --watch",
     "test:unit:debug": "TZ='Europe/London' node --experimental-vm-modules --disable-warning=ExperimentalWarning node_modules/jest/bin/jest.js --runInBand getAverageTemperatureFromHourly.test.mjs",
     "test:integration": "npx playwright test",
-    "test:debug": "npx playwright test --ui",
+    "test:integration:debug": "npx playwright test --ui",
     "github-action:debug": "open -a Docker && act --container-architecture linux/amd64 --artifact-server-path ./test-results/",
     "lint:next": "next lint",
     "lint:tsc": "tsc",

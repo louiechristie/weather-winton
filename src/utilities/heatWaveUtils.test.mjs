@@ -1,7 +1,7 @@
 import getThirdDayOfHeatwaveIndex, {
   getIsHeatWaveTemperatureFromCelsius,
   getIsAtLeastThirdDayOfHeatwave,
-} from './heatWaveUtils.mjs';
+} from './heatWaveUtils';
 import getMockItems from '../tests/mockItems.mjs';
 
 const invalidValues = [undefined, null, 0, '', [], {}];

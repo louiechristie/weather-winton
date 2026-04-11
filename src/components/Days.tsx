@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { theme } from '../utilities/theme';
-import getThirdDayOfHeatwaveIndex from '../utilities/heatWaveUtils.mjs';
+import getThirdDayOfHeatwaveIndex from '../utilities/heatWaveUtils';
 import Day from './Day';
 
 import { Items } from '@/utilities/transformMetOfficeJSON';

@@ -1,4 +1,6 @@
-export function getIsHeatWaveTemperatureFromCelsius(celsius) {
+import type { Item } from './transformMetOfficeJSON';
+
+export function getIsHeatWaveTemperatureFromCelsius(celsius: number): boolean {
   // https://www.metoffice.gov.uk/weather/learn-about/weather/types-of-weather/temperature/heatwave
   if (celsius >= 28) {
     return true;
@@ -6,7 +8,7 @@ export function getIsHeatWaveTemperatureFromCelsius(celsius) {
   return false;
 }
 
-export default function getThirdDayOfHeatwaveIndex(items) {
+export default function getThirdDayOfHeatwaveIndex(items: Item[]): number {
   if (!Array.isArray(items)) {
     throw Error('expected array');
   }
@@ -14,14 +16,17 @@ export default function getThirdDayOfHeatwaveIndex(items) {
     return getIsAtLeastThirdDayOfHeatwave(items, index);
   });
 
-  const isTrue = (element) => element === true;
+  const isTrue = (element: boolean) => element === true;
 
   const foundIndex = daysThatHaveTwoPreviousHeatwaveDays.findIndex(isTrue);
 
   return foundIndex;
 }
 
-export function getIsAtLeastThirdDayOfHeatwave(items, index) {
+export function getIsAtLeastThirdDayOfHeatwave(
+  items: Item[],
+  index: number
+): boolean {
   if (
     index >= 2 &&
     getIsHeatWaveTemperatureFromCelsius(items[index].maxTemperature) &&
