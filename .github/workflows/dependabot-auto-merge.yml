@@ -13,7 +13,7 @@ jobs:
     if: github.event.pull_request.user.login == 'dependabot[bot]' && github.repository == 'louiechristie/weather-winton'
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:v1.58.0-noble
+      image: mcr.microsoft.com/playwright:v1.59.1-noble
       options: --user 1001
     steps:
       - run: echo "event name is:" ${{ github.event_name }}
