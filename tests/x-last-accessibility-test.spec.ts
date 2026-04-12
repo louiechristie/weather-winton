@@ -4,7 +4,14 @@ import { AxeResults } from 'axe-core';
 
 const baseUrl = process.env.BASE_URL || 'http://localhost:3000';
 
-const stubs = ['/', '/test/', '/fun/', '/storm/', '/test/windy/', '/error/'];
+const stubs = [
+  '/',
+  '/test/',
+  '/test/fun/',
+  '/test/storm/',
+  '/test/windy/',
+  '/test/error/',
+];
 
 /* Workaround for flakey test in dev with Next.js message "Latest available version is detected (16.1.1).\">Next.js 16.1.1</span>" */
 if (process.env.NODE_ENV === 'production') stubs.push('/test/heatwave/');

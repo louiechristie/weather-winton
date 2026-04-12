@@ -63,7 +63,7 @@ test.describe('fun dates', async () => {
 
   test.beforeAll(async ({ browser }) => {
     page = await browser.newPage();
-    await page.goto(baseUrl + '/fun/');
+    await page.goto(baseUrl + '/test/fun/');
   });
 
   test.afterAll(async () => {
@@ -95,7 +95,7 @@ test.describe('fun dates', async () => {
 
 test.describe('named storm', async () => {
   test('storm Bram', async ({ page }) => {
-    await page.goto(baseUrl + '/storm/');
+    await page.goto(baseUrl + '/test/storm/');
     await expect(page.getByText('Storm Bram')).toHaveCount(2);
     await expect(page.getByText('heatwave')).toHaveCount(0);
     await expect(page.getByText('Windy').first()).toBeVisible();
