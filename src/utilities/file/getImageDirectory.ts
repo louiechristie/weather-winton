@@ -1,5 +1,5 @@
 import type { Item } from '../transformMetOfficeJSON';
-import { getTemperatureFriendlyDirectoryName } from '../getRoomTemperatureComfortFromCelsius.mjs';
+import { getTemperatureFriendlyDirectoryName } from '../getRoomTemperatureComfortFromCelsius';
 // @ts-expect-error because we are running generating images at command line with experimental Node Typescript support
 import { weatherTypes } from '../../types/metOffice.ts';
 

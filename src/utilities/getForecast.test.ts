@@ -1,3 +1,4 @@
+import { expect, test } from '@jest/globals';
 import { Temporal } from 'temporal-polyfill';
 
 import type SpecialDate from '@/types/specialDate';
@@ -361,6 +362,8 @@ describe('getForecast module', () => {
         expect(item.maxTemperature).toBeDefined();
         expect(typeof item.minTemperature).toBe('number');
         expect(typeof item.maxTemperature).toBe('number');
+        expect(Number.isFinite(item.minTemperature)).toBe(true);
+        expect(Number.isFinite(item.maxTemperature)).toBe(true);
       });
     });
   });

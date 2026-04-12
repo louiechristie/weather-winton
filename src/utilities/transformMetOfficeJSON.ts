@@ -12,7 +12,7 @@ import getIsStickyFromCelsiusAndRelativeHumidity from '../utilities/getIsStickyF
 import { getIsHourInTheRemainingDay } from './getIsHourInTheRemainingDay';
 import getAverageTemperaturefromHourly from './getAverageTemperatureFromHourly';
 import getFriendlyDateFromISODate from './getFriendlyDateFromISODate';
-import { getTemperatureFriendly } from './getRoomTemperatureComfortFromCelsius.mjs';
+import { getTemperatureFriendly } from './getRoomTemperatureComfortFromCelsius';
 import getIsWindy from './getIsWindy';
 import getIsTakeRaincoat from './getIsTakeRaincoat';
 

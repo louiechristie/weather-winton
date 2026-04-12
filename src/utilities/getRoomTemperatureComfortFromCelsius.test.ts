@@ -1,4 +1,6 @@
-import { getTemperatureFriendly } from './getRoomTemperatureComfortFromCelsius.mjs';
+import { expect, test } from '@jest/globals';
+
+import { getTemperatureFriendly } from './getRoomTemperatureComfortFromCelsius';
 
 test(`getTemperatureFriendly: negative temperature`, () => {
   expect(getTemperatureFriendly(-4)).toBe('Freezing 🥶');

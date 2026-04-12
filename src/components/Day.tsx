@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { theme, Box, Typography, Card } from '../utilities/theme';
-import { getTemperatureFriendly } from '../utilities/getRoomTemperatureComfortFromCelsius.mjs';
+import { getTemperatureFriendly } from '../utilities/getRoomTemperatureComfortFromCelsius';
 import { Item } from '@/utilities/transformMetOfficeJSON';
 import { Temporal } from 'temporal-polyfill';
 

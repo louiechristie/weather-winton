@@ -1,4 +1,4 @@
-import { getTemperatureFriendly } from '@/utilities/getRoomTemperatureComfortFromCelsius.mjs';
+import { getTemperatureFriendly } from '@/utilities/getRoomTemperatureComfortFromCelsius';
 import type { Item } from '@/utilities/transformMetOfficeJSON';
 
 const styles: { [key: string]: React.CSSProperties } = {
@@ -37,23 +37,25 @@ const styles: { [key: string]: React.CSSProperties } = {
 const getAppBarStyle = (forecast: Item) => {
   const averageTempInt = Math.round(forecast.averageTemperature);
   const maxTempInt = Math.round(forecast.maxTemperature);
+  const temperatureFriendly = getTemperatureFriendly(averageTempInt);
+  const maxTemperatureFriendly = getTemperatureFriendly(maxTempInt);
 
-  if (getTemperatureFriendly(averageTempInt) === 'Hot 🥵') {
+  if (temperatureFriendly === 'Hot 🥵') {
     return styles.hot;
   }
-  if (getTemperatureFriendly(averageTempInt) === 'Warm') {
-    if (getTemperatureFriendly(Math.round(maxTempInt)) === 'Hot 🥵') {
+  if (temperatureFriendly === 'Warm') {
+    if (maxTemperatureFriendly === 'Hot 🥵') {
       return styles.warmToHot;
     }
     return styles.warmToCold;
   }
-  if (getTemperatureFriendly(averageTempInt) === 'Cold') {
-    if (getTemperatureFriendly(Math.round(maxTempInt)) === 'Warm') {
+  if (temperatureFriendly === 'Cold') {
+    if (maxTemperatureFriendly === 'Warm') {
       return styles.coldToWarm;
     }
     return styles.coldToFreezing;
   }
-  if (getTemperatureFriendly(averageTempInt) === 'Freezing 🥶') {
+  if (temperatureFriendly === 'Freezing 🥶') {
     return styles.freezing;
   }
   return styles.coldToFreezing;

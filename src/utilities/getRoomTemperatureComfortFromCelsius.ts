@@ -1,4 +1,4 @@
-export function getIsTooHotForRoomTemperatureFromCelsius(celsius) {
+export function getIsTooHotForRoomTemperatureFromCelsius(celsius: number): boolean {
   // the maximum should be below 24 °C (75 °F) – and to avoid sick building syndrome, below 22 °C (72 °F).[3]
   // From https://en.wikipedia.org/wiki/Room_temperature Accessed 2019-12-28
   if (celsius > 24) {
@@ -7,7 +7,7 @@ export function getIsTooHotForRoomTemperatureFromCelsius(celsius) {
   return false;
 }
 
-export function getIsTooColdForRoomTemperatureFromCelsius(celsius) {
+export function getIsTooColdForRoomTemperatureFromCelsius(celsius: number): boolean {
   // The World Health Organization's standard ...
   // For those with respiratory problems or allergies, they recommend no less than 16 °C */
   // From https://en.wikipedia.org/wiki/Room_temperature Accessed 2019-12-28
@@ -17,12 +17,13 @@ export function getIsTooColdForRoomTemperatureFromCelsius(celsius) {
   return false;
 }
 
-export function getIsFrostyFromCelsius(celsius) {
+export function getIsFrostyFromCelsius(celsius: number): boolean {
   // Frost is likely below 4 degrees celsius
   // https://www.metoffice.gov.uk/weather/learn-about/weather/types-of-weather/frost-and-ice/forecasting-frost
   if (celsius <= 4) {
     return true;
   }
+  return false;
 }
 
 // export function getIsComfortableRoomTemperatureFromCelsius(celsius) {
@@ -38,7 +39,7 @@ export function getIsFrostyFromCelsius(celsius) {
 //   return false;
 // }
 
-export function getTemperatureFriendly(celsius) {
+export function getTemperatureFriendly(celsius: number): string {
   if (!isFinite(celsius)) {
     throw new Error(
       `Cannot get friendly temperature from Infinite celsius value`
@@ -56,7 +57,7 @@ export function getTemperatureFriendly(celsius) {
   return 'Warm';
 }
 
-export function getTemperatureFriendlyDirectoryName(celsius) {
+export function getTemperatureFriendlyDirectoryName(celsius: number): string {
   if (!isFinite(celsius)) {
     throw new Error(
       `Cannot get friendly temperature from Infinite celsius value`
