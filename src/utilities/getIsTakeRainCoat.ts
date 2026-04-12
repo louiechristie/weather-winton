@@ -1,4 +1,4 @@
-import { DailyWeatherData } from '../../src/types/metOffice';
+import { DailyWeatherData } from '../types/metOffice';
 
 const getIsTakeRaincoat = (day: DailyWeatherData) => {
   const isTakeRaincoat =

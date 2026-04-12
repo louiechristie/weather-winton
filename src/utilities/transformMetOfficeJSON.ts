@@ -14,7 +14,7 @@ import getAverageTemperaturefromHourly from './getAverageTemperatureFromHourly';
 import getFriendlyDateFromISODate from './getFriendlyDateFromISODate';
 import { getTemperatureFriendly } from './getRoomTemperatureComfortFromCelsius.mjs';
 import getIsWindy from './getIsWindy';
-import getIsTakeRainCoat from './getIsTakeRainCoat';
+import getIsTakeRaincoat from './getIsTakeRaincoat';
 
 import {
   MetOfficeDailyForecastGeoJSON,
@@ -93,11 +93,11 @@ const transformMetOfficeJSON = (
 ): Item[] => {
   const items: Items = dailyJson.features[0].properties.timeSeries.map(
     (day) => {
-      const avgTemperature = avg(
+      const averageTemperature = avg(
         day.dayMaxScreenTemperature,
         day.dayLowerBoundMaxTemp
       );
-      let currentTemperature = avgTemperature;
+      let currentTemperature = averageTemperature;
 
       if (hourlyJson) {
         currentTemperature = getCurrentTemperature(hourlyJson);
@@ -107,48 +107,59 @@ const transformMetOfficeJSON = (
         throw new Error(`invalid date string: ${day.time}`);
       }
 
+      const time = day.time;
+      const friendlyDate = getFriendlyDateFromISODate(day.time, specialDates);
+      const description = getDescriptionFromMetOfficeWeatherCode(
+        day.daySignificantWeatherCode
+      );
+      const icon = getEmojiFromMetOfficeWeatherCode(
+        day.daySignificantWeatherCode
+      );
+      const friendlyTemperature = getTemperatureFriendly(averageTemperature);
+      const minTemperature = Math.min(
+        day.dayMaxScreenTemperature,
+        day.nightMinScreenTemperature
+      );
+      const maxTemperature = Math.max(
+        day.dayMaxScreenTemperature,
+        day.nightMinScreenTemperature
+      );
+      const relativeHumidity = day.middayRelativeHumidity;
+      const isSticky = getIsStickyFromCelsiusAndRelativeHumidity(
+        averageTemperature,
+        day.middayRelativeHumidity
+      );
+      const isDry = getIsTooDryFromRelativeHumidity(day.middayRelativeHumidity);
+      const isWindy = getIsWindy(day.midday10MWindGust);
+      const isTakeRaincoat = getIsTakeRaincoat(day);
+      const isSnowDay =
+        day.dayProbabilityOfSnow >= 50 || day.nightProbabilityOfSnow >= 50;
+      const stormName = getStormName(
+        Temporal.Instant.from(day.time),
+        isWindy,
+        isTakeRaincoat
+      );
       const toZonedDateTimeISO = Temporal.Instant.from(
         day.time
       ).toZonedDateTimeISO('UTC');
-
-      const isWindy = getIsWindy(day.midday10MWindGust);
-
-      const isTakeRainCoat = getIsTakeRainCoat(day);
-
       const isLooney = getIsLooney(toZonedDateTimeISO);
 
       return {
-        time: day.time,
-        friendlyDate: getFriendlyDateFromISODate(day.time, specialDates),
-        description: getDescriptionFromMetOfficeWeatherCode(
-          day.daySignificantWeatherCode
-        ),
-        icon: getEmojiFromMetOfficeWeatherCode(day.daySignificantWeatherCode),
-        friendlyTemperature: getTemperatureFriendly(avgTemperature),
-        minTemperature: Math.min(
-          day.dayMaxScreenTemperature,
-          day.nightMinScreenTemperature
-        ),
-        maxTemperature: Math.max(
-          day.dayMaxScreenTemperature,
-          day.nightMinScreenTemperature
-        ),
-        relativeHumidity: day.middayRelativeHumidity,
-        isSticky: getIsStickyFromCelsiusAndRelativeHumidity(
-          avgTemperature,
-          day.middayRelativeHumidity
-        ),
-        isDry: getIsTooDryFromRelativeHumidity(day.middayRelativeHumidity),
-        isTakeRaincoat: getIsTakeRainCoat(day),
-        isSnowDay:
-          day.dayProbabilityOfSnow >= 50 || day.nightProbabilityOfSnow >= 50,
-        averageTemperature: avgTemperature,
+        time,
+        friendlyDate,
+        description,
+        icon,
+        friendlyTemperature,
+        minTemperature,
+        maxTemperature,
+        relativeHumidity,
+        isSticky,
+        isDry,
+        isTakeRaincoat,
+        isSnowDay,
+        averageTemperature,
         currentTemperature,
-        stormName: getStormName(
-          Temporal.Instant.from(day.time),
-          isWindy,
-          isTakeRainCoat
-        ),
+        stormName,
         isWindy,
         isLooney,
       };

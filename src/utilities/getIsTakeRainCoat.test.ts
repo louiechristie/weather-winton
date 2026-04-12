@@ -1,5 +1,5 @@
-import getIsTakeRaincoat from './getIsTakeRainCoat';
-import { DailyWeatherData } from '../../src/types/metOffice';
+import getIsTakeRaincoat from './getIsTakeRaincoat';
+import { DailyWeatherData } from '../types/metOffice';
 
 const day: DailyWeatherData = {
   time: '2020-05-18T00:00Z',
