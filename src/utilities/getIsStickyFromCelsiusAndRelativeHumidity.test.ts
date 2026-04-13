@@ -1,4 +1,6 @@
-import getIsStickyFromCelsiusAndRelativeHumidity from './getIsStickyFromCelsiusAndRelativeHumidity.mjs';
+import { expect, test } from '@jest/globals';
+
+import getIsStickyFromCelsiusAndRelativeHumidity from './getIsStickyFromCelsiusAndRelativeHumidity';
 
 test('is sticky', () => {
   expect(getIsStickyFromCelsiusAndRelativeHumidity(24, 60)).toBe(true);

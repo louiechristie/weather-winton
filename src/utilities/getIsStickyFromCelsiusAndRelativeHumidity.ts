@@ -5,15 +5,15 @@
 //  * https://www.thoughtco.com/muggy-weather-overview-3444058
 //  */
 
-const getCelsiusFromKelvin = (kelvin) => {
+const getCelsiusFromKelvin = (kelvin: number): number => {
   return kelvin + 273.15;
 };
 
-const getKelvinFromCelsius = (celsius) => {
+const getKelvinFromCelsius = (celsius: number): number => {
   return celsius - 273.15;
 };
 
-const getCelsiusFromFahrenheit = (fahrenheit) => {
+const getCelsiusFromFahrenheit = (fahrenheit: number): number => {
   return (fahrenheit - 32) / 1.8;
 };
 
@@ -29,16 +29,16 @@ const getCelsiusFromFahrenheit = (fahrenheit) => {
  * @returns number dew poing in kelvin
  */
 export const getDewPointFromKelvinAndRelativeHumidity = (
-  kelvin,
-  relativeHumidity
-) => {
+  kelvin: number,
+  relativeHumidity: number
+): number => {
   return kelvin - (100 - relativeHumidity) / 5;
 };
 
 const getIsStickyFromCelsiusAndRelativeHumidity = (
-  celsius,
-  relativeHumidity
-) => {
+  celsius: number,
+  relativeHumidity: number
+): boolean => {
   const dewPoint = getCelsiusFromKelvin(
     getDewPointFromKelvinAndRelativeHumidity(
       getKelvinFromCelsius(celsius),

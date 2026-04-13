@@ -8,7 +8,7 @@ import {
   getIsTakeRaincoatToday,
 } from './metOfficeWeatherUtils';
 import { getIsTooDryFromRelativeHumidity } from './getComfortFromRelativeHumidity';
-import getIsStickyFromCelsiusAndRelativeHumidity from '../utilities/getIsStickyFromCelsiusAndRelativeHumidity.mjs';
+import getIsStickyFromCelsiusAndRelativeHumidity from '../utilities/getIsStickyFromCelsiusAndRelativeHumidity';
 import { getIsHourInTheRemainingDay } from './getIsHourInTheRemainingDay';
 import getAverageTemperaturefromHourly from './getAverageTemperatureFromHourly';
 import getFriendlyDateFromISODate from './getFriendlyDateFromISODate';

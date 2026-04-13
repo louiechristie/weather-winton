@@ -1,9 +1,9 @@
 import { Temporal } from 'temporal-polyfill';
 import { getIsTakeRaincoatToday } from './metOfficeWeatherUtils';
-import mockHourlyNoRaincoatJSON from '../tests/mockHourlyNoRaincoat.mjs';
-import mockHourlyNeedRaincoatJSON from '../tests/mockHourlyNeedRaincoat.mjs';
-import mockHourlyRainAtMidnightJSON from '../tests/mockHourlyRainAtMidnight.mjs';
-import mockHourlyRainAtElevenJSON from '../tests/mockHourlyRainAtEleven.mjs';
+import mockHourlyNoRaincoatJSON from '../tests/mockHourlyNoRaincoat';
+import mockHourlyNeedRaincoatJSON from '../tests/mockHourlyNeedRaincoat';
+import mockHourlyRainAtMidnightJSON from '../tests/mockHourlyRainAtMidnight';
+import mockHourlyRainAtElevenJSON from '../tests/mockHourlyRainAtEleven';
 import { MetOfficeHourlyForecastGeoJSONSchema } from '../types/metOffice';
 
 const mockHourlyNoRaincoat = MetOfficeHourlyForecastGeoJSONSchema.parse(
