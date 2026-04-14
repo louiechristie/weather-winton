@@ -1,7 +1,8 @@
+import dynamic from 'next/dynamic';
+
 import { theme } from '../utilities/theme';
 import getThirdDayOfHeatwaveIndex from '../utilities/heatWaveUtils';
 import Day from './Day';
-import Advert from './Advert';
 
 import { Items } from '@/utilities/transformMetOfficeJSON';
 
@@ -33,6 +34,8 @@ export const styles = {
   },
 } as const;
 
+const NoSSR = dynamic(() => import('../components/Advert'), { ssr: false });
+
 interface Props {
   items: Items;
 }
@@ -60,7 +63,7 @@ const Days = (props: Props) => {
         style={{ ...styles.li, ...styles.adContainer }}
         key={'advert-heatwave'}
       >
-        <Advert />
+        <NoSSR />
       </li>
     );
   }
