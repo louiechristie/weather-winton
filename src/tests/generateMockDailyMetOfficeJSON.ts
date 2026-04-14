@@ -1,17 +1,21 @@
 import { Temporal } from 'temporal-polyfill';
 import { MetOfficeDailyForecastGeoJSON } from '../types/metOffice';
-const now = Temporal.Now;
-const instant = now.instant();
-const todayZonedDateTime = now.zonedDateTimeISO();
-const today = instant.toString();
-const oneDayDuration = Temporal.Duration.from({ days: 1 });
-const tomorrow = todayZonedDateTime.add(oneDayDuration).toInstant().toString();
-const yesterday = todayZonedDateTime
-  .subtract(oneDayDuration)
-  .toInstant()
-  .toString();
 
-const generateMockDailyMetOfficeJSON = (): MetOfficeDailyForecastGeoJSON => {
+const generateMockDailyMetOfficeJSON = (
+  from: Temporal.Instant
+): MetOfficeDailyForecastGeoJSON => {
+  const todayZonedDateTime = from.toZonedDateTimeISO('Europe/London');
+  const today = from.toString();
+  const oneDayDuration = Temporal.Duration.from({ days: 1 });
+  const tomorrow = todayZonedDateTime
+    .add(oneDayDuration)
+    .toInstant()
+    .toString();
+  const yesterday = todayZonedDateTime
+    .subtract(oneDayDuration)
+    .toInstant()
+    .toString();
+
   const mockMetOfficeJSON = {
     type: 'FeatureCollection' as const,
     features: [

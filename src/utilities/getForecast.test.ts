@@ -76,7 +76,9 @@ describe('getForecast module', () => {
     });
 
     test('validates correct daily forecast data', () => {
-      const mockDailyData = generateMockDailyMetOfficeJSON();
+      const mockDailyData = generateMockDailyMetOfficeJSON(
+        Temporal.Instant.from('2024-06-08T23:00Z')
+      );
       const result =
         MetOfficeDailyForecastGeoJSONSchema.safeParse(mockDailyData);
 
@@ -91,7 +93,9 @@ describe('getForecast module', () => {
     });
 
     test('type guards work with daily data', () => {
-      const mockDailyData = generateMockDailyMetOfficeJSON();
+      const mockDailyData = generateMockDailyMetOfficeJSON(
+        Temporal.Instant.from('2024-06-08T23:00Z')
+      );
       expect(
         MetOfficeDailyForecastGeoJSONSchema.safeParse(mockDailyData).success
       ).toBe(true);

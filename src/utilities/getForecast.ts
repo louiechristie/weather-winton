@@ -124,7 +124,7 @@ const getMetOfficeForecast = async (specialDates: SpecialDate[]) => {
 
 export const getMockForecast = async (specialDates: SpecialDate[]) => {
   // log('getMockForecast');
-  const mockDailyMetOfficeJSON = generateMockDailyMetOfficeJSON();
+  const mockDailyMetOfficeJSON = generateMockDailyMetOfficeJSON(now);
   const dailyFromTodayJson = todayOnwardsFilterMetOfficeJSON(
     mockDailyMetOfficeJSON
   );

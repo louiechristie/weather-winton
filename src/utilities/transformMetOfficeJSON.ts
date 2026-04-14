@@ -168,7 +168,7 @@ const transformMetOfficeJSON = (
 
   const today = items[0];
 
-  if (hourlyJson && isItem(today)) {
+  if (isItem(today)) {
     const hourlyTimeSeries = hourlyJson.features[0].properties.timeSeries;
 
     const isSnowDay =
@@ -184,35 +184,48 @@ const transformMetOfficeJSON = (
         return false;
       }).length > 0;
 
-    items[0].isTakeRaincoat = getIsTakeRaincoatToday(hourlyJson, now);
-    items[0].isSnowDay = isSnowDay;
+    const isTakeRaincoat = getIsTakeRaincoatToday(hourlyJson, now);
 
-    items[0].averageTemperature =
-      getAverageTemperaturefromHourly(hourlyJson, Temporal.Now.instant()) ||
+    const averageTemperature =
+      getAverageTemperaturefromHourly(hourlyJson, now) ||
       getCurrentTemperature(hourlyJson);
-    items[0].currentTemperature = getCurrentTemperature(hourlyJson);
 
-    items[0].maxTemperature = Math.max(
+    const currentTemperature = getCurrentTemperature(hourlyJson);
+
+    const hoursInRemainingDay = [
       ...hourlyTimeSeries
         .filter((hour) =>
-          getIsHourInTheRemainingDay(
-            Temporal.Instant.from(hour.time),
-            Temporal.Now.instant()
-          )
+          getIsHourInTheRemainingDay(Temporal.Instant.from(hour.time), now)
+        )
+        .map((hour) => hour.screenTemperature),
+    ];
+
+    const minTemperature = Math.min(...hoursInRemainingDay);
+
+    const maxTemperature = Math.max(
+      ...hourlyTimeSeries
+        .filter((hour) =>
+          getIsHourInTheRemainingDay(Temporal.Instant.from(hour.time), now)
         )
         .map((hour) => hour.screenTemperature)
     );
 
-    items[0].minTemperature = Math.min(
-      ...hourlyTimeSeries
-        .filter((hour) =>
-          getIsHourInTheRemainingDay(
-            Temporal.Instant.from(hour.time),
-            Temporal.Now.instant()
-          )
-        )
-        .map((hour) => hour.screenTemperature)
-    );
+    if (!Number.isFinite(minTemperature) || !Number.isFinite(maxTemperature)) {
+      // eslint-disable-next-line no-debugger
+      debugger;
+    }
+
+    const day = {
+      ...items[0],
+      isTakeRaincoat,
+      isSnowDay,
+      averageTemperature,
+      currentTemperature,
+      minTemperature,
+      maxTemperature,
+    };
+    items[0] = day;
+
     return items;
   }
 
