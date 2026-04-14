@@ -34,7 +34,9 @@ export const styles = {
   },
 } as const;
 
-const NoSSR = dynamic(() => import('../components/Advert'), { ssr: false });
+const AdvertNoSSR = dynamic(() => import('../components/Advert'), {
+  ssr: false,
+});
 
 interface Props {
   items: Items;
@@ -63,7 +65,7 @@ const Days = (props: Props) => {
         style={{ ...styles.li, ...styles.adContainer }}
         key={'advert-heatwave'}
       >
-        <NoSSR />
+        <AdvertNoSSR />
       </li>
     );
   }
