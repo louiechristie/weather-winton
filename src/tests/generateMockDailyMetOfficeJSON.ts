@@ -1,5 +1,8 @@
 import { Temporal } from 'temporal-polyfill';
-import { MetOfficeDailyForecastGeoJSON } from '../types/metOffice';
+import {
+  MetOfficeDailyForecastGeoJSON,
+  MetOfficeDailyForecastGeoJSONSchema,
+} from '../types/metOffice';
 import testData from '../../data/test-data.json' with { type: 'json' };
 
 const generateMockDailyMetOfficeJSON = (
@@ -17,8 +20,7 @@ const generateMockDailyMetOfficeJSON = (
     .toInstant()
     .toString();
 
-  const mockMetOfficeJSON: MetOfficeDailyForecastGeoJSON =
-    testData as MetOfficeDailyForecastGeoJSON;
+  const mockMetOfficeJSON = MetOfficeDailyForecastGeoJSONSchema.parse(testData);
 
   let timeSeries = mockMetOfficeJSON.features[0].properties.timeSeries;
 
