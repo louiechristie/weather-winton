@@ -37,6 +37,24 @@ test('0100 is after 0000', () => {
   ).toBe(true);
 });
 
+test('2300 is after 2200', () => {
+  expect(
+    getIsHourInTheRemainingDay(
+      Temporal.Instant.from('2024-06-07T23:00:00+0100'),
+      Temporal.Instant.from('2024-06-07T22:00:00+0100')
+    )
+  ).toBe(true);
+});
+
+test('2300 is after 22:47', () => {
+  expect(
+    getIsHourInTheRemainingDay(
+      Temporal.Instant.from('2026-04-21T23:00:00+0100'),
+      Temporal.Instant.from('2026-04-21T22:47:53.225+0100')
+    )
+  ).toBe(true);
+});
+
 test('time is current time', () => {
   expect(
     expect(
@@ -111,7 +129,7 @@ test('one hour before current time', () => {
   ).toBe(false);
 });
 
-test('one hour before current day', () => {
+test('one day after current day', () => {
   expect(
     getIsHourInTheRemainingDay(
       Temporal.Instant.from('2024-06-12T23:00Z'),
