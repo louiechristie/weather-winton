@@ -205,19 +205,19 @@ const transformMetOfficeJSON = (
         .map((hour) => hour.screenTemperature),
     ];
 
-    const minTemperature = Math.min(...hoursInRemainingDay);
+    let minTemperature = items[0].minTemperature;
+    let maxTemperature = items[0].maxTemperature;
 
-    const maxTemperature = Math.max(
-      ...hourlyTimeSeries
-        .filter((hour) =>
-          getIsHourInTheRemainingDay(Temporal.Instant.from(hour.time), now)
-        )
-        .map((hour) => hour.screenTemperature)
-    );
+    if (hoursInRemainingDay.length) {
+      minTemperature = Math.min(...hoursInRemainingDay);
 
-    if (!Number.isFinite(minTemperature) || !Number.isFinite(maxTemperature)) {
-      // eslint-disable-next-line no-debugger
-      debugger;
+      maxTemperature = Math.max(
+        ...hourlyTimeSeries
+          .filter((hour) =>
+            getIsHourInTheRemainingDay(Temporal.Instant.from(hour.time), now)
+          )
+          .map((hour) => hour.screenTemperature)
+      );
     }
 
     const day = {

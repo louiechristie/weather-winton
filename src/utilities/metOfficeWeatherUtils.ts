@@ -48,6 +48,10 @@ export const getIsTakeRaincoatToday = (
 
   const hourlyTimeSeries = hourlyMetOffice.features[0].properties.timeSeries;
 
+  if (!hourlyTimeSeries || hourlyTimeSeries.length === 0) {
+    return false;
+  }
+
   let isTakeRaincoatToday = false;
 
   hourlyTimeSeries.forEach((nextHour) => {
