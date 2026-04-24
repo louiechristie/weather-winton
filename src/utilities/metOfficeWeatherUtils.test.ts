@@ -31,7 +31,7 @@ test('isTakeRaincoatToday false', () => {
   ).toBe(false);
 });
 
-test.only('isTakeRaincoatToday true when there is rain 11pm London time', () => {
+test('isTakeRaincoatToday true when there is rain 11pm London time', () => {
   expect(
     getIsTakeRaincoatToday(
       mockHourlyNeedRaincoat,

@@ -6,7 +6,7 @@ import generateMockHourlyMetOfficeJSON from './generateMockHourlyMetOfficeJSON';
 import hourly from './hourly.json' with { type: 'json' };
 
 describe('generate mock hourly forecast', () => {
-  test.only('regenerate hourly.json file exactly', () => {
+  test('regenerate hourly.json file exactly', () => {
     expect(generateMockHourlyMetOfficeJSON()).toEqual(hourly);
   });
 

@@ -67,12 +67,11 @@ test('time is current time', () => {
 });
 
 test('one second after current time', () => {
-  expect(
-    getIsHourInTheRemainingDay(
-      Temporal.Instant.from('2024-06-07T00:00:01+0100'),
-      Temporal.Instant.from('2024-06-07T00:00:00+0100')
-    )
-  ).toBe(true);
+  const hourInTheRemainingDay = getIsHourInTheRemainingDay(
+    Temporal.Instant.from('2024-06-07T00:00:01+0100'),
+    Temporal.Instant.from('2024-06-07T00:00:00+0100')
+  );
+  expect(hourInTheRemainingDay).toBe(true);
 });
 
 test('one hour after current time', () => {

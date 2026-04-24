@@ -4,9 +4,19 @@ import neostandard from 'neostandard';
 import nextVitals from 'eslint-config-next/core-web-vitals';
 import typescript from 'eslint-config-next/typescript';
 import { defineConfig } from 'eslint/config';
+import pluginJest from 'eslint-plugin-jest';
 
 export default defineConfig([
-  { languageOptions: { globals: { ...globals.browser, ...globals.node } } },
+  {
+    plugins: { jest: pluginJest },
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+        ...pluginJest.environments.globals.globals,
+      },
+    },
+  },
   pluginJs.configs.recommended,
   ...nextVitals,
   ...typescript,
@@ -26,6 +36,9 @@ export default defineConfig([
         'error',
         { terms: ['@TODO'], location: 'anywhere' },
       ],
+      'jest/no-disabled-tests': 'warn',
+      'jest/no-focused-tests': 'error',
+      'jest/no-identical-title': 'error',
     },
   },
 ]);
