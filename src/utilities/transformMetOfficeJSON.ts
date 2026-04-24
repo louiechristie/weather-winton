@@ -194,9 +194,14 @@ const transformMetOfficeJSON = (
 
     const hoursInRemainingDay = [
       ...hourlyTimeSeries
-        .filter((hour) =>
-          getIsHourInTheRemainingDay(Temporal.Instant.from(hour.time), now)
-        )
+        .filter((hour) => {
+          const hourInstant = Temporal.Instant.from(hour.time);
+          const hourInTheRemainingDay = getIsHourInTheRemainingDay(
+            hourInstant,
+            now
+          );
+          return hourInTheRemainingDay;
+        })
         .map((hour) => hour.screenTemperature),
     ];
 
