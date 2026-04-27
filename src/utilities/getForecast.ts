@@ -10,6 +10,7 @@ import {
   MetOfficeDailyForecastGeoRawJSON,
   MetOfficeDailyForecastGeoJSONSchema,
   MetOfficeDailyForecastGeoJSONRawSchema,
+  MetOfficeHourlyForecastGeoJSON,
   MetOfficeHourlyForecastGeoJSONSchema,
   DailyWeatherPreviousNightData,
   DailyWeatherData,
@@ -122,17 +123,22 @@ const getMetOfficeForecast = async (specialDates: SpecialDate[]) => {
   return items;
 };
 
-export const getMockForecast = async (specialDates: SpecialDate[]) => {
+export const getMockForecast = async (
+  specialDates: SpecialDate[],
+  mockDailyMetOfficeJSON: MetOfficeDailyForecastGeoJSON = generateMockDailyMetOfficeJSON(
+    now
+  ),
+  mockHourlyMetOfficeJSON: MetOfficeHourlyForecastGeoJSON = generateMockHourlyMetOfficeJSON(
+    nowString
+  )
+) => {
   // log('getMockForecast');
-  const mockDailyMetOfficeJSON = generateMockDailyMetOfficeJSON(now);
   const dailyFromTodayJson = todayOnwardsFilterMetOfficeJSON(
     mockDailyMetOfficeJSON
   );
 
   const dailyForecast =
     MetOfficeDailyForecastGeoJSONSchema.parse(dailyFromTodayJson);
-
-  const mockHourlyMetOfficeJSON = generateMockHourlyMetOfficeJSON(nowString);
 
   const hourlyForecast = MetOfficeHourlyForecastGeoJSONSchema.parse(
     mockHourlyMetOfficeJSON
