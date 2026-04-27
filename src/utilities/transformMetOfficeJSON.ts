@@ -186,11 +186,14 @@ const transformMetOfficeJSON = (
 
     const isTakeRaincoat = getIsTakeRaincoatToday(hourlyJson, now);
 
-    const averageTemperature =
-      getAverageTemperaturefromHourly(hourlyJson, now) ||
-      getCurrentTemperature(hourlyJson);
-
+    const averageTemperatureFromHourly = getAverageTemperaturefromHourly(
+      hourlyJson,
+      now
+    );
     const currentTemperature = getCurrentTemperature(hourlyJson);
+
+    const averageTemperature =
+      averageTemperatureFromHourly || currentTemperature;
 
     const hoursInRemainingDay = [
       ...hourlyTimeSeries
@@ -209,15 +212,8 @@ const transformMetOfficeJSON = (
     let maxTemperature = items[0].maxTemperature;
 
     if (hoursInRemainingDay.length) {
-      minTemperature = Math.min(...hoursInRemainingDay);
-
-      maxTemperature = Math.max(
-        ...hourlyTimeSeries
-          .filter((hour) =>
-            getIsHourInTheRemainingDay(Temporal.Instant.from(hour.time), now)
-          )
-          .map((hour) => hour.screenTemperature)
-      );
+      minTemperature = Math.min(...hoursInRemainingDay, minTemperature);
+      maxTemperature = Math.max(...hoursInRemainingDay, maxTemperature);
     }
 
     const day = {
