@@ -29,9 +29,6 @@ export async function getPageProps(
     console.error('Error creating pages');
     console.error(error);
 
-    if (error instanceof Error) {
-      errorMessage = error.toString();
-    }
     errorMessage = String(error);
     items = getErrorItems(errorMessage);
   }
