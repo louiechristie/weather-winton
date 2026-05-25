@@ -207,8 +207,8 @@ const transformMetOfficeJSON = (
     let maxTemperature = items[0].maxTemperature;
 
     if (hoursInRemainingDay.length) {
-      minTemperature = Math.min(...hoursInRemainingDay, minTemperature);
-      maxTemperature = Math.max(...hoursInRemainingDay, maxTemperature);
+      minTemperature = Math.min(...hoursInRemainingDay);
+      maxTemperature = Math.max(...hoursInRemainingDay);
     }
 
     const day = {
