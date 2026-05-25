@@ -160,7 +160,9 @@ const transformMetOfficeJSON = (
 
   const today = items[0];
 
-  if (isItem(today && hourlyJson)) {
+  const todayIsValidItem = isItem(today);
+
+  if (todayIsValidItem && hourlyJson) {
     const hourlyTimeSeries = hourlyJson.features[0].properties.timeSeries;
     const hoursInRemainingDay = [
       ...hourlyTimeSeries
