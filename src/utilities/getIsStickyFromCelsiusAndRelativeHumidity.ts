@@ -6,11 +6,11 @@
 //  */
 
 const getCelsiusFromKelvin = (kelvin: number): number => {
-  return kelvin + 273.15;
+  return kelvin - 273.15;
 };
 
 const getKelvinFromCelsius = (celsius: number): number => {
-  return celsius - 273.15;
+  return celsius + 273.15;
 };
 
 const getCelsiusFromFahrenheit = (fahrenheit: number): number => {
