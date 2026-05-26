@@ -192,7 +192,13 @@ const transformMetOfficeJSON = (
 
     const isTakeRaincoat = getIsTakeRaincoatToday(hourlyJson, now);
 
-    const currentTemperature = getCurrentTemperature(hourlyJson);
+    const founcCurrentTemperature = getCurrentTemperature(hourlyJson);
+
+    let currentTemperature = today.averageTemperature;
+
+    if (founcCurrentTemperature !== null) {
+      currentTemperature = founcCurrentTemperature;
+    }
 
     let averageTemperature = today.averageTemperature;
     const averageTemperatureFromHourly = getAverageTemperaturefromHourly(
@@ -207,7 +213,11 @@ const transformMetOfficeJSON = (
     let maxTemperature = items[0].maxTemperature;
 
     if (hoursInRemainingDay.length) {
-      minTemperature = Math.min(...hoursInRemainingDay);
+      const minTemperatures: number[] = [...hoursInRemainingDay];
+      if (currentTemperature !== null) {
+        minTemperatures.push(currentTemperature);
+      }
+      minTemperature = Math.min(...minTemperatures);
       maxTemperature = Math.max(...hoursInRemainingDay);
     }
 

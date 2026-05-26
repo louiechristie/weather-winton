@@ -43,7 +43,7 @@ describe('transformMetOfficeJSON', () => {
     );
   });
 
-  test('temperature data is present and valid', async () => {
+  test('temperature data is present and valid, transformMetOfficeJSON', async () => {
     transformedData.forEach((item) => {
       const minIsFinite = Number.isFinite(item.minTemperature);
       const maxIsFinite = Number.isFinite(item.maxTemperature);

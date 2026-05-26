@@ -357,7 +357,7 @@ describe('getForecast module', () => {
       });
     });
 
-    test('temperature data is present and valid', async () => {
+    test('temperature data is present and valid, getForecast', async () => {
       const specialDates = await getSpecialDates();
       const mockItems = await getMockForecast(specialDates);
 
