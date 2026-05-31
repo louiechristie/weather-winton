@@ -63,34 +63,49 @@ const onwardsFilter = (
   return Temporal.PlainDateTime.compare(timePlainDate, fromPlainDate) >= 0;
 };
 
-if (!process.env.MET_WEATHER_SECRET) {
-  throw new Error(
-    'You need to set your MET_WEATHER_SECRET environment variable'
-  );
-}
+let MET_WEATHER_SECRET: string;
+let MET_WEATHER_DAILY_URL: string;
+let MET_WEATHER_HOURLY_URL: string;
+let headers: Record<string, string>;
 
-const headers: HeadersInit = {
-  // prettier-ignore
-  'accept': 'application/json',
-  // prettier-ignore
-  'apikey': process.env.MET_WEATHER_SECRET,
-};
-
-const getMetOfficeForecast = async (specialDates: SpecialDate[]) => {
+const preflight = () => {
+  if (!process.env.MET_WEATHER_SECRET) {
+    throw new Error(
+      'You need to set your MET_WEATHER_SECRET environment variable'
+    );
+  } else {
+    MET_WEATHER_SECRET = process.env.MET_WEATHER_SECRET;
+  }
   if (!process.env.MET_WEATHER_DAILY_URL) {
     throw new Error('MET_WEATHER_DAILY_URL missing');
+  } else {
+    MET_WEATHER_DAILY_URL = process.env.MET_WEATHER_DAILY_URL;
   }
   if (!process.env.MET_WEATHER_HOURLY_URL) {
     throw new Error('MET_WEATHER_HOURLY_URL missing');
+  } else {
+    MET_WEATHER_HOURLY_URL = process.env.MET_WEATHER_HOURLY_URL;
   }
-  const response = await fetch(process.env.MET_WEATHER_DAILY_URL, {
+};
+
+const getMetOfficeForecast = async (specialDates: SpecialDate[]) => {
+  preflight();
+
+  headers = {
+    // prettier-ignore
+    'accept': 'application/json',
+    // prettier-ignore
+    'apikey': MET_WEATHER_SECRET,
+  };
+
+  const response = await fetch(MET_WEATHER_DAILY_URL, {
     headers,
   });
   // const text = await response.text();
   // log('text: ' + text);
   if (!response.ok) {
     throw new Error(
-      `Not OK daily weather forecast response from server ${process.env.MET_WEATHER_DAILY_URL}, response.status: ${response.status}.`
+      `Not OK daily weather forecast response from server ${MET_WEATHER_DAILY_URL}, response.status: ${response.status}.`
     );
   }
   // log(`response.data: ${JSON.stringify(response.data, null, '  ')}`);
@@ -106,7 +121,7 @@ const getMetOfficeForecast = async (specialDates: SpecialDate[]) => {
   const dailyForecast =
     MetOfficeDailyForecastGeoJSONSchema.parse(dailyFromTodayJson);
 
-  const hourlyResponse = await fetch(process.env.MET_WEATHER_HOURLY_URL, {
+  const hourlyResponse = await fetch(MET_WEATHER_HOURLY_URL, {
     headers,
   });
 
