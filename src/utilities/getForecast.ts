@@ -88,8 +88,10 @@ const getMetOfficeForecast = async (specialDates: SpecialDate[]) => {
   });
   // const text = await response.text();
   // log('text: ' + text);
-  if (!response) {
-    throw new Error('No response from server.');
+  if (!response.ok) {
+    throw new Error(
+      `Not OK daily weather forecast response from server ${process.env.MET_WEATHER_DAILY_URL}, response.status: ${response.status}.`
+    );
   }
   // log(`response.data: ${JSON.stringify(response.data, null, '  ')}`);
 
@@ -108,8 +110,10 @@ const getMetOfficeForecast = async (specialDates: SpecialDate[]) => {
     headers,
   });
 
-  if (!hourlyResponse) {
-    throw new Error('No hourlyResponse from server.');
+  if (!hourlyResponse.ok) {
+    throw new Error(
+      `Not OK hourly weather forecast response from server ${process.env.MET_WEATHER_HOURLY_URL}, response.status: ${hourlyResponse.status}.`
+    );
   }
 
   const hourlyJson = await hourlyResponse.json();
