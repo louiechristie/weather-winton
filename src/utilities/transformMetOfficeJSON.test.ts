@@ -3,15 +3,19 @@ import { test, expect, describe, beforeAll } from '@jest/globals';
 
 import { Item } from './transformMetOfficeJSON';
 import SpecialDate from '@/types/specialDate';
-
 import getSpecialDates from './getSpecialDates';
 
 import generateMockDailyMetOfficeJSON from '../tests/generateMockDailyMetOfficeJSON';
 
 import hourly from '../tests/hourly.json' with { type: 'json' };
+import minMaxTestDaily from '../../data/min-max-test/min-max-test-daily.json' with { type: 'json' };
+import minMaxTestHourly from '../../data/min-max-test/min-max-test-hourly.json' with { type: 'json' };
+
+import { onwardsFilterMetOfficeJSON } from './getForecast';
 import transformMetOfficeJSON from './transformMetOfficeJSON';
 
 import {
+  MetOfficeDailyForecastGeoJSONRawSchema,
   MetOfficeHourlyForecastGeoJSONSchema,
   MetOfficeDailyForecastGeoJSON,
   MetOfficeHourlyForecastGeoJSON,
@@ -66,6 +70,52 @@ describe('transformMetOfficeJSON', () => {
       const maxIsFinite = Number.isFinite(item.maxTemperature);
       expect(minIsFinite).toBe(true);
       expect(maxIsFinite).toBe(true);
+    });
+  });
+
+  describe('inside min and max temperature bounds', () => {
+    let runDate: Temporal.Instant;
+    let averageTemperature: number;
+    let currentTemperature: number;
+    let maxTemperature: number;
+    let minTemperature: number;
+
+    beforeAll(() => {
+      const daily =
+        MetOfficeDailyForecastGeoJSONRawSchema.parse(minMaxTestDaily);
+      const dailyFiltered = onwardsFilterMetOfficeJSON(daily, runDate);
+      const hourly =
+        MetOfficeHourlyForecastGeoJSONSchema.parse(minMaxTestHourly);
+
+      runDate = Temporal.Instant.from('2026-05-31T15:00Z');
+
+      transformedData = transformMetOfficeJSON(
+        specialDates,
+        dailyFiltered,
+        hourly,
+        runDate
+      );
+
+      averageTemperature = transformedData[0].averageTemperature;
+      currentTemperature = transformedData[0].currentTemperature;
+      maxTemperature = transformedData[0].maxTemperature;
+      minTemperature = transformedData[0].minTemperature;
+    });
+
+    test('current temperature is not greater than max temperature', async () => {
+      expect(currentTemperature).not.toBeGreaterThan(maxTemperature);
+    });
+
+    test('average temperature is not greater than max temperature', async () => {
+      expect(averageTemperature).not.toBeGreaterThan(maxTemperature);
+    });
+
+    test('current temperature is not less than min temperature', async () => {
+      expect(currentTemperature).not.toBeLessThan(minTemperature);
+    });
+
+    test('average temperature is not less than min temperature', async () => {
+      expect(averageTemperature).not.toBeLessThan(minTemperature);
     });
   });
 });

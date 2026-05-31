@@ -28,7 +28,7 @@ const nowString = now.toString();
 const mockHourlyMetOfficeJSON = generateMockHourlyMetOfficeJSON(nowString);
 const systemTimeZone = Temporal.Now.timeZoneId();
 
-const onwardsFilterMetOfficeJSON = (
+export const onwardsFilterMetOfficeJSON = (
   metOfficeJSON:
     | MetOfficeDailyForecastGeoRawJSON
     | MetOfficeDailyForecastGeoJSON,
