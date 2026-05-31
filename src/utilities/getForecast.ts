@@ -39,8 +39,8 @@ export const onwardsFilterMetOfficeJSON = (
   ) as MetOfficeDailyForecastGeoJSON;
 
   const days = metOfficeJSON.features[0].properties.timeSeries;
-  const daysFiltered: DailyWeatherData[] = days.filter((from) =>
-    onwardsFilter(from)
+  const daysFiltered: DailyWeatherData[] = days.filter((day) =>
+    onwardsFilter(day, from)
   ) as DailyWeatherData[];
 
   filtered.features[0].properties.timeSeries = daysFiltered;
@@ -50,7 +50,7 @@ export const onwardsFilterMetOfficeJSON = (
 
 const onwardsFilter = (
   day: DailyWeatherPreviousNightData | DailyWeatherData,
-  from = now
+  from: Temporal.Instant
 ) => {
   const fromDateZoned = from.toZonedDateTimeISO(systemTimeZone);
   const fromPlainDate = fromDateZoned.toPlainDate();
