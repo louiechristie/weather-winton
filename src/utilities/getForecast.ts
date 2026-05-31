@@ -63,12 +63,11 @@ const onwardsFilter = (
   return Temporal.PlainDateTime.compare(timePlainDate, fromPlainDate) >= 0;
 };
 
-let MET_WEATHER_SECRET: string;
-let MET_WEATHER_DAILY_URL: string;
-let MET_WEATHER_HOURLY_URL: string;
-let headers: Record<string, string>;
+const preflightCheck = () => {
+  let MET_WEATHER_SECRET: string;
+  let MET_WEATHER_DAILY_URL: string;
+  let MET_WEATHER_HOURLY_URL: string;
 
-const preflight = () => {
   if (!process.env.MET_WEATHER_SECRET) {
     throw new Error(
       'You need to set your MET_WEATHER_SECRET environment variable'
@@ -86,18 +85,29 @@ const preflight = () => {
   } else {
     MET_WEATHER_HOURLY_URL = process.env.MET_WEATHER_HOURLY_URL;
   }
+
+  return {
+    MET_WEATHER_SECRET,
+    MET_WEATHER_DAILY_URL,
+    MET_WEATHER_HOURLY_URL,
+  };
 };
 
-const getMetOfficeForecast = async (specialDates: SpecialDate[]) => {
-  preflight();
-
-  headers = {
+const getHeaders = (MET_WEATHER_SECRET: string) => {
+  const headers = {
     // prettier-ignore
     'accept': 'application/json',
     // prettier-ignore
     'apikey': MET_WEATHER_SECRET,
   };
+  return headers;
+};
 
+const getDailyForecastRaw = async (
+  MET_WEATHER_DAILY_URL: string,
+  MET_WEATHER_SECRET: string
+) => {
+  const headers = getHeaders(MET_WEATHER_SECRET);
   const response = await fetch(MET_WEATHER_DAILY_URL, {
     headers,
   });
@@ -115,12 +125,14 @@ const getMetOfficeForecast = async (specialDates: SpecialDate[]) => {
   const dailyForecastRaw =
     MetOfficeDailyForecastGeoJSONRawSchema.parse(dailyJson);
 
-  const dailyFromTodayJson: MetOfficeDailyForecastGeoJSON =
-    onwardsFilterMetOfficeJSON(dailyForecastRaw);
+  return dailyForecastRaw;
+};
 
-  const dailyForecast =
-    MetOfficeDailyForecastGeoJSONSchema.parse(dailyFromTodayJson);
-
+const getHourlyForecast = async (
+  MET_WEATHER_HOURLY_URL: string,
+  MET_WEATHER_SECRET: string
+) => {
+  const headers = getHeaders(MET_WEATHER_SECRET);
   const hourlyResponse = await fetch(MET_WEATHER_HOURLY_URL, {
     headers,
   });
@@ -132,8 +144,29 @@ const getMetOfficeForecast = async (specialDates: SpecialDate[]) => {
   }
 
   const hourlyJson = await hourlyResponse.json();
-
   const hourlyForecast = MetOfficeHourlyForecastGeoJSONSchema.parse(hourlyJson);
+  return hourlyForecast;
+};
+
+const getMetOfficeForecast = async (specialDates: SpecialDate[]) => {
+  const { MET_WEATHER_DAILY_URL, MET_WEATHER_HOURLY_URL, MET_WEATHER_SECRET } =
+    preflightCheck();
+
+  const dailyForecastRaw = await getDailyForecastRaw(
+    MET_WEATHER_DAILY_URL,
+    MET_WEATHER_SECRET
+  );
+
+  const dailyFromTodayJson: MetOfficeDailyForecastGeoJSON =
+    onwardsFilterMetOfficeJSON(dailyForecastRaw);
+
+  const dailyForecast =
+    MetOfficeDailyForecastGeoJSONSchema.parse(dailyFromTodayJson);
+
+  const hourlyForecast = await getHourlyForecast(
+    MET_WEATHER_HOURLY_URL,
+    MET_WEATHER_SECRET
+  );
 
   const items = transformMetOfficeJSON(
     specialDates,
