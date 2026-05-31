@@ -103,7 +103,7 @@ const getHeaders = (MET_WEATHER_SECRET: string) => {
   return headers;
 };
 
-const getDailyForecastRaw = async (
+const getDailyForecast = async (
   MET_WEATHER_DAILY_URL: string,
   MET_WEATHER_SECRET: string
 ) => {
@@ -125,7 +125,13 @@ const getDailyForecastRaw = async (
   const dailyForecastRaw =
     MetOfficeDailyForecastGeoJSONRawSchema.parse(dailyJson);
 
-  return dailyForecastRaw;
+  const dailyFromTodayJson: MetOfficeDailyForecastGeoJSON =
+    onwardsFilterMetOfficeJSON(dailyForecastRaw);
+
+  const dailyForecast =
+    MetOfficeDailyForecastGeoJSONSchema.parse(dailyFromTodayJson);
+
+  return dailyForecast;
 };
 
 const getHourlyForecast = async (
@@ -152,16 +158,10 @@ const getMetOfficeForecast = async (specialDates: SpecialDate[]) => {
   const { MET_WEATHER_DAILY_URL, MET_WEATHER_HOURLY_URL, MET_WEATHER_SECRET } =
     preflightCheck();
 
-  const dailyForecastRaw = await getDailyForecastRaw(
+  const dailyForecast = await getDailyForecast(
     MET_WEATHER_DAILY_URL,
     MET_WEATHER_SECRET
   );
-
-  const dailyFromTodayJson: MetOfficeDailyForecastGeoJSON =
-    onwardsFilterMetOfficeJSON(dailyForecastRaw);
-
-  const dailyForecast =
-    MetOfficeDailyForecastGeoJSONSchema.parse(dailyFromTodayJson);
 
   const hourlyForecast = await getHourlyForecast(
     MET_WEATHER_HOURLY_URL,
