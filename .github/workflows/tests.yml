@@ -15,7 +15,7 @@ jobs:
       - run: echo "event name is:" ${{ github.event_name }}
       - run: echo "event type is:" ${{ github.event.action }}
       - run: echo "event type is:" ${{ github.event.deployment_status.state }}
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6.0.2
       - name: Install dependencies and run tests
         run: |
           npm ci
