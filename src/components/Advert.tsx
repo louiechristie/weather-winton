@@ -56,6 +56,17 @@ const Advert = () => {
         </Link>{' '}
         with his shirt off. (Sunglasses recommended 😎)
       </p>
+      <q>
+        at least three consecutive days with daily maximum temperatures meeting
+        or exceeding the heatwave temperature threshold [of 28 degrees Celsius
+        in London]
+      </q>
+      <p>
+        -{' '}
+        <a href="https://weather.metoffice.gov.uk/learn-about/weather/types-of-weather/temperature/heatwave">
+          Met Office
+        </a>
+      </p>
       <h3 style={styles.adText}>End of Advert</h3>
     </div>
   );
