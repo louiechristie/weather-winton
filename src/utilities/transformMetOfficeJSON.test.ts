@@ -81,13 +81,13 @@ describe('transformMetOfficeJSON', () => {
     let minTemperature: number;
 
     beforeAll(() => {
+      runDate = Temporal.Instant.from('2026-05-31T15:00Z');
+
       const daily =
         MetOfficeDailyForecastGeoJSONRawSchema.parse(minMaxTestDaily);
       const dailyFiltered = onwardsFilterMetOfficeJSON(daily, runDate);
       const hourly =
         MetOfficeHourlyForecastGeoJSONSchema.parse(minMaxTestHourly);
-
-      runDate = Temporal.Instant.from('2026-05-31T15:00Z');
 
       transformedData = transformMetOfficeJSON(
         specialDates,
