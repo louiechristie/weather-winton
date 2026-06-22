@@ -1,4 +1,4 @@
-import { Temporal } from 'temporal-polyfill';
+import { Temporal } from 'temporal-polyfill/full';
 
 export const getIsHourInTheRemainingDay = (
   hour: Temporal.Instant,

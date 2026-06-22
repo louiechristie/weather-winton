@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import Holidays from 'date-holidays';
-import { Temporal } from 'temporal-polyfill';
+import { Temporal } from 'temporal-polyfill/full';
 import timezone from 'dayjs/plugin/timezone.js';
 import utc from 'dayjs/plugin/utc.js';
 import customParseFormat from 'dayjs/plugin/customParseFormat.js';

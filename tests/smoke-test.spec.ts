@@ -1,5 +1,5 @@
 import { test, expect, Page } from '@playwright/test';
-import { Temporal } from 'temporal-polyfill';
+import { Temporal } from 'temporal-polyfill/full';
 import getFriendlyDateFromISODate from '@/utilities/getFriendlyDateFromISODate';
 import getSpecialDates from '@/utilities/getSpecialDates';
 

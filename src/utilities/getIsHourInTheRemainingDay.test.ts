@@ -1,4 +1,4 @@
-import { Temporal } from 'temporal-polyfill';
+import { Temporal } from 'temporal-polyfill/full';
 import { getIsHourInTheRemainingDay } from './getIsHourInTheRemainingDay';
 
 test('1200 is after 0800', () => {

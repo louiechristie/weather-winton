@@ -1,5 +1,5 @@
 import { describe, expect, test } from '@jest/globals';
-import { Temporal } from 'temporal-polyfill';
+import { Temporal } from 'temporal-polyfill/full';
 
 import hourly from '../tests/hourly.json' with { type: 'json' };
 import hourlyForBetween2300AndMidnightTestingJSON from '../tests/hourlyForBetween2300AndMidnightTesting.json' with { type: 'json' };

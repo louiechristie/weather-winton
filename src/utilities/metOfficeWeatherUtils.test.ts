@@ -1,4 +1,4 @@
-import { Temporal } from 'temporal-polyfill';
+import { Temporal } from 'temporal-polyfill/full';
 import { getIsTakeRaincoatToday } from './metOfficeWeatherUtils';
 import mockHourlyNoRaincoatJSON from '../tests/mockHourlyNoRaincoat';
 import mockHourlyNeedRaincoatJSON from '../tests/mockHourlyNeedRaincoat';

@@ -1,4 +1,4 @@
-import { Temporal } from 'temporal-polyfill';
+import { Temporal } from 'temporal-polyfill/full';
 
 // From https://www.rmg.co.uk/stories/time/when-easter
 // and https://www.calendarbede.com/book/carter-easter-algorithm

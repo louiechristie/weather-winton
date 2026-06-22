@@ -7,7 +7,7 @@ import getFriendlyDateFromISODate from './getFriendlyDateFromISODate';
 import getSpecialDates from './getSpecialDates';
 
 import SpecialDate from '@/types/specialDate';
-import { Temporal } from 'temporal-polyfill';
+import { Temporal } from 'temporal-polyfill/full';
 import { getNextPancakeDayDate } from './date/getPancakeDay';
 
 dayjs.extend(utc);

@@ -1,4 +1,4 @@
-import { Temporal } from 'temporal-polyfill';
+import { Temporal } from 'temporal-polyfill/full';
 import { test, expect, describe, beforeAll } from '@jest/globals';
 
 import { Item } from './transformMetOfficeJSON';

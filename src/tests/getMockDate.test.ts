@@ -1,5 +1,5 @@
 import getMockDate from './getMockDate';
-import { Temporal } from 'temporal-polyfill';
+import { Temporal } from 'temporal-polyfill/full';
 
 describe('getMockDate', () => {
   test('getMockDate to be beginning hour to input time', () => {

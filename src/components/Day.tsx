@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { theme, Box, Typography, Card } from '../utilities/theme';
 import { getTemperatureFriendly } from '../utilities/getRoomTemperatureComfortFromCelsius';
 import { Item } from '@/utilities/transformMetOfficeJSON';
-import { Temporal } from 'temporal-polyfill';
+import { Temporal } from 'temporal-polyfill/full';
 
 const styles: { [key: string]: React.CSSProperties } = {
   li: {

@@ -1,4 +1,4 @@
-import { Temporal } from 'temporal-polyfill';
+import { Temporal } from 'temporal-polyfill/full';
 import getCurrentTemperature from './getCurrentTemperature';
 import {
   getDescriptionFromMetOfficeWeatherCode,

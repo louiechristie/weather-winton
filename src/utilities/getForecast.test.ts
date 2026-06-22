@@ -1,5 +1,5 @@
 import { expect, test } from '@jest/globals';
-import { Temporal } from 'temporal-polyfill';
+import { Temporal } from 'temporal-polyfill/full';
 
 import type SpecialDate from '@/types/specialDate';
 

@@ -1,4 +1,4 @@
-import { Temporal } from 'temporal-polyfill';
+import { Temporal } from 'temporal-polyfill/full';
 import getStormName from './getStormName';
 
 describe('get storm name', () => {

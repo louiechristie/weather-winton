@@ -1,4 +1,4 @@
-import { Temporal } from 'temporal-polyfill';
+import { Temporal } from 'temporal-polyfill/full';
 import { theme, Paper, Typography } from '../utilities/theme';
 import Meta from '@/types/meta';
 

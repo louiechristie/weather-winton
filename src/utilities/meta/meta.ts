@@ -1,4 +1,4 @@
-import { Temporal } from 'temporal-polyfill';
+import { Temporal } from 'temporal-polyfill/full';
 
 import manifest from 'package.json' with { type: 'json' };
 import type Meta from '@/types/meta';
