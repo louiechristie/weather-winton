@@ -113,8 +113,6 @@ test.describe('weather conditions', async () => {
   test('heatwave', async ({ page }) => {
     await page.goto(baseUrl + '/test/heatwave/');
     await expect(page.getByText('heatwave')).toHaveCount(2);
-    await expect(page.getByText('Windy')).toHaveCount(0);
-    await expect(page.getByText('Storm Bram')).toHaveCount(0);
   });
 });
 

@@ -21,7 +21,8 @@ import SpecialDate from '../types/specialDate';
 
 import looneyDailyForecastJSON from '../../data/looney/looney-daily.json' with { type: 'json' };
 import windyDailyForecastJSON from '../../data/windy/windy-daily.json' with { type: 'json' };
-import heatwaveDailyForecastJSON from '../../data/heatwave/heatwave-daily.json' with { type: 'json' };
+import heatwaveDailyForecastJSON from '../../data/heatwave/daily-2026-06-23T14-30-25-456Z.json' with { type: 'json' };
+import heatwaveHourlyForecastJSON from '../../data/heatwave/hourly-2026-06-23T14-30-25-456Z.json' with { type: 'json' };
 
 const now = Temporal.Now.instant();
 const nowString = now.toString();
@@ -260,16 +261,25 @@ export const getWindyForecast = async (specialDates: SpecialDate[]) => {
 };
 
 export const getHeatWaveForecast = async (specialDates: SpecialDate[]) => {
-  const heatwaveDailyForecast = MetOfficeDailyForecastGeoJSONSchema.parse(
-    heatwaveDailyForecastJSON
+  const dailyForecastRaw = MetOfficeDailyForecastGeoJSONRawSchema.parse(
+    heatwaveDailyForecastJSON as MetOfficeDailyForecastGeoRawJSON
   );
 
-  return transformMetOfficeJSON(
+  const dailyFromTodayJson: MetOfficeDailyForecastGeoJSON =
+    onwardsFilterMetOfficeJSON(dailyForecastRaw);
+
+  const hourlyForecast = MetOfficeHourlyForecastGeoJSONSchema.parse(
+    heatwaveHourlyForecastJSON as MetOfficeHourlyForecastGeoJSON
+  );
+
+  const transformedMetOfficeJSON = transformMetOfficeJSON(
     specialDates,
-    heatwaveDailyForecast,
-    mockHourlyMetOfficeJSON,
+    dailyFromTodayJson,
+    hourlyForecast,
     now
   );
+
+  return transformedMetOfficeJSON;
 };
 
 const getForecast = async (specialDates: SpecialDate[]): Promise<Items> => {
