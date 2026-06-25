@@ -192,12 +192,12 @@ const transformMetOfficeJSON = (
 
     const isTakeRaincoat = getIsTakeRaincoatToday(hourlyJson, now);
 
-    const founcCurrentTemperature = getCurrentTemperature(hourlyJson);
+    const foundCurrentTemperature = getCurrentTemperature(hourlyJson);
 
     let currentTemperature = today.averageTemperature;
 
-    if (founcCurrentTemperature !== null) {
-      currentTemperature = founcCurrentTemperature;
+    if (foundCurrentTemperature !== null) {
+      currentTemperature = foundCurrentTemperature;
     }
 
     let averageTemperature = today.averageTemperature;
