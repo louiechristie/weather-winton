@@ -266,7 +266,12 @@ export const getHeatWaveForecast = async (specialDates: SpecialDate[]) => {
   );
 
   const dailyFromTodayJson: MetOfficeDailyForecastGeoJSON =
-    onwardsFilterMetOfficeJSON(dailyForecastRaw);
+    onwardsFilterMetOfficeJSON(
+      dailyForecastRaw,
+      Temporal.Instant.from(
+        dailyForecastRaw.features[0].properties.modelRunDate
+      )
+    );
 
   const hourlyForecast = MetOfficeHourlyForecastGeoJSONSchema.parse(
     heatwaveHourlyForecastJSON as MetOfficeHourlyForecastGeoJSON
