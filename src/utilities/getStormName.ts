@@ -83,6 +83,38 @@ const getStormName = (
     return 'Dave';
   }
 
+  stormStartDate = Temporal.Instant.from('2026-10-20T00+00:00[Europe/London]');
+  stormEndDate = Temporal.Instant.from('2026-10-22T00+00:00[Europe/London]');
+
+  dateIsAfterStormStart =
+    date.epochMilliseconds >= stormStartDate.epochMilliseconds;
+  dateIsBeforeStormEnd =
+    date.epochMilliseconds < stormEndDate.epochMilliseconds;
+
+  if (
+    dateIsAfterStormStart &&
+    dateIsBeforeStormEnd &&
+    (isWindy || isTakeRaincoat)
+  ) {
+    return 'Austen';
+  }
+
+  stormStartDate = Temporal.Instant.from('2026-10-22T00+00:00[Europe/London]');
+  stormEndDate = Temporal.Instant.from('2026-10-27T00+00:00[Europe/London]');
+
+  dateIsAfterStormStart =
+    date.epochMilliseconds >= stormStartDate.epochMilliseconds;
+  dateIsBeforeStormEnd =
+    date.epochMilliseconds < stormEndDate.epochMilliseconds;
+
+  if (
+    dateIsAfterStormStart &&
+    dateIsBeforeStormEnd &&
+    (isWindy || isTakeRaincoat)
+  ) {
+    return 'Boelo';
+  }
+
   return null;
 };
 
