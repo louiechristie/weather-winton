@@ -51,14 +51,14 @@ describe('get storm name', () => {
     expect(getStormName(instant, true, true)).toEqual('Dave');
   });
 
-  test('should return Austen, when date is 21 October 2026, and weather is windy', () => {
-    const instant = Temporal.Instant.from('2026-10-21T00:00:00Z');
+  test('should return Austen, when date is 23 October 2026, and weather is windy', () => {
+    const instant = Temporal.Instant.from('2026-10-23T00:00:00Z');
 
     expect(getStormName(instant, true, false)).toEqual('Austen');
   });
 
-  test('should return Boelo, when date is 22 October 2026, and weather is wet but not windy', () => {
-    const instant = Temporal.Instant.from('2026-10-22T00:00:00Z');
+  test('should return Boelo, when date is 24 October 2026, and weather is wet but not windy', () => {
+    const instant = Temporal.Instant.from('2026-10-24T00:00:00Z');
 
     expect(getStormName(instant, false, true)).toEqual('Boelo');
   });

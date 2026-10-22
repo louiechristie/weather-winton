@@ -84,7 +84,7 @@ const getStormName = (
   }
 
   stormStartDate = Temporal.Instant.from('2026-10-20T00+00:00[Europe/London]');
-  stormEndDate = Temporal.Instant.from('2026-10-22T00+00:00[Europe/London]');
+  stormEndDate = Temporal.Instant.from('2026-10-24T00+00:00[Europe/London]');
 
   dateIsAfterStormStart =
     date.epochMilliseconds >= stormStartDate.epochMilliseconds;
