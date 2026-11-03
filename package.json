@@ -48,7 +48,7 @@
     "react": "19",
     "react-dom": "19",
     "temporal-polyfill": "1.0.5",
-    "zod": "4.6.5"
+    "zod": "4.6.6"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
