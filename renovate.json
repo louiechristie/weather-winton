@@ -1,0 +1,24 @@
+{
+  "extends": ["config:recommended"],
+  "enabledManagers": ["npm", "custom.regex"],
+  "timezone": "Europe/London",
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": ["/^\\.github\\/workflows\\/.*\\.ya?ml$/"],
+      "matchStrings": [
+        "image:\\s*mcr\\.microsoft\\.com/playwright:(?<currentValue>v\\d+\\.\\d+\\.\\d+-[a-z0-9]+)"
+      ],
+      "depNameTemplate": "mcr.microsoft.com/playwright",
+      "datasourceTemplate": "docker",
+      "versioningTemplate": "regex:^v(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-(?<compatibility>.+)$"
+    }
+  ],
+  "packageRules": [
+    {
+      "matchPackageNames": ["@playwright/test", "mcr.microsoft.com/playwright"],
+      "groupName": "Playwright and container images",
+      "schedule": ["before 5am on monday"]
+    }
+  ]
+}
