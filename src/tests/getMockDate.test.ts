@@ -33,6 +33,8 @@ describe('getMockDate', () => {
           minute: 0,
           second: 0,
           millisecond: 0,
+          microsecond: 0,
+          nanosecond: 0,
         })
         .subtract({
           hours: 1,
@@ -54,6 +56,8 @@ describe('getMockDate', () => {
         minute: 0,
         second: 0,
         millisecond: 0,
+        microsecond: 0,
+        nanosecond: 0,
       });
 
       getMockDate(nowStringISO8601UTC);
@@ -75,6 +79,8 @@ describe('getMockDate', () => {
           minute: 0,
           second: 0,
           millisecond: 0,
+          microsecond: 0,
+          nanosecond: 0,
         })
         .add({ hours: 1 });
 
