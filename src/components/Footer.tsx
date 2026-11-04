@@ -72,7 +72,12 @@ const Footer = (props: { meta: Meta }) => {
         Weather Winton ©️ {year} v{meta.version} | Tags: user experience, UX
       </Typography>
 
-      <Typography variant="body2" component="p" paragraph align="center">
+      <Typography
+        variant="body2"
+        component="p"
+        style={{ marginBottom: theme.spacing(2) }}
+        align="center"
+      >
         Data from: Met Office | Contains public sector information licensed
         under the{' '}
         <a href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">
@@ -104,7 +109,7 @@ const Footer = (props: { meta: Meta }) => {
         variant="body2"
         component="p"
         color="inherit"
-        paragraph
+        style={{ marginBottom: theme.spacing(2) }}
         align="center"
       >
         Made by: <a href={meta.author.url}> {meta.author.name}</a>

@@ -14,7 +14,9 @@ test.describe('heatwave advert', () => {
   });
 
   test.afterAll(async () => {
-    await page.close();
+    if (page) {
+      await page.close();
+    }
   });
 
   test('displays Stella Artois advert when heatwave is detected', async () => {

@@ -17,7 +17,9 @@ test.describe('main page', () => {
   });
 
   test.afterAll(async () => {
-    await page.close();
+    if (page) {
+      await page.close();
+    }
   });
 
   test('has title', async () => {
@@ -67,7 +69,9 @@ test.describe('fun dates', async () => {
   });
 
   test.afterAll(async () => {
-    await page.close();
+    if (page) {
+      await page.close();
+    }
   });
 
   test('pancake day', async () => {
@@ -142,6 +146,8 @@ test.describe('looney conditions', async () => {
   });
 
   test.afterAll(async () => {
-    await page.close();
+    if (page) {
+      await page.close();
+    }
   });
 });

@@ -50,7 +50,14 @@ test('isTakeRaincoatToday false when there is rain only at midnight', () => {
 });
 
 test('isTakeRaincoatToday true when there is rain only at 23:00', () => {
+  const rainTime = Temporal.Instant.from(
+    mockHourlyRainAtEleven.features[0].properties.timeSeries[1].time
+  );
+
   expect(
-    getIsTakeRaincoatToday(mockHourlyRainAtEleven, Temporal.Now.instant())
+    getIsTakeRaincoatToday(
+      mockHourlyRainAtEleven,
+      rainTime.subtract({ hours: 1 })
+    )
   ).toBe(true);
 });
