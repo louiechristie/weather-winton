@@ -1,5 +1,5 @@
-# Automatically approve and merge Dependabot PRs for minor and patch updates
-name: Dependabot auto-merge
+# Automatically merge dependency update PRs after tests pass
+name: Dependency update auto-merge
 on: pull_request
 
 permissions:
@@ -10,7 +10,7 @@ jobs:
   test:
     environment:
       name: Continuous Integration
-    if: github.event.pull_request.user.login == 'dependabot[bot]' && github.repository == 'louiechristie/weather-winton'
+    if: (github.event.pull_request.user.login == 'dependabot[bot]' || github.event.pull_request.user.login == 'renovate[bot]') && github.repository == 'louiechristie/weather-winton'
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.64.1-resolute
@@ -56,6 +56,17 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Enable auto-merge for Dependabot PRs
         if: steps.metadata.outputs.update-type == 'version-update:semver-patch' || steps.metadata.outputs.update-type == 'version-update:semver-minor'
+        run: gh pr merge --auto --squash "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  renovate:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.user.login == 'renovate[bot]' && github.repository == 'louiechristie/weather-winton'
+    steps:
+      - name: Enable auto-merge for Renovate PRs
         run: gh pr merge --auto --squash "$PR_URL"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
