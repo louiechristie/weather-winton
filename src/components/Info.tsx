@@ -64,7 +64,12 @@ const Info = (props: Props) => {
         <Typography variant="h5" component="h2" gutterBottom align="center">
           About
         </Typography>
-        <Typography variant="body1" component="p" paragraph align="left">
+        <Typography
+          variant="body1"
+          component="p"
+          style={{ marginBottom: theme.spacing(2) }}
+          align="left"
+        >
           {meta.siteDescription}
         </Typography>
       </Paper>
@@ -78,7 +83,6 @@ const Info = (props: Props) => {
           style={styles.quote}
           variant="body1"
           component="blockquote"
-          paragraph
           align="left"
         >
           <q>

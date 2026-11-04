@@ -288,17 +288,13 @@ export const getHeatWaveForecast = async (specialDates: SpecialDate[]) => {
 };
 
 const getForecast = async (specialDates: SpecialDate[]): Promise<Items> => {
-  let items: Items = [];
-
   try {
-    items = await getMetOfficeForecast(specialDates);
+    return await getMetOfficeForecast(specialDates);
   } catch (error) {
     console.error('Error getting forecast');
     console.error(error);
     throw error;
   }
-
-  return items;
 };
 
 export default getForecast;

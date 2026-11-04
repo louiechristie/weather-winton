@@ -36,7 +36,6 @@ const isThisYearOrIsNextYearEarlyJanuary = (
 };
 
 const getSpecialDates = async (): Promise<SpecialDate[]> => {
-  let specialDates = [];
   type MergedDates = {
     [key: string]: string;
   };
@@ -204,7 +203,7 @@ const getSpecialDates = async (): Promise<SpecialDate[]> => {
   }
   mergedDates[pancakeDayDateString] = pancakeDayFriendlyName;
 
-  specialDates = Object.keys(mergedDates)
+  const specialDates = Object.keys(mergedDates)
     .toSorted()
     .map((key) => {
       return {
