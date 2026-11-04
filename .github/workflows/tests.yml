@@ -9,13 +9,16 @@ jobs:
     if: github.event_name == 'deployment_status'
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:v1.63.0-resolute
+      image: mcr.microsoft.com/playwright:v1.64.1-resolute
       options: --user 1001
     steps:
       - run: echo "event name is:" ${{ github.event_name }}
       - run: echo "event type is:" ${{ github.event.action }}
       - run: echo "event type is:" ${{ github.event.deployment_status.state }}
       - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.x
       - name: Install dependencies and run tests
         run: |
           npm ci
