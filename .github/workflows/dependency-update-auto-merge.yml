@@ -20,7 +20,7 @@ jobs:
       - run: echo "event type is:" ${{ github.event.action }}
       - run: echo "event type is:" ${{ github.event.deployment_status.state }}
       - uses: actions/checkout@v7.0.1
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 24.x
       - name: Install dependencies and run tests
