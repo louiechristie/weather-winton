@@ -59,8 +59,8 @@
     "@types/node": "26",
     "@types/react": "19",
     "@types/react-dom": "19",
-    "@typescript-eslint/eslint-plugin": "8.72.1",
-    "@typescript-eslint/parser": "8.72.1",
+    "@typescript-eslint/eslint-plugin": "8.72.2",
+    "@typescript-eslint/parser": "8.72.2",
     "dotenv": "18.0.10",
     "eslint": "10.14.0",
     "eslint-config-next": "16.4.5",
@@ -82,7 +82,7 @@
     "ts-jest": "29.4.15",
     "ts-node": "10.9.2",
     "typescript": "~6.0.3",
-    "typescript-eslint": "8.72.1"
+    "typescript-eslint": "8.72.2"
   },
   "overrides": {
     "eslint": "10.14.0",
