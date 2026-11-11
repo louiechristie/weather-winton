@@ -86,7 +86,7 @@
   },
   "overrides": {
     "eslint": "10.14.0",
-    "glob": "14.0.4"
+    "glob": "14.0.5"
   },
   "engines": {
     "node": "26.x"
