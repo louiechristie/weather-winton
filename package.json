@@ -39,7 +39,7 @@
     "@eslint/eslintrc": "^3.3.7",
     "@mui/material": "^9.5.0",
     "color": "5.0.3",
-    "date-holidays": "3.38.0",
+    "date-holidays": "3.39.1",
     "dayjs": "1.11.23",
     "eslint-plugin-jest": "^29.17.0",
     "globals": "17.14.0",
