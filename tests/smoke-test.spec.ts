@@ -90,9 +90,9 @@ test.describe('fun dates', async () => {
       .toBeGreaterThan(0);
   });
 
-  test("Mother's day", async () => {
+  test('Mother’s day', async () => {
     await expect
-      .poll(() => page.getByText("Mother's day").count())
+      .poll(() => page.getByText('Mother’s day').count())
       .toBeGreaterThan(0);
   });
 });
